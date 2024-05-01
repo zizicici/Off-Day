@@ -60,7 +60,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .oneBackground
+        view.backgroundColor = .background
         updateNavigationBarStyle()
         
         configureHierarchy()
@@ -189,7 +189,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     
     private func configureHierarchy() {
         collectionView = UIDraggableCollectionView(frame: CGRect.zero, collectionViewLayout: createLayout())
-        collectionView.backgroundColor = .oneBackground
+        collectionView.backgroundColor = .background
         collectionView.delaysContentTouches = false
         collectionView.canCancelContentTouches = true
         collectionView.delegate = self
