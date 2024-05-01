@@ -14,7 +14,6 @@ protocol DisplayHandlerDelegate: AnyObject {
 protocol DisplayHandler {
     init(delegate: DisplayHandlerDelegate)
     
-    func getDateType() -> DateType
     func getStart(for section: Section) -> Int?
     func getEnd(for section: Section) -> Int?
     

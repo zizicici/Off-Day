@@ -129,15 +129,6 @@
         }
       }
     },
-    "event.priority.high" : {
-
-    },
-    "event.priority.low" : {
-
-    },
-    "event.priority.middle" : {
-
-    },
     "settings.default.%@" : {
 
     }

@@ -21,9 +21,8 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         didSet {
             eventsDict = [:]
             for event in events {
-                let dateType = displayHandler.getDateType()
-                let start = event.startDate.leadingIndex(for: dateType)
-                let end = event.endDate.trailingIndex(for: dateType)
+                let start = Int(event.start)
+                let end = Int(event.end)
                 for i in start...end {
                     var result: [Event] = eventsDict[i] ?? []
                     result.append(event)
@@ -99,10 +98,9 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     
     func filter(events: [Event], from startIndex: Int, to endIndex: Int) -> [Event] {
         return events.filter({ event in
-            let dateType = self.displayHandler.getDateType()
-            if event.endDate.trailingIndex(for: dateType) < startIndex {
+            if event.end < startIndex {
                 return false
-            } else if event.startDate.leadingIndex(for: dateType) > endIndex {
+            } else if event.start > endIndex {
                 return false
             } else {
                 return true

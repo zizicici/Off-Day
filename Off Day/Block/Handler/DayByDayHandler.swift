@@ -17,10 +17,6 @@ class DayDisplayHandler: DisplayHandler {
         self.currentCatalogue = .targetYear(2024)
     }
     
-    func getDateType() -> DateType {
-        return .day
-    }
-    
     func getStart(for section: Section) -> Int? {
         switch section {
         case .info, .topTag:

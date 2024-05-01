@@ -31,14 +31,11 @@ final class AppDatabase {
                 
                 table.column("creation_time", .integer).notNull()
                 table.column("modification_time", .integer).notNull()
-                table.column("title", .text).notNull()
+                table.column("day_type", .integer).notNull()
                 table.column("comment", .text)
                 table.column("color", .text).notNull()
-                table.column("priority", .integer)
                 table.column("start", .integer).notNull()
                 table.column("end", .integer).notNull()
-                table.column("start_type", .integer).notNull()
-                table.column("end_type", .integer).notNull()
             }
         }
         

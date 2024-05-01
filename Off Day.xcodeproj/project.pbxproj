@@ -41,7 +41,6 @@
 		14DD51212BE21050004329E2 /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51162BE21050004329E2 /* AppDatabase.swift */; };
 		14DD51222BE21050004329E2 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51172BE21050004329E2 /* Persistence.swift */; };
 		14DD51232BE21050004329E2 /* TimestampedRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51182BE21050004329E2 /* TimestampedRecord.swift */; };
-		14DD51272BE213AD004329E2 /* EventDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51242BE213AD004329E2 /* EventDate.swift */; };
 		14DD51282BE213AD004329E2 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51252BE213AD004329E2 /* EventManager.swift */; };
 		14DD512C2BE21AB8004329E2 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51292BE21AB8004329E2 /* UIColor+Extension.swift */; };
 		14DD512D2BE21AB8004329E2 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD512A2BE21AB8004329E2 /* UIViewController+Extension.swift */; };
@@ -86,7 +85,6 @@
 		14DD51162BE21050004329E2 /* AppDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
 		14DD51172BE21050004329E2 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		14DD51182BE21050004329E2 /* TimestampedRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimestampedRecord.swift; sourceTree = "<group>"; };
-		14DD51242BE213AD004329E2 /* EventDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDate.swift; sourceTree = "<group>"; };
 		14DD51252BE213AD004329E2 /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
 		14DD51292BE21AB8004329E2 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		14DD512A2BE21AB8004329E2 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -247,7 +245,6 @@
 		14DD51262BE213AD004329E2 /* Event */ = {
 			isa = PBXGroup;
 			children = (
-				14DD51242BE213AD004329E2 /* EventDate.swift */,
 				14DD51252BE213AD004329E2 /* EventManager.swift */,
 			);
 			path = Event;
@@ -402,7 +399,6 @@
 				14DD51432BE24642004329E2 /* ShortcutsViewController.swift in Sources */,
 				14DD51212BE21050004329E2 /* AppDatabase.swift in Sources */,
 				14DD50B22BE1F5C4004329E2 /* AppDelegate.swift in Sources */,
-				14DD51272BE213AD004329E2 /* EventDate.swift in Sources */,
 				14DD511A2BE21050004329E2 /* Date+Extension.swift in Sources */,
 				14DD50FD2BE20BC1004329E2 /* ImpactGenerator.swift in Sources */,
 				14DD50EF2BE20BC1004329E2 /* BlockViewController+Popover.swift in Sources */,

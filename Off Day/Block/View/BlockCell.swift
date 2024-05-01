@@ -123,7 +123,7 @@ class BlockCell: BlockBaseCell {
         setupViewsIfNeeded()
         
         if let item = state.blockItem {
-            if let events = item.events, let first = events.sortedByPriority().first {
+            if let events = item.events, let first = events.first {
                 paperView.backgroundColor = UIColor(string: first.color)
                 if paperView.backgroundColor?.isSimilar(to: .background) == true {
                     paperView.layer.borderWidth = 1.0

@@ -12,8 +12,8 @@ protocol DayInfoProvider {
     var days: [Day] { get }
 }
 
-enum DayType {
-    case offday
+enum DayType: Int, Codable {
+    case offday = 0
     case workday
 }
 
