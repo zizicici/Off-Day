@@ -48,6 +48,7 @@
 		14DD51402BE2459C004329E2 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD513F2BE2459C004329E2 /* MoreViewController.swift */; };
 		14DD51432BE24642004329E2 /* ShortcutsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51422BE24642004329E2 /* ShortcutsViewController.swift */; };
 		14DD51482BE24EA9004329E2 /* DayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51472BE24EA9004329E2 /* DayInfo.swift */; };
+		14DD514A2BE27A9E004329E2 /* CheckDayIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +92,7 @@
 		14DD513F2BE2459C004329E2 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		14DD51422BE24642004329E2 /* ShortcutsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsViewController.swift; sourceTree = "<group>"; };
 		14DD51472BE24EA9004329E2 /* DayInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayInfo.swift; sourceTree = "<group>"; };
+		14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDayIntent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 				14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */,
 				14DD51032BE20C57004329E2 /* ZCCalendar */,
 				14DD51472BE24EA9004329E2 /* DayInfo.swift */,
+				14DD514B2BE27AA4004329E2 /* Intent */,
 				14DD513A2BE2356A004329E2 /* BaseViewController */,
 				14DD50E92BE20BC1004329E2 /* Block */,
 				14DD51192BE21050004329E2 /* Database */,
@@ -290,6 +293,14 @@
 			path = Shortcuts;
 			sourceTree = "<group>";
 		};
+		14DD514B2BE27AA4004329E2 /* Intent */ = {
+			isa = PBXGroup;
+			children = (
+				14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */,
+			);
+			path = Intent;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -403,6 +414,7 @@
 				14DD50FC2BE20BC1004329E2 /* HoverGestureRecognizer.swift in Sources */,
 				14DD50B42BE1F5C4004329E2 /* SceneDelegate.swift in Sources */,
 				14DD50EB2BE20BC1004329E2 /* BlockViewController+CellRegistration.swift in Sources */,
+				14DD514A2BE27A9E004329E2 /* CheckDayIntent.swift in Sources */,
 				14DD51002BE20BC1004329E2 /* BlockBaseViewController.swift in Sources */,
 				14DD513D2BE2356A004329E2 /* TabbarController.swift in Sources */,
 				14DD50F32BE20BC1004329E2 /* LayoutGenerator.swift in Sources */,
