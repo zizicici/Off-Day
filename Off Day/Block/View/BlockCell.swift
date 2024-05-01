@@ -123,10 +123,19 @@ class BlockCell: BlockBaseCell {
         setupViewsIfNeeded()
         
         if let item = state.blockItem {
-            if item.calendarDay.dayType == .offday {
+            switch item.calendarDay.dayType {
+            case .offday:
                 paperView.backgroundColor = .offDay.withAlphaComponent(0.8)
-            } else {
+            case .workday:
                 paperView.backgroundColor = defaultBackgroundColor
+            }
+            if let publicDay = item.publicDay {
+                switch publicDay.dayType {
+                case .offday:
+                    paperView.backgroundColor = .offDay.withAlphaComponent(0.8)
+                case .workday:
+                    paperView.backgroundColor = .workDay.withAlphaComponent(0.8)
+                }
             }
             if let events = item.events, let first = events.first {
                 paperView.backgroundColor = UIColor(string: first.color)

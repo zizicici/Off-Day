@@ -15,6 +15,8 @@ struct LayoutGenerater {
         snapshot.appendSections([.topTag])
         snapshot.appendItems(rearrangeArray(startingFrom: firstDayOfWeek, in: WeekdayOrder.allCases).map({ .tag($0.getShortSymbol(), false) }), toSection: .topTag)
         
+        let publicDays = Mainland2024().days
+        
         for month in Month.allCases {
             snapshot.appendSections([.row(month.rawValue, month.getShortSymbol())])
             let firstDay = GregorianDay(year: year, month: month, day: 1)
@@ -28,7 +30,7 @@ struct LayoutGenerater {
             }
             snapshot.appendItems(Array(1...ZCCalendar.manager.dayCount(at: month, year: year)).map({ day in
                 let gregorianDay = GregorianDay(year: year, month: month, day: day)
-                return Item.block(BlockItem(index: gregorianDay.julianDay, calendarDay: gregorianDay.getCalendarDay(), events: eventsDict[gregorianDay.julianDay]))
+                return Item.block(BlockItem(index: gregorianDay.julianDay, calendarDay: gregorianDay.getCalendarDay(), publicDay: publicDays[gregorianDay.julianDay] as? PublicDay, events: eventsDict[gregorianDay.julianDay]))
             }))
         }
     }
