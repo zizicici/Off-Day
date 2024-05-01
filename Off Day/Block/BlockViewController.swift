@@ -39,6 +39,17 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     
     private var displayHandler: DisplayHandler!
     
+    private var didScrollToday: Bool = false {
+        willSet {
+            if didScrollToday == false, newValue == true {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25) { [weak self] in
+                    guard let self = self else { return }
+                    self.scrollToToday()
+                }
+            }
+        }
+    }
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
@@ -205,7 +216,10 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     
     private func applyData() {
         if let snapshot = displayHandler.getSnapshot(eventsDict: eventsDict) {
-            dataSource.apply(snapshot, animatingDifferences: true)
+            dataSource.apply(snapshot, animatingDifferences: true) { [weak self] in
+                guard let self = self, !self.didScrollToday else { return }
+                self.didScrollToday = true
+            }
             self.updateVisibleItems()
         }
     }
@@ -213,5 +227,10 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     internal func getCatalogueMenu() -> UIMenu? {
         let children = displayHandler.getCatalogueMenuElements()
         return UIMenu(children: children)
+    }
+    
+    func scrollToToday() {
+        let today = ZCCalendar.manager.today
+        collectionView.scrollToItem(at: IndexPath(item: today.day, section: today.month.rawValue + 1), at: .centeredVertically, animated: true)
     }
 }

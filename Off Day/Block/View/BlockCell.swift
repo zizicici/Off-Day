@@ -165,7 +165,13 @@ class BlockCell: BlockBaseCell {
                 label.textColor = .text
             }
             
-            label.text = item.day.dayString()
+            if item.isToday {
+                label.text = String(localized: "calendar.today")
+                label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+            } else {
+                label.text = item.day.dayString()
+                label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+            }
             accessibilityLabel = item.day.formatString()
         }
         

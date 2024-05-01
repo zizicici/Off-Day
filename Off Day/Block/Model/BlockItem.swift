@@ -13,6 +13,7 @@ struct BlockItem: Hashable {
     var calendarDay: CalendarDay
     var publicDay: PublicDay?
     var events: [Event]?
+    var isToday: Bool
 }
 
 extension BlockItem {

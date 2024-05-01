@@ -30,7 +30,7 @@ struct LayoutGenerater {
             }
             snapshot.appendItems(Array(1...ZCCalendar.manager.dayCount(at: month, year: year)).map({ day in
                 let gregorianDay = GregorianDay(year: year, month: month, day: day)
-                return Item.block(BlockItem(index: gregorianDay.julianDay, calendarDay: gregorianDay.getCalendarDay(), publicDay: publicDays[gregorianDay.julianDay] as? PublicDay, events: eventsDict[gregorianDay.julianDay]))
+                return Item.block(BlockItem(index: gregorianDay.julianDay, calendarDay: gregorianDay.getCalendarDay(), publicDay: publicDays[gregorianDay.julianDay] as? PublicDay, events: eventsDict[gregorianDay.julianDay], isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay)))
             }))
         }
     }
