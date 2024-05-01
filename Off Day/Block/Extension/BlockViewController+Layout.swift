@@ -41,7 +41,7 @@ extension BlockViewController {
         group.interItemSpacing = .fixed(interSpacing)
         
         let monthTagView = NSCollectionLayoutSupplementaryItem(
-            layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(DayGrid.yearTagWidth(in: containerWidth)),
+            layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(DayGrid.monthTagWidth(in: containerWidth)),
                                                heightDimension: .absolute(itemWidth)),
             elementKind: Self.monthTagElementKind,
             containerAnchor: NSCollectionLayoutAnchor.init(edges: [.leading], fractionalOffset: CGPoint(x: -1.0, y: 0.0)))

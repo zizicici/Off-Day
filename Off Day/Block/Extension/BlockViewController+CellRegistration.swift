@@ -35,20 +35,8 @@ extension BlockViewController {
         return cellRegistration
     }
     
-    func getMonthCellRegistration() -> UICollectionView.CellRegistration<MonthCell, Item> {
-        let cellRegistration = UICollectionView.CellRegistration<MonthCell, Item> { (cell, indexPath, identifier) in
-            switch identifier {
-            case .info, .block, .invisible:
-                break
-            case .tag(let text, _):
-                cell.titleLabel.text = text
-            }
-        }
-        return cellRegistration
-    }
-    
-    func getWeekCellRegistration() -> UICollectionView.CellRegistration<MonthCell, Item> {
-        let cellRegistration = UICollectionView.CellRegistration<MonthCell, Item> { (cell, indexPath, identifier) in
+    func getWeekCellRegistration() -> UICollectionView.CellRegistration<WeekOrderTagCell, Item> {
+        let cellRegistration = UICollectionView.CellRegistration<WeekOrderTagCell, Item> { (cell, indexPath, identifier) in
             switch identifier {
             case .info, .block, .invisible:
                 break

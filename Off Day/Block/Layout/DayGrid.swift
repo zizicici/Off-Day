@@ -13,8 +13,8 @@ struct DayGrid {
     }
     static let interSpacing: CGFloat = 3.0
     static let minEdgeInset: CGFloat = 12.0
-    static func yearTagWidth(in containerWidth: CGFloat) -> CGFloat {
-        return 40.0
+    static func monthTagWidth(in containerWidth: CGFloat) -> CGFloat {
+        return 50.0
     }
     
     static func maxCount(in containerWidth: CGFloat) -> Int {
