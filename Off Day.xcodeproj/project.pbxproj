@@ -49,6 +49,7 @@
 		14DD513D2BE2356A004329E2 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51392BE2356A004329E2 /* TabbarController.swift */; };
 		14DD51402BE2459C004329E2 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD513F2BE2459C004329E2 /* MoreViewController.swift */; };
 		14DD51432BE24642004329E2 /* ShortcutsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51422BE24642004329E2 /* ShortcutsViewController.swift */; };
+		14DD51482BE24EA9004329E2 /* DayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51472BE24EA9004329E2 /* DayInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +94,7 @@
 		14DD51392BE2356A004329E2 /* TabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		14DD513F2BE2459C004329E2 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		14DD51422BE24642004329E2 /* ShortcutsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsViewController.swift; sourceTree = "<group>"; };
+		14DD51472BE24EA9004329E2 /* DayInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */,
 				14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */,
 				14DD51032BE20C57004329E2 /* ZCCalendar */,
+				14DD51472BE24EA9004329E2 /* DayInfo.swift */,
 				14DD513A2BE2356A004329E2 /* BaseViewController */,
 				14DD50E92BE20BC1004329E2 /* Block */,
 				14DD51192BE21050004329E2 /* Database */,
@@ -386,6 +389,7 @@
 				14DD50EC2BE20BC1004329E2 /* BlockViewController+Enum.swift in Sources */,
 				14DD50F62BE20BC1004329E2 /* BlockItem.swift in Sources */,
 				14DD511F2BE21050004329E2 /* Event.swift in Sources */,
+				14DD51482BE24EA9004329E2 /* DayInfo.swift in Sources */,
 				14DD50F82BE20BC1004329E2 /* BlockCell.swift in Sources */,
 				14DD50F22BE20BC1004329E2 /* DisplayHandler.swift in Sources */,
 				14DD51222BE21050004329E2 /* Persistence.swift in Sources */,
