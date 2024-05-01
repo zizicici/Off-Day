@@ -6,14 +6,22 @@
 //
 
 import UIKit
+import Toast
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        _ = AppDatabase.shared
+        var style = ToastStyle()
+        style.messageColor = .text
+        style.backgroundColor = .paper
+        style.shadowColor = UIColor.gray
+        style.shadowOpacity = 0.1
+        style.shadowOffset = CGSize(width: 0, height: 2)
+        style.shadowRadius = 3.0
+        style.displayShadow = true
+        ToastManager.shared.style = style
         return true
     }
 

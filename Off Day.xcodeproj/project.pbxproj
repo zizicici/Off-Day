@@ -9,24 +9,86 @@
 /* Begin PBXBuildFile section */
 		14DD50B22BE1F5C4004329E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */; };
 		14DD50B42BE1F5C4004329E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */; };
-		14DD50B62BE1F5C4004329E2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50B52BE1F5C4004329E2 /* ViewController.swift */; };
 		14DD50BB2BE1F5C5004329E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14DD50BA2BE1F5C5004329E2 /* Assets.xcassets */; };
 		14DD50BE2BE1F5C5004329E2 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 14DD50BD2BE1F5C5004329E2 /* Base */; };
 		14DD50C72BE1F78F004329E2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 14DD50C62BE1F78F004329E2 /* SnapKit */; };
 		14DD50C92BE1F7BD004329E2 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 14DD50C82BE1F7BD004329E2 /* Localizable.xcstrings */; };
 		14DD50CB2BE1F7F2004329E2 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 14DD50CA2BE1F7F2004329E2 /* InfoPlist.xcstrings */; };
+		14DD50EB2BE20BC1004329E2 /* BlockViewController+CellRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50CD2BE20BC1004329E2 /* BlockViewController+CellRegistration.swift */; };
+		14DD50EC2BE20BC1004329E2 /* BlockViewController+Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50CE2BE20BC1004329E2 /* BlockViewController+Enum.swift */; };
+		14DD50ED2BE20BC1004329E2 /* BlockViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50CF2BE20BC1004329E2 /* BlockViewController+Layout.swift */; };
+		14DD50EF2BE20BC1004329E2 /* BlockViewController+Popover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50D12BE20BC1004329E2 /* BlockViewController+Popover.swift */; };
+		14DD50F12BE20BC1004329E2 /* DayByDayHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50D42BE20BC1004329E2 /* DayByDayHandler.swift */; };
+		14DD50F22BE20BC1004329E2 /* DisplayHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50D52BE20BC1004329E2 /* DisplayHandler.swift */; };
+		14DD50F32BE20BC1004329E2 /* LayoutGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50D62BE20BC1004329E2 /* LayoutGenerator.swift */; };
+		14DD50F52BE20BC1004329E2 /* DayGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50D82BE20BC1004329E2 /* DayGrid.swift */; };
+		14DD50F62BE20BC1004329E2 /* BlockItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50DA2BE20BC1004329E2 /* BlockItem.swift */; };
+		14DD50F72BE20BC1004329E2 /* TwoSourceOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50DB2BE20BC1004329E2 /* TwoSourceOption.swift */; };
+		14DD50F82BE20BC1004329E2 /* BlockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50DD2BE20BC1004329E2 /* BlockCell.swift */; };
+		14DD50F92BE20BC1004329E2 /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50DE2BE20BC1004329E2 /* TitleCell.swift */; };
+		14DD50FC2BE20BC1004329E2 /* HoverGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50E12BE20BC1004329E2 /* HoverGestureRecognizer.swift */; };
+		14DD50FD2BE20BC1004329E2 /* ImpactGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50E22BE20BC1004329E2 /* ImpactGenerator.swift */; };
+		14DD50FE2BE20BC1004329E2 /* UIDraggableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50E32BE20BC1004329E2 /* UIDraggableCollectionView.swift */; };
+		14DD50FF2BE20BC1004329E2 /* MonthTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50E42BE20BC1004329E2 /* MonthTagView.swift */; };
+		14DD51002BE20BC1004329E2 /* BlockBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50E62BE20BC1004329E2 /* BlockBaseViewController.swift */; };
+		14DD51012BE20BC1004329E2 /* BlockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50E72BE20BC1004329E2 /* BlockDetailViewController.swift */; };
+		14DD51022BE20BC1004329E2 /* BlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50E82BE20BC1004329E2 /* BlockViewController.swift */; };
+		14DD51062BE20CF8004329E2 /* ZCCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 14DD51052BE20CF8004329E2 /* ZCCalendar */; };
+		14DD51092BE20D8D004329E2 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 14DD51082BE20D8D004329E2 /* Toast */; };
+		14DD510C2BE20F3A004329E2 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 14DD510B2BE20F3A004329E2 /* GRDB */; };
+		14DD511A2BE21050004329E2 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD510D2BE21050004329E2 /* Date+Extension.swift */; };
+		14DD511F2BE21050004329E2 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51132BE21050004329E2 /* Event.swift */; };
+		14DD51212BE21050004329E2 /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51162BE21050004329E2 /* AppDatabase.swift */; };
+		14DD51222BE21050004329E2 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51172BE21050004329E2 /* Persistence.swift */; };
+		14DD51232BE21050004329E2 /* TimestampedRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51182BE21050004329E2 /* TimestampedRecord.swift */; };
+		14DD51272BE213AD004329E2 /* EventDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51242BE213AD004329E2 /* EventDate.swift */; };
+		14DD51282BE213AD004329E2 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51252BE213AD004329E2 /* EventManager.swift */; };
+		14DD512C2BE21AB8004329E2 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51292BE21AB8004329E2 /* UIColor+Extension.swift */; };
+		14DD512D2BE21AB8004329E2 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD512A2BE21AB8004329E2 /* UIViewController+Extension.swift */; };
+		14DD513C2BE2356A004329E2 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51382BE2356A004329E2 /* NavigationViewController.swift */; };
+		14DD513D2BE2356A004329E2 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51392BE2356A004329E2 /* TabbarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		14DD50AE2BE1F5C4004329E2 /* Off Day.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Off Day.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		14DD50B52BE1F5C4004329E2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		14DD50BA2BE1F5C5004329E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		14DD50BD2BE1F5C5004329E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		14DD50BF2BE1F5C5004329E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14DD50C82BE1F7BD004329E2 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		14DD50CA2BE1F7F2004329E2 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		14DD50CD2BE20BC1004329E2 /* BlockViewController+CellRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BlockViewController+CellRegistration.swift"; sourceTree = "<group>"; };
+		14DD50CE2BE20BC1004329E2 /* BlockViewController+Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BlockViewController+Enum.swift"; sourceTree = "<group>"; };
+		14DD50CF2BE20BC1004329E2 /* BlockViewController+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BlockViewController+Layout.swift"; sourceTree = "<group>"; };
+		14DD50D12BE20BC1004329E2 /* BlockViewController+Popover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BlockViewController+Popover.swift"; sourceTree = "<group>"; };
+		14DD50D42BE20BC1004329E2 /* DayByDayHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayByDayHandler.swift; sourceTree = "<group>"; };
+		14DD50D52BE20BC1004329E2 /* DisplayHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayHandler.swift; sourceTree = "<group>"; };
+		14DD50D62BE20BC1004329E2 /* LayoutGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutGenerator.swift; sourceTree = "<group>"; };
+		14DD50D82BE20BC1004329E2 /* DayGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayGrid.swift; sourceTree = "<group>"; };
+		14DD50DA2BE20BC1004329E2 /* BlockItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockItem.swift; sourceTree = "<group>"; };
+		14DD50DB2BE20BC1004329E2 /* TwoSourceOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoSourceOption.swift; sourceTree = "<group>"; };
+		14DD50DD2BE20BC1004329E2 /* BlockCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockCell.swift; sourceTree = "<group>"; };
+		14DD50DE2BE20BC1004329E2 /* TitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
+		14DD50E12BE20BC1004329E2 /* HoverGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoverGestureRecognizer.swift; sourceTree = "<group>"; };
+		14DD50E22BE20BC1004329E2 /* ImpactGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImpactGenerator.swift; sourceTree = "<group>"; };
+		14DD50E32BE20BC1004329E2 /* UIDraggableCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDraggableCollectionView.swift; sourceTree = "<group>"; };
+		14DD50E42BE20BC1004329E2 /* MonthTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthTagView.swift; sourceTree = "<group>"; };
+		14DD50E62BE20BC1004329E2 /* BlockBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockBaseViewController.swift; sourceTree = "<group>"; };
+		14DD50E72BE20BC1004329E2 /* BlockDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockDetailViewController.swift; sourceTree = "<group>"; };
+		14DD50E82BE20BC1004329E2 /* BlockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockViewController.swift; sourceTree = "<group>"; };
+		14DD51032BE20C57004329E2 /* ZCCalendar */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ZCCalendar; path = ../../ZCCalendar; sourceTree = "<group>"; };
+		14DD510D2BE21050004329E2 /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		14DD51132BE21050004329E2 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		14DD51162BE21050004329E2 /* AppDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
+		14DD51172BE21050004329E2 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		14DD51182BE21050004329E2 /* TimestampedRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimestampedRecord.swift; sourceTree = "<group>"; };
+		14DD51242BE213AD004329E2 /* EventDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDate.swift; sourceTree = "<group>"; };
+		14DD51252BE213AD004329E2 /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
+		14DD51292BE21AB8004329E2 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		14DD512A2BE21AB8004329E2 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		14DD51382BE2356A004329E2 /* NavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
+		14DD51392BE2356A004329E2 /* TabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,7 +96,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14DD51092BE20D8D004329E2 /* Toast in Frameworks */,
 				14DD50C72BE1F78F004329E2 /* SnapKit in Frameworks */,
+				14DD51062BE20CF8004329E2 /* ZCCalendar in Frameworks */,
+				14DD510C2BE20F3A004329E2 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +111,7 @@
 			children = (
 				14DD50B02BE1F5C4004329E2 /* Off Day */,
 				14DD50AF2BE1F5C4004329E2 /* Products */,
+				14DD51042BE20CF8004329E2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,7 +128,12 @@
 			children = (
 				14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */,
 				14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */,
-				14DD50B52BE1F5C4004329E2 /* ViewController.swift */,
+				14DD51032BE20C57004329E2 /* ZCCalendar */,
+				14DD513A2BE2356A004329E2 /* BaseViewController */,
+				14DD50E92BE20BC1004329E2 /* Block */,
+				14DD51192BE21050004329E2 /* Database */,
+				14DD51262BE213AD004329E2 /* Event */,
+				14DD512B2BE21AB8004329E2 /* Extension */,
 				14DD50BA2BE1F5C5004329E2 /* Assets.xcassets */,
 				14DD50BC2BE1F5C5004329E2 /* LaunchScreen.storyboard */,
 				14DD50BF2BE1F5C5004329E2 /* Info.plist */,
@@ -70,6 +141,134 @@
 				14DD50CA2BE1F7F2004329E2 /* InfoPlist.xcstrings */,
 			);
 			path = "Off Day";
+			sourceTree = "<group>";
+		};
+		14DD50D32BE20BC1004329E2 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				14DD50CD2BE20BC1004329E2 /* BlockViewController+CellRegistration.swift */,
+				14DD50CE2BE20BC1004329E2 /* BlockViewController+Enum.swift */,
+				14DD50CF2BE20BC1004329E2 /* BlockViewController+Layout.swift */,
+				14DD50D12BE20BC1004329E2 /* BlockViewController+Popover.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		14DD50D92BE20BC1004329E2 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				14DD50D62BE20BC1004329E2 /* LayoutGenerator.swift */,
+				14DD50D82BE20BC1004329E2 /* DayGrid.swift */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
+		14DD50DC2BE20BC1004329E2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				14DD50DA2BE20BC1004329E2 /* BlockItem.swift */,
+				14DD50DB2BE20BC1004329E2 /* TwoSourceOption.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		14DD50E52BE20BC1004329E2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				14DD50DE2BE20BC1004329E2 /* TitleCell.swift */,
+				14DD50DD2BE20BC1004329E2 /* BlockCell.swift */,
+				14DD50E42BE20BC1004329E2 /* MonthTagView.swift */,
+				14DD50E12BE20BC1004329E2 /* HoverGestureRecognizer.swift */,
+				14DD50E32BE20BC1004329E2 /* UIDraggableCollectionView.swift */,
+				14DD50E22BE20BC1004329E2 /* ImpactGenerator.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		14DD50E92BE20BC1004329E2 /* Block */ = {
+			isa = PBXGroup;
+			children = (
+				14DD50E62BE20BC1004329E2 /* BlockBaseViewController.swift */,
+				14DD50E72BE20BC1004329E2 /* BlockDetailViewController.swift */,
+				14DD50E82BE20BC1004329E2 /* BlockViewController.swift */,
+				14DD50D32BE20BC1004329E2 /* Extension */,
+				14DD513E2BE24412004329E2 /* Handler */,
+				14DD50D92BE20BC1004329E2 /* Layout */,
+				14DD50DC2BE20BC1004329E2 /* Model */,
+				14DD50E52BE20BC1004329E2 /* View */,
+			);
+			path = Block;
+			sourceTree = "<group>";
+		};
+		14DD51042BE20CF8004329E2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		14DD510E2BE21050004329E2 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				14DD510D2BE21050004329E2 /* Date+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		14DD51152BE21050004329E2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				14DD51132BE21050004329E2 /* Event.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		14DD51192BE21050004329E2 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				14DD51162BE21050004329E2 /* AppDatabase.swift */,
+				14DD51172BE21050004329E2 /* Persistence.swift */,
+				14DD51182BE21050004329E2 /* TimestampedRecord.swift */,
+				14DD51152BE21050004329E2 /* Model */,
+				14DD510E2BE21050004329E2 /* Extension */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		14DD51262BE213AD004329E2 /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				14DD51242BE213AD004329E2 /* EventDate.swift */,
+				14DD51252BE213AD004329E2 /* EventManager.swift */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
+		14DD512B2BE21AB8004329E2 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				14DD51292BE21AB8004329E2 /* UIColor+Extension.swift */,
+				14DD512A2BE21AB8004329E2 /* UIViewController+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		14DD513A2BE2356A004329E2 /* BaseViewController */ = {
+			isa = PBXGroup;
+			children = (
+				14DD51382BE2356A004329E2 /* NavigationViewController.swift */,
+				14DD51392BE2356A004329E2 /* TabbarController.swift */,
+			);
+			path = BaseViewController;
+			sourceTree = "<group>";
+		};
+		14DD513E2BE24412004329E2 /* Handler */ = {
+			isa = PBXGroup;
+			children = (
+				14DD50D42BE20BC1004329E2 /* DayByDayHandler.swift */,
+				14DD50D52BE20BC1004329E2 /* DisplayHandler.swift */,
+			);
+			path = Handler;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -90,6 +289,9 @@
 			name = "Off Day";
 			packageProductDependencies = (
 				14DD50C62BE1F78F004329E2 /* SnapKit */,
+				14DD51052BE20CF8004329E2 /* ZCCalendar */,
+				14DD51082BE20D8D004329E2 /* Toast */,
+				14DD510B2BE20F3A004329E2 /* GRDB */,
 			);
 			productName = "Off Day";
 			productReference = 14DD50AE2BE1F5C4004329E2 /* Off Day.app */;
@@ -122,6 +324,8 @@
 			mainGroup = 14DD50A52BE1F5C4004329E2;
 			packageReferences = (
 				14DD50C52BE1F78F004329E2 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				14DD51072BE20D8D004329E2 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				14DD510A2BE20F3A004329E2 /* XCRemoteSwiftPackageReference "GRDB" */,
 			);
 			productRefGroup = 14DD50AF2BE1F5C4004329E2 /* Products */;
 			projectDirPath = "";
@@ -151,9 +355,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14DD50B62BE1F5C4004329E2 /* ViewController.swift in Sources */,
+				14DD512D2BE21AB8004329E2 /* UIViewController+Extension.swift in Sources */,
+				14DD51282BE213AD004329E2 /* EventManager.swift in Sources */,
+				14DD50FE2BE20BC1004329E2 /* UIDraggableCollectionView.swift in Sources */,
+				14DD51012BE20BC1004329E2 /* BlockDetailViewController.swift in Sources */,
+				14DD50ED2BE20BC1004329E2 /* BlockViewController+Layout.swift in Sources */,
+				14DD50F52BE20BC1004329E2 /* DayGrid.swift in Sources */,
+				14DD50EC2BE20BC1004329E2 /* BlockViewController+Enum.swift in Sources */,
+				14DD50F62BE20BC1004329E2 /* BlockItem.swift in Sources */,
+				14DD511F2BE21050004329E2 /* Event.swift in Sources */,
+				14DD50F82BE20BC1004329E2 /* BlockCell.swift in Sources */,
+				14DD50F22BE20BC1004329E2 /* DisplayHandler.swift in Sources */,
+				14DD51222BE21050004329E2 /* Persistence.swift in Sources */,
+				14DD51022BE20BC1004329E2 /* BlockViewController.swift in Sources */,
+				14DD50F12BE20BC1004329E2 /* DayByDayHandler.swift in Sources */,
+				14DD512C2BE21AB8004329E2 /* UIColor+Extension.swift in Sources */,
+				14DD51232BE21050004329E2 /* TimestampedRecord.swift in Sources */,
+				14DD50FF2BE20BC1004329E2 /* MonthTagView.swift in Sources */,
+				14DD51212BE21050004329E2 /* AppDatabase.swift in Sources */,
 				14DD50B22BE1F5C4004329E2 /* AppDelegate.swift in Sources */,
+				14DD51272BE213AD004329E2 /* EventDate.swift in Sources */,
+				14DD511A2BE21050004329E2 /* Date+Extension.swift in Sources */,
+				14DD50FD2BE20BC1004329E2 /* ImpactGenerator.swift in Sources */,
+				14DD50EF2BE20BC1004329E2 /* BlockViewController+Popover.swift in Sources */,
+				14DD513C2BE2356A004329E2 /* NavigationViewController.swift in Sources */,
+				14DD50FC2BE20BC1004329E2 /* HoverGestureRecognizer.swift in Sources */,
 				14DD50B42BE1F5C4004329E2 /* SceneDelegate.swift in Sources */,
+				14DD50EB2BE20BC1004329E2 /* BlockViewController+CellRegistration.swift in Sources */,
+				14DD51002BE20BC1004329E2 /* BlockBaseViewController.swift in Sources */,
+				14DD513D2BE2356A004329E2 /* TabbarController.swift in Sources */,
+				14DD50F32BE20BC1004329E2 /* LayoutGenerator.swift in Sources */,
+				14DD50F72BE20BC1004329E2 /* TwoSourceOption.swift in Sources */,
+				14DD50F92BE20BC1004329E2 /* TitleCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,7 +456,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -280,7 +513,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -305,7 +538,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -334,7 +567,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -380,6 +613,22 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		14DD51072BE20D8D004329E2 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
+		14DD510A2BE20F3A004329E2 /* XCRemoteSwiftPackageReference "GRDB" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.27.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -387,6 +636,20 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 14DD50C52BE1F78F004329E2 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		14DD51052BE20CF8004329E2 /* ZCCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ZCCalendar;
+		};
+		14DD51082BE20D8D004329E2 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 14DD51072BE20D8D004329E2 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
+		};
+		14DD510B2BE20F3A004329E2 /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 14DD510A2BE20F3A004329E2 /* XCRemoteSwiftPackageReference "GRDB" */;
+			productName = GRDB;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
