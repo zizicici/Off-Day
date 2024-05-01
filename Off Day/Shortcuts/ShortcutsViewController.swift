@@ -9,6 +9,31 @@ import UIKit
 import SnapKit
 
 class ShortcutsViewController: UIViewController {
+    let shortcutsURL = URL(string: "https://www.icloud.com/shortcuts/9e320348949c4b89a85499b6aed38533")
+    
+    private var addButton: UIButton = {
+        var configuration = UIButton.Configuration.borderedTinted()
+        configuration.image = UIImage(systemName: "wand.and.stars", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24.0))
+        configuration.title = String(localized: "shortcuts.add.title")
+        configuration.subtitle = String(localized: "shortcuts.add.subtitle")
+        configuration.imagePadding = 8.0
+        configuration.titlePadding = 4.0
+        configuration.contentInsets = NSDirectionalEdgeInsets(top: 14, leading: 12, bottom: 14, trailing: 16)
+        configuration.cornerStyle = .large
+        
+        configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.preferredFont(forTextStyle: .headline)
+
+            return outgoing
+        })
+        
+        let button = UIButton(configuration: configuration)
+        button.tintColor = .offDay
+        
+        return button
+    }()
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
@@ -29,9 +54,22 @@ class ShortcutsViewController: UIViewController {
         
         view.backgroundColor = .background
         updateNavigationBarStyle()
+        
+        view.addSubview(addButton)
+        addButton.snp.makeConstraints { make in
+            make.center.equalTo(view)
+            make.height.greaterThanOrEqualTo(60)
+        }
+        addButton.addTarget(self, action: #selector(addShortcuts), for: .touchUpInside)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    @objc func addShortcuts() {
+        if let shortcutsURL = shortcutsURL {
+            UIApplication.shared.open(shortcutsURL, options: [:], completionHandler: nil)
+        }
     }
 }

@@ -276,6 +276,38 @@
         }
       }
     },
+    "shortcuts.add.subtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Shortcuts"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点击添加快捷指令"
+          }
+        }
+      }
+    },
+    "shortcuts.add.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn off alarm on off days"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "闹钟不要在休息日响"
+          }
+        }
+      }
+    },
     "Which day?" : {
       "localizations" : {
         "en" : {
