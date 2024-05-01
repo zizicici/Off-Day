@@ -23,7 +23,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBarController.tabBar.tintColor = .systemGreen
         tabBarController.viewControllers = [
             NavigationController(rootViewController: BlockViewController()),
-            NavigationController(rootViewController: UIViewController())
+            NavigationController(rootViewController: ShortcutsViewController()),
+            NavigationController(rootViewController: MoreViewController())
         ]
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()

@@ -47,6 +47,8 @@
 		14DD512D2BE21AB8004329E2 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD512A2BE21AB8004329E2 /* UIViewController+Extension.swift */; };
 		14DD513C2BE2356A004329E2 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51382BE2356A004329E2 /* NavigationViewController.swift */; };
 		14DD513D2BE2356A004329E2 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51392BE2356A004329E2 /* TabbarController.swift */; };
+		14DD51402BE2459C004329E2 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD513F2BE2459C004329E2 /* MoreViewController.swift */; };
+		14DD51432BE24642004329E2 /* ShortcutsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51422BE24642004329E2 /* ShortcutsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +91,8 @@
 		14DD512A2BE21AB8004329E2 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		14DD51382BE2356A004329E2 /* NavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		14DD51392BE2356A004329E2 /* TabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
+		14DD513F2BE2459C004329E2 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
+		14DD51422BE24642004329E2 /* ShortcutsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +137,8 @@
 				14DD50E92BE20BC1004329E2 /* Block */,
 				14DD51192BE21050004329E2 /* Database */,
 				14DD51262BE213AD004329E2 /* Event */,
+				14DD51442BE24648004329E2 /* Shortcuts */,
+				14DD51412BE245E8004329E2 /* More */,
 				14DD512B2BE21AB8004329E2 /* Extension */,
 				14DD50BA2BE1F5C5004329E2 /* Assets.xcassets */,
 				14DD50BC2BE1F5C5004329E2 /* LaunchScreen.storyboard */,
@@ -189,8 +195,8 @@
 			isa = PBXGroup;
 			children = (
 				14DD50E62BE20BC1004329E2 /* BlockBaseViewController.swift */,
-				14DD50E72BE20BC1004329E2 /* BlockDetailViewController.swift */,
 				14DD50E82BE20BC1004329E2 /* BlockViewController.swift */,
+				14DD50E72BE20BC1004329E2 /* BlockDetailViewController.swift */,
 				14DD50D32BE20BC1004329E2 /* Extension */,
 				14DD513E2BE24412004329E2 /* Handler */,
 				14DD50D92BE20BC1004329E2 /* Layout */,
@@ -269,6 +275,22 @@
 				14DD50D52BE20BC1004329E2 /* DisplayHandler.swift */,
 			);
 			path = Handler;
+			sourceTree = "<group>";
+		};
+		14DD51412BE245E8004329E2 /* More */ = {
+			isa = PBXGroup;
+			children = (
+				14DD513F2BE2459C004329E2 /* MoreViewController.swift */,
+			);
+			path = More;
+			sourceTree = "<group>";
+		};
+		14DD51442BE24648004329E2 /* Shortcuts */ = {
+			isa = PBXGroup;
+			children = (
+				14DD51422BE24642004329E2 /* ShortcutsViewController.swift */,
+			);
+			path = Shortcuts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -370,8 +392,10 @@
 				14DD51022BE20BC1004329E2 /* BlockViewController.swift in Sources */,
 				14DD50F12BE20BC1004329E2 /* DayByDayHandler.swift in Sources */,
 				14DD512C2BE21AB8004329E2 /* UIColor+Extension.swift in Sources */,
+				14DD51402BE2459C004329E2 /* MoreViewController.swift in Sources */,
 				14DD51232BE21050004329E2 /* TimestampedRecord.swift in Sources */,
 				14DD50FF2BE20BC1004329E2 /* MonthTagView.swift in Sources */,
+				14DD51432BE24642004329E2 /* ShortcutsViewController.swift in Sources */,
 				14DD51212BE21050004329E2 /* AppDatabase.swift in Sources */,
 				14DD50B22BE1F5C4004329E2 /* AppDelegate.swift in Sources */,
 				14DD51272BE213AD004329E2 /* EventDate.swift in Sources */,
