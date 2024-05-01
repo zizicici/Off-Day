@@ -11,19 +11,6 @@
         }
       },
       "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "color" : {
-        "platform" : "ios",
-        "reference" : "tertiarySystemBackgroundColor"
-      },
-      "idiom" : "universal"
     }
   ],
   "info" : {

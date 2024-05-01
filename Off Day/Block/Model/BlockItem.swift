@@ -10,16 +10,12 @@ import ZCCalendar
 
 struct BlockItem: Hashable {
     var index: Int
+    var calendarDay: CalendarDay
+    var publicDay: PublicDay?
     var events: [Event]?
-    var isSpecial: Bool = false
-    var isDay: Bool
 }
 
 extension BlockItem {
-    var yearMonth: GregorianMonth {
-        return GregorianMonth.generate(by: index)
-    }
-    
     var day: GregorianDay {
         return GregorianDay(JDN: index)
     }

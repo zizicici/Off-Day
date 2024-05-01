@@ -53,16 +53,17 @@ class TitleCell: TitleBaseCell {
     }()
     
     private var indexButton: UIButton = {
-        var configuration = UIButton.Configuration.borderedTinted()
+        var configuration = UIButton.Configuration.filled()
         configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
             var outgoing = incoming
             outgoing.font = UIFont.systemFont(ofSize: 20, weight: .regular)
+            outgoing.strokeColor = .text
 
             return outgoing
         })
         
         let button = UIButton(configuration: configuration)
-        button.tintColor = .systemGreen
+        button.tintColor = .offDay
         button.showsMenuAsPrimaryAction = true
         
         return button

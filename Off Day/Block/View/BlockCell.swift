@@ -65,7 +65,7 @@ class BlockCell: BlockBaseCell {
         let label = UILabel()
         label.textColor = .label.withAlphaComponent(0.5)
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
         
@@ -123,6 +123,11 @@ class BlockCell: BlockBaseCell {
         setupViewsIfNeeded()
         
         if let item = state.blockItem {
+            if item.calendarDay.dayType == .offday {
+                paperView.backgroundColor = .offDay.withAlphaComponent(0.8)
+            } else {
+                paperView.backgroundColor = defaultBackgroundColor
+            }
             if let events = item.events, let first = events.first {
                 paperView.backgroundColor = UIColor(string: first.color)
                 if paperView.backgroundColor?.isSimilar(to: .background) == true {
@@ -140,30 +145,19 @@ class BlockCell: BlockBaseCell {
                 highlightView.backgroundColor = .clear
             }
             
-            if item.isSpecial {
-                label.textColor = UIColor.systemRed.withAlphaComponent(0.8)
-                if label.textColor.isSimilar(to: paperView.backgroundColor ?? .clear) {
-                    label.textColor = .white
-                }
-            } else {
-                switch (paperView.backgroundColor?.isLight ?? false, UIColor.text.isLight) {
-                case (true, true):
-                    label.textColor = .text.resolvedColor(with: UITraitCollection(userInterfaceStyle: .light))
-                case (false, true):
-                    label.textColor = .text
-                case (false, false):
-                    label.textColor = .text.resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark))
-                case (true, false):
-                    label.textColor = .text
-                }
+            switch (paperView.backgroundColor?.isLight ?? false, UIColor.text.isLight) {
+            case (true, true):
+                label.textColor = .text.resolvedColor(with: UITraitCollection(userInterfaceStyle: .light))
+            case (false, true):
+                label.textColor = .text
+            case (false, false):
+                label.textColor = .text.resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark))
+            case (true, false):
+                label.textColor = .text
             }
             
-            if item.isDay {
-                label.text = item.day.dayString()
-                accessibilityLabel = item.day.formatString()
-            } else {
-                accessibilityLabel = GregorianMonth.generate(by: item.index).title
-            }
+            label.text = item.day.dayString()
+            accessibilityLabel = item.day.formatString()
         }
         
         isAccessibilityElement = true

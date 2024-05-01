@@ -117,11 +117,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         case .info, .tag, .invisible:
             break
         case .block(let blockItem):
-            if blockItem.isDay {
-                view.makeToast(blockItem.day.formatString(), position: .top)
-            } else {
-                view.makeToast(blockItem.yearMonth.title, position: .top)
-            }
+            view.makeToast(blockItem.day.formatString(), position: .top)
         }
     }
     

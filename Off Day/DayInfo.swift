@@ -18,13 +18,25 @@ enum DayType: Int, Codable {
 }
 
 protocol Day {
-    var name: String { get }
+    var name: String? { get }
     var julianDay: Int { get }
     var dayType: DayType { get }
 }
 
-struct PublicDay: Day {
-    let name: String
+struct CalendarDay: Day, Hashable {
+    let name: String?
+    let julianDay: Int
+    let dayType: DayType
+}
+
+extension GregorianDay {
+    func getCalendarDay() -> CalendarDay {
+        return CalendarDay(name: nil, julianDay: julianDay, dayType: self.weekdayOrder().isWeekEnd ? .offday : .workday)
+    }
+}
+
+struct PublicDay: Day, Hashable {
+    let name: String?
     let day: GregorianDay
     var julianDay: Int {
         return day.julianDay
@@ -32,8 +44,8 @@ struct PublicDay: Day {
     let dayType: DayType
 }
 
-struct CustomDay: Day {
-    let name: String
+struct CustomDay: Day, Hashable {
+    let name: String?
     let julianDay: Int
     let dayType: DayType
 }
