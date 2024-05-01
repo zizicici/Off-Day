@@ -23,7 +23,6 @@
 		14DD50F32BE20BC1004329E2 /* LayoutGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50D62BE20BC1004329E2 /* LayoutGenerator.swift */; };
 		14DD50F52BE20BC1004329E2 /* DayGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50D82BE20BC1004329E2 /* DayGrid.swift */; };
 		14DD50F62BE20BC1004329E2 /* BlockItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50DA2BE20BC1004329E2 /* BlockItem.swift */; };
-		14DD50F72BE20BC1004329E2 /* TwoSourceOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50DB2BE20BC1004329E2 /* TwoSourceOption.swift */; };
 		14DD50F82BE20BC1004329E2 /* BlockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50DD2BE20BC1004329E2 /* BlockCell.swift */; };
 		14DD50F92BE20BC1004329E2 /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50DE2BE20BC1004329E2 /* TitleCell.swift */; };
 		14DD50FC2BE20BC1004329E2 /* HoverGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50E12BE20BC1004329E2 /* HoverGestureRecognizer.swift */; };
@@ -69,7 +68,6 @@
 		14DD50D62BE20BC1004329E2 /* LayoutGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutGenerator.swift; sourceTree = "<group>"; };
 		14DD50D82BE20BC1004329E2 /* DayGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayGrid.swift; sourceTree = "<group>"; };
 		14DD50DA2BE20BC1004329E2 /* BlockItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockItem.swift; sourceTree = "<group>"; };
-		14DD50DB2BE20BC1004329E2 /* TwoSourceOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoSourceOption.swift; sourceTree = "<group>"; };
 		14DD50DD2BE20BC1004329E2 /* BlockCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockCell.swift; sourceTree = "<group>"; };
 		14DD50DE2BE20BC1004329E2 /* TitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
 		14DD50E12BE20BC1004329E2 /* HoverGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoverGestureRecognizer.swift; sourceTree = "<group>"; };
@@ -174,7 +172,6 @@
 			isa = PBXGroup;
 			children = (
 				14DD50DA2BE20BC1004329E2 /* BlockItem.swift */,
-				14DD50DB2BE20BC1004329E2 /* TwoSourceOption.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -409,7 +406,6 @@
 				14DD51002BE20BC1004329E2 /* BlockBaseViewController.swift in Sources */,
 				14DD513D2BE2356A004329E2 /* TabbarController.swift in Sources */,
 				14DD50F32BE20BC1004329E2 /* LayoutGenerator.swift in Sources */,
-				14DD50F72BE20BC1004329E2 /* TwoSourceOption.swift in Sources */,
 				14DD50F92BE20BC1004329E2 /* TitleCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
