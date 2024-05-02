@@ -53,7 +53,7 @@ class TitleCell: TitleBaseCell {
     }()
     
     private var indexButton: UIButton = {
-        var configuration = UIButton.Configuration.gray()
+        var configuration = UIButton.Configuration.tinted()
         configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
             var outgoing = incoming
             outgoing.font = UIFont.preferredFont(forTextStyle: .body)
