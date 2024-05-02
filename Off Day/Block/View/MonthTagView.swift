@@ -11,7 +11,7 @@ import SnapKit
 class MonthTagView: UICollectionReusableView {
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.preferredFont(forTextStyle: .callout)
         label.textColor = .label.withAlphaComponent(0.8)
         label.textAlignment = .center
         label.numberOfLines = 1
@@ -38,7 +38,7 @@ class MonthTagView: UICollectionReusableView {
 class WeekOrderTagCell: UICollectionViewCell {
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.font = UIFont.preferredFont(forTextStyle: .caption2)
         label.textColor = .label.withAlphaComponent(0.8)
         label.textAlignment = .center
         label.numberOfLines = 1

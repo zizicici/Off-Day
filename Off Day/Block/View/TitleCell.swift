@@ -43,7 +43,7 @@ class TitleBaseCell: UICollectionViewCell {
 class TitleCell: TitleBaseCell {
     private var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont.preferredFont(forTextStyle: .caption2)
         label.textColor = .label.withAlphaComponent(0.75)
         label.minimumScaleFactor = 0.25
         label.adjustsFontSizeToFitWidth = true
@@ -56,8 +56,7 @@ class TitleCell: TitleBaseCell {
         var configuration = UIButton.Configuration.filled()
         configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
             var outgoing = incoming
-            outgoing.font = UIFont.systemFont(ofSize: 20, weight: .regular)
-            outgoing.strokeColor = .text
+            outgoing.font = UIFont.preferredFont(forTextStyle: .body)
 
             return outgoing
         })
