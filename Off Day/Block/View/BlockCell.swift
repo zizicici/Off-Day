@@ -72,6 +72,16 @@ class BlockCell: BlockBaseCell {
         return label
     }()
     
+    var cornerMark: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "OffDayMark"))
+        view.layer.cornerRadius = 4.0
+        view.layer.cornerCurve = .continuous
+        view.layer.maskedCorners = [.layerMaxXMaxYCorner]
+        view.layer.masksToBounds = true
+        
+        return view
+    }()
+    
     var defaultBackgroundColor: UIColor = .paper
     var highlightColor: UIColor = .gray.withAlphaComponent(0.5)
     
@@ -81,6 +91,7 @@ class BlockCell: BlockBaseCell {
         isHover = false
         label.text = nil
         paperView.backgroundColor = defaultBackgroundColor
+        cornerMark.isHidden = true
     }
     
     override func layoutSubviews() {
@@ -106,6 +117,12 @@ class BlockCell: BlockBaseCell {
         paperView.layer.shadowOffset = CGSize(width: 0, height: 2)
         paperView.layer.cornerCurve = .continuous
         paperView.backgroundColor = defaultBackgroundColor
+        
+        paperView.addSubview(cornerMark)
+        cornerMark.snp.makeConstraints { make in
+            make.right.bottom.equalTo(paperView)
+            make.width.height.equalTo(15.0)
+        }
         
         paperView.addSubview(highlightView)
         highlightView.snp.makeConstraints { make in
@@ -133,15 +150,15 @@ class BlockCell: BlockBaseCell {
                 paperView.backgroundColor = publicDay.dayType.color
             }
             if let customDay = item.customDay {
-                paperView.backgroundColor = customDay.color
-                if paperView.backgroundColor?.isSimilar(to: .background) == true {
-                    paperView.layer.borderWidth = 1.0
-                    paperView.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
-                } else {
-                    paperView.layer.borderWidth = 0.0
+                cornerMark.isHidden = false
+                switch customDay.dayType {
+                case .offday:
+                    cornerMark.image = UIImage(named: "OffDayMark")
+                case .workday:
+                    cornerMark.image = UIImage(named: "WorkDayMark")
                 }
             } else {
-                paperView.layer.borderWidth = 0.0
+                cornerMark.isHidden = true
             }
             if isHover || isHighlighted {
                 highlightView.backgroundColor = highlightColor
