@@ -11,7 +11,7 @@ import ZCCalendar
 struct BlockItem: Hashable {
     var index: Int
     var publicDay: PublicDay?
-    var customDays: [CustomDay]?
+    var customDay: CustomDay?
     var isToday: Bool
 }
 

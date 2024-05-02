@@ -15,27 +15,19 @@ struct CustomDay: Identifiable, Hashable {
     var creationTime: Int64?
     var modificationTime: Int64?
     
+    var dayIndex: Int64
     var dayType: DayType
-    var comment: String?
-    var start: Int64
-    var end: Int64
-}
-
-extension CustomDay {
-    var isValidDate: Bool {
-        return start <= end
-    }
 }
 
 extension CustomDay: Codable {
     enum CodingKeys: String, CodingKey {
-        case id, creationTime = "creation_time", modificationTime = "modification_time", dayType = "day_type", comment, start, end
+        case id, creationTime = "creation_time", modificationTime = "modification_time", dayIndex = "day_index", dayType = "day_type"
     }
 }
 
 extension CustomDay {
     static func emptyDay(day: GregorianDay) -> Self {
-        return Self.init(dayType: .offday, start: Int64(day.julianDay), end: Int64(day.julianDay))
+        return Self.init(dayIndex: Int64(day.julianDay), dayType: .offday)
     }
 }
 
@@ -66,7 +58,7 @@ extension CustomDay: TimestampedRecord {
 extension Array<CustomDay> {
     func sortedByStart() -> Self {
         return self.sorted(by: { lhs, rhs in
-            return lhs.start < rhs.end
+            return lhs.dayIndex < rhs.dayIndex
         })
     }
 }

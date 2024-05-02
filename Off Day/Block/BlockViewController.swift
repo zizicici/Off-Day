@@ -21,19 +21,13 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         didSet {
             customDaysDict = [:]
             for customDay in customDays {
-                let start = Int(customDay.start)
-                let end = Int(customDay.end)
-                for i in start...end {
-                    var result: [CustomDay] = customDaysDict[i] ?? []
-                    result.append(customDay)
-                    customDaysDict[i] = result
-                }
+                customDaysDict[Int(customDay.dayIndex)] = customDay
             }
             applyData()
         }
     }
     
-    private var customDaysDict: [Int : [CustomDay]] = [:]
+    private var customDaysDict: [Int : CustomDay] = [:]
     
     // Handler
     
@@ -109,9 +103,9 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     
     func filter(customDays: [CustomDay], from startIndex: Int, to endIndex: Int) -> [CustomDay] {
         return customDays.filter({ customDay in
-            if customDay.end < startIndex {
+            if customDay.dayIndex < startIndex {
                 return false
-            } else if customDay.start > endIndex {
+            } else if customDay.dayIndex > endIndex {
                 return false
             } else {
                 return true

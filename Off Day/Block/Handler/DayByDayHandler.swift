@@ -97,7 +97,7 @@ class DayDisplayHandler: DisplayHandler {
         currentCatalogue = .targetYear(year)
     }
     
-    func getSnapshot(customDaysDict: [Int : [CustomDay]]) -> NSDiffableDataSourceSnapshot<Section, Item>? {
+    func getSnapshot(customDaysDict: [Int : CustomDay]) -> NSDiffableDataSourceSnapshot<Section, Item>? {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         
         snapshot.appendSections([.info])
