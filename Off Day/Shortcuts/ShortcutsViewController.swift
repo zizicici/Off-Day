@@ -18,8 +18,8 @@ class ShortcutsViewController: UIViewController {
         configuration.subtitle = String(localized: "shortcuts.add.subtitle")
         configuration.imagePadding = 8.0
         configuration.titlePadding = 4.0
-        configuration.contentInsets = NSDirectionalEdgeInsets(top: 14, leading: 12, bottom: 14, trailing: 16)
         configuration.cornerStyle = .large
+        configuration.buttonSize = .large
         
         configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
             var outgoing = incoming
