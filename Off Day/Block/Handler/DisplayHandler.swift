@@ -20,6 +20,6 @@ protocol DisplayHandler {
     func getLeading() -> Int
     func getTrailing() -> Int
     
-    func getSnapshot(eventsDict: [Int : [Event]]) -> NSDiffableDataSourceSnapshot<Section, Item>?
+    func getSnapshot(customDaysDict: [Int : [CustomDay]]) -> NSDiffableDataSourceSnapshot<Section, Item>?
     func getCatalogueMenuElements() -> [UIMenuElement]
 }

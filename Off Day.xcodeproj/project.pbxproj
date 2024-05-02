@@ -36,11 +36,11 @@
 		14DD51092BE20D8D004329E2 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 14DD51082BE20D8D004329E2 /* Toast */; };
 		14DD510C2BE20F3A004329E2 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 14DD510B2BE20F3A004329E2 /* GRDB */; };
 		14DD511A2BE21050004329E2 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD510D2BE21050004329E2 /* Date+Extension.swift */; };
-		14DD511F2BE21050004329E2 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51132BE21050004329E2 /* Event.swift */; };
+		14DD511F2BE21050004329E2 /* CustomDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51132BE21050004329E2 /* CustomDay.swift */; };
 		14DD51212BE21050004329E2 /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51162BE21050004329E2 /* AppDatabase.swift */; };
 		14DD51222BE21050004329E2 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51172BE21050004329E2 /* Persistence.swift */; };
 		14DD51232BE21050004329E2 /* TimestampedRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51182BE21050004329E2 /* TimestampedRecord.swift */; };
-		14DD51282BE213AD004329E2 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51252BE213AD004329E2 /* EventManager.swift */; };
+		14DD51282BE213AD004329E2 /* CustomDayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51252BE213AD004329E2 /* CustomDayManager.swift */; };
 		14DD512C2BE21AB8004329E2 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51292BE21AB8004329E2 /* UIColor+Extension.swift */; };
 		14DD512D2BE21AB8004329E2 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD512A2BE21AB8004329E2 /* UIViewController+Extension.swift */; };
 		14DD513C2BE2356A004329E2 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51382BE2356A004329E2 /* NavigationViewController.swift */; };
@@ -49,6 +49,7 @@
 		14DD51432BE24642004329E2 /* ShortcutsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51422BE24642004329E2 /* ShortcutsViewController.swift */; };
 		14DD51482BE24EA9004329E2 /* DayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51472BE24EA9004329E2 /* DayInfo.swift */; };
 		14DD514A2BE27A9E004329E2 /* CheckDayIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */; };
+		14F371202BE3355900254C39 /* CustomDay+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,11 +81,11 @@
 		14DD50E82BE20BC1004329E2 /* BlockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockViewController.swift; sourceTree = "<group>"; };
 		14DD51032BE20C57004329E2 /* ZCCalendar */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ZCCalendar; path = ../../ZCCalendar; sourceTree = "<group>"; };
 		14DD510D2BE21050004329E2 /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
-		14DD51132BE21050004329E2 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		14DD51132BE21050004329E2 /* CustomDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDay.swift; sourceTree = "<group>"; };
 		14DD51162BE21050004329E2 /* AppDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
 		14DD51172BE21050004329E2 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		14DD51182BE21050004329E2 /* TimestampedRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimestampedRecord.swift; sourceTree = "<group>"; };
-		14DD51252BE213AD004329E2 /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
+		14DD51252BE213AD004329E2 /* CustomDayManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDayManager.swift; sourceTree = "<group>"; };
 		14DD51292BE21AB8004329E2 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		14DD512A2BE21AB8004329E2 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		14DD51382BE2356A004329E2 /* NavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +94,7 @@
 		14DD51422BE24642004329E2 /* ShortcutsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsViewController.swift; sourceTree = "<group>"; };
 		14DD51472BE24EA9004329E2 /* DayInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayInfo.swift; sourceTree = "<group>"; };
 		14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDayIntent.swift; sourceTree = "<group>"; };
+		14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomDay+UIColor.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,7 +135,7 @@
 				14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */,
 				14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */,
 				14DD51032BE20C57004329E2 /* ZCCalendar */,
-				14DD51472BE24EA9004329E2 /* DayInfo.swift */,
+				14F3711E2BE3353900254C39 /* Model */,
 				14DD514B2BE27AA4004329E2 /* Intent */,
 				14DD513A2BE2356A004329E2 /* BaseViewController */,
 				14DD50E92BE20BC1004329E2 /* Block */,
@@ -225,7 +227,8 @@
 		14DD51152BE21050004329E2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				14DD51132BE21050004329E2 /* Event.swift */,
+				14DD51132BE21050004329E2 /* CustomDay.swift */,
+				14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -245,7 +248,7 @@
 		14DD51262BE213AD004329E2 /* Event */ = {
 			isa = PBXGroup;
 			children = (
-				14DD51252BE213AD004329E2 /* EventManager.swift */,
+				14DD51252BE213AD004329E2 /* CustomDayManager.swift */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -299,6 +302,14 @@
 				14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */,
 			);
 			path = Intent;
+			sourceTree = "<group>";
+		};
+		14F3711E2BE3353900254C39 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				14DD51472BE24EA9004329E2 /* DayInfo.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -386,14 +397,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				14DD512D2BE21AB8004329E2 /* UIViewController+Extension.swift in Sources */,
-				14DD51282BE213AD004329E2 /* EventManager.swift in Sources */,
+				14DD51282BE213AD004329E2 /* CustomDayManager.swift in Sources */,
 				14DD50FE2BE20BC1004329E2 /* UIDraggableCollectionView.swift in Sources */,
 				14DD51012BE20BC1004329E2 /* BlockDetailViewController.swift in Sources */,
 				14DD50ED2BE20BC1004329E2 /* BlockViewController+Layout.swift in Sources */,
 				14DD50F52BE20BC1004329E2 /* DayGrid.swift in Sources */,
 				14DD50EC2BE20BC1004329E2 /* BlockViewController+Enum.swift in Sources */,
 				14DD50F62BE20BC1004329E2 /* BlockItem.swift in Sources */,
-				14DD511F2BE21050004329E2 /* Event.swift in Sources */,
+				14DD511F2BE21050004329E2 /* CustomDay.swift in Sources */,
 				14DD51482BE24EA9004329E2 /* DayInfo.swift in Sources */,
 				14DD50F82BE20BC1004329E2 /* BlockCell.swift in Sources */,
 				14DD50F22BE20BC1004329E2 /* DisplayHandler.swift in Sources */,
@@ -410,6 +421,7 @@
 				14DD511A2BE21050004329E2 /* Date+Extension.swift in Sources */,
 				14DD50FD2BE20BC1004329E2 /* ImpactGenerator.swift in Sources */,
 				14DD50EF2BE20BC1004329E2 /* BlockViewController+Popover.swift in Sources */,
+				14F371202BE3355900254C39 /* CustomDay+UIColor.swift in Sources */,
 				14DD513C2BE2356A004329E2 /* NavigationViewController.swift in Sources */,
 				14DD50FC2BE20BC1004329E2 /* HoverGestureRecognizer.swift in Sources */,
 				14DD50B42BE1F5C4004329E2 /* SceneDelegate.swift in Sources */,

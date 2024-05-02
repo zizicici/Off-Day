@@ -137,7 +137,7 @@ class BlockCell: BlockBaseCell {
                     paperView.backgroundColor = .workDay.withAlphaComponent(0.8)
                 }
             }
-            if let events = item.events, let first = events.first {
+            if let customDays = item.customDays, let first = customDays.first {
                 paperView.backgroundColor = first.color
                 if paperView.backgroundColor?.isSimilar(to: .background) == true {
                     paperView.layer.borderWidth = 1.0

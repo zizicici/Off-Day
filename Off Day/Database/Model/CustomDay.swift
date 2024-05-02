@@ -34,13 +34,13 @@ extension CustomDay: Codable {
 }
 
 extension CustomDay {
-    static func emptyDayEvent(day: GregorianDay) -> Self {
+    static func emptyDay(day: GregorianDay) -> Self {
         return Self.init(dayType: .offday, start: Int64(day.julianDay), end: Int64(day.julianDay))
     }
 }
 
 extension CustomDay: TableRecord {
-    static var databaseTableName: String = "event"
+    static var databaseTableName: String = "custom_day"
 }
 
 extension CustomDay {

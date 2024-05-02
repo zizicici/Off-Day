@@ -17,23 +17,23 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     
     internal var dataSource: UICollectionViewDiffableDataSource<Section, Item>! = nil
     
-    private var events: [Event] = [] {
+    private var customDays: [CustomDay] = [] {
         didSet {
-            eventsDict = [:]
-            for event in events {
-                let start = Int(event.start)
-                let end = Int(event.end)
+            customDaysDict = [:]
+            for customDay in customDays {
+                let start = Int(customDay.start)
+                let end = Int(customDay.end)
                 for i in start...end {
-                    var result: [Event] = eventsDict[i] ?? []
-                    result.append(event)
-                    eventsDict[i] = result
+                    var result: [CustomDay] = customDaysDict[i] ?? []
+                    result.append(customDay)
+                    customDaysDict[i] = result
                 }
             }
             applyData()
         }
     }
     
-    private var eventsDict: [Int : [Event]] = [:]
+    private var customDaysDict: [Int : [CustomDay]] = [:]
     
     // Handler
     
@@ -107,11 +107,11 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         }
     }
     
-    func filter(events: [Event], from startIndex: Int, to endIndex: Int) -> [Event] {
-        return events.filter({ event in
-            if event.end < startIndex {
+    func filter(customDays: [CustomDay], from startIndex: Int, to endIndex: Int) -> [CustomDay] {
+        return customDays.filter({ customDay in
+            if customDay.end < startIndex {
                 return false
-            } else if event.start > endIndex {
+            } else if customDay.start > endIndex {
                 return false
             } else {
                 return true
@@ -208,14 +208,14 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     @objc
     internal func reloadData() {
         // TODO: Apply Active Handler for reduce request
-        EventManager.shared.fetch { [weak self] events in
+        CustomDayManager.shared.fetch { [weak self] customDays in
             guard let self = self else { return }
-            self.events = filter(events: events.sortedByStart(), from: self.displayHandler.getLeading(), to: self.displayHandler.getTrailing())
+            self.customDays = filter(customDays: customDays.sortedByStart(), from: self.displayHandler.getLeading(), to: self.displayHandler.getTrailing())
         }
     }
     
     private func applyData() {
-        if let snapshot = displayHandler.getSnapshot(eventsDict: eventsDict) {
+        if let snapshot = displayHandler.getSnapshot(customDaysDict: customDaysDict) {
             dataSource.apply(snapshot, animatingDifferences: true) { [weak self] in
                 guard let self = self, !self.didScrollToday else { return }
                 self.didScrollToday = true

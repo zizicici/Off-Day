@@ -9,7 +9,7 @@ import UIKit
 import ZCCalendar
 
 struct LayoutGenerater {
-    static func dayLayout(for snapshot: inout NSDiffableDataSourceSnapshot<Section, Item>, year: Int, eventsDict: [Int : [Event]]) {
+    static func dayLayout(for snapshot: inout NSDiffableDataSourceSnapshot<Section, Item>, year: Int, customDaysDict: [Int : [CustomDay]]) {
         let firstDayOfWeek: WeekdayOrder = .mon
         
         snapshot.appendSections([.topTag])
@@ -30,7 +30,7 @@ struct LayoutGenerater {
             }
             snapshot.appendItems(Array(1...ZCCalendar.manager.dayCount(at: month, year: year)).map({ day in
                 let gregorianDay = GregorianDay(year: year, month: month, day: day)
-                return Item.block(BlockItem(index: gregorianDay.julianDay, publicDay: publicDays[gregorianDay.julianDay] as? PublicDay, events: eventsDict[gregorianDay.julianDay], isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay)))
+                return Item.block(BlockItem(index: gregorianDay.julianDay, publicDay: publicDays[gregorianDay.julianDay] as? PublicDay, customDays: customDaysDict[gregorianDay.julianDay], isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay)))
             }))
         }
     }

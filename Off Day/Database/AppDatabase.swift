@@ -25,15 +25,14 @@ final class AppDatabase {
 #if DEBUG
         migrator.eraseDatabaseOnSchemaChange = true
 #endif
-        migrator.registerMigration("create_event") { db in
-            try db.create(table: "event") { table in
+        migrator.registerMigration("create_custom_day") { db in
+            try db.create(table: "custom_day") { table in
                 table.autoIncrementedPrimaryKey("id")
                 
                 table.column("creation_time", .integer).notNull()
                 table.column("modification_time", .integer).notNull()
                 table.column("day_type", .integer).notNull()
                 table.column("comment", .text)
-                table.column("color", .text).notNull()
                 table.column("start", .integer).notNull()
                 table.column("end", .integer).notNull()
             }
@@ -58,14 +57,14 @@ final class AppDatabase {
 }
 
 extension AppDatabase {
-    func add(event: Event) -> Bool {
-        guard event.id == nil else {
+    func add(customDay: CustomDay) -> Bool {
+        guard customDay.id == nil else {
             return false
         }
         do {
             try dbWriter?.write{ db in
-                var saveEvent = event
-                try saveEvent.save(db)
+                var saveCustomDay = customDay
+                try saveCustomDay.save(db)
             }
         }
         catch {
@@ -76,14 +75,14 @@ extension AppDatabase {
         return true
     }
     
-    func update(event: Event) -> Bool {
-        guard event.id != nil else {
+    func update(customDay: CustomDay) -> Bool {
+        guard customDay.id != nil else {
             return false
         }
         do {
             _ = try dbWriter?.write{ db in
-                var saveEvent = event
-                try saveEvent.updateWithTimestamp(db)
+                var saveCustomDay = customDay
+                try saveCustomDay.updateWithTimestamp(db)
             }
         }
         catch {
@@ -94,13 +93,13 @@ extension AppDatabase {
         return true
     }
     
-    func delete(event: Event) -> Bool {
-        guard let eventId = event.id else {
+    func delete(customDay: CustomDay) -> Bool {
+        guard let customDayId = customDay.id else {
             return false
         }
         do {
             _ = try dbWriter?.write{ db in
-                try Event.deleteAll(db, ids: [eventId])
+                try CustomDay.deleteAll(db, ids: [customDayId])
             }
         }
         catch {
