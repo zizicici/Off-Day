@@ -23,15 +23,13 @@ protocol Day {
     var dayType: DayType { get }
 }
 
-struct CalendarDay: Day, Hashable {
-    let name: String?
-    let julianDay: Int
-    let dayType: DayType
-}
-
-extension GregorianDay {
-    func getCalendarDay() -> CalendarDay {
-        return CalendarDay(name: nil, julianDay: julianDay, dayType: self.weekdayOrder().isWeekEnd ? .offday : .workday)
+extension GregorianDay: Day {
+    var name: String? {
+        return nil
+    }
+    
+    var dayType: DayType {
+        return weekdayOrder().isWeekEnd ? .offday : .workday
     }
 }
 
@@ -41,12 +39,6 @@ struct PublicDay: Day, Hashable {
     var julianDay: Int {
         return day.julianDay
     }
-    let dayType: DayType
-}
-
-struct CustomDay: Day, Hashable {
-    let name: String?
-    let julianDay: Int
     let dayType: DayType
 }
 
