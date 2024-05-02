@@ -127,12 +127,8 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     }
     
     private func tap(in targetView: UIView, for blockItem: BlockItem) {
-//        if blockItem.events?.count ?? 0 > 0 {
-//            showBlockDetailPopoverView(at: targetView, for: blockItem)
-//        } else {
-//            let addViewController = EventEditorViewController.emptyEvent(for: blockItem)
-//            showPopoverView(at: targetView, contentViewController: addViewController)
-//        }
+        let detailViewController = BlockDetailViewController(blockItem: blockItem)
+        showPopoverView(at: targetView, contentViewController: detailViewController)
     }
     
     private func createLayout() -> UICollectionViewLayout {

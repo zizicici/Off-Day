@@ -9,8 +9,8 @@ import UIKit
 
 extension BlockViewController {
     func showPopoverView(at sourceView: UIView, contentViewController: UIViewController) {
-        let nav = UINavigationController.init(rootViewController: contentViewController)
-        nav.preferredContentSize = CGSize(width: 330, height: 400)
+        let nav = contentViewController
+        nav.preferredContentSize = CGSize(width: 240, height: 130)
         nav.modalPresentationStyle = .popover
 
         if let pres = nav.presentationController {
@@ -27,11 +27,7 @@ extension BlockViewController {
 
 extension BlockViewController: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        if view.frame.width < 376.0 {
-            return .automatic
-        } else {
-            return .none
-        }
+        return .none
     }
     
     func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {

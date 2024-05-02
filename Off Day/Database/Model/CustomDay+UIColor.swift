@@ -11,7 +11,15 @@ import UIKit
 extension CustomDay {
     var color: UIColor {
         get {
-            switch dayType {
+            return dayType.color
+        }
+    }
+}
+
+extension DayType {
+    var color: UIColor {
+        get {
+            switch self {
             case .offday:
                 return UIColor.offDay
             case .workday:

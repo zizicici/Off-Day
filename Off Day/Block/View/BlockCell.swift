@@ -125,17 +125,12 @@ class BlockCell: BlockBaseCell {
         if let item = state.blockItem {
             switch item.day.dayType {
             case .offday:
-                paperView.backgroundColor = .offDay.withAlphaComponent(0.8)
+                paperView.backgroundColor = .offDay
             case .workday:
                 paperView.backgroundColor = defaultBackgroundColor
             }
             if let publicDay = item.publicDay {
-                switch publicDay.dayType {
-                case .offday:
-                    paperView.backgroundColor = .offDay.withAlphaComponent(0.8)
-                case .workday:
-                    paperView.backgroundColor = .workDay.withAlphaComponent(0.8)
-                }
+                paperView.backgroundColor = publicDay.dayType.color
             }
             if let customDay = item.customDay {
                 paperView.backgroundColor = customDay.color
