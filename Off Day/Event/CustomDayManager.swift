@@ -11,7 +11,7 @@ import GRDB
 struct CustomDayManager {
     static let shared: CustomDayManager = CustomDayManager()
     
-    func fetch(completion: (([CustomDay]) -> ())? ) {
+    func fetchAll(completion: (([CustomDay]) -> ())? ) {
         AppDatabase.shared.reader?.asyncRead{ dbResult in
             do {
                 let db = try dbResult.get()
@@ -24,6 +24,20 @@ struct CustomDayManager {
                 print(error)
             }
         }
+    }
+    
+    func fetchCustomDay(by dayIndex: Int) -> CustomDay? {
+        var result: CustomDay?
+        do {
+            try AppDatabase.shared.reader?.read{ db in
+                let dayIndexColumn = CustomDay.Columns.dayIndex
+                result = try CustomDay.filter(dayIndexColumn == Int64(dayIndex)).fetchOne(db)
+            }
+        }
+        catch {
+            print(error)
+        }
+        return result
     }
     
     func add(customDay: CustomDay) {

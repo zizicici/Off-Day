@@ -11,6 +11,8 @@ import SnapKit
 class BlockDetailViewController: UIViewController {
     private var blockItem: BlockItem!
     
+    private var dateTypeDebounce: Debounce<DayType?>!
+    
     private var dateLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .body)
@@ -32,7 +34,7 @@ class BlockDetailViewController: UIViewController {
     private var customLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .footnote)
-        label.textColor = .label
+        label.textColor = .label.withAlphaComponent(0.8)
         label.textAlignment = .natural
         label.minimumScaleFactor = 0.25
         label.adjustsFontSizeToFitWidth = true
@@ -51,6 +53,7 @@ class BlockDetailViewController: UIViewController {
             return outgoing
         })
         configuration.title = String(localized: "detail.day.work.title")
+        configuration.imagePadding = 4.0
         
         let button = UIButton(configuration: configuration)
         button.tintColor = .workDay
@@ -67,6 +70,7 @@ class BlockDetailViewController: UIViewController {
             return outgoing
         })
         configuration.title = String(localized: "detail.day.off.title")
+        configuration.imagePadding = 4.0
         
         let button = UIButton(configuration: configuration)
         button.tintColor = .offDay
@@ -77,6 +81,9 @@ class BlockDetailViewController: UIViewController {
     convenience init(blockItem: BlockItem) {
         self.init(nibName: nil, bundle: nil)
         self.blockItem = blockItem
+        dateTypeDebounce = Debounce(duration: 0.25, block: { [weak self] value in
+            await self?.commit(dayType: value)
+        })
     }
     
     override func viewDidLoad() {
@@ -123,6 +130,49 @@ class BlockDetailViewController: UIViewController {
         dateLabel.text = (blockItem.day.completeFormatString() ?? "") + suffix
         
         updateDateLabelColor()
+
+        workDayButton.configurationUpdateHandler = { [weak self] button in
+            guard let self = self else { return }
+            var config = button.configuration
+            
+            switch self.customDayType {
+            case .offday:
+                config?.image = nil
+            case .workday:
+                config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12.0))
+            case nil:
+                config?.image = nil
+            }
+            
+            button.configuration = config
+        }
+        
+        offDayButton.configurationUpdateHandler = { [weak self] button in
+            guard let self = self else { return }
+            var config = button.configuration
+            
+            switch self.customDayType {
+            case .offday:
+                config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12.0))
+            case .workday:
+                config?.image = nil
+            case nil:
+                config?.image = nil
+            }
+            
+            button.configuration = config
+        }
+        
+        updateButtons()
+        
+        workDayButton.addTarget(self, action: #selector(workDayButtonAction), for: .touchUpInside)
+        offDayButton.addTarget(self, action: #selector(offDayButtonAction), for: .touchUpInside)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .DatabaseUpdated, object: nil)
+    }
+    
+    var customDayType: DayType? {
+        return blockItem.customDay?.dayType
     }
     
     func updateDateLabelColor() {
@@ -141,5 +191,95 @@ class BlockDetailViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         updateDateLabelColor()
+    }
+    
+    @objc
+    func workDayButtonAction() {
+        switch customDayType {
+        case .offday:
+            dateTypeDebounce.emit(value: .workday)
+        case .workday:
+            dateTypeDebounce.emit(value: nil)
+        case nil:
+            dateTypeDebounce.emit(value: .workday)
+        }
+    }
+    
+    @objc
+    func offDayButtonAction() {
+        switch customDayType {
+        case .offday:
+            dateTypeDebounce.emit(value: nil)
+        case .workday:
+            dateTypeDebounce.emit(value: .offday)
+        case nil:
+            dateTypeDebounce.emit(value: .offday)
+        }
+    }
+    
+    @objc
+    func reloadData() {
+        blockItem.customDay = CustomDayManager.shared.fetchCustomDay(by: blockItem.day.julianDay)
+        updateButtons()
+    }
+    
+    func updateButtons() {
+        offDayButton.setNeedsUpdateConfiguration()
+        workDayButton.setNeedsUpdateConfiguration()
+    }
+    
+    func commit(dayType: DayType?) {
+        if let dayType = dayType {
+            if var customDay = CustomDayManager.shared.fetchCustomDay(by: blockItem.day.julianDay) {
+                if customDay.dayType != dayType{
+                    customDay.dayType = dayType
+                    CustomDayManager.shared.update(customDay: customDay)
+                }
+            } else {
+                let customDay = CustomDay(dayIndex: Int64(blockItem.day.julianDay), dayType: dayType)
+                CustomDayManager.shared.add(customDay: customDay)
+            }
+        } else {
+            if let customDay = CustomDayManager.shared.fetchCustomDay(by: blockItem.day.julianDay) {
+                CustomDayManager.shared.delete(customDay: customDay)
+            } else {
+                //
+            }
+        }
+    }
+}
+
+extension Task where Success == Never, Failure == Never {
+    static func sleep(seconds: Double) async throws {
+        let duration = UInt64(seconds * 1_000_000_000)
+        try await Task.sleep(nanoseconds: duration)
+    }
+}
+
+final class Debounce<T> {
+    private let block: @Sendable (T) async -> Void
+    private let duration: Double
+    private var task: Task<Void, Never>?
+    
+    init(
+        duration: Double,
+        block: @Sendable @escaping (T) async -> Void
+    ) {
+        self.duration = duration
+        self.block = block
+    }
+    
+    func emit(value: T) {
+        self.task?.cancel()
+        self.task = Task { [duration, block] in
+            do {
+                if #available(iOS 16.0, *) {
+                    try await Task.sleep(for: .seconds(duration))
+                } else {
+                    try await Task.sleep(seconds: duration)
+                }
+                await block(value)
+            } catch {}
+        }
     }
 }

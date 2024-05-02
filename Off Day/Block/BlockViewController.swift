@@ -198,7 +198,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     @objc
     internal func reloadData() {
         // TODO: Apply Active Handler for reduce request
-        CustomDayManager.shared.fetch { [weak self] customDays in
+        CustomDayManager.shared.fetchAll { [weak self] customDays in
             guard let self = self else { return }
             self.customDays = filter(customDays: customDays.sortedByStart(), from: self.displayHandler.getLeading(), to: self.displayHandler.getTrailing())
         }

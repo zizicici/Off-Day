@@ -41,6 +41,7 @@ extension CustomDay {
 
         static let creationTime = Column(CodingKeys.creationTime)
         static let modificationTime = Column(CodingKeys.modificationTime)
+        static let dayIndex = Column(CodingKeys.dayIndex)
         static let dayType = Column(CodingKeys.dayType)
     }
 }

@@ -26,19 +26,7 @@ struct CheckDayIntent: AppIntent {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
         if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
             let target = GregorianDay(year: year, month: month, day: day)
-            if target.weekdayOrder().isWeekEnd {
-                isOffDay = true
-            } else {
-                isOffDay = false
-            }
-            if let publicDay = Mainland2024().days[target.julianDay] as? PublicDay {
-                switch publicDay.dayType {
-                case .offday:
-                    isOffDay = true
-                case .workday:
-                    isOffDay = false
-                }
-            }
+            isOffDay = target.isOffDay()
         }
         return .result(value: isOffDay)
     }
@@ -61,19 +49,7 @@ struct CheckTodayIntent: AppIntent {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
         if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
             let target = GregorianDay(year: year, month: month, day: day)
-            if target.weekdayOrder().isWeekEnd {
-                isOffDay = true
-            } else {
-                isOffDay = false
-            }
-            if let publicDay = Mainland2024().days[target.julianDay] as? PublicDay {
-                switch publicDay.dayType {
-                case .offday:
-                    isOffDay = true
-                case .workday:
-                    isOffDay = false
-                }
-            }
+            isOffDay = target.isOffDay()
         }
         return .result(value: isOffDay)
     }
@@ -97,22 +73,23 @@ struct CheckTomorrowIntent: AppIntent {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: tomorrow)
         if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
             let target = GregorianDay(year: year, month: month, day: day)
-            if target.weekdayOrder().isWeekEnd {
-                isOffDay = true
-            } else {
-                isOffDay = false
-            }
-            if let publicDay = Mainland2024().days[target.julianDay] as? PublicDay {
-                switch publicDay.dayType {
-                case .offday:
-                    isOffDay = true
-                case .workday:
-                    isOffDay = false
-                }
-            }
+            isOffDay = target.isOffDay()
         }
         return .result(value: isOffDay)
     }
 
     static var openAppWhenRun: Bool = false
+}
+
+extension GregorianDay {
+    fileprivate func isOffDay() -> Bool {
+        var isOffDay: Bool = self.weekdayOrder().isWeekEnd
+        if let publicDay = Mainland2024().days[julianDay] as? PublicDay {
+            isOffDay = publicDay.dayType == .offday
+        }
+        if let customDay = CustomDayManager.shared.fetchCustomDay(by: julianDay) {
+            isOffDay = customDay.dayType == .offday
+        }
+        return isOffDay
+    }
 }
