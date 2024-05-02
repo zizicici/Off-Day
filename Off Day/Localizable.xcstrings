@@ -781,6 +781,22 @@
         }
       }
     },
+    "shortcuts.tutorials.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to tutorials"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看使用教程"
+          }
+        }
+      }
+    },
     "specifications.item.summary.dateOfProduction" : {
       "comment" : "Date of Production",
       "localizations" : {

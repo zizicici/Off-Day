@@ -33,6 +33,15 @@ class ShortcutsViewController: UIViewController {
         
         return button
     }()
+    
+    
+    private var tutorialsButton: UIButton = {
+        var configuration = UIButton.Configuration.plain()
+        let button = UIButton(configuration: configuration)
+        button.tintColor = .offDay
+        
+        return button
+    }()
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -61,15 +70,35 @@ class ShortcutsViewController: UIViewController {
             make.height.greaterThanOrEqualTo(60)
         }
         addButton.addTarget(self, action: #selector(addShortcuts), for: .touchUpInside)
+        
+        view.addSubview(tutorialsButton)
+        tutorialsButton.snp.makeConstraints { make in
+            make.top.equalTo(addButton.snp.bottom).offset(12.0)
+            make.centerX.equalTo(view)
+        }
+        tutorialsButton.addTarget(self, action: #selector(openTutorials), for: .touchUpInside)
+        
+        let attributes: [NSAttributedString.Key: Any] = [.underlineStyle: NSUnderlineStyle.single.rawValue]
+        let string = NSAttributedString(string: String(localized: "shortcuts.tutorials.title"),attributes: attributes)
+
+        tutorialsButton.setAttributedTitle(string, for: .normal)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    @objc func addShortcuts() {
+    @objc
+    func addShortcuts() {
         if let shortcutsURL = shortcutsURL {
             UIApplication.shared.open(shortcutsURL, options: [:], completionHandler: nil)
+        }
+    }
+    
+    @objc
+    func openTutorials() {
+        if let url = URL(string: "https://fxwl60qzgjx.feishu.cn/wiki/MYMPw67yNiRfgikTM7DckyNQnPG?from=from_copylink") {
+            openSF(with: url)
         }
     }
 }
