@@ -13,6 +13,10 @@ import ZCCalendar
 class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     static let monthTagElementKind: String = "monthTagElementKind"
     
+    // More
+    
+    private var moreButton: UIBarButtonItem?
+    
     // Data
     
     internal var dataSource: UICollectionViewDiffableDataSource<Section, Item>! = nil
@@ -72,8 +76,15 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         
         addGestures()
         
+        moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: nil)
+        updateMoreMenu()
+        if let moreButton = moreButton {
+            navigationItem.rightBarButtonItems = [moreButton]
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .DatabaseUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .TodayUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .SettingsUpdate, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -212,6 +223,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
             }
             self.updateVisibleItems()
         }
+        updateMoreMenu()
     }
     
     internal func getCatalogueMenu() -> UIMenu? {
@@ -222,5 +234,14 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     func scrollToToday() {
         let today = ZCCalendar.manager.today
         collectionView.scrollToItem(at: IndexPath(item: today.day, section: today.month.rawValue + 1), at: .centeredVertically, animated: true)
+    }
+    
+    private func updateMoreMenu() {
+        var children: [UIMenuElement] = []
+        
+        let divider = UIMenu(title: "", options: .displayInline, children: [getWeekStartTypeMenu()])
+        children.append(divider)
+        
+        moreButton?.menu = UIMenu(title: "", children: children)
     }
 }
