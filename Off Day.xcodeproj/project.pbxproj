@@ -52,6 +52,8 @@
 		14F371202BE3355900254C39 /* CustomDay+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */; };
 		14F371222BE3CA6500254C39 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371212BE3CA6500254C39 /* Settings.swift */; };
 		14F371252BE3CB9F00254C39 /* BlockViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */; };
+		14F371272BE3EACF00254C39 /* AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371262BE3EACF00254C39 /* AppCell.swift */; };
+		14F3712A2BE3EB4E00254C39 /* SpecificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371292BE3EB4E00254C39 /* SpecificationsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +101,8 @@
 		14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomDay+UIColor.swift"; sourceTree = "<group>"; };
 		14F371212BE3CA6500254C39 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BlockViewController+Menu.swift"; sourceTree = "<group>"; };
+		14F371262BE3EACF00254C39 /* AppCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCell.swift; sourceTree = "<group>"; };
+		14F371292BE3EB4E00254C39 /* SpecificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecificationsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,6 +294,8 @@
 			isa = PBXGroup;
 			children = (
 				14DD513F2BE2459C004329E2 /* MoreViewController.swift */,
+				14F371292BE3EB4E00254C39 /* SpecificationsViewController.swift */,
+				14F371282BE3EADE00254C39 /* View */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -324,6 +330,14 @@
 				14F371212BE3CA6500254C39 /* Settings.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		14F371282BE3EADE00254C39 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				14F371262BE3EACF00254C39 /* AppCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -413,6 +427,7 @@
 				14DD512D2BE21AB8004329E2 /* UIViewController+Extension.swift in Sources */,
 				14DD51282BE213AD004329E2 /* CustomDayManager.swift in Sources */,
 				14DD50FE2BE20BC1004329E2 /* UIDraggableCollectionView.swift in Sources */,
+				14F371272BE3EACF00254C39 /* AppCell.swift in Sources */,
 				14DD51012BE20BC1004329E2 /* BlockDetailViewController.swift in Sources */,
 				14DD50ED2BE20BC1004329E2 /* BlockViewController+Layout.swift in Sources */,
 				14DD50F52BE20BC1004329E2 /* DayGrid.swift in Sources */,
@@ -422,6 +437,7 @@
 				14DD511F2BE21050004329E2 /* CustomDay.swift in Sources */,
 				14DD51482BE24EA9004329E2 /* DayInfo.swift in Sources */,
 				14DD50F82BE20BC1004329E2 /* BlockCell.swift in Sources */,
+				14F3712A2BE3EB4E00254C39 /* SpecificationsViewController.swift in Sources */,
 				14DD50F22BE20BC1004329E2 /* DisplayHandler.swift in Sources */,
 				14DD51222BE21050004329E2 /* Persistence.swift in Sources */,
 				14DD51022BE20BC1004329E2 /* BlockViewController.swift in Sources */,
