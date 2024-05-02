@@ -337,7 +337,7 @@ extension MoreViewController {
     }
     
     func openPrivacyPolicy() {
-        if let url = URL(string: "https://zizicici.medium.com/privacy-policy-for-1-1-9b1bcfff3f0c") {
+        if let url = URL(string: "https://zizicici.medium.com/privacy-policy-for-off-day-app-6f7f26f68c7c") {
             openSF(with: url)
         }
     }
