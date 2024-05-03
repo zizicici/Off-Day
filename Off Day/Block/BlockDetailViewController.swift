@@ -123,11 +123,7 @@ class BlockDetailViewController: UIViewController {
         stackView.addArrangedSubview(offDayButton)
         stackView.addArrangedSubview(workDayButton)
         
-        var suffix = ""
-        if let name = blockItem.publicDay?.name {
-            suffix = "\n\(name)"
-        }
-        dateLabel.text = (blockItem.day.completeFormatString() ?? "") + suffix
+        dateLabel.text = blockItem.calendarString
         
         updateDateLabelColor()
 
@@ -176,16 +172,7 @@ class BlockDetailViewController: UIViewController {
     }
     
     func updateDateLabelColor() {
-        switch (headView.backgroundColor?.isLight ?? false, UIColor.text.isLight) {
-        case (true, true):
-            dateLabel.textColor = .text.resolvedColor(with: UITraitCollection(userInterfaceStyle: .light))
-        case (false, true):
-            dateLabel.textColor = .text
-        case (false, false):
-            dateLabel.textColor = .text.resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark))
-        case (true, false):
-            dateLabel.textColor = .text
-        }
+        dateLabel.textColor = blockItem.calendarTextColor
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

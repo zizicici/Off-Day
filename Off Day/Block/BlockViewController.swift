@@ -133,7 +133,8 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         case .info, .tag, .invisible:
             break
         case .block(let blockItem):
-            view.makeToast(blockItem.day.formatString(), position: .top)
+            let style = ToastStyle.getStyle(messageColor: blockItem.calendarTextColor, backgroundColor: blockItem.calendarColor)
+            view.makeToast(blockItem.calendarString, position: .top, style: style)
         }
     }
     

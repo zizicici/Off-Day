@@ -140,15 +140,7 @@ class BlockCell: BlockBaseCell {
         setupViewsIfNeeded()
         
         if let item = state.blockItem {
-            switch item.day.dayType {
-            case .offday:
-                paperView.backgroundColor = .offDay
-            case .workday:
-                paperView.backgroundColor = defaultBackgroundColor
-            }
-            if let publicDay = item.publicDay {
-                paperView.backgroundColor = publicDay.dayType.color
-            }
+            paperView.backgroundColor = item.calendarColor
             if let customDay = item.customDay {
                 cornerMark.isHidden = false
                 switch customDay.dayType {
@@ -166,16 +158,7 @@ class BlockCell: BlockBaseCell {
                 highlightView.backgroundColor = .clear
             }
             
-            switch (paperView.backgroundColor?.isLight ?? false, UIColor.text.isLight) {
-            case (true, true):
-                label.textColor = .text.resolvedColor(with: UITraitCollection(userInterfaceStyle: .light))
-            case (false, true):
-                label.textColor = .text
-            case (false, false):
-                label.textColor = .text.resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark))
-            case (true, false):
-                label.textColor = .text
-            }
+            label.textColor = item.calendarTextColor
             
             if item.isToday {
                 label.text = String(localized: "calendar.today")
