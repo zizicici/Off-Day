@@ -76,7 +76,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         
         addGestures()
         
-        moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: nil)
+        moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
         updateMoreMenu()
         if let moreButton = moreButton {
             navigationItem.rightBarButtonItems = [moreButton]

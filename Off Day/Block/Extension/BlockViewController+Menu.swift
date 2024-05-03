@@ -20,7 +20,7 @@ extension BlockViewController {
             }
             return action
         }
-        let weekStartTypeMenu = UIMenu(title: WeekStartType.getTitle(), subtitle: getWeekStartType().getName(), image: UIImage(systemName: "calendar"), children: weekStartActions)
+        let weekStartTypeMenu = UIMenu(title: WeekStartType.getTitle(), subtitle: getWeekStartType().getName(), image: UIImage(systemName: "arrow.up.arrow.down"), children: weekStartActions)
     
         return weekStartTypeMenu
     }
