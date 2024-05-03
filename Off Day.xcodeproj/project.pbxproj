@@ -144,14 +144,14 @@
 				14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */,
 				14DD51032BE20C57004329E2 /* ZCCalendar */,
 				14F3711E2BE3353900254C39 /* Model */,
-				14DD514B2BE27AA4004329E2 /* Intent */,
 				14DD513A2BE2356A004329E2 /* BaseViewController */,
 				14DD50E92BE20BC1004329E2 /* Block */,
-				14DD51192BE21050004329E2 /* Database */,
-				14DD51262BE213AD004329E2 /* Event */,
-				14F371232BE3CA7100254C39 /* Settings */,
 				14DD51442BE24648004329E2 /* Shortcuts */,
 				14DD51412BE245E8004329E2 /* More */,
+				14DD51192BE21050004329E2 /* Database */,
+				14DD51262BE213AD004329E2 /* DataManager */,
+				14F371232BE3CA7100254C39 /* Settings */,
+				14DD514B2BE27AA4004329E2 /* Intent */,
 				14DD512B2BE21AB8004329E2 /* Extension */,
 				14DD50BA2BE1F5C5004329E2 /* Assets.xcassets */,
 				14DD50BC2BE1F5C5004329E2 /* LaunchScreen.storyboard */,
@@ -255,12 +255,12 @@
 			path = Database;
 			sourceTree = "<group>";
 		};
-		14DD51262BE213AD004329E2 /* Event */ = {
+		14DD51262BE213AD004329E2 /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
 				14DD51252BE213AD004329E2 /* CustomDayManager.swift */,
 			);
-			path = Event;
+			path = DataManager;
 			sourceTree = "<group>";
 		};
 		14DD512B2BE21AB8004329E2 /* Extension */ = {
