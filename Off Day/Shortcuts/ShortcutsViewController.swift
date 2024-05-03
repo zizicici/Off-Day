@@ -78,7 +78,10 @@ class ShortcutsViewController: UIViewController {
         }
         tutorialsButton.addTarget(self, action: #selector(openTutorials), for: .touchUpInside)
         
-        let attributes: [NSAttributedString.Key: Any] = [.underlineStyle: NSUnderlineStyle.single.rawValue]
+        let attributes: [NSAttributedString.Key: Any] = [
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+            .font: UIFont.systemFont(ofSize: 14)
+        ]
         let string = NSAttributedString(string: String(localized: "shortcuts.tutorials.title"),attributes: attributes)
 
         tutorialsButton.setAttributedTitle(string, for: .normal)
