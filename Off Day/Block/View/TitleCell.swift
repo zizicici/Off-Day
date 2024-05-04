@@ -99,7 +99,7 @@ class TitleCell: TitleBaseCell {
         if let bookInfoCellItem = state.titleInfoItem {
             switch bookInfoCellItem.catalogue {
             case .targetYear(let year):
-                titleLabel.text = String(localized: "calendar.title.hint")
+//                titleLabel.text = String(localized: "calendar.title.hint")
                 let text = String(format: (String(localized: "calendar.title.year%i")), year)
                 indexButton.setTitle(text, for: .normal)
             }

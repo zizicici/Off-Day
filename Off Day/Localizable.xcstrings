@@ -202,22 +202,6 @@
         }
       }
     },
-    "calendar.title.hint" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Year"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "年份"
-          }
-        }
-      }
-    },
     "calendar.title.year%i" : {
       "localizations" : {
         "en" : {
