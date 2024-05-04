@@ -50,6 +50,14 @@
 		14DD51482BE24EA9004329E2 /* DayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51472BE24EA9004329E2 /* DayInfo.swift */; };
 		14DD514A2BE27A9E004329E2 /* CheckDayIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */; };
 		14E6D9BA2BE495F000931F3D /* Toast+Stryle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6D9B92BE495F000931F3D /* Toast+Stryle.swift */; };
+		14E6D9BC2BE4A81C00931F3D /* PublicDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6D9BB2BE4A81C00931F3D /* PublicDayViewController.swift */; };
+		14ECFEED2BE5F30C005D2D79 /* DayInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ECFEEC2BE5F30C005D2D79 /* DayInfoManager.swift */; };
+		14ECFEF52BE5FBEE005D2D79 /* cn-xinjiang.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEEF2BE5FBED005D2D79 /* cn-xinjiang.json */; };
+		14ECFEF62BE5FBEE005D2D79 /* cn-guangxi.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEF02BE5FBED005D2D79 /* cn-guangxi.json */; };
+		14ECFEF72BE5FBEE005D2D79 /* cn-ningxia.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEF12BE5FBED005D2D79 /* cn-ningxia.json */; };
+		14ECFEF82BE5FBEE005D2D79 /* cn-xizang.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEF22BE5FBEE005D2D79 /* cn-xizang.json */; };
+		14ECFEF92BE5FBEE005D2D79 /* cn-mainland.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEF32BE5FBEE005D2D79 /* cn-mainland.json */; };
+		14ECFEFA2BE5FBEE005D2D79 /* jp.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEF42BE5FBEE005D2D79 /* jp.json */; };
 		14F371202BE3355900254C39 /* CustomDay+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */; };
 		14F371222BE3CA6500254C39 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371212BE3CA6500254C39 /* Settings.swift */; };
 		14F371252BE3CB9F00254C39 /* BlockViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */; };
@@ -100,6 +108,14 @@
 		14DD51472BE24EA9004329E2 /* DayInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayInfo.swift; sourceTree = "<group>"; };
 		14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDayIntent.swift; sourceTree = "<group>"; };
 		14E6D9B92BE495F000931F3D /* Toast+Stryle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Toast+Stryle.swift"; sourceTree = "<group>"; };
+		14E6D9BB2BE4A81C00931F3D /* PublicDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicDayViewController.swift; sourceTree = "<group>"; };
+		14ECFEEC2BE5F30C005D2D79 /* DayInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayInfoManager.swift; sourceTree = "<group>"; };
+		14ECFEEF2BE5FBED005D2D79 /* cn-xinjiang.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cn-xinjiang.json"; sourceTree = "<group>"; };
+		14ECFEF02BE5FBED005D2D79 /* cn-guangxi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cn-guangxi.json"; sourceTree = "<group>"; };
+		14ECFEF12BE5FBED005D2D79 /* cn-ningxia.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cn-ningxia.json"; sourceTree = "<group>"; };
+		14ECFEF22BE5FBEE005D2D79 /* cn-xizang.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cn-xizang.json"; sourceTree = "<group>"; };
+		14ECFEF32BE5FBEE005D2D79 /* cn-mainland.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cn-mainland.json"; sourceTree = "<group>"; };
+		14ECFEF42BE5FBEE005D2D79 /* jp.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jp.json; sourceTree = "<group>"; };
 		14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomDay+UIColor.swift"; sourceTree = "<group>"; };
 		14F371212BE3CA6500254C39 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BlockViewController+Menu.swift"; sourceTree = "<group>"; };
@@ -145,8 +161,9 @@
 				14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */,
 				14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */,
 				14DD51032BE20C57004329E2 /* ZCCalendar */,
-				14F3711E2BE3353900254C39 /* Model */,
+				14ECFEEE2BE5F523005D2D79 /* DayInfo */,
 				14DD513A2BE2356A004329E2 /* BaseViewController */,
+				14E6D9BD2BE4A82800931F3D /* PublicDay */,
 				14DD50E92BE20BC1004329E2 /* Block */,
 				14DD51442BE24648004329E2 /* Shortcuts */,
 				14DD51412BE245E8004329E2 /* More */,
@@ -319,12 +336,35 @@
 			path = Intent;
 			sourceTree = "<group>";
 		};
-		14F3711E2BE3353900254C39 /* Model */ = {
+		14E6D9BD2BE4A82800931F3D /* PublicDay */ = {
 			isa = PBXGroup;
 			children = (
-				14DD51472BE24EA9004329E2 /* DayInfo.swift */,
+				14E6D9BB2BE4A81C00931F3D /* PublicDayViewController.swift */,
 			);
-			path = Model;
+			path = PublicDay;
+			sourceTree = "<group>";
+		};
+		14ECFEEE2BE5F523005D2D79 /* DayInfo */ = {
+			isa = PBXGroup;
+			children = (
+				14ECFEFB2BE5FBF8005D2D79 /* JSON */,
+				14DD51472BE24EA9004329E2 /* DayInfo.swift */,
+				14ECFEEC2BE5F30C005D2D79 /* DayInfoManager.swift */,
+			);
+			path = DayInfo;
+			sourceTree = "<group>";
+		};
+		14ECFEFB2BE5FBF8005D2D79 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				14ECFEF02BE5FBED005D2D79 /* cn-guangxi.json */,
+				14ECFEF32BE5FBEE005D2D79 /* cn-mainland.json */,
+				14ECFEF12BE5FBED005D2D79 /* cn-ningxia.json */,
+				14ECFEEF2BE5FBED005D2D79 /* cn-xinjiang.json */,
+				14ECFEF22BE5FBEE005D2D79 /* cn-xizang.json */,
+				14ECFEF42BE5FBEE005D2D79 /* jp.json */,
+			);
+			path = JSON;
 			sourceTree = "<group>";
 		};
 		14F371232BE3CA7100254C39 /* Settings */ = {
@@ -413,9 +453,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14ECFEF72BE5FBEE005D2D79 /* cn-ningxia.json in Resources */,
+				14ECFEFA2BE5FBEE005D2D79 /* jp.json in Resources */,
+				14ECFEF92BE5FBEE005D2D79 /* cn-mainland.json in Resources */,
 				14DD50BB2BE1F5C5004329E2 /* Assets.xcassets in Resources */,
 				14DD50BE2BE1F5C5004329E2 /* Base in Resources */,
+				14ECFEF52BE5FBEE005D2D79 /* cn-xinjiang.json in Resources */,
 				14DD50CB2BE1F7F2004329E2 /* InfoPlist.xcstrings in Resources */,
+				14ECFEF82BE5FBEE005D2D79 /* cn-xizang.json in Resources */,
+				14ECFEF62BE5FBEE005D2D79 /* cn-guangxi.json in Resources */,
 				14DD50C92BE1F7BD004329E2 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -450,6 +496,7 @@
 				14DD51402BE2459C004329E2 /* MoreViewController.swift in Sources */,
 				14DD51232BE21050004329E2 /* TimestampedRecord.swift in Sources */,
 				14DD50FF2BE20BC1004329E2 /* MonthTagView.swift in Sources */,
+				14ECFEED2BE5F30C005D2D79 /* DayInfoManager.swift in Sources */,
 				14DD51432BE24642004329E2 /* ShortcutsViewController.swift in Sources */,
 				14DD51212BE21050004329E2 /* AppDatabase.swift in Sources */,
 				14DD50B22BE1F5C4004329E2 /* AppDelegate.swift in Sources */,
@@ -465,6 +512,7 @@
 				14DD51002BE20BC1004329E2 /* BlockBaseViewController.swift in Sources */,
 				14DD513D2BE2356A004329E2 /* TabbarController.swift in Sources */,
 				14DD50F32BE20BC1004329E2 /* LayoutGenerator.swift in Sources */,
+				14E6D9BC2BE4A81C00931F3D /* PublicDayViewController.swift in Sources */,
 				14DD50F92BE20BC1004329E2 /* TitleCell.swift in Sources */,
 				14F371252BE3CB9F00254C39 /* BlockViewController+Menu.swift in Sources */,
 			);

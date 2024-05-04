@@ -76,10 +76,13 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         
         addGestures()
         
+        let calendarButton = UIBarButtonItem(image: UIImage(systemName: "calendar.badge.checkmark"), style: .plain, target: self, action: #selector(calendarButtonAction))
+        navigationItem.leftBarButtonItem = calendarButton
+        
         moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
         updateMoreMenu()
         if let moreButton = moreButton {
-            navigationItem.rightBarButtonItems = [moreButton]
+            navigationItem.rightBarButtonItem = moreButton
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .DatabaseUpdated, object: nil)
@@ -244,5 +247,13 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         children.append(divider)
         
         moreButton?.menu = UIMenu(title: "", children: children)
+    }
+    
+    @objc
+    func calendarButtonAction() {
+        let calendarSectionViewController = PublicDayViewController()
+        let nav = UINavigationController(rootViewController: calendarSectionViewController)
+        
+        navigationController?.present(nav, animated: true)
     }
 }

@@ -11,7 +11,7 @@ import UIKit
 
 struct BlockItem: Hashable {
     var index: Int
-    var publicDay: PublicDay?
+    var publicDay: DayInfo?
     var customDay: CustomDay?
     var isToday: Bool
 }
@@ -24,7 +24,7 @@ extension BlockItem {
 
 extension BlockItem {
     var calendarColor: UIColor {
-        guard let dayType = publicDay?.dayType else {
+        guard let dayType = publicDay?.type else {
             switch day.dayType {
             case .offday:
                 return day.dayType.color

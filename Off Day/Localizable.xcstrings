@@ -298,6 +298,22 @@
         }
       }
     },
+    "controller.publicDay.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Public Holiday"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择公共假期"
+          }
+        }
+      }
+    },
     "controller.shortcuts.title" : {
       "localizations" : {
         "en" : {
@@ -713,6 +729,118 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "通用"
+          }
+        }
+      }
+    },
+    "publicDay.item.cn.guangxi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "China Mainland Public Holiday (Guangxi Version)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "广西壮族自治区节假日安排"
+          }
+        }
+      }
+    },
+    "publicDay.item.cn.mainland" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "China Mainland Public Holiday"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中国内地节假日安排"
+          }
+        }
+      }
+    },
+    "publicDay.item.cn.ningxia" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "China Mainland Public Holiday (Ningxia Version)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宁夏回族自治区节假日安排"
+          }
+        }
+      }
+    },
+    "publicDay.item.cn.xinjiang" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "China Mainland Public Holiday (Xinjiang Version)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新疆维吾尔自治区节假日安排"
+          }
+        }
+      }
+    },
+    "publicDay.item.cn.xizang" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "China Mainland Public Holiday (Xizang Version)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "西藏自治区节假日安排"
+          }
+        }
+      }
+    },
+    "publicDay.item.jp" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Japan Public Holiday"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日本祝日·休日"
+          }
+        }
+      }
+    },
+    "publicDay.item.special.empty" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Set"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不设置"
           }
         }
       }

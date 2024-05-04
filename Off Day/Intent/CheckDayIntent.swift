@@ -84,8 +84,8 @@ struct CheckTomorrowIntent: AppIntent {
 extension GregorianDay {
     fileprivate func isOffDay() -> Bool {
         var isOffDay: Bool = self.weekdayOrder().isWeekEnd
-        if let publicDay = Mainland2024().days[julianDay] as? PublicDay {
-            isOffDay = publicDay.dayType == .offday
+        if let publicDay = DayInfoManager.shared.publicDay(at: julianDay) {
+            isOffDay = publicDay.type == .offday
         }
         if let customDay = CustomDayManager.shared.fetchCustomDay(by: julianDay) {
             isOffDay = customDay.dayType == .offday
