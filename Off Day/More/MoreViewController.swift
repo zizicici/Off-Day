@@ -39,11 +39,14 @@ class MoreViewController: UIViewController {
     enum Item: Hashable {
         enum GeneralItem: Hashable {
             case language
+            case publicHoliday(DayInfoManager.PublicDayPlan?)
             
             var title: String {
                 switch self {
                 case .language:
                     return String(localized: "more.item.settings.language")
+                case .publicHoliday:
+                    return String(localized: "more.item.settings.publicHoliday")
                 }
             }
             
@@ -51,6 +54,12 @@ class MoreViewController: UIViewController {
                 switch self {
                 case .language:
                     return String(localized: "more.item.settings.language.value")
+                case .publicHoliday(let plan):
+                    if let plan = plan {
+                        return plan.title
+                    } else {
+                        return String(localized: "more.item.settings.publicHoliday.noSet")
+                    }
                 }
             }
         }
@@ -168,6 +177,8 @@ class MoreViewController: UIViewController {
         configureHierarchy()
         configureDataSource()
         reloadData()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .SettingsUpdate, object: nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -241,7 +252,7 @@ class MoreViewController: UIViewController {
     func reloadData() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.general])
-        snapshot.appendItems([.settings(.language)], toSection: .general)
+        snapshot.appendItems([.settings(.language), .settings(.publicHoliday(DayInfoManager.shared.plan))], toSection: .general)
         
         snapshot.appendSections([.appjun])
         var appItems: [Item] = [.appjun(.otherApps(.lemon)), .appjun(.otherApps(.moontake)), .appjun(.otherApps(.coconut)), .appjun(.otherApps(.pigeon))]
@@ -268,6 +279,8 @@ extension MoreViewController: UITableViewDelegate {
                 switch item {
                 case .language:
                     jumpToSettings()
+                case .publicHoliday:
+                    openPublicHolidaySettings()
                 }
             case .appjun(let item):
                 switch item {
@@ -306,6 +319,13 @@ extension MoreViewController {
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:])
         }
+    }
+    
+    func openPublicHolidaySettings() {
+        let calendarSectionViewController = PublicDayViewController()
+        let nav = UINavigationController(rootViewController: calendarSectionViewController)
+        
+        navigationController?.present(nav, animated: true)
     }
     
     func enterSpecifications() {

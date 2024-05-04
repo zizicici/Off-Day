@@ -701,6 +701,38 @@
         }
       }
     },
+    "more.item.settings.publicHoliday" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Public Holiday Template"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "公众假期模板"
+          }
+        }
+      }
+    },
+    "more.item.settings.publicHoliday.noSet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Template"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无"
+          }
+        }
+      }
+    },
     "more.section.about" : {
       "localizations" : {
         "en" : {
