@@ -56,6 +56,10 @@ final class DayInfoManager {
         case cn_xz
         case cn_gx
         case cn_nx
+        case hk
+        case mo_public
+        case mo_force
+        case mo_cs
         case jp
         
         var resource: String {
@@ -70,6 +74,14 @@ final class DayInfoManager {
                 return "cn-guangxi"
             case .cn_nx:
                 return "cn-ningxia"
+            case .hk:
+                return "hk"
+            case .mo_public:
+                return "mo-public"
+            case .mo_force:
+                return "mo-force"
+            case .mo_cs:
+                return "mo-civil-servant"
             case .jp:
                 return "jp"
             }
@@ -87,6 +99,14 @@ final class DayInfoManager {
                 return String(localized: "publicDay.item.cn.ningxia")
             case .cn_gx:
                 return String(localized: "publicDay.item.cn.guangxi")
+            case .hk:
+                return String(localized: "publicDay.item.hk")
+            case .mo_public:
+                return String(localized: "publicDay.item.mo.public")
+            case .mo_force:
+                return String(localized: "publicDay.item.mo.force")
+            case .mo_cs:
+                return String(localized: "publicDay.item.mo.cs")
             case .jp:
                 return String(localized: "publicDay.item.jp")
             }
@@ -104,6 +124,14 @@ final class DayInfoManager {
                 return String(localized: "publicDay.item.cn.ningxia.subtitle")
             case .cn_gx:
                 return String(localized: "publicDay.item.cn.guangxi.subtitle")
+            case .hk:
+                return String(localized: "publicDay.item.hk.subtitle")
+            case .mo_public:
+                return String(localized: "publicDay.item.mo.public.subtitle")
+            case .mo_force:
+                return String(localized: "publicDay.item.mo.force.subtitle")
+            case .mo_cs:
+                return String(localized: "publicDay.item.mo.cs.subtitle")
             case .jp:
                 return String(localized: "publicDay.item.jp.subtitle")
             }

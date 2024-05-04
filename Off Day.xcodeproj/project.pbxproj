@@ -58,6 +58,10 @@
 		14ECFEF82BE5FBEE005D2D79 /* cn-xizang.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEF22BE5FBEE005D2D79 /* cn-xizang.json */; };
 		14ECFEF92BE5FBEE005D2D79 /* cn-mainland.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEF32BE5FBEE005D2D79 /* cn-mainland.json */; };
 		14ECFEFA2BE5FBEE005D2D79 /* jp.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEF42BE5FBEE005D2D79 /* jp.json */; };
+		14ECFEFD2BE62DCE005D2D79 /* hk.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEFC2BE62DCE005D2D79 /* hk.json */; };
+		14ECFF012BE6319B005D2D79 /* mo-public.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEFE2BE6319B005D2D79 /* mo-public.json */; };
+		14ECFF022BE6319B005D2D79 /* mo-civil-servant.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEFF2BE6319B005D2D79 /* mo-civil-servant.json */; };
+		14ECFF032BE6319B005D2D79 /* mo-force.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFF002BE6319B005D2D79 /* mo-force.json */; };
 		14F371202BE3355900254C39 /* CustomDay+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */; };
 		14F371222BE3CA6500254C39 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371212BE3CA6500254C39 /* Settings.swift */; };
 		14F371252BE3CB9F00254C39 /* BlockViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */; };
@@ -116,6 +120,10 @@
 		14ECFEF22BE5FBEE005D2D79 /* cn-xizang.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cn-xizang.json"; sourceTree = "<group>"; };
 		14ECFEF32BE5FBEE005D2D79 /* cn-mainland.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cn-mainland.json"; sourceTree = "<group>"; };
 		14ECFEF42BE5FBEE005D2D79 /* jp.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jp.json; sourceTree = "<group>"; };
+		14ECFEFC2BE62DCE005D2D79 /* hk.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hk.json; sourceTree = "<group>"; };
+		14ECFEFE2BE6319B005D2D79 /* mo-public.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mo-public.json"; sourceTree = "<group>"; };
+		14ECFEFF2BE6319B005D2D79 /* mo-civil-servant.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mo-civil-servant.json"; sourceTree = "<group>"; };
+		14ECFF002BE6319B005D2D79 /* mo-force.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mo-force.json"; sourceTree = "<group>"; };
 		14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomDay+UIColor.swift"; sourceTree = "<group>"; };
 		14F371212BE3CA6500254C39 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BlockViewController+Menu.swift"; sourceTree = "<group>"; };
@@ -362,6 +370,10 @@
 				14ECFEF12BE5FBED005D2D79 /* cn-ningxia.json */,
 				14ECFEEF2BE5FBED005D2D79 /* cn-xinjiang.json */,
 				14ECFEF22BE5FBEE005D2D79 /* cn-xizang.json */,
+				14ECFEFC2BE62DCE005D2D79 /* hk.json */,
+				14ECFEFF2BE6319B005D2D79 /* mo-civil-servant.json */,
+				14ECFF002BE6319B005D2D79 /* mo-force.json */,
+				14ECFEFE2BE6319B005D2D79 /* mo-public.json */,
 				14ECFEF42BE5FBEE005D2D79 /* jp.json */,
 			);
 			path = JSON;
@@ -456,12 +468,16 @@
 				14ECFEF72BE5FBEE005D2D79 /* cn-ningxia.json in Resources */,
 				14ECFEFA2BE5FBEE005D2D79 /* jp.json in Resources */,
 				14ECFEF92BE5FBEE005D2D79 /* cn-mainland.json in Resources */,
+				14ECFF032BE6319B005D2D79 /* mo-force.json in Resources */,
 				14DD50BB2BE1F5C5004329E2 /* Assets.xcassets in Resources */,
 				14DD50BE2BE1F5C5004329E2 /* Base in Resources */,
 				14ECFEF52BE5FBEE005D2D79 /* cn-xinjiang.json in Resources */,
+				14ECFF012BE6319B005D2D79 /* mo-public.json in Resources */,
 				14DD50CB2BE1F7F2004329E2 /* InfoPlist.xcstrings in Resources */,
 				14ECFEF82BE5FBEE005D2D79 /* cn-xizang.json in Resources */,
 				14ECFEF62BE5FBEE005D2D79 /* cn-guangxi.json in Resources */,
+				14ECFF022BE6319B005D2D79 /* mo-civil-servant.json in Resources */,
+				14ECFEFD2BE62DCE005D2D79 /* hk.json in Resources */,
 				14DD50C92BE1F7BD004329E2 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

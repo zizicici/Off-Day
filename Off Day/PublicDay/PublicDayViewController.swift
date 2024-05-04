@@ -15,6 +15,8 @@ class PublicDayViewController: UIViewController {
     enum Section: Hashable {
         case special
         case cn
+        case hk
+        case mo
         case jp
         
         var header: String? {
@@ -143,6 +145,12 @@ class PublicDayViewController: UIViewController {
         
         snapshot.appendSections([.cn])
         snapshot.appendItems([.plan(.cn), .plan(.cn_xj), .plan(.cn_xz), .plan(.cn_gx), .plan(.cn_nx)], toSection: .cn)
+        
+        snapshot.appendSections([.hk])
+        snapshot.appendItems([.plan(.hk)], toSection: .hk)
+        
+        snapshot.appendSections([.mo])
+        snapshot.appendItems([.plan(.mo_public), .plan(.mo_force), .plan(.mo_cs)])
         
         snapshot.appendSections([.jp])
         snapshot.appendItems([.plan(.jp)], toSection: .jp)
