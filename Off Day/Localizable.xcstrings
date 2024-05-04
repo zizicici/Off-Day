@@ -1085,6 +1085,38 @@
         }
       }
     },
+    "publicDay.item.sg" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Singapore Public Holiday"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新加坡公共假期"
+          }
+        }
+      }
+    },
+    "publicDay.item.sg.subtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cover 2024"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "覆盖2024年"
+          }
+        }
+      }
+    },
     "publicDay.item.special.empty" : {
       "localizations" : {
         "en" : {
@@ -1097,6 +1129,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "不设置"
+          }
+        }
+      }
+    },
+    "publicDay.item.us" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Federal Holidays"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "美国联邦假日"
+          }
+        }
+      }
+    },
+    "publicDay.item.us.subtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cover 2024"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "覆盖2024年"
           }
         }
       }

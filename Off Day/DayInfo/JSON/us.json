@@ -1,0 +1,62 @@
+{
+    "name": "新加坡公共假日",
+    "start": "2024",
+    "end": "2024",
+    "days": [
+        {
+            "date": "2024-01-01",
+            "name": "New Year's Day",
+            "type": 0
+        },
+        {
+            "date": "2024-01-15",
+            "name": "Birthday of Martin Luther King, Jr.",
+            "type": 0
+        },
+        {
+            "date": "2024-02-19",
+            "name": "Washington’s Birthday",
+            "type": 0
+        },
+        {
+            "date": "2024-05-27",
+            "name": "Memorial Day",
+            "type": 0
+        },
+        {
+            "date": "2024-06-19",
+            "name": "Juneteenth National Independence Day",
+            "type": 0
+        },
+        {
+            "date": "2024-07-04",
+            "name": "Independence Day",
+            "type": 0
+        },
+        {
+            "date": "2024-09-02",
+            "name": "Labor Day",
+            "type": 0
+        },
+        {
+            "date": "2024-10-14",
+            "name": "Columbus Day",
+            "type": 0
+        },
+        {
+            "date": "2024-11-11",
+            "name": "Veterans Day",
+            "type": 0
+        },
+        {
+            "date": "2024-11-28",
+            "name": "Thanksgiving Day",
+            "type": 0
+        },
+        {
+            "date": "2024-12-25",
+            "name": "Christmas Day",
+            "type": 0
+        }
+    ]
+}

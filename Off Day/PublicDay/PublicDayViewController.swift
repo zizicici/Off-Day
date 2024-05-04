@@ -17,7 +17,9 @@ class PublicDayViewController: UIViewController {
         case cn
         case hk
         case mo
+        case sg
         case jp
+        case us
         
         var header: String? {
             return nil
@@ -149,10 +151,16 @@ class PublicDayViewController: UIViewController {
         snapshot.appendItems([.plan(.hk)], toSection: .hk)
         
         snapshot.appendSections([.mo])
-        snapshot.appendItems([.plan(.mo_public), .plan(.mo_force), .plan(.mo_cs)])
+        snapshot.appendItems([.plan(.mo_public), .plan(.mo_force), .plan(.mo_cs)], toSection: .mo)
+        
+        snapshot.appendSections([.sg])
+        snapshot.appendItems([.plan(.sg)], toSection: .sg)
         
         snapshot.appendSections([.jp])
         snapshot.appendItems([.plan(.jp)], toSection: .jp)
+        
+        snapshot.appendSections([.us])
+        snapshot.appendItems([.plan(.us)], toSection: .us)
         
         dataSource.apply(snapshot, animatingDifferences: false)
     }

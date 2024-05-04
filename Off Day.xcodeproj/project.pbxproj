@@ -63,6 +63,8 @@
 		14ECFF022BE6319B005D2D79 /* mo-civil-servant.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEFF2BE6319B005D2D79 /* mo-civil-servant.json */; };
 		14ECFF032BE6319B005D2D79 /* mo-force.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFF002BE6319B005D2D79 /* mo-force.json */; };
 		14ECFF052BE64983005D2D79 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ECFF042BE64983005D2D79 /* AppColor.swift */; };
+		14ECFF082BE68AE1005D2D79 /* sg.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFF062BE68AE1005D2D79 /* sg.json */; };
+		14ECFF092BE68AE1005D2D79 /* us.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFF072BE68AE1005D2D79 /* us.json */; };
 		14F371202BE3355900254C39 /* CustomDay+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */; };
 		14F371222BE3CA6500254C39 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371212BE3CA6500254C39 /* Settings.swift */; };
 		14F371252BE3CB9F00254C39 /* BlockViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */; };
@@ -126,6 +128,8 @@
 		14ECFEFF2BE6319B005D2D79 /* mo-civil-servant.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mo-civil-servant.json"; sourceTree = "<group>"; };
 		14ECFF002BE6319B005D2D79 /* mo-force.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mo-force.json"; sourceTree = "<group>"; };
 		14ECFF042BE64983005D2D79 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
+		14ECFF062BE68AE1005D2D79 /* sg.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sg.json; sourceTree = "<group>"; };
+		14ECFF072BE68AE1005D2D79 /* us.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = us.json; sourceTree = "<group>"; };
 		14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomDay+UIColor.swift"; sourceTree = "<group>"; };
 		14F371212BE3CA6500254C39 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BlockViewController+Menu.swift"; sourceTree = "<group>"; };
@@ -378,6 +382,8 @@
 				14ECFF002BE6319B005D2D79 /* mo-force.json */,
 				14ECFEFE2BE6319B005D2D79 /* mo-public.json */,
 				14ECFEF42BE5FBEE005D2D79 /* jp.json */,
+				14ECFF062BE68AE1005D2D79 /* sg.json */,
+				14ECFF072BE68AE1005D2D79 /* us.json */,
 			);
 			path = JSON;
 			sourceTree = "<group>";
@@ -471,9 +477,11 @@
 				14ECFEF72BE5FBEE005D2D79 /* cn-ningxia.json in Resources */,
 				14ECFEFA2BE5FBEE005D2D79 /* jp.json in Resources */,
 				14ECFEF92BE5FBEE005D2D79 /* cn-mainland.json in Resources */,
+				14ECFF082BE68AE1005D2D79 /* sg.json in Resources */,
 				14ECFF032BE6319B005D2D79 /* mo-force.json in Resources */,
 				14DD50BB2BE1F5C5004329E2 /* Assets.xcassets in Resources */,
 				14DD50BE2BE1F5C5004329E2 /* Base in Resources */,
+				14ECFF092BE68AE1005D2D79 /* us.json in Resources */,
 				14ECFEF52BE5FBEE005D2D79 /* cn-xinjiang.json in Resources */,
 				14ECFF012BE6319B005D2D79 /* mo-public.json in Resources */,
 				14DD50CB2BE1F7F2004329E2 /* InfoPlist.xcstrings in Resources */,

@@ -61,6 +61,8 @@ final class DayInfoManager {
         case mo_force
         case mo_cs
         case jp
+        case sg
+        case us
         
         var resource: String {
             switch self {
@@ -84,6 +86,10 @@ final class DayInfoManager {
                 return "mo-civil-servant"
             case .jp:
                 return "jp"
+            case .sg:
+                return "sg"
+            case .us:
+                return "us"
             }
         }
         
@@ -109,6 +115,10 @@ final class DayInfoManager {
                 return String(localized: "publicDay.item.mo.cs")
             case .jp:
                 return String(localized: "publicDay.item.jp")
+            case .sg:
+                return String(localized: "publicDay.item.sg")
+            case .us:
+                return String(localized: "publicDay.item.us")
             }
         }
         
@@ -134,6 +144,10 @@ final class DayInfoManager {
                 return String(localized: "publicDay.item.mo.cs.subtitle")
             case .jp:
                 return String(localized: "publicDay.item.jp.subtitle")
+            case .sg:
+                return String(localized: "publicDay.item.sg.subtitle")
+            case .us:
+                return String(localized: "publicDay.item.us.subtitle")
             }
         }
     }
