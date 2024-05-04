@@ -797,6 +797,16 @@
         }
       }
     },
+    "publicDay.item.cn.guangxi.subtitle" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "覆盖2024年"
+          }
+        }
+      }
+    },
     "publicDay.item.cn.mainland" : {
       "localizations" : {
         "en" : {
@@ -809,6 +819,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "中国内地节假日安排"
+          }
+        }
+      }
+    },
+    "publicDay.item.cn.mainland.subtitle" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "覆盖2024年"
           }
         }
       }
@@ -829,6 +849,16 @@
         }
       }
     },
+    "publicDay.item.cn.ningxia.subtitle" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "覆盖2024年"
+          }
+        }
+      }
+    },
     "publicDay.item.cn.xinjiang" : {
       "localizations" : {
         "en" : {
@@ -841,6 +871,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新疆维吾尔自治区节假日安排"
+          }
+        }
+      }
+    },
+    "publicDay.item.cn.xinjiang.subtitle" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "覆盖2024年"
           }
         }
       }
@@ -861,6 +901,16 @@
         }
       }
     },
+    "publicDay.item.cn.xizang.subtitle" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "覆盖2024年（雪顿节放假安排还未公布）"
+          }
+        }
+      }
+    },
     "publicDay.item.jp" : {
       "localizations" : {
         "en" : {
@@ -873,6 +923,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "日本祝日·休日"
+          }
+        }
+      }
+    },
+    "publicDay.item.jp.subtitle" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "覆盖1955-2025年"
           }
         }
       }

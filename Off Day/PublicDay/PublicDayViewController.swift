@@ -38,6 +38,15 @@ class PublicDayViewController: UIViewController {
                 return plan.title
             }
         }
+        
+        var subtitle: String {
+            switch self {
+            case .empty:
+                return String(localized: "publicDay.item.special.empty")
+            case .plan(let plan):
+                return plan.subtitle
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -46,6 +55,8 @@ class PublicDayViewController: UIViewController {
         title = String(localized: "controller.publicDay.title")
         view.backgroundColor = .background
         updateNavigationBarStyle()
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeAction))
         
         configureHierarchy()
         configureDataSource()
@@ -98,10 +109,15 @@ class PublicDayViewController: UIViewController {
                 cell.contentConfiguration = content
                 cell.detail = nil
             default:
-                var content = UIListContentConfiguration.valueCell()
+                var content = UIListContentConfiguration.subtitleCell()
                 content.text = item.title
+                content.secondaryText = item.subtitle
+                content.textToSecondaryTextVerticalPadding = 6.0
+                content.secondaryTextProperties.color = .text.withAlphaComponent(0.75)
                 var layoutMargins = content.directionalLayoutMargins
                 layoutMargins.leading = 10.0
+                layoutMargins.top = 10.0
+                layoutMargins.bottom = 10.0
                 content.directionalLayoutMargins = layoutMargins
                 cell.contentConfiguration = content
                 cell.detail = nil//self.detailAccessoryForListCellItem(item)
@@ -142,6 +158,11 @@ class PublicDayViewController: UIViewController {
                 collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
             }
         }
+    }
+    
+    @objc
+    func closeAction() {
+        dismiss(animated: true)
     }
 }
 

@@ -91,6 +91,23 @@ final class DayInfoManager {
                 return String(localized: "publicDay.item.jp")
             }
         }
+        
+        var subtitle: String {
+            switch self {
+            case .cn:
+                return String(localized: "publicDay.item.cn.mainland.subtitle")
+            case .cn_xj:
+                return String(localized: "publicDay.item.cn.xinjiang.subtitle")
+            case .cn_xz:
+                return String(localized: "publicDay.item.cn.xizang.subtitle")
+            case .cn_nx:
+                return String(localized: "publicDay.item.cn.ningxia.subtitle")
+            case .cn_gx:
+                return String(localized: "publicDay.item.cn.guangxi.subtitle")
+            case .jp:
+                return String(localized: "publicDay.item.jp.subtitle")
+            }
+        }
     }
     
     static let shared: DayInfoManager = DayInfoManager()

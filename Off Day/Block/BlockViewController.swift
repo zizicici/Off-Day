@@ -13,10 +13,12 @@ import ZCCalendar
 class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     static let monthTagElementKind: String = "monthTagElementKind"
     
-    // More
+    // UIBarButtonItem
+    
+    private var publicHolidayButton: UIBarButtonItem?
     
     private var moreButton: UIBarButtonItem?
-    
+
     // Data
     
     internal var dataSource: UICollectionViewDiffableDataSource<Section, Item>! = nil
@@ -76,8 +78,9 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         
         addGestures()
         
-        let calendarButton = UIBarButtonItem(image: UIImage(systemName: "calendar.badge.checkmark"), style: .plain, target: self, action: #selector(calendarButtonAction))
-        navigationItem.leftBarButtonItem = calendarButton
+        let publicHolidayButton = UIBarButtonItem(image: UIImage(systemName: "calendar.badge.checkmark"), style: .plain, target: self, action: #selector(calendarButtonAction))
+        navigationItem.leftBarButtonItem = publicHolidayButton
+        self.publicHolidayButton = publicHolidayButton
         
         moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
         updateMoreMenu()
@@ -218,6 +221,12 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
             self.customDays = filter(customDays: customDays.sortedByStart(), from: self.displayHandler.getLeading(), to: self.displayHandler.getTrailing())
         }
         self.updateNavigationTitleView()
+        
+        if DayInfoManager.shared.plan == nil {
+            publicHolidayButton?.image = UIImage(systemName: "calendar.badge.exclamationmark")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors: [.systemPink, .white]))
+        } else {
+            publicHolidayButton?.image = UIImage(systemName: "calendar.badge.checkmark")
+        }
     }
     
     private func applyData() {
@@ -261,6 +270,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     func updateNavigationTitleView() {
         let publicPlan = DayInfoManager.shared.plan
         let subtitle = (publicPlan == nil) ? String(localized: "controller.calendar.noPublicPlan") : publicPlan!.title
+        
         navigationItem.setTitle(String(localized: "controller.calendar.title"), subtitle: subtitle)
     }
 }
