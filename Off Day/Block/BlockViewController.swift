@@ -15,7 +15,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     
     // UIBarButtonItem
     
-    private var publicHolidayButton: UIBarButtonItem?
+    private var publicPlanButton: UIBarButtonItem?
     
     private var moreButton: UIBarButtonItem?
 
@@ -78,9 +78,9 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         
         addGestures()
         
-        let publicHolidayButton = UIBarButtonItem(image: UIImage(systemName: "calendar.badge.checkmark"), style: .plain, target: self, action: #selector(calendarButtonAction))
-        navigationItem.leftBarButtonItem = publicHolidayButton
-        self.publicHolidayButton = publicHolidayButton
+        let publicPlanButton = UIBarButtonItem(image: UIImage(systemName: "calendar.badge.checkmark"), style: .plain, target: self, action: #selector(showPublicPlanPicker))
+        navigationItem.leftBarButtonItem = publicPlanButton
+        self.publicPlanButton = publicPlanButton
         
         moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
         updateMoreMenu()
@@ -91,6 +91,10 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .DatabaseUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .TodayUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .SettingsUpdate, object: nil)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.showPublicPlanPickerIfNeeded()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -222,10 +226,10 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         }
         self.updateNavigationTitleView()
         
-        if DayInfoManager.shared.plan == nil {
-            publicHolidayButton?.image = UIImage(systemName: "calendar.badge.exclamationmark")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors: [.systemPink, .white]))
+        if DayInfoManager.shared.publicPlan == nil {
+            publicPlanButton?.image = UIImage(systemName: "calendar.badge.exclamationmark")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors: [.systemPink, .white]))
         } else {
-            publicHolidayButton?.image = UIImage(systemName: "calendar.badge.checkmark")
+            publicPlanButton?.image = UIImage(systemName: "calendar.badge.checkmark")
         }
     }
     
@@ -260,7 +264,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     }
     
     @objc
-    func calendarButtonAction() {
+    func showPublicPlanPicker() {
         let calendarSectionViewController = PublicDayViewController()
         let nav = UINavigationController(rootViewController: calendarSectionViewController)
         
@@ -268,10 +272,19 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     }
     
     func updateNavigationTitleView() {
-        let publicPlan = DayInfoManager.shared.plan
+        let publicPlan = DayInfoManager.shared.publicPlan
         let subtitle = (publicPlan == nil) ? String(localized: "controller.calendar.noPublicPlan") : publicPlan!.title
         
         navigationItem.setTitle(String(localized: "controller.calendar.title"), subtitle: subtitle)
+    }
+    
+    func showPublicPlanPickerIfNeeded() {
+        let key = UserDefaults.Settings.NeedShowPublicPlanPicker.rawValue
+        guard UserDefaults.standard.object(forKey: key) == nil else {
+            return
+        }
+        UserDefaults.standard.setValue(false, forKey: key)
+        showPublicPlanPicker()
     }
 }
 

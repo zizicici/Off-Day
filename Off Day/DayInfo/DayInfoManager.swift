@@ -50,7 +50,7 @@ struct DayInfoProvider: Codable {
 }
 
 final class DayInfoManager {
-    enum PublicDayPlan: String {
+    enum PublicPlan: String {
         case cn
         case cn_xj
         case cn_xz
@@ -140,32 +140,32 @@ final class DayInfoManager {
     
     static let shared: DayInfoManager = DayInfoManager()
     
-    private var publicDayPlanProvider: DayInfoProvider?
+    private var publicPlanProvider: DayInfoProvider?
     
     public func load() {
-        load(publicDayPlan: planByUserDefault())
+        load(publicPlan: planByUserDefault())
     }
     
-    private func load(publicDayPlan: PublicDayPlan?) {
-        guard let publicDayPlan = publicDayPlan else {
-            publicDayPlanProvider = nil
+    private func load(publicPlan: PublicPlan?) {
+        guard let publicPlan = publicPlan else {
+            publicPlanProvider = nil
             return
         }
-        if let url = Bundle.main.url(forResource: publicDayPlan.resource, withExtension: "json"), let data = try? Data(contentsOf: url) {
+        if let url = Bundle.main.url(forResource: publicPlan.resource, withExtension: "json"), let data = try? Data(contentsOf: url) {
             do {
-                publicDayPlanProvider = try JSONDecoder().decode(DayInfoProvider.self, from: data)
+                publicPlanProvider = try JSONDecoder().decode(DayInfoProvider.self, from: data)
             } catch {
                 print("Unexpected error: \(error).")
             }
         }
     }
     
-    var plan: PublicDayPlan? {
+    var publicPlan: PublicPlan? {
         get {
             return planByUserDefault()
         }
         set {
-            guard plan != newValue else {
+            guard publicPlan != newValue else {
                 return
             }
             let key = UserDefaults.Settings.PublicPlanType.rawValue
@@ -174,21 +174,21 @@ final class DayInfoManager {
             } else {
                 UserDefaults.standard.removeObject(forKey: key)
             }
-            load(publicDayPlan: planByUserDefault())
+            load(publicPlan: planByUserDefault())
             NotificationCenter.default.post(name: NSNotification.Name.SettingsUpdate, object: nil)
         }
     }
     
-    private func planByUserDefault() -> PublicDayPlan? {
-        if let storedPlan = UserDefaults.standard.string(forKey: UserDefaults.Settings.PublicPlanType.rawValue), let plan = PublicDayPlan(rawValue: storedPlan) {
+    private func planByUserDefault() -> PublicPlan? {
+        if let storedPlan = UserDefaults.standard.string(forKey: UserDefaults.Settings.PublicPlanType.rawValue), let plan = PublicPlan(rawValue: storedPlan) {
             return plan
         } else {
             return nil
         }
     }
     
-    private func planForCurrentLocale() -> PublicDayPlan? {
-        var targetPlan: PublicDayPlan? = nil
+    private func planForCurrentLocale() -> PublicPlan? {
+        var targetPlan: PublicPlan? = nil
         let localeIdentifier = Locale.current.identifier
         if localeIdentifier.hasSuffix("CN") {
             targetPlan = .cn
@@ -199,6 +199,6 @@ final class DayInfoManager {
     }
     
     public func publicDay(at julianDay: Int) -> DayInfo? {
-        return publicDayPlanProvider?.days[julianDay]
+        return publicPlanProvider?.days[julianDay]
     }
 }

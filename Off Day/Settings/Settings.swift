@@ -12,6 +12,7 @@ extension UserDefaults {
     enum Settings: String {
         case PublicPlanType = "com.zizicici.common.settings.PublicPlanType"
         case WeekStartType = "com.zizicici.common.settings.WeekStartType"
+        case NeedShowPublicPlanPicker = "com.zizicici.common.settings.NeedShowPublicPlanPicker"
     }
 }
 

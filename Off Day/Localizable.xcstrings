@@ -685,7 +685,7 @@
         }
       }
     },
-    "more.item.settings.publicHoliday" : {
+    "more.item.settings.publicPlan" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -701,7 +701,7 @@
         }
       }
     },
-    "more.item.settings.publicHoliday.noSet" : {
+    "more.item.settings.publicPlan.noSet" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {

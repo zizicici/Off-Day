@@ -39,14 +39,14 @@ class MoreViewController: UIViewController {
     enum Item: Hashable {
         enum GeneralItem: Hashable {
             case language
-            case publicHoliday(DayInfoManager.PublicDayPlan?)
+            case publicPlan(DayInfoManager.PublicPlan?)
             
             var title: String {
                 switch self {
                 case .language:
                     return String(localized: "more.item.settings.language")
-                case .publicHoliday:
-                    return String(localized: "more.item.settings.publicHoliday")
+                case .publicPlan:
+                    return String(localized: "more.item.settings.publicPlan")
                 }
             }
             
@@ -54,11 +54,11 @@ class MoreViewController: UIViewController {
                 switch self {
                 case .language:
                     return String(localized: "more.item.settings.language.value")
-                case .publicHoliday(let plan):
+                case .publicPlan(let plan):
                     if let plan = plan {
                         return plan.title
                     } else {
-                        return String(localized: "more.item.settings.publicHoliday.noSet")
+                        return String(localized: "more.item.settings.publicPlan.noSet")
                     }
                 }
             }
@@ -252,7 +252,7 @@ class MoreViewController: UIViewController {
     func reloadData() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.general])
-        snapshot.appendItems([.settings(.language), .settings(.publicHoliday(DayInfoManager.shared.plan))], toSection: .general)
+        snapshot.appendItems([.settings(.language), .settings(.publicPlan(DayInfoManager.shared.publicPlan))], toSection: .general)
         
         snapshot.appendSections([.appjun])
         var appItems: [Item] = [.appjun(.otherApps(.lemon)), .appjun(.otherApps(.moontake)), .appjun(.otherApps(.coconut)), .appjun(.otherApps(.pigeon))]
@@ -279,8 +279,8 @@ extension MoreViewController: UITableViewDelegate {
                 switch item {
                 case .language:
                     jumpToSettings()
-                case .publicHoliday:
-                    openPublicHolidaySettings()
+                case .publicPlan:
+                    showPublicPlanPicker()
                 }
             case .appjun(let item):
                 switch item {
@@ -321,7 +321,7 @@ extension MoreViewController {
         }
     }
     
-    func openPublicHolidaySettings() {
+    func showPublicPlanPicker() {
         let calendarSectionViewController = PublicDayViewController()
         let nav = UINavigationController(rootViewController: calendarSectionViewController)
         

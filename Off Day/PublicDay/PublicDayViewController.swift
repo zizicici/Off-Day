@@ -30,7 +30,7 @@ class PublicDayViewController: UIViewController {
     
     enum Item: Hashable {
         case empty
-        case plan(DayInfoManager.PublicDayPlan)
+        case plan(DayInfoManager.PublicPlan)
         
         var title: String {
             switch self {
@@ -158,7 +158,7 @@ class PublicDayViewController: UIViewController {
     }
     
     func updateSelection() {
-        if let plan = DayInfoManager.shared.plan, let index = dataSource.indexPath(for: .plan(plan)) {
+        if let plan = DayInfoManager.shared.publicPlan, let index = dataSource.indexPath(for: .plan(plan)) {
             collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
         } else {
             if let index = dataSource.indexPath(for: .empty) {
@@ -178,9 +178,9 @@ extension PublicDayViewController: UICollectionViewDelegate {
         if let item = dataSource.itemIdentifier(for: indexPath) {
             switch item {
             case .empty:
-                DayInfoManager.shared.plan = nil
-            case .plan(let publicDayPlan):
-                DayInfoManager.shared.plan = publicDayPlan
+                DayInfoManager.shared.publicPlan = nil
+            case .plan(let publicPlan):
+                DayInfoManager.shared.publicPlan = publicPlan
             }
         }
     }
