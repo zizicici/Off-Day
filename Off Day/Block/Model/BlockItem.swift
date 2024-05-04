@@ -26,10 +26,10 @@ extension BlockItem {
     var calendarColor: UIColor {
         guard let dayType = publicDay?.type else {
             switch day.dayType {
-            case .offday:
+            case .offDay:
                 return day.dayType.color
-            case .workday:
-                return .paper
+            case .workDay:
+                return AppColor.paper
             }
         }
         return dayType.color
@@ -48,10 +48,10 @@ extension BlockItem {
             return .white
         }
         switch day.dayType {
-        case .offday:
+        case .offDay:
             return .white
-        case .workday:
-            return .text
+        case .workDay:
+            return AppColor.text
         }
 //        var result: UIColor
 //        switch (calendarColor.isLight, UIColor.text.isLight) {

@@ -82,7 +82,7 @@ class BlockCell: BlockBaseCell {
         return view
     }()
     
-    var defaultBackgroundColor: UIColor = .paper
+    var defaultBackgroundColor: UIColor = AppColor.paper
     var highlightColor: UIColor = .gray.withAlphaComponent(0.5)
     
     override func prepareForReuse() {
@@ -133,6 +133,9 @@ class BlockCell: BlockBaseCell {
         label.snp.makeConstraints { make in
             make.edges.equalTo(paperView).inset(2)
         }
+        
+        isAccessibilityElement = true
+        accessibilityTraits = .button
     }
     
     override func updateConfiguration(using state: UICellConfigurationState) {
@@ -144,9 +147,9 @@ class BlockCell: BlockBaseCell {
             if let customDay = item.customDay {
                 cornerMark.isHidden = false
                 switch customDay.dayType {
-                case .offday:
+                case .offDay:
                     cornerMark.image = UIImage(named: "OffDayMark")
-                case .workday:
+                case .workDay:
                     cornerMark.image = UIImage(named: "WorkDayMark")
                 }
             } else {
@@ -169,9 +172,6 @@ class BlockCell: BlockBaseCell {
             }
             accessibilityLabel = item.day.formatString()
         }
-        
-        isAccessibilityElement = true
-        accessibilityTraits = .button
     }
     
     func update(isHover: Bool) {

@@ -20,10 +20,10 @@ extension DayType {
     var color: UIColor {
         get {
             switch self {
-            case .offday:
-                return UIColor.offDay
-            case .workday:
-                return UIColor.workDay
+            case .offDay:
+                return AppColor.offDay
+            case .workDay:
+                return AppColor.workDay
             }
         }
     }

@@ -56,7 +56,7 @@ class BlockDetailViewController: UIViewController {
         configuration.imagePadding = 4.0
         
         let button = UIButton(configuration: configuration)
-        button.tintColor = .workDay
+        button.tintColor = AppColor.workDay
         
         return button
     }()
@@ -73,7 +73,7 @@ class BlockDetailViewController: UIViewController {
         configuration.imagePadding = 4.0
         
         let button = UIButton(configuration: configuration)
-        button.tintColor = .offDay
+        button.tintColor = AppColor.offDay
         
         return button
     }()
@@ -89,7 +89,7 @@ class BlockDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .background
+        view.backgroundColor = AppColor.background
         
         view.addSubview(headView)
         headView.snp.makeConstraints { make in
@@ -132,9 +132,9 @@ class BlockDetailViewController: UIViewController {
             var config = button.configuration
             
             switch self.customDayType {
-            case .offday:
+            case .offDay:
                 config?.image = nil
-            case .workday:
+            case .workDay:
                 config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12.0))
             case nil:
                 config?.image = nil
@@ -148,9 +148,9 @@ class BlockDetailViewController: UIViewController {
             var config = button.configuration
             
             switch self.customDayType {
-            case .offday:
+            case .offDay:
                 config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12.0))
-            case .workday:
+            case .workDay:
                 config?.image = nil
             case nil:
                 config?.image = nil
@@ -183,24 +183,24 @@ class BlockDetailViewController: UIViewController {
     @objc
     func workDayButtonAction() {
         switch customDayType {
-        case .offday:
-            dateTypeDebounce.emit(value: .workday)
-        case .workday:
+        case .offDay:
+            dateTypeDebounce.emit(value: .workDay)
+        case .workDay:
             dateTypeDebounce.emit(value: nil)
         case nil:
-            dateTypeDebounce.emit(value: .workday)
+            dateTypeDebounce.emit(value: .workDay)
         }
     }
     
     @objc
     func offDayButtonAction() {
         switch customDayType {
-        case .offday:
+        case .offDay:
             dateTypeDebounce.emit(value: nil)
-        case .workday:
-            dateTypeDebounce.emit(value: .offday)
+        case .workDay:
+            dateTypeDebounce.emit(value: .offDay)
         case nil:
-            dateTypeDebounce.emit(value: .offday)
+            dateTypeDebounce.emit(value: .offDay)
         }
     }
     

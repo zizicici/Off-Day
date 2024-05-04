@@ -171,7 +171,7 @@ class MoreViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .background
+        view.backgroundColor = AppColor.background
         updateNavigationBarStyle()
         
         configureHierarchy()
@@ -187,7 +187,7 @@ class MoreViewController: UIViewController {
     
     func configureHierarchy() {
         tableView = UITableView(frame: .zero, style: .insetGrouped)
-        tableView.backgroundColor = .background
+        tableView.backgroundColor = AppColor.background
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         tableView.register(AppCell.self, forCellReuseIdentifier: NSStringFromClass(AppCell.self))
         tableView.translatesAutoresizingMaskIntoConstraints = false

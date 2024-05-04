@@ -85,10 +85,10 @@ extension GregorianDay {
     fileprivate func isOffDay() -> Bool {
         var isOffDay: Bool = self.weekdayOrder().isWeekEnd
         if let publicDay = DayInfoManager.shared.publicDay(at: julianDay) {
-            isOffDay = publicDay.type == .offday
+            isOffDay = publicDay.type == .offDay
         }
         if let customDay = CustomDayManager.shared.fetchCustomDay(by: julianDay) {
-            isOffDay = customDay.dayType == .offday
+            isOffDay = customDay.dayType == .offDay
         }
         return isOffDay
     }

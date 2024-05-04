@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         let tabBarController = TabbarController()
-        tabBarController.tabBar.tintColor = .offDay
+        tabBarController.tabBar.tintColor = AppColor.offDay
         tabBarController.viewControllers = [
             NavigationController(rootViewController: BlockViewController()),
             NavigationController(rootViewController: ShortcutsViewController()),

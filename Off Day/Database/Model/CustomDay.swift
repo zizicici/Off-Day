@@ -27,7 +27,7 @@ extension CustomDay: Codable {
 
 extension CustomDay {
     static func emptyDay(day: GregorianDay) -> Self {
-        return Self.init(dayIndex: Int64(day.julianDay), dayType: .offday)
+        return Self.init(dayIndex: Int64(day.julianDay), dayType: .offDay)
     }
 }
 

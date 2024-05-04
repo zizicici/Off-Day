@@ -29,7 +29,7 @@ class ShortcutsViewController: UIViewController {
         })
         
         let button = UIButton(configuration: configuration)
-        button.tintColor = .offDay
+        button.tintColor = AppColor.offDay
         
         return button
     }()
@@ -38,7 +38,7 @@ class ShortcutsViewController: UIViewController {
     private var tutorialsButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         let button = UIButton(configuration: configuration)
-        button.tintColor = .offDay
+        button.tintColor = AppColor.offDay
         
         return button
     }()
@@ -61,7 +61,7 @@ class ShortcutsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .background
+        view.backgroundColor = AppColor.background
         updateNavigationBarStyle()
         
         view.addSubview(addButton)

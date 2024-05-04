@@ -72,7 +72,7 @@ class PublicDayViewController: UIViewController {
         let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             var configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
             configuration.separatorConfiguration = UIListSeparatorConfiguration(listAppearance: .insetGrouped)
-            configuration.backgroundColor = .background
+            configuration.backgroundColor = AppColor.background
             let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
             
             return section
@@ -114,7 +114,7 @@ class PublicDayViewController: UIViewController {
                 content.text = item.title
                 content.secondaryText = item.subtitle
                 content.textToSecondaryTextVerticalPadding = 6.0
-                content.secondaryTextProperties.color = .text.withAlphaComponent(0.75)
+                content.secondaryTextProperties.color = AppColor.text.withAlphaComponent(0.75)
                 var layoutMargins = content.directionalLayoutMargins
                 layoutMargins.leading = 10.0
                 layoutMargins.top = 10.0
@@ -127,7 +127,7 @@ class PublicDayViewController: UIViewController {
     }
     
     func detailAccessoryForListCellItem(_ item: Item) -> UICellAccessory {
-        return UICellAccessory.detail(options: UICellAccessory.DetailOptions(tintColor: .offDay), actionHandler: { [weak self] in
+        return UICellAccessory.detail(options: UICellAccessory.DetailOptions(tintColor: AppColor.offDay), actionHandler: { [weak self] in
             self?.goToDetail(for: item)
         })
     }
@@ -218,9 +218,9 @@ class PublicPlanCell: UICollectionViewListCell {
 
         if state.isSelected {
             let checkmark = UIImageView(image: UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18, weight: .medium)))
-            accessories = [detail, .customView(configuration: .init(customView: checkmark, placement: .leading(), reservedLayoutWidth: .custom(12), tintColor: .offDay))].compactMap{ $0 }
+            accessories = [detail, .customView(configuration: .init(customView: checkmark, placement: .leading(), reservedLayoutWidth: .custom(12), tintColor: AppColor.offDay))].compactMap{ $0 }
         } else {
-            accessories = [detail, (.customView(configuration: .init(customView: UIView(), placement: .leading(), reservedLayoutWidth: .custom(12), tintColor: .offDay)))].compactMap{ $0 }
+            accessories = [detail, (.customView(configuration: .init(customView: UIView(), placement: .leading(), reservedLayoutWidth: .custom(12), tintColor: AppColor.offDay)))].compactMap{ $0 }
         }
         if state.isHighlighted {
             if state.isSelected {

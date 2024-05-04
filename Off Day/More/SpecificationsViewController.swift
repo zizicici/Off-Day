@@ -136,7 +136,7 @@ class SpecificationsViewController: UIViewController {
         title = String(localized: "controller.specifications.title")
         navigationItem.largeTitleDisplayMode = .never
         
-        view.backgroundColor = .background
+        view.backgroundColor = AppColor.background
 
         configureHierarchy()
         configureDataSource()

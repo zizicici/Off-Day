@@ -62,7 +62,7 @@ class TitleCell: TitleBaseCell {
         })
         
         let button = UIButton(configuration: configuration)
-        button.tintColor = .offDay
+        button.tintColor = AppColor.offDay
         button.showsMenuAsPrimaryAction = true
         
         return button

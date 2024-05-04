@@ -9,8 +9,8 @@ import Foundation
 import ZCCalendar
 
 enum DayType: Int, Codable {
-    case offday = 0
-    case workday
+    case offDay = 0
+    case workDay
 }
 
 struct DayInfo: Codable, Equatable, Hashable {
@@ -21,6 +21,6 @@ struct DayInfo: Codable, Equatable, Hashable {
 
 extension GregorianDay {
     var dayType: DayType {
-        return weekdayOrder().isWeekEnd ? .offday : .workday
+        return weekdayOrder().isWeekEnd ? .offDay : .workDay
     }
 }

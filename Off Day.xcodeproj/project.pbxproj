@@ -62,6 +62,7 @@
 		14ECFF012BE6319B005D2D79 /* mo-public.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEFE2BE6319B005D2D79 /* mo-public.json */; };
 		14ECFF022BE6319B005D2D79 /* mo-civil-servant.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEFF2BE6319B005D2D79 /* mo-civil-servant.json */; };
 		14ECFF032BE6319B005D2D79 /* mo-force.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFF002BE6319B005D2D79 /* mo-force.json */; };
+		14ECFF052BE64983005D2D79 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ECFF042BE64983005D2D79 /* AppColor.swift */; };
 		14F371202BE3355900254C39 /* CustomDay+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */; };
 		14F371222BE3CA6500254C39 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371212BE3CA6500254C39 /* Settings.swift */; };
 		14F371252BE3CB9F00254C39 /* BlockViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */; };
@@ -124,6 +125,7 @@
 		14ECFEFE2BE6319B005D2D79 /* mo-public.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mo-public.json"; sourceTree = "<group>"; };
 		14ECFEFF2BE6319B005D2D79 /* mo-civil-servant.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mo-civil-servant.json"; sourceTree = "<group>"; };
 		14ECFF002BE6319B005D2D79 /* mo-force.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mo-force.json"; sourceTree = "<group>"; };
+		14ECFF042BE64983005D2D79 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
 		14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomDay+UIColor.swift"; sourceTree = "<group>"; };
 		14F371212BE3CA6500254C39 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BlockViewController+Menu.swift"; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 		14DD512B2BE21AB8004329E2 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				14ECFF042BE64983005D2D79 /* AppColor.swift */,
 				14DD51292BE21AB8004329E2 /* UIColor+Extension.swift */,
 				14DD512A2BE21AB8004329E2 /* UIViewController+Extension.swift */,
 				14E6D9B92BE495F000931F3D /* Toast+Stryle.swift */,
@@ -495,6 +498,7 @@
 				14F371272BE3EACF00254C39 /* AppCell.swift in Sources */,
 				14DD51012BE20BC1004329E2 /* BlockDetailViewController.swift in Sources */,
 				14DD50ED2BE20BC1004329E2 /* BlockViewController+Layout.swift in Sources */,
+				14ECFF052BE64983005D2D79 /* AppColor.swift in Sources */,
 				14E6D9BA2BE495F000931F3D /* Toast+Stryle.swift in Sources */,
 				14DD50F52BE20BC1004329E2 /* DayGrid.swift in Sources */,
 				14F371222BE3CA6500254C39 /* Settings.swift in Sources */,
