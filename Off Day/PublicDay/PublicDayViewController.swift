@@ -55,7 +55,6 @@ class PublicDayViewController: UIViewController {
         super.viewDidLoad()
         
         title = String(localized: "controller.publicDay.title")
-        view.backgroundColor = .background
         updateNavigationBarStyle()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeAction))
@@ -73,6 +72,7 @@ class PublicDayViewController: UIViewController {
         let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             var configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
             configuration.separatorConfiguration = UIListSeparatorConfiguration(listAppearance: .insetGrouped)
+            configuration.backgroundColor = .background
             let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
             
             return section
@@ -82,7 +82,6 @@ class PublicDayViewController: UIViewController {
     
     func configureHierarchy() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
-        collectionView.backgroundColor = .background
         collectionView.delegate = self
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
