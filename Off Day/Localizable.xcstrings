@@ -266,6 +266,22 @@
         }
       }
     },
+    "controller.calendar.noPublicPlan" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Public Holiday Template"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无公共假期模板"
+          }
+        }
+      }
+    },
     "controller.calendar.title" : {
       "localizations" : {
         "en" : {
@@ -303,13 +319,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose Public Holiday"
+            "value" : "Choose Public Holiday Template"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "选择公共假期"
+            "value" : "选择公共假期模板"
           }
         }
       }

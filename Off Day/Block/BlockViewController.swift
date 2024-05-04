@@ -53,7 +53,6 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         
         displayHandler = DayDisplayHandler(delegate: self)
         
-        title = String(localized: "controller.calendar.title")
         tabBarItem = UITabBarItem(title: String(localized: "controller.calendar.title"), image: UIImage(systemName: "calendar"), tag: 0)
     }
     
@@ -67,9 +66,10 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .background
         updateNavigationBarStyle()
+        updateNavigationTitleView()
         
         configureHierarchy()
         configureDataSource()
@@ -217,6 +217,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
             guard let self = self else { return }
             self.customDays = filter(customDays: customDays.sortedByStart(), from: self.displayHandler.getLeading(), to: self.displayHandler.getTrailing())
         }
+        self.updateNavigationTitleView()
     }
     
     private func applyData() {
@@ -255,5 +256,35 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         let nav = UINavigationController(rootViewController: calendarSectionViewController)
         
         navigationController?.present(nav, animated: true)
+    }
+    
+    func updateNavigationTitleView() {
+        let publicPlan = DayInfoManager.shared.plan
+        let subtitle = (publicPlan == nil) ? String(localized: "controller.calendar.noPublicPlan") : publicPlan!.title
+        navigationItem.setTitle(String(localized: "controller.calendar.title"), subtitle: subtitle)
+    }
+}
+
+extension UINavigationItem {
+    func setTitle(_ title: String, subtitle: String) {
+        let textColor = UIColor.white
+        
+        let titleLabel = UILabel()
+        titleLabel.text = title
+        titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
+        titleLabel.textColor = textColor
+
+        let subtitleLabel = UILabel()
+        subtitleLabel.text = subtitle
+        subtitleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.caption2)
+        subtitleLabel.textColor = textColor
+
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
+        stackView.distribution = .equalCentering
+        stackView.alignment = .center
+        stackView.axis = .vertical
+        stackView.layoutSubviews()
+               
+        self.titleView = stackView
     }
 }
