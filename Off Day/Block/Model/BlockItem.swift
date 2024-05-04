@@ -44,17 +44,26 @@ extension BlockItem {
     }
     
     var calendarTextColor: UIColor {
-        var result: UIColor
-        switch (calendarColor.isLight, UIColor.text.isLight) {
-        case (true, true):
-            result = .text.resolvedColor(with: UITraitCollection(userInterfaceStyle: .light))
-        case (false, true):
-            result = .text
-        case (false, false):
-            result = .text.resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark))
-        case (true, false):
-            result = .text
+        guard (publicDay?.type) == nil else {
+            return .white
         }
-        return result
+        switch day.dayType {
+        case .offday:
+            return .white
+        case .workday:
+            return .text
+        }
+//        var result: UIColor
+//        switch (calendarColor.isLight, UIColor.text.isLight) {
+//        case (true, true):
+//            result = .text.resolvedColor(with: UITraitCollection(userInterfaceStyle: .light))
+//        case (false, true):
+//            result = .text
+//        case (false, false):
+//            result = .text.resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark))
+//        case (true, false):
+//            result = .text
+//        }
+//        return result
     }
 }
