@@ -46,7 +46,7 @@
 		14DD513C2BE2356A004329E2 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51382BE2356A004329E2 /* NavigationViewController.swift */; };
 		14DD513D2BE2356A004329E2 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51392BE2356A004329E2 /* TabbarController.swift */; };
 		14DD51402BE2459C004329E2 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD513F2BE2459C004329E2 /* MoreViewController.swift */; };
-		14DD51432BE24642004329E2 /* ShortcutsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51422BE24642004329E2 /* ShortcutsViewController.swift */; };
+		14DD51432BE24642004329E2 /* TutorialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51422BE24642004329E2 /* TutorialsViewController.swift */; };
 		14DD51482BE24EA9004329E2 /* DayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51472BE24EA9004329E2 /* DayInfo.swift */; };
 		14DD514A2BE27A9E004329E2 /* CheckDayIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */; };
 		14E6D9BA2BE495F000931F3D /* Toast+Stryle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6D9B92BE495F000931F3D /* Toast+Stryle.swift */; };
@@ -111,7 +111,7 @@
 		14DD51382BE2356A004329E2 /* NavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		14DD51392BE2356A004329E2 /* TabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		14DD513F2BE2459C004329E2 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
-		14DD51422BE24642004329E2 /* ShortcutsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsViewController.swift; sourceTree = "<group>"; };
+		14DD51422BE24642004329E2 /* TutorialsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialsViewController.swift; sourceTree = "<group>"; };
 		14DD51472BE24EA9004329E2 /* DayInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayInfo.swift; sourceTree = "<group>"; };
 		14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDayIntent.swift; sourceTree = "<group>"; };
 		14E6D9B92BE495F000931F3D /* Toast+Stryle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Toast+Stryle.swift"; sourceTree = "<group>"; };
@@ -179,7 +179,7 @@
 				14DD513A2BE2356A004329E2 /* BaseViewController */,
 				14E6D9BD2BE4A82800931F3D /* PublicDay */,
 				14DD50E92BE20BC1004329E2 /* Block */,
-				14DD51442BE24648004329E2 /* Shortcuts */,
+				14DD51442BE24648004329E2 /* Tutorials */,
 				14DD51412BE245E8004329E2 /* More */,
 				14DD51192BE21050004329E2 /* Database */,
 				14DD51262BE213AD004329E2 /* DataManager */,
@@ -335,12 +335,12 @@
 			path = More;
 			sourceTree = "<group>";
 		};
-		14DD51442BE24648004329E2 /* Shortcuts */ = {
+		14DD51442BE24648004329E2 /* Tutorials */ = {
 			isa = PBXGroup;
 			children = (
-				14DD51422BE24642004329E2 /* ShortcutsViewController.swift */,
+				14DD51422BE24642004329E2 /* TutorialsViewController.swift */,
 			);
-			path = Shortcuts;
+			path = Tutorials;
 			sourceTree = "<group>";
 		};
 		14DD514B2BE27AA4004329E2 /* Intent */ = {
@@ -527,7 +527,7 @@
 				14DD51232BE21050004329E2 /* TimestampedRecord.swift in Sources */,
 				14DD50FF2BE20BC1004329E2 /* MonthTagView.swift in Sources */,
 				14ECFEED2BE5F30C005D2D79 /* DayInfoManager.swift in Sources */,
-				14DD51432BE24642004329E2 /* ShortcutsViewController.swift in Sources */,
+				14DD51432BE24642004329E2 /* TutorialsViewController.swift in Sources */,
 				14DD51212BE21050004329E2 /* AppDatabase.swift in Sources */,
 				14DD50B22BE1F5C4004329E2 /* AppDelegate.swift in Sources */,
 				14DD511A2BE21050004329E2 /* Date+Extension.swift in Sources */,

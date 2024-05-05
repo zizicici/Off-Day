@@ -1,5 +1,5 @@
 //
-//  ShortcutsViewController.swift
+//  TutorialsViewController.swift
 //  Off Day
 //
 //  Created by zici on 1/5/24.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ShortcutsViewController: UIViewController {
+class TutorialsViewController: UIViewController {
     let shortcutsURL = URL(string: "https://www.icloud.com/shortcuts/9e320348949c4b89a85499b6aed38533")
     
     private var addButton: UIButton = {
