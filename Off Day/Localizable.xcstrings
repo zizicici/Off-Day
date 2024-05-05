@@ -543,6 +543,7 @@
       }
     },
     "controller.shortcuts.title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -597,6 +598,9 @@
           }
         }
       }
+    },
+    "controller.tutorials.title" : {
+
     },
     "Date" : {
       "localizations" : {

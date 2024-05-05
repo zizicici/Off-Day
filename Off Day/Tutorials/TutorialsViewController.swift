@@ -46,8 +46,8 @@ class TutorialsViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
-        title = String(localized: "controller.shortcuts.title")
-        tabBarItem = UITabBarItem(title: String(localized: "controller.shortcuts.title"), image: UIImage(systemName: "sparkles"), tag: 0)
+        title = String(localized: "controller.tutorials.title")
+        tabBarItem = UITabBarItem(title: String(localized: "controller.tutorials.title"), image: UIImage(systemName: "sparkles"), tag: 0)
     }
     
     required init?(coder: NSCoder) {
@@ -55,7 +55,7 @@ class TutorialsViewController: UIViewController {
     }
     
     deinit {
-        print("ShortcutsViewController is deinited")
+        print("TutorialsViewController is deinited")
     }
     
     override func viewDidLoad() {
