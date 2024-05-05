@@ -92,9 +92,6 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .TodayUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .SettingsUpdate, object: nil)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.00) {
-            self.reloadData()
-        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.showPublicPlanPickerIfNeeded()
         }
@@ -102,6 +99,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.reloadData()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
