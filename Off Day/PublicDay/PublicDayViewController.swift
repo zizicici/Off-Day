@@ -101,7 +101,7 @@ class PublicDayViewController: UIViewController {
     
     func createListCellRegistration() -> UICollectionView.CellRegistration<PublicPlanCell, Item> {
         return UICollectionView.CellRegistration<PublicPlanCell, Item> { [weak self] (cell, indexPath, item) in
-            guard let self = self else { return }
+            guard self != nil else { return }
             switch item {
             case .empty:
                 var content = UIListContentConfiguration.valueCell()

@@ -9,13 +9,47 @@ import UIKit
 import SnapKit
 
 class TutorialsViewController: UIViewController {
-    let shortcutsURL = URL(string: "https://www.icloud.com/shortcuts/9e320348949c4b89a85499b6aed38533")
+    let shortcutsURL = URL(string: String(localized: "url.shortcuts"))
+    let shortcutsHelpURL = URL(string: String(localized: "url.help.shortcuts"))
+    let automationHelpURL = URL(string: String(localized: "url.help.automation"))
+
+    private var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 24.0
+        stackView.distribution = .fill
+        stackView.alignment = .leading
+        
+        return stackView
+    }()
     
-    private var addButton: UIButton = {
+    private var topLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.textAlignment = .center
+        label.textColor = AppColor.offDay
+        label.numberOfLines = 0
+        label.text = String(localized: "tutorials.hint.top")
+        
+        return label
+    }()
+    
+    private var secondLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .title1).pointSize, weight: .medium)
+        label.textAlignment = .center
+        label.textColor = AppColor.offDay
+        label.numberOfLines = 0
+        label.text = String(localized: "tutorials.hint.second")
+        
+        return label
+    }()
+    
+    private var publicPlanButton: UIButton = {
         var configuration = UIButton.Configuration.borderedTinted()
-        configuration.image = UIImage(systemName: "wand.and.stars", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24.0))
-        configuration.title = String(localized: "shortcuts.add.title")
-        configuration.subtitle = String(localized: "shortcuts.add.subtitle")
+        configuration.image = UIImage(systemName: "1.circle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18.0))
+        configuration.title = String(localized: "tutorials.publicPlan.title")
+        configuration.subtitle = String(localized: "tutorials.publicPlan.subtitle")
         configuration.imagePadding = 8.0
         configuration.titlePadding = 4.0
         configuration.cornerStyle = .large
@@ -34,11 +68,63 @@ class TutorialsViewController: UIViewController {
         return button
     }()
     
+    private var addShortcutsButton: UIButton = {
+        var configuration = UIButton.Configuration.borderedTinted()
+        configuration.image = UIImage(systemName: "2.circle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18.0))
+        configuration.title = String(localized: "tutorials.shortcuts.title")
+        configuration.subtitle = String(localized: "tutorials.shortcuts.subtitle")
+        configuration.imagePadding = 8.0
+        configuration.titlePadding = 4.0
+        configuration.cornerStyle = .large
+        configuration.buttonSize = .large
+        
+        configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.preferredFont(forTextStyle: .headline)
+
+            return outgoing
+        })
+        
+        let button = UIButton(configuration: configuration)
+        button.tintColor = AppColor.offDay
+        
+        return button
+    }()
+    
+    private var automationButton: UIButton = {
+        var configuration = UIButton.Configuration.borderedTinted()
+        configuration.image = UIImage(systemName: "3.circle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18.0))
+        configuration.title = String(localized: "tutorials.automation.title")
+        configuration.subtitle = String(localized: "tutorials.automation.subtitle")
+        configuration.imagePadding = 8.0
+        configuration.titlePadding = 4.0
+        configuration.cornerStyle = .large
+        configuration.buttonSize = .large
+        
+        configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.preferredFont(forTextStyle: .headline)
+
+            return outgoing
+        })
+        
+        let button = UIButton(configuration: configuration)
+        button.tintColor = AppColor.offDay
+        
+        return button
+    }()
     
     private var tutorialsButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         let button = UIButton(configuration: configuration)
         button.tintColor = AppColor.offDay
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+            .font: UIFont.systemFont(ofSize: 14)
+        ]
+        let string = NSAttributedString(string: String(localized: "tutorials.shortcuts.help.title"),attributes: attributes)
+        button.setAttributedTitle(string, for: .normal)
         
         return button
     }()
@@ -64,31 +150,48 @@ class TutorialsViewController: UIViewController {
         view.backgroundColor = AppColor.background
         updateNavigationBarStyle()
         
-        view.addSubview(addButton)
-        addButton.snp.makeConstraints { make in
-            make.center.equalTo(view)
-            make.height.greaterThanOrEqualTo(60)
-        }
-        addButton.addTarget(self, action: #selector(addShortcuts), for: .touchUpInside)
-        
-        view.addSubview(tutorialsButton)
-        tutorialsButton.snp.makeConstraints { make in
-            make.top.equalTo(addButton.snp.bottom).offset(12.0)
+        view.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
             make.centerX.equalTo(view)
+            make.centerY.equalTo(view).offset(50)
+            make.height.width.greaterThanOrEqualTo(0)
+            make.width.lessThanOrEqualTo(view).offset(-80)
         }
-        tutorialsButton.addTarget(self, action: #selector(openTutorials), for: .touchUpInside)
         
-        let attributes: [NSAttributedString.Key: Any] = [
-            .underlineStyle: NSUnderlineStyle.single.rawValue,
-            .font: UIFont.systemFont(ofSize: 14)
-        ]
-        let string = NSAttributedString(string: String(localized: "shortcuts.tutorials.title"),attributes: attributes)
+        stackView.addArrangedSubview(publicPlanButton)
+        stackView.addArrangedSubview(addShortcutsButton)
+        stackView.setCustomSpacing(4, after: addShortcutsButton)
+        stackView.addArrangedSubview(tutorialsButton)
+        stackView.addArrangedSubview(automationButton)
+        
+        view.addSubview(secondLabel)
+        secondLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(stackView.snp.top).offset(-60)
+            make.leading.trailing.equalTo(view).inset(32)
+        }
+        view.addSubview(topLabel)
+        topLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(secondLabel.snp.top).offset(-10)
+            make.leading.trailing.equalTo(view).inset(32)
+        }
 
-        tutorialsButton.setAttributedTitle(string, for: .normal)
+        publicPlanButton.addTarget(self, action: #selector(choosePublicPlan), for: .touchUpInside)
+        addShortcutsButton.addTarget(self, action: #selector(addShortcuts), for: .touchUpInside)
+        tutorialsButton.addTarget(self, action: #selector(openShortcutsHelp), for: .touchUpInside)
+        automationButton.addTarget(self, action: #selector(openAutomationHelp), for: .touchUpInside)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    @objc
+    
+    func choosePublicPlan() {
+        let calendarSectionViewController = PublicDayViewController()
+        let nav = UINavigationController(rootViewController: calendarSectionViewController)
+        
+        navigationController?.present(nav, animated: true)
     }
     
     @objc
@@ -99,8 +202,15 @@ class TutorialsViewController: UIViewController {
     }
     
     @objc
-    func openTutorials() {
-        if let url = URL(string: "https://fxwl60qzgjx.feishu.cn/wiki/MYMPw67yNiRfgikTM7DckyNQnPG?from=from_copylink") {
+    func openShortcutsHelp() {
+        if let url = shortcutsHelpURL {
+            openSF(with: url)
+        }
+    }
+    
+    @objc
+    func openAutomationHelp() {
+        if let url = automationHelpURL {
             openSF(with: url)
         }
     }
