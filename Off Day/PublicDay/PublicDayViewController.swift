@@ -11,6 +11,8 @@ import SnapKit
 class PublicDayViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
+    
+    private var selectedItem: Item?
         
     enum Section: Hashable {
         case special
@@ -59,7 +61,8 @@ class PublicDayViewController: UIViewController {
         title = String(localized: "controller.publicDay.title")
         updateNavigationBarStyle()
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeAction))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: String(localized: "controller.publicDay.cancel"), style: .plain, target: self, action: #selector(cancelAction))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: String(localized: "controller.publicDay.confirm"), style: .plain, target: self, action: #selector(confirmAction))
         
         configureHierarchy()
         configureDataSource()
@@ -167,16 +170,32 @@ class PublicDayViewController: UIViewController {
     
     func updateSelection() {
         if let plan = DayInfoManager.shared.publicPlan, let index = dataSource.indexPath(for: .plan(plan)) {
+            selectedItem = .plan(plan)
             collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
         } else {
             if let index = dataSource.indexPath(for: .empty) {
+                selectedItem = .empty
                 collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
             }
         }
     }
     
     @objc
-    func closeAction() {
+    func cancelAction() {
+        dismiss(animated: true)
+    }
+    
+    @objc
+    func confirmAction() {
+        guard let selectedItem = selectedItem else {
+            return
+        }
+        switch selectedItem {
+        case .empty:
+            DayInfoManager.shared.publicPlan = nil
+        case .plan(let publicPlan):
+            DayInfoManager.shared.publicPlan = publicPlan
+        }
         dismiss(animated: true)
     }
 }
@@ -184,12 +203,7 @@ class PublicDayViewController: UIViewController {
 extension PublicDayViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let item = dataSource.itemIdentifier(for: indexPath) {
-            switch item {
-            case .empty:
-                DayInfoManager.shared.publicPlan = nil
-            case .plan(let publicPlan):
-                DayInfoManager.shared.publicPlan = publicPlan
-            }
+            selectedItem = item
         }
     }
 }
