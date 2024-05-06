@@ -264,8 +264,7 @@ class MoreViewController: UIViewController {
         snapshot.appendItems(appItems, toSection: .appjun)
         
         snapshot.appendSections([.about])
-        snapshot.appendItems([.about(.specifications), .about(.eula), .about(.privacyPolicy), .about(.email)], toSection: .about)
-//        snapshot.appendItems([.about(.specifications), .about(.eula), .about(.share), .about(.review), .about(.privacyPolicy), .about(.email)], toSection: .about)
+        snapshot.appendItems([.about(.specifications), .about(.eula), .about(.share), .about(.review), .about(.privacyPolicy), .about(.email)], toSection: .about)
 
         dataSource.apply(snapshot, animatingDifferences: false)
     }
@@ -392,7 +391,7 @@ extension MoreViewController {
     }
     
     func openAppStoreForReview() {
-        guard let appStoreURL = URL(string: "itms-apps://itunes.apple.com/app/id6474681491?action=write-review") else {
+        guard let appStoreURL = URL(string: "itms-apps://itunes.apple.com/app/id6501973975?action=write-review") else {
             return
         }
         
@@ -402,7 +401,7 @@ extension MoreViewController {
     }
     
     func shareApp() {
-        if let url = URL(string: "https://apps.apple.com/app/id6474681491") {
+        if let url = URL(string: "https://apps.apple.com/app/id6501973975") {
             let controller = UIActivityViewController(activityItems: [url], applicationActivities: nil)
             
             present(controller, animated: true)
