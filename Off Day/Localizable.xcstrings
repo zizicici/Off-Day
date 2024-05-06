@@ -204,6 +204,35 @@
         }
       }
     },
+    "app.one.subtitle" : {
+      "comment" : "1/1",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Life Grid"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人生格子"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人生格子"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人生格子"
+          }
+        }
+      }
+    },
     "app.pigeon.subtitle" : {
       "comment" : "Focus Mode On",
       "localizations" : {

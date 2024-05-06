@@ -259,6 +259,7 @@ class MoreViewController: UIViewController {
         if Language.type() == .zh {
             appItems.append(.appjun(.otherApps(.festivals)))
         }
+        appItems.append(.appjun(.otherApps(.one)))
         appItems.append(contentsOf: [.appjun(.bilibili), .appjun(.xiaohongshu)])
         snapshot.appendItems(appItems, toSection: .appjun)
         
