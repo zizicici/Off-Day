@@ -9,7 +9,8 @@ import UIKit
 import SnapKit
 
 class TutorialsViewController: UIViewController {
-    let shortcutsURL = URL(string: String(localized: "url.shortcuts"))
+    let shortcutsNormalURL = URL(string: String(localized: "url.shortcuts.normal"))
+    let shortcutsSleepURL = URL(string: String(localized: "url.shortcuts.sleep"))
     let shortcutsHelpURL = URL(string: String(localized: "url.help.shortcuts"))
     let automationHelpURL = URL(string: String(localized: "url.help.automation"))
 
@@ -93,6 +94,7 @@ class TutorialsViewController: UIViewController {
         
         let button = UIButton(configuration: configuration)
         button.tintColor = AppColor.offDay
+        button.showsMenuAsPrimaryAction = true
         
         return button
     }()
@@ -180,9 +182,18 @@ class TutorialsViewController: UIViewController {
             make.bottom.equalTo(secondLabel.snp.top).offset(-10)
             make.leading.trailing.equalTo(view).inset(32)
         }
+        
+        let normalAction = UIAction(title: String(localized: "tutorials.normal.title"), image: UIImage(systemName: "alarm")) { [weak self] _ in
+            guard let self = self else { return }
+            self.addNormalShortcuts()
+        }
+        let sleepAction = UIAction(title: String(localized: "tutorials.sleep.title"), image: UIImage(systemName: "moon.fill")) { [weak self] _ in
+            guard let self = self else { return }
+            self.addSleepShortcuts()
+        }
+        addShortcutsButton.menu = UIMenu(title: "", children: [normalAction, sleepAction])
 
         publicPlanButton.addTarget(self, action: #selector(choosePublicPlan), for: .touchUpInside)
-        addShortcutsButton.addTarget(self, action: #selector(addShortcuts), for: .touchUpInside)
         tutorialsButton.addTarget(self, action: #selector(openShortcutsHelp), for: .touchUpInside)
         automationButton.addTarget(self, action: #selector(openAutomationHelp), for: .touchUpInside)
     }
@@ -192,7 +203,6 @@ class TutorialsViewController: UIViewController {
     }
     
     @objc
-    
     func choosePublicPlan() {
         let calendarSectionViewController = PublicDayViewController()
         let nav = UINavigationController(rootViewController: calendarSectionViewController)
@@ -200,9 +210,14 @@ class TutorialsViewController: UIViewController {
         navigationController?.present(nav, animated: true)
     }
     
-    @objc
-    func addShortcuts() {
-        if let shortcutsURL = shortcutsURL {
+    func addNormalShortcuts() {
+        if let shortcutsURL = shortcutsNormalURL {
+            UIApplication.shared.open(shortcutsURL, options: [:], completionHandler: nil)
+        }
+    }
+    
+    func addSleepShortcuts() {
+        if let shortcutsURL = shortcutsSleepURL {
             UIApplication.shared.open(shortcutsURL, options: [:], completionHandler: nil)
         }
     }

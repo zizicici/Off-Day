@@ -2514,6 +2514,34 @@
         }
       }
     },
+    "tutorials.normal.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For Normal Alarms"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于一般闹钟"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於一般鬧鐘"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於一般鬧鐘"
+          }
+        }
+      }
+    },
     "tutorials.publicPlan.subtitle" : {
       "localizations" : {
         "en" : {
@@ -2654,6 +2682,34 @@
         }
       }
     },
+    "tutorials.sleep.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For Sleep Alarms"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于睡眠闹钟"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於睡眠鬧鐘"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於睡眠鬧鐘"
+          }
+        }
+      }
+    },
     "url.help.automation" : {
       "localizations" : {
         "en" : {
@@ -2710,7 +2766,7 @@
         }
       }
     },
-    "url.shortcuts" : {
+    "url.shortcuts.normal" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2734,6 +2790,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "https://www.icloud.com/shortcuts/9e320348949c4b89a85499b6aed38533"
+          }
+        }
+      }
+    },
+    "url.shortcuts.sleep" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://www.icloud.com/shortcuts/bdd295c9ac08441d9db0d7f06fe60980"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://www.icloud.com/shortcuts/9faec60881504dfca40e0c3152498de5"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://www.icloud.com/shortcuts/9faec60881504dfca40e0c3152498de5"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://www.icloud.com/shortcuts/9faec60881504dfca40e0c3152498de5"
           }
         }
       }
