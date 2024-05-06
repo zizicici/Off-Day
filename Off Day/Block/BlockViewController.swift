@@ -91,10 +91,6 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .DatabaseUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .TodayUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .SettingsUpdate, object: nil)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            self.showPublicPlanPickerIfNeeded()
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
