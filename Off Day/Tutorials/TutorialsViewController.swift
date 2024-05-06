@@ -28,7 +28,10 @@ class TutorialsViewController: UIViewController {
         label.font = UIFont.preferredFont(forTextStyle: .body)
         label.textAlignment = .center
         label.textColor = AppColor.offDay
-        label.numberOfLines = 0
+        label.numberOfLines = 1
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
+        
         label.text = String(localized: "tutorials.hint.top")
         
         return label
@@ -36,10 +39,13 @@ class TutorialsViewController: UIViewController {
     
     private var secondLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .title1).pointSize, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .title1).pointSize, weight: .black)
         label.textAlignment = .center
         label.textColor = AppColor.offDay
-        label.numberOfLines = 0
+        label.numberOfLines = 1
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
+        
         label.text = String(localized: "tutorials.hint.second")
         
         return label
