@@ -1,0 +1,107 @@
+{
+    "name": "Thailand Public Holiday",
+    "start": "2024",
+    "end": "2024",
+    "days": [
+        {
+            "date": "2024-01-01",
+            "name": "New Year's Day",
+            "type": 0
+        },
+        {
+            "date": "2024-01-02",
+            "name": "Substitution for New Year's Eve",
+            "type": 0
+        },
+        {
+            "date": "2024-02-26",
+            "name": "Substitution for Makha Bucha Day",
+            "type": 0
+        },
+        {
+            "date": "2024-04-08",
+            "name": "Substitution for Chakri Memorial Day",
+            "type": 0
+        },
+        {
+            "date": "2024-04-13",
+            "name": "Songkran Festival",
+            "type": 0
+        },
+        {
+            "date": "2024-04-14",
+            "name": "Songkran Festival",
+            "type": 0
+        },
+        {
+            "date": "2024-04-15",
+            "name": "Songkran Festival",
+            "type": 0
+        },
+        {
+            "date": "2024-04-16",
+            "name": "Substitution for Songkran Festival",
+            "type": 0
+        },
+        {
+            "date": "2024-05-01",
+            "name": "National Labour Day",
+            "type": 0
+        },
+        {
+            "date": "2024-05-06",
+            "name": "Substitution for Coronation Day",
+            "type": 0
+        },
+        {
+            "date": "2024-05-22",
+            "name": "Visakha Bucha Day",
+            "type": 0
+        },
+        {
+            "date": "2024-06-03",
+            "name": "H.M. Queen Suthida Bajrasudhabimalalakshana's Birthday",
+            "type": 0
+        },
+        {
+            "date": "2024-07-22",
+            "name": "Substitution for Asarnha Bucha Day",
+            "type": 0
+        },
+        {
+            "date": "2024-07-29",
+            "name": "Substitution for H.M. King Maha Vajiralongkorn Phra Vajiraklaochaoyuhua's Birthday",
+            "type": 0
+        },
+        {
+            "date": "2024-08-12",
+            "name": "H.M. Queen Sirikit The Queen Mother's Birthday / Mother's Day",
+            "type": 0
+        },
+        {
+            "date": "2024-10-14",
+            "name": "Substitution for H.M. King Bhumibol Adulyadej The Great Memorial Day",
+            "type": 0
+        },
+        {
+            "date": "2024-10-23",
+            "name": "H.M. King Chulalongkorn The Great Memorial Day",
+            "type": 0
+        },
+        {
+            "date": "2024-12-5",
+            "name": "H.M. King Bhumibol Adulyadej The Great's Birthday / National Day / Father's Day",
+            "type": 0
+        },
+        {
+            "date": "2024-12-10",
+            "name": "Constitution Day",
+            "type": 0
+        },
+        {
+            "date": "2024-12-31",
+            "name": "New Year's Eve",
+            "type": 0
+        }
+    ]
+}

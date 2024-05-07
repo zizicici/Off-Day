@@ -50,6 +50,7 @@
 		14DD51482BE24EA9004329E2 /* DayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51472BE24EA9004329E2 /* DayInfo.swift */; };
 		14DD514A2BE27A9E004329E2 /* CheckDayIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */; };
 		14E49C972BE9C07B00431EA9 /* SettingOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E49C962BE9C07B00431EA9 /* SettingOptionsViewController.swift */; };
+		14E49C992BEA078A00431EA9 /* th.json in Resources */ = {isa = PBXBuildFile; fileRef = 14E49C982BEA078A00431EA9 /* th.json */; };
 		14E6D9BA2BE495F000931F3D /* Toast+Stryle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6D9B92BE495F000931F3D /* Toast+Stryle.swift */; };
 		14E6D9BC2BE4A81C00931F3D /* PublicDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6D9BB2BE4A81C00931F3D /* PublicDayViewController.swift */; };
 		14ECFEED2BE5F30C005D2D79 /* DayInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ECFEEC2BE5F30C005D2D79 /* DayInfoManager.swift */; };
@@ -116,6 +117,7 @@
 		14DD51472BE24EA9004329E2 /* DayInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayInfo.swift; sourceTree = "<group>"; };
 		14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDayIntent.swift; sourceTree = "<group>"; };
 		14E49C962BE9C07B00431EA9 /* SettingOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOptionsViewController.swift; sourceTree = "<group>"; };
+		14E49C982BEA078A00431EA9 /* th.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = th.json; sourceTree = "<group>"; };
 		14E6D9B92BE495F000931F3D /* Toast+Stryle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Toast+Stryle.swift"; sourceTree = "<group>"; };
 		14E6D9BB2BE4A81C00931F3D /* PublicDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicDayViewController.swift; sourceTree = "<group>"; };
 		14ECFEEC2BE5F30C005D2D79 /* DayInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayInfoManager.swift; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 				14ECFEFF2BE6319B005D2D79 /* mo-civil-servant.json */,
 				14ECFF002BE6319B005D2D79 /* mo-force.json */,
 				14ECFEFE2BE6319B005D2D79 /* mo-public.json */,
+				14E49C982BEA078A00431EA9 /* th.json */,
 				14ECFEF42BE5FBEE005D2D79 /* jp.json */,
 				14ECFF062BE68AE1005D2D79 /* sg.json */,
 				14ECFF072BE68AE1005D2D79 /* us.json */,
@@ -487,6 +490,7 @@
 				14DD50BB2BE1F5C5004329E2 /* Assets.xcassets in Resources */,
 				14DD50BE2BE1F5C5004329E2 /* Base in Resources */,
 				14ECFF092BE68AE1005D2D79 /* us.json in Resources */,
+				14E49C992BEA078A00431EA9 /* th.json in Resources */,
 				14ECFEF52BE5FBEE005D2D79 /* cn-xinjiang.json in Resources */,
 				14ECFF012BE6319B005D2D79 /* mo-public.json in Resources */,
 				14DD50CB2BE1F7F2004329E2 /* InfoPlist.xcstrings in Resources */,
@@ -706,7 +710,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zizicici.zzz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -736,7 +740,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zizicici.zzz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
