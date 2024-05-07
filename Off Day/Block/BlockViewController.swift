@@ -253,7 +253,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     private func updateMoreMenu() {
         var children: [UIMenuElement] = []
         
-        let divider = UIMenu(title: "", options: .displayInline, children: [getWeekStartTypeMenu()])
+        let divider = UIMenu(title: "", options: .displayInline, children: [getWeekStartTypeMenu(), getWeekEndColorMenu()])
         children.append(divider)
         
         moreButton?.menu = UIMenu(title: "", children: children)

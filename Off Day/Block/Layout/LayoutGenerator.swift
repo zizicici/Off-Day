@@ -28,7 +28,7 @@ struct LayoutGenerater {
             }
             snapshot.appendItems(Array(1...ZCCalendar.manager.dayCount(at: month, year: year)).map({ day in
                 let gregorianDay = GregorianDay(year: year, month: month, day: day)
-                return Item.block(BlockItem(index: gregorianDay.julianDay, publicDay: DayInfoManager.shared.publicDay(at: gregorianDay.julianDay), customDay: customDaysDict[gregorianDay.julianDay], isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay)))
+                return Item.block(BlockItem(index: gregorianDay.julianDay, publicDay: DayInfoManager.shared.publicDay(at: gregorianDay.julianDay), customDay: customDaysDict[gregorianDay.julianDay], weekEndColor: WeekEndColorType.getValue().getColor(), isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay)))
             }))
         }
     }
@@ -42,5 +42,16 @@ extension LayoutGenerater {
         let firstPart = array.suffix(from: index)
         let secondPart = array.prefix(index)
         return Array(firstPart + secondPart)
+    }
+}
+
+extension WeekEndColorType {
+    func getColor() -> UIColor {
+        switch self {
+        case .offDay:
+            return AppColor.offDay
+        case .blue:
+            return AppColor.weekEnd
+        }
     }
 }

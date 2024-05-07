@@ -13,6 +13,7 @@ struct BlockItem: Hashable {
     var index: Int
     var publicDay: DayInfo?
     var customDay: CustomDay?
+    var weekEndColor: UIColor
     var isToday: Bool
 }
 
@@ -27,7 +28,7 @@ extension BlockItem {
         guard let dayType = publicDay?.type else {
             switch day.dayType {
             case .offDay:
-                return day.dayType.color
+                return weekEndColor
             case .workDay:
                 return AppColor.paper
             }

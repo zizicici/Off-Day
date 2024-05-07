@@ -12,6 +12,7 @@ extension UserDefaults {
     enum Settings: String {
         case PublicPlanType = "com.zizicici.common.settings.PublicPlanType"
         case WeekStartType = "com.zizicici.common.settings.WeekStartType"
+        case WeekEndColorType = "com.zizicici.common.settings.WeekEndColorType"
         case NeedShowPublicPlanPicker = "com.zizicici.common.settings.NeedShowPublicPlanPicker"
     }
 }
@@ -110,6 +111,42 @@ extension WeekStartType: UserDefaultSettable {
     }
     
     static func getFooter() -> String? {
+        return nil
+    }
+}
+
+enum WeekEndColorType: Int, CaseIterable, Codable {
+    case offDay = 0
+    case blue
+}
+
+extension WeekEndColorType: UserDefaultSettable {
+    static func getKey() -> UserDefaults.Settings {
+        return .WeekEndColorType
+    }
+    
+    static var defaultOption: WeekEndColorType {
+        return .offDay
+    }
+    
+    func getName() -> String {
+        switch self {
+        case .offDay:
+            return String(localized: "settings.weekEndColorType.offDay")
+        case .blue:
+            return String(localized: "settings.weekEndColorType.blue")
+        }
+    }
+    
+    static func getTitle() -> String {
+        return String(localized: "settings.weekEndColorType.title")
+    }
+    
+    static func getFooter() -> String? {
+        return nil
+    }
+    
+    static func getHeader() -> String? {
         return nil
     }
 }

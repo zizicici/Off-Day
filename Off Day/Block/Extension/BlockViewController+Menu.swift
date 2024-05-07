@@ -24,4 +24,20 @@ extension BlockViewController {
     
         return weekStartTypeMenu
     }
+    
+    func getWeekEndColorType() -> WeekEndColorType {
+        return WeekEndColorType.getValue()
+    }
+    
+    func getWeekEndColorMenu() -> UIMenu {
+        let weekEndColor: [WeekEndColorType] = WeekEndColorType.allCases
+        let weekEndCOlorActions = weekEndColor.map { type in
+            let action = UIAction(title: type.getName(), state: type == getWeekEndColorType() ? .on : .off) { _ in
+                WeekEndColorType.setValue(type)
+            }
+            return action
+        }
+        let weekEndColorTypeMenu = UIMenu(title: WeekEndColorType.getTitle(), subtitle: getWeekEndColorType().getName(), image: UIImage(systemName: "paintpalette"), children: weekEndCOlorActions)
+        return weekEndColorTypeMenu
+    }
 }
