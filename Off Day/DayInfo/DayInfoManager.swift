@@ -64,6 +64,7 @@ final class DayInfoManager {
         case sg
         case us
         case th
+        case kr
         
         var resource: String {
             switch self {
@@ -93,6 +94,8 @@ final class DayInfoManager {
                 return "us"
             case .th:
                 return "th"
+            case .kr:
+                return "kr"
             }
         }
         
@@ -124,6 +127,8 @@ final class DayInfoManager {
                 return String(localized: "publicDay.item.us")
             case .th:
                 return String(localized: "publicDay.item.th")
+            case .kr:
+                return String(localized: "publicDay.item.kr")
             }
         }
         
@@ -155,6 +160,8 @@ final class DayInfoManager {
                 return String(localized: "publicDay.item.us.subtitle")
             case .th:
                 return String(localized: "publicDay.item.th.subtitle")
+            case .kr:
+                return String(localized: "publicDay.item.kr.subtitle")
             }
         }
     }

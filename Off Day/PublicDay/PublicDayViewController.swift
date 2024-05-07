@@ -23,6 +23,7 @@ class PublicDayViewController: UIViewController {
         case jp
         case us
         case th
+        case kr
         
         var header: String? {
             return nil
@@ -162,6 +163,9 @@ class PublicDayViewController: UIViewController {
         
         snapshot.appendSections([.th])
         snapshot.appendItems([.plan(.th)], toSection: .th)
+        
+        snapshot.appendSections([.kr])
+        snapshot.appendItems([.plan(.kr)], toSection: .kr)
         
         snapshot.appendSections([.jp])
         snapshot.appendItems([.plan(.jp)], toSection: .jp)
