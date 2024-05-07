@@ -13,8 +13,8 @@ class DayDisplayHandler: DisplayHandler {
     
     required init(delegate: DisplayHandlerDelegate) {
         self.delegate = delegate
-        self.anchorYear = 2024
-        self.currentCatalogue = .targetYear(2024)
+        self.anchorYear = ZCCalendar.manager.today.year
+        self.currentCatalogue = .targetYear(ZCCalendar.manager.today.year)
     }
     
     func getStart(for section: Section) -> Int? {
