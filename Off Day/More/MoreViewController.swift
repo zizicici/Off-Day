@@ -17,6 +17,7 @@ class MoreViewController: UIViewController {
         
     enum Section: Hashable {
         case general
+        case dataSource
         case appjun
         case about
         
@@ -24,6 +25,8 @@ class MoreViewController: UIViewController {
             switch self {
             case .general:
                 return String(localized: "more.section.general")
+            case .dataSource:
+                return String(localized: "more.section.dataSource")
             case .appjun:
                 return String(localized: "more.section.appjun")
             case .about:
@@ -39,13 +42,33 @@ class MoreViewController: UIViewController {
     enum Item: Hashable {
         enum GeneralItem: Hashable {
             case language
-            case publicPlan(DayInfoManager.PublicPlan?)
-            case weekEndType(WeekEndOffDayType)
+            case tutorial(TutorialEntranceType)
             
             var title: String {
                 switch self {
                 case .language:
                     return String(localized: "more.item.settings.language")
+                case .tutorial:
+                    return TutorialEntranceType.getTitle()
+                }
+            }
+            
+            var value: String? {
+                switch self {
+                case .language:
+                    return String(localized: "more.item.settings.language.value")
+                case .tutorial(let type):
+                    return type.getName()
+                }
+            }
+        }
+        
+        enum DataSourceItem: Hashable {
+            case publicPlan(DayInfoManager.PublicPlan?)
+            case weekEndType(WeekEndOffDayType)
+            
+            var title: String {
+                switch self {
                 case .publicPlan:
                     return String(localized: "more.item.settings.publicPlan")
                 case .weekEndType:
@@ -55,8 +78,6 @@ class MoreViewController: UIViewController {
             
             var value: String? {
                 switch self {
-                case .language:
-                    return String(localized: "more.item.settings.language.value")
                 case .publicPlan(let plan):
                     if let plan = plan {
                         return plan.title
@@ -131,12 +152,15 @@ class MoreViewController: UIViewController {
         }
         
         case settings(GeneralItem)
+        case dataSource(DataSourceItem)
         case appjun(AppJunItem)
         case about(AboutItem)
         
         var title: String {
             switch self {
             case .settings(let item):
+                return item.title
+            case .dataSource(let item):
                 return item.title
             case .appjun(let item):
                 return item.title
@@ -220,6 +244,15 @@ class MoreViewController: UIViewController {
                 content.secondaryText = item.value
                 cell.contentConfiguration = content
                 return cell
+            case .dataSource(let item):
+                let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+                cell.accessoryType = .disclosureIndicator
+                var content = UIListContentConfiguration.valueCell()
+                content.text = identifier.title
+                content.textProperties.color = .label
+                content.secondaryText = item.value
+                cell.contentConfiguration = content
+                return cell
             case .appjun(let item):
                 switch item {
                 case .otherApps(let app):
@@ -257,7 +290,10 @@ class MoreViewController: UIViewController {
     func reloadData() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.general])
-        snapshot.appendItems([.settings(.language), .settings(.publicPlan(DayInfoManager.shared.publicPlan)), .settings(.weekEndType(WeekEndOffDayType.getValue()))], toSection: .general)
+        snapshot.appendItems([.settings(.language), .settings(.tutorial(TutorialEntranceType.getValue()))], toSection: .general)
+        
+        snapshot.appendSections([.dataSource])
+        snapshot.appendItems([.dataSource(.publicPlan(DayInfoManager.shared.publicPlan)), .dataSource(.weekEndType(WeekEndOffDayType.getValue()))], toSection: .dataSource)
         
         snapshot.appendSections([.appjun])
         var appItems: [Item] = [.appjun(.otherApps(.lemon)), .appjun(.otherApps(.moontake)), .appjun(.otherApps(.coconut)), .appjun(.otherApps(.pigeon))]
@@ -284,6 +320,11 @@ extension MoreViewController: UITableViewDelegate {
                 switch item {
                 case .language:
                     jumpToSettings()
+                case .tutorial:
+                    enterSettings(TutorialEntranceType.self)
+                }
+            case .dataSource(let item):
+                switch item {
                 case .publicPlan:
                     showPublicPlanPicker()
                 case .weekEndType:

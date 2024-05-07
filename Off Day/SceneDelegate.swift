@@ -11,6 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    var tutorialSetting: TutorialEntranceType?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -21,13 +22,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         let tabBarController = TabbarController()
         tabBarController.tabBar.tintColor = AppColor.offDay
-        tabBarController.viewControllers = [
-            NavigationController(rootViewController: TutorialsViewController()),
-            NavigationController(rootViewController: BlockViewController()),
-            NavigationController(rootViewController: MoreViewController())
-        ]
+        self.tutorialSetting = TutorialEntranceType.getValue()
+        switch TutorialEntranceType.getValue() {
+        case .firstTab:
+            tabBarController.viewControllers = [
+                NavigationController(rootViewController: TutorialsViewController()),
+                NavigationController(rootViewController: BlockViewController()),
+                NavigationController(rootViewController: MoreViewController())
+            ]
+        case .secondTab:
+            tabBarController.viewControllers = [
+                NavigationController(rootViewController: BlockViewController()),
+                NavigationController(rootViewController: TutorialsViewController()),
+                NavigationController(rootViewController: MoreViewController())
+            ]
+        case .hidden:
+            tabBarController.viewControllers = [
+                NavigationController(rootViewController: BlockViewController()),
+                NavigationController(rootViewController: MoreViewController())
+            ]
+        }
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTabIfNeeded), name: .SettingsUpdate, object: nil)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -58,6 +76,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
+    @objc
+    func reloadTabIfNeeded() {
+        guard tutorialSetting != TutorialEntranceType.getValue() else {
+            return
+        }
+        let newValue = TutorialEntranceType.getValue()
+        tutorialSetting = newValue
+        
+        if let tabBarController = window?.rootViewController as? TabbarController {
+            var newViewControllers = tabBarController.viewControllers
+            newViewControllers?.removeAll(where: { viewController in
+                return (viewController as? NavigationController)?.viewControllers.first is TutorialsViewController
+            })
+            switch newValue {
+            case .firstTab:
+                newViewControllers?.insert(NavigationController(rootViewController: TutorialsViewController()), at: 0)
+            case .secondTab:
+                newViewControllers?.insert(NavigationController(rootViewController: TutorialsViewController()), at: 1)
+            case .hidden:
+                break
+            }
+            tabBarController.setViewControllers(newViewControllers, animated: false)
+            window?.rootViewController = tabBarController
+        }
+    }
 }
 

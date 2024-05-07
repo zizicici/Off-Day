@@ -14,6 +14,7 @@ extension UserDefaults {
         case WeekStartType = "com.zizicici.common.settings.WeekStartType"
         case WeekEndColorType = "com.zizicici.common.settings.WeekEndColorType"
         case WeekEndOffDayType = "com.zizicici.common.settings.WeekEndOffDayType"
+        case TutorialEntranceType = "com.zizicici.common.settings.TutorialEntranceType"
         case NeedShowPublicPlanPicker = "com.zizicici.common.settings.NeedShowPublicPlanPicker"
     }
 }
@@ -214,4 +215,36 @@ extension WeekEndOffDayType {
         
         return isOffDay
     }
+}
+
+enum TutorialEntranceType: Int, CaseIterable, Codable {
+    case firstTab = 0
+    case secondTab
+    case hidden
+}
+
+extension TutorialEntranceType: UserDefaultSettable {
+    static func getKey() -> UserDefaults.Settings {
+        .TutorialEntranceType
+    }
+    
+    static var defaultOption: TutorialEntranceType {
+        return .firstTab
+    }
+    
+    func getName() -> String {
+        switch self {
+        case .firstTab:
+            return String(localized: "settings.tutorialEntranceType.first")
+        case .secondTab:
+            return String(localized: "settings.tutorialEntranceType.second")
+        case .hidden:
+            return String(localized: "settings.tutorialEntranceType.hidden")
+        }
+    }
+    
+    static func getTitle() -> String {
+        return String(localized: "settings.tutorialEntranceType.title")
+    }
+    
 }
