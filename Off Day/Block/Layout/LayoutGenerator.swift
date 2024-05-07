@@ -39,7 +39,7 @@ struct LayoutGenerater {
                     backgroundColor = dayType.color
                     foregroundColor = .white
                 } else {
-                    if gregorianDay.weekdayOrder().isWeekEnd(twoDaysOff: WeekEndOffDayType.getValue() == .two) {
+                    if WeekEndOffDayType.checkIsWeekOffDay(for: gregorianDay) {
                         backgroundColor = WeekEndColorType.getValue().getColor()
                         foregroundColor = .white
                     } else {

@@ -2310,6 +2310,34 @@
         }
       }
     },
+    "settings.weekEndOffDayType.zero" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无休"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無休"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無休"
+          }
+        }
+      }
+    },
     "settings.weekStartType.followSystem" : {
       "localizations" : {
         "en" : {

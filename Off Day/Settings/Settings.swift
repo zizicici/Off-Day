@@ -167,6 +167,7 @@ extension WeekEndColorType: UserDefaultSettable {
 enum WeekEndOffDayType: Int, CaseIterable, Codable {
     case two = 0
     case one
+    case zero
 }
 
 extension WeekEndOffDayType: UserDefaultSettable {
@@ -184,6 +185,8 @@ extension WeekEndOffDayType: UserDefaultSettable {
             return String(localized: "settings.weekEndOffDayType.two")
         case .one:
             return String(localized: "settings.weekEndOffDayType.one")
+        case .zero:
+            return String(localized: "settings.weekEndOffDayType.zero")
         }
     }
     
@@ -193,5 +196,22 @@ extension WeekEndOffDayType: UserDefaultSettable {
     
     static func getFooter() -> String? {
         return String(localized: "settings.weekEndOffDayType.footer")
+    }
+}
+
+extension WeekEndOffDayType {
+    static func checkIsWeekOffDay(for day: GregorianDay) -> Bool {
+        var isOffDay: Bool
+        
+        switch getValue() {
+        case .two:
+            isOffDay = day.weekdayOrder().isWeekEnd(twoDaysOff: true)
+        case .one:
+            isOffDay = day.weekdayOrder().isWeekEnd(twoDaysOff: false)
+        case .zero:
+            isOffDay = false
+        }
+        
+        return isOffDay
     }
 }
