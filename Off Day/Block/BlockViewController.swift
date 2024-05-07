@@ -273,15 +273,6 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         
         navigationItem.setTitle(String(localized: "controller.calendar.title"), subtitle: subtitle)
     }
-    
-    func showPublicPlanPickerIfNeeded() {
-        let key = UserDefaults.Settings.NeedShowPublicPlanPicker.rawValue
-        guard UserDefaults.standard.object(forKey: key) == nil else {
-            return
-        }
-        UserDefaults.standard.setValue(false, forKey: key)
-        showPublicPlanPicker()
-    }
 }
 
 extension UINavigationItem {

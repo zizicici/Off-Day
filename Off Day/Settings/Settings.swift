@@ -15,7 +15,6 @@ extension UserDefaults {
         case WeekEndColorType = "com.zizicici.common.settings.WeekEndColorType"
         case WeekEndOffDayType = "com.zizicici.common.settings.WeekEndOffDayType"
         case TutorialEntranceType = "com.zizicici.common.settings.TutorialEntranceType"
-        case NeedShowPublicPlanPicker = "com.zizicici.common.settings.NeedShowPublicPlanPicker"
     }
 }
 
