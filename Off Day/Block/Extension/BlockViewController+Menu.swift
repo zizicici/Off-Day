@@ -37,7 +37,7 @@ extension BlockViewController {
             }
             return action
         }
-        let weekEndColorTypeMenu = UIMenu(title: WeekEndColorType.getTitle(), subtitle: getWeekEndColorType().getName(), image: UIImage(systemName: "paintpalette"), children: weekEndCOlorActions)
+        let weekEndColorTypeMenu = UIMenu(title: WeekEndColorType.getTitle(), subtitle: getWeekEndColorType().getName(), image: UIImage(systemName: "swatchpalette"), children: weekEndCOlorActions)
         return weekEndColorTypeMenu
     }
 }
