@@ -191,7 +191,11 @@ class TutorialsViewController: UIViewController {
             guard let self = self else { return }
             self.addSleepShortcuts()
         }
-        addShortcutsButton.menu = UIMenu(title: "", children: [normalAction, sleepAction])
+        if #available(iOS 17.0, *) {
+            addShortcutsButton.menu = UIMenu(title: "", children: [normalAction, sleepAction])
+        } else {
+            addShortcutsButton.menu = UIMenu(title: "", children: [normalAction])
+        }
 
         publicPlanButton.addTarget(self, action: #selector(choosePublicPlan), for: .touchUpInside)
         tutorialsButton.addTarget(self, action: #selector(openShortcutsHelp), for: .touchUpInside)
