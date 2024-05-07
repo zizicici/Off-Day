@@ -13,7 +13,8 @@ struct BlockItem: Hashable {
     var index: Int
     var publicDay: DayInfo?
     var customDay: CustomDay?
-    var weekEndColor: UIColor
+    var backgroundColor: UIColor
+    var foregroundColor: UIColor
     var isToday: Bool
 }
 
@@ -24,47 +25,11 @@ extension BlockItem {
 }
 
 extension BlockItem {
-    var calendarColor: UIColor {
-        guard let dayType = publicDay?.type else {
-            switch day.dayType {
-            case .offDay:
-                return weekEndColor
-            case .workDay:
-                return AppColor.paper
-            }
-        }
-        return dayType.color
-    }
-    
     var calendarString: String {
         var suffix = ""
         if let name = publicDay?.name {
             suffix = "\n\(name)"
         }
         return (day.completeFormatString() ?? "") + suffix
-    }
-    
-    var calendarTextColor: UIColor {
-        guard (publicDay?.type) == nil else {
-            return .white
-        }
-        switch day.dayType {
-        case .offDay:
-            return .white
-        case .workDay:
-            return AppColor.text
-        }
-//        var result: UIColor
-//        switch (calendarColor.isLight, UIColor.text.isLight) {
-//        case (true, true):
-//            result = .text.resolvedColor(with: UITraitCollection(userInterfaceStyle: .light))
-//        case (false, true):
-//            result = .text
-//        case (false, false):
-//            result = .text.resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark))
-//        case (true, false):
-//            result = .text
-//        }
-//        return result
     }
 }

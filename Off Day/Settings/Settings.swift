@@ -13,6 +13,7 @@ extension UserDefaults {
         case PublicPlanType = "com.zizicici.common.settings.PublicPlanType"
         case WeekStartType = "com.zizicici.common.settings.WeekStartType"
         case WeekEndColorType = "com.zizicici.common.settings.WeekEndColorType"
+        case WeekEndOffDayType = "com.zizicici.common.settings.WeekEndOffDayType"
         case NeedShowPublicPlanPicker = "com.zizicici.common.settings.NeedShowPublicPlanPicker"
     }
 }
@@ -28,6 +29,26 @@ protocol SettingsOption: Hashable, Equatable {
     static func getTitle() -> String
     static func getOptions() -> [Self]
     static var current: Self { get set}
+}
+
+extension SettingsOption {
+    static func getHeader() -> String? {
+        return nil
+    }
+    
+    static func getFooter() -> String? {
+        return nil
+    }
+}
+
+extension SettingsOption {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        if type(of: lhs) != type(of: rhs) {
+            return false
+        } else {
+            return lhs.getName() == rhs.getName()
+        }
+    }
 }
 
 protocol UserDefaultSettable: SettingsOption {
@@ -141,12 +162,36 @@ extension WeekEndColorType: UserDefaultSettable {
     static func getTitle() -> String {
         return String(localized: "settings.weekEndColorType.title")
     }
-    
-    static func getFooter() -> String? {
-        return nil
+}
+
+enum WeekEndOffDayType: Int, CaseIterable, Codable {
+    case two = 0
+    case one
+}
+
+extension WeekEndOffDayType: UserDefaultSettable {
+    static func getKey() -> UserDefaults.Settings {
+        return .WeekEndOffDayType
     }
     
-    static func getHeader() -> String? {
-        return nil
+    static var defaultOption: WeekEndOffDayType {
+        return .two
+    }
+    
+    func getName() -> String {
+        switch self {
+        case .two:
+            return String(localized: "settings.weekEndOffDayType.two")
+        case .one:
+            return String(localized: "settings.weekEndOffDayType.one")
+        }
+    }
+    
+    static func getTitle() -> String {
+        return String(localized: "settings.weekEndOffDayType.title")
+    }
+    
+    static func getFooter() -> String? {
+        return String(localized: "settings.weekEndOffDayType.footer")
     }
 }

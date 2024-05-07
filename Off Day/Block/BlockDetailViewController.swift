@@ -96,7 +96,7 @@ class BlockDetailViewController: UIViewController {
             make.leading.trailing.top.equalTo(view)
             make.bottom.equalTo(headView.safeAreaLayoutGuide.snp.top).offset(50.0)
         }
-        headView.backgroundColor = blockItem.calendarColor
+        headView.backgroundColor = blockItem.backgroundColor
         
         view.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
@@ -172,7 +172,7 @@ class BlockDetailViewController: UIViewController {
     }
     
     func updateDateLabelColor() {
-        dateLabel.textColor = blockItem.calendarTextColor
+        dateLabel.textColor = blockItem.foregroundColor
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

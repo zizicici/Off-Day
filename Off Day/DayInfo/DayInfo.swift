@@ -18,9 +18,3 @@ struct DayInfo: Codable, Equatable, Hashable {
     let date: GregorianDay
     let type: DayType
 }
-
-extension GregorianDay {
-    var dayType: DayType {
-        return weekdayOrder().isWeekEnd ? .offDay : .workDay
-    }
-}

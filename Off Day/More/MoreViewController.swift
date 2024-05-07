@@ -40,6 +40,7 @@ class MoreViewController: UIViewController {
         enum GeneralItem: Hashable {
             case language
             case publicPlan(DayInfoManager.PublicPlan?)
+            case weekEndType(WeekEndOffDayType)
             
             var title: String {
                 switch self {
@@ -47,6 +48,8 @@ class MoreViewController: UIViewController {
                     return String(localized: "more.item.settings.language")
                 case .publicPlan:
                     return String(localized: "more.item.settings.publicPlan")
+                case .weekEndType:
+                    return WeekEndOffDayType.getTitle()
                 }
             }
             
@@ -60,6 +63,8 @@ class MoreViewController: UIViewController {
                     } else {
                         return String(localized: "more.item.settings.publicPlan.noSet")
                     }
+                case .weekEndType(let type):
+                    return type.getName()
                 }
             }
         }
@@ -252,7 +257,7 @@ class MoreViewController: UIViewController {
     func reloadData() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.general])
-        snapshot.appendItems([.settings(.language), .settings(.publicPlan(DayInfoManager.shared.publicPlan))], toSection: .general)
+        snapshot.appendItems([.settings(.language), .settings(.publicPlan(DayInfoManager.shared.publicPlan)), .settings(.weekEndType(WeekEndOffDayType.getValue()))], toSection: .general)
         
         snapshot.appendSections([.appjun])
         var appItems: [Item] = [.appjun(.otherApps(.lemon)), .appjun(.otherApps(.moontake)), .appjun(.otherApps(.coconut)), .appjun(.otherApps(.pigeon))]
@@ -281,6 +286,8 @@ extension MoreViewController: UITableViewDelegate {
                     jumpToSettings()
                 case .publicPlan:
                     showPublicPlanPicker()
+                case .weekEndType:
+                    enterSettings(WeekEndOffDayType.self)
                 }
             case .appjun(let item):
                 switch item {
@@ -326,6 +333,13 @@ extension MoreViewController {
         let nav = UINavigationController(rootViewController: calendarSectionViewController)
         
         navigationController?.present(nav, animated: true)
+    }
+    
+    func enterSettings<T: SettingsOption>(_ type: T.Type) {
+        let settingsOptionViewController = SettingOptionsViewController<T>()
+        settingsOptionViewController.hidesBottomBarWhenPushed = true
+        
+        navigationController?.pushViewController(settingsOptionViewController, animated: true)
     }
     
     func enterSpecifications() {

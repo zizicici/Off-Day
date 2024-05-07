@@ -49,6 +49,7 @@
 		14DD51432BE24642004329E2 /* TutorialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51422BE24642004329E2 /* TutorialsViewController.swift */; };
 		14DD51482BE24EA9004329E2 /* DayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51472BE24EA9004329E2 /* DayInfo.swift */; };
 		14DD514A2BE27A9E004329E2 /* CheckDayIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */; };
+		14E49C972BE9C07B00431EA9 /* SettingOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E49C962BE9C07B00431EA9 /* SettingOptionsViewController.swift */; };
 		14E6D9BA2BE495F000931F3D /* Toast+Stryle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6D9B92BE495F000931F3D /* Toast+Stryle.swift */; };
 		14E6D9BC2BE4A81C00931F3D /* PublicDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6D9BB2BE4A81C00931F3D /* PublicDayViewController.swift */; };
 		14ECFEED2BE5F30C005D2D79 /* DayInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ECFEEC2BE5F30C005D2D79 /* DayInfoManager.swift */; };
@@ -114,6 +115,7 @@
 		14DD51422BE24642004329E2 /* TutorialsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialsViewController.swift; sourceTree = "<group>"; };
 		14DD51472BE24EA9004329E2 /* DayInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayInfo.swift; sourceTree = "<group>"; };
 		14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDayIntent.swift; sourceTree = "<group>"; };
+		14E49C962BE9C07B00431EA9 /* SettingOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOptionsViewController.swift; sourceTree = "<group>"; };
 		14E6D9B92BE495F000931F3D /* Toast+Stryle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Toast+Stryle.swift"; sourceTree = "<group>"; };
 		14E6D9BB2BE4A81C00931F3D /* PublicDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicDayViewController.swift; sourceTree = "<group>"; };
 		14ECFEEC2BE5F30C005D2D79 /* DayInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayInfoManager.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				14DD513F2BE2459C004329E2 /* MoreViewController.swift */,
+				14E49C962BE9C07B00431EA9 /* SettingOptionsViewController.swift */,
 				14F371292BE3EB4E00254C39 /* SpecificationsViewController.swift */,
 				14F371282BE3EADE00254C39 /* View */,
 			);
@@ -536,6 +539,7 @@
 				14F371202BE3355900254C39 /* CustomDay+UIColor.swift in Sources */,
 				14DD513C2BE2356A004329E2 /* NavigationViewController.swift in Sources */,
 				14DD50FC2BE20BC1004329E2 /* HoverGestureRecognizer.swift in Sources */,
+				14E49C972BE9C07B00431EA9 /* SettingOptionsViewController.swift in Sources */,
 				14DD50B42BE1F5C4004329E2 /* SceneDelegate.swift in Sources */,
 				14DD50EB2BE20BC1004329E2 /* BlockViewController+CellRegistration.swift in Sources */,
 				14DD514A2BE27A9E004329E2 /* CheckDayIntent.swift in Sources */,

@@ -143,7 +143,7 @@ class BlockCell: BlockBaseCell {
         setupViewsIfNeeded()
         
         if let item = state.blockItem {
-            paperView.backgroundColor = item.calendarColor
+            paperView.backgroundColor = item.backgroundColor
             if let customDay = item.customDay {
                 cornerMark.isHidden = false
                 switch customDay.dayType {
@@ -161,7 +161,7 @@ class BlockCell: BlockBaseCell {
                 highlightView.backgroundColor = .clear
             }
             
-            label.textColor = item.calendarTextColor
+            label.textColor = item.foregroundColor
             
             if item.isToday {
                 label.text = String(localized: "calendar.today")
