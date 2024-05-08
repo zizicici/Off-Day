@@ -75,7 +75,7 @@ class SpecificationsViewController: UIViewController {
                 case .date:
                     return "2024/05/02"
                 case .license:
-                    return "闽ICP备2023015823号-7A"
+                    return "闽ICP备2023015823号-8A"
                 }
             }
         }
