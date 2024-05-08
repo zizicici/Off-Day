@@ -16,6 +16,18 @@
             "state" : "translated",
             "value" : "休息日"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "休息日"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "休息日"
+          }
         }
       }
     }
