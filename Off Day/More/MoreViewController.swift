@@ -65,14 +65,14 @@ class MoreViewController: UIViewController {
         
         enum DataSourceItem: Hashable {
             case publicPlan(DayInfoManager.PublicPlan?)
-            case weekEndType(WeekEndOffDayType)
+            case basicCalendar(BasicCalendarType)
             
             var title: String {
                 switch self {
                 case .publicPlan:
                     return String(localized: "more.item.settings.publicPlan")
-                case .weekEndType:
-                    return WeekEndOffDayType.getTitle()
+                case .basicCalendar:
+                    return String(localized: "more.item.settings.basicCalendar")
                 }
             }
             
@@ -84,8 +84,8 @@ class MoreViewController: UIViewController {
                     } else {
                         return String(localized: "more.item.settings.publicPlan.noSet")
                     }
-                case .weekEndType(let type):
-                    return type.getName()
+                case .basicCalendar(let type):
+                    return type.title
                 }
             }
         }
@@ -208,6 +208,7 @@ class MoreViewController: UIViewController {
         reloadData()
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .SettingsUpdate, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .BasicCalendarUpdate, object: nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -293,7 +294,7 @@ class MoreViewController: UIViewController {
         snapshot.appendItems([.settings(.language), .settings(.tutorial(TutorialEntranceType.getValue()))], toSection: .general)
         
         snapshot.appendSections([.dataSource])
-        snapshot.appendItems([.dataSource(.publicPlan(DayInfoManager.shared.publicPlan)), .dataSource(.weekEndType(WeekEndOffDayType.getValue()))], toSection: .dataSource)
+        snapshot.appendItems([.dataSource(.publicPlan(DayInfoManager.shared.publicPlan)), .dataSource(.basicCalendar(BasicCalendarManager.shared.getConfigType()))], toSection: .dataSource)
         
         snapshot.appendSections([.appjun])
         var appItems: [Item] = [.appjun(.otherApps(.lemon)), .appjun(.otherApps(.moontake)), .appjun(.otherApps(.coconut)), .appjun(.otherApps(.pigeon))]
@@ -327,8 +328,8 @@ extension MoreViewController: UITableViewDelegate {
                 switch item {
                 case .publicPlan:
                     showPublicPlanPicker()
-                case .weekEndType:
-                    enterSettings(WeekEndOffDayType.self)
+                case .basicCalendar:
+                    showBasicCalendarEditor()
                 }
             case .appjun(let item):
                 switch item {
@@ -372,6 +373,13 @@ extension MoreViewController {
     func showPublicPlanPicker() {
         let calendarSectionViewController = PublicDayViewController()
         let nav = UINavigationController(rootViewController: calendarSectionViewController)
+        
+        navigationController?.present(nav, animated: true)
+    }
+    
+    func showBasicCalendarEditor() {
+        let basicCalendarViewController = BasicCalendarEditorViewController()
+        let nav = UINavigationController(rootViewController: basicCalendarViewController)
         
         navigationController?.present(nav, animated: true)
     }

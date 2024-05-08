@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14D6F9202BEB05FA008712E1 /* BasicCalendarEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F91F2BEB05FA008712E1 /* BasicCalendarEditorViewController.swift */; };
+		14D6F9242BEB31E6008712E1 /* StandardConfigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F9232BEB31E6008712E1 /* StandardConfigCell.swift */; };
+		14D6F9262BEB412A008712E1 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F9252BEB412A008712E1 /* MenuCell.swift */; };
+		14D6F9282BEB6B5E008712E1 /* WeekCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F9272BEB6B5E008712E1 /* WeekCalendarCell.swift */; };
+		14D6F92A2BEB6C86008712E1 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F9292BEB6C86008712E1 /* DateCell.swift */; };
+		14D6F92C2BEB90F6008712E1 /* BasicCalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F92B2BEB90F6008712E1 /* BasicCalendarManager.swift */; };
 		14DD50B22BE1F5C4004329E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */; };
 		14DD50B42BE1F5C4004329E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */; };
 		14DD50BB2BE1F5C5004329E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14DD50BA2BE1F5C5004329E2 /* Assets.xcassets */; };
@@ -76,6 +82,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14D6F91F2BEB05FA008712E1 /* BasicCalendarEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCalendarEditorViewController.swift; sourceTree = "<group>"; };
+		14D6F9232BEB31E6008712E1 /* StandardConfigCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardConfigCell.swift; sourceTree = "<group>"; };
+		14D6F9252BEB412A008712E1 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
+		14D6F9272BEB6B5E008712E1 /* WeekCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCalendarCell.swift; sourceTree = "<group>"; };
+		14D6F9292BEB6C86008712E1 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
+		14D6F92B2BEB90F6008712E1 /* BasicCalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCalendarManager.swift; sourceTree = "<group>"; };
 		14DD50AE2BE1F5C4004329E2 /* Off Day.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Off Day.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -158,6 +170,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		14D6F9212BEB31B5008712E1 /* BasicCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				14D6F91F2BEB05FA008712E1 /* BasicCalendarEditorViewController.swift */,
+				14D6F92B2BEB90F6008712E1 /* BasicCalendarManager.swift */,
+				14D6F9222BEB31D2008712E1 /* View */,
+			);
+			path = BasicCalendar;
+			sourceTree = "<group>";
+		};
+		14D6F9222BEB31D2008712E1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				14D6F9232BEB31E6008712E1 /* StandardConfigCell.swift */,
+				14D6F9252BEB412A008712E1 /* MenuCell.swift */,
+				14D6F9272BEB6B5E008712E1 /* WeekCalendarCell.swift */,
+				14D6F9292BEB6C86008712E1 /* DateCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		14DD50A52BE1F5C4004329E2 = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +219,7 @@
 				14E6D9BD2BE4A82800931F3D /* PublicDay */,
 				14DD50E92BE20BC1004329E2 /* Block */,
 				14DD51442BE24648004329E2 /* Tutorials */,
+				14D6F9212BEB31B5008712E1 /* BasicCalendar */,
 				14DD51412BE245E8004329E2 /* More */,
 				14DD51192BE21050004329E2 /* Database */,
 				14DD51262BE213AD004329E2 /* DataManager */,
@@ -520,6 +554,7 @@
 				14DD51012BE20BC1004329E2 /* BlockDetailViewController.swift in Sources */,
 				14DD50ED2BE20BC1004329E2 /* BlockViewController+Layout.swift in Sources */,
 				14ECFF052BE64983005D2D79 /* AppColor.swift in Sources */,
+				14D6F9282BEB6B5E008712E1 /* WeekCalendarCell.swift in Sources */,
 				14E6D9BA2BE495F000931F3D /* Toast+Stryle.swift in Sources */,
 				14DD50F52BE20BC1004329E2 /* DayGrid.swift in Sources */,
 				14F371222BE3CA6500254C39 /* Settings.swift in Sources */,
@@ -529,17 +564,21 @@
 				14DD51482BE24EA9004329E2 /* DayInfo.swift in Sources */,
 				14DD50F82BE20BC1004329E2 /* BlockCell.swift in Sources */,
 				14F3712A2BE3EB4E00254C39 /* SpecificationsViewController.swift in Sources */,
+				14D6F9242BEB31E6008712E1 /* StandardConfigCell.swift in Sources */,
 				14DD50F22BE20BC1004329E2 /* DisplayHandler.swift in Sources */,
 				14DD51222BE21050004329E2 /* Persistence.swift in Sources */,
 				14DD51022BE20BC1004329E2 /* BlockViewController.swift in Sources */,
+				14D6F9202BEB05FA008712E1 /* BasicCalendarEditorViewController.swift in Sources */,
 				14DD50F12BE20BC1004329E2 /* DayByDayHandler.swift in Sources */,
 				14DD512C2BE21AB8004329E2 /* UIColor+Extension.swift in Sources */,
 				14DD51402BE2459C004329E2 /* MoreViewController.swift in Sources */,
 				14DD51232BE21050004329E2 /* TimestampedRecord.swift in Sources */,
+				14D6F92C2BEB90F6008712E1 /* BasicCalendarManager.swift in Sources */,
 				14DD50FF2BE20BC1004329E2 /* MonthTagView.swift in Sources */,
 				14ECFEED2BE5F30C005D2D79 /* DayInfoManager.swift in Sources */,
 				14DD51432BE24642004329E2 /* TutorialsViewController.swift in Sources */,
 				14DD51212BE21050004329E2 /* AppDatabase.swift in Sources */,
+				14D6F92A2BEB6C86008712E1 /* DateCell.swift in Sources */,
 				14DD50B22BE1F5C4004329E2 /* AppDelegate.swift in Sources */,
 				14DD511A2BE21050004329E2 /* Date+Extension.swift in Sources */,
 				14DD50FD2BE20BC1004329E2 /* ImpactGenerator.swift in Sources */,
@@ -547,6 +586,7 @@
 				14F371202BE3355900254C39 /* CustomDay+UIColor.swift in Sources */,
 				14DD513C2BE2356A004329E2 /* NavigationViewController.swift in Sources */,
 				14DD50FC2BE20BC1004329E2 /* HoverGestureRecognizer.swift in Sources */,
+				14D6F9262BEB412A008712E1 /* MenuCell.swift in Sources */,
 				14E49C972BE9C07B00431EA9 /* SettingOptionsViewController.swift in Sources */,
 				14DD50B42BE1F5C4004329E2 /* SceneDelegate.swift in Sources */,
 				14DD50EB2BE20BC1004329E2 /* BlockViewController+CellRegistration.swift in Sources */,
