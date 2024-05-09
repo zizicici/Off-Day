@@ -11,12 +11,12 @@ import ZCCalendar
 struct CheckDayClashIntent: AppIntent {
     static var title: LocalizedStringResource = "intent.clash.title"
     
-    static var description: IntentDescription = IntentDescription("If the result is true, it is a clash day.", categoryName: "Check Clash Day")
+    static var description: IntentDescription = IntentDescription("If the result is true, it is a Clash Day. Clash Day means that the public holiday template, base calendar, and user annotations (optional) for this day have different criteria for determining whether it is an Off Day.", categoryName: "Check Clash Day")
     
     @Parameter(title: "Date", description: "Date", kind: .date, requestValueDialog: IntentDialog("Which day?"))
     var date: Date
     
-    @Parameter(title: "Including Custom Mark", description: "Including Custom Mark", default: false)
+    @Parameter(title: "Including user annotaions", description: "Including user annotaions", default: false)
     var enableUserMark: Bool
     
     static var parameterSummary: some ParameterSummary {
@@ -42,9 +42,9 @@ struct CheckDayClashIntent: AppIntent {
 struct CheckTodayClashIntent: AppIntent {
     static var title: LocalizedStringResource = "intent.clash.today.title"
     
-    static var description: IntentDescription = IntentDescription("If the result is true, it is a clash day.", categoryName: "Check Clash Day")
+    static var description: IntentDescription = IntentDescription("If the result is true, it is a Clash Day. Clash Day means that the public holiday template, base calendar, and user annotations (optional) for this day have different criteria for determining whether it is an Off Day.", categoryName: "Check Clash Day")
     
-    @Parameter(title: "Including Custom Mark", description: "Including Custom Mark", default: false)
+    @Parameter(title: "Including user annotaions", description: "Including user annotaions", default: false)
     var enableUserMark: Bool
     
     static var parameterSummary: some ParameterSummary {
@@ -70,9 +70,9 @@ struct CheckTodayClashIntent: AppIntent {
 struct CheckTomorrowClashIntent: AppIntent {
     static var title: LocalizedStringResource = "intent.clash.tomorrow.title"
     
-    static var description: IntentDescription = IntentDescription("If the result is true, it is a clash day.", categoryName: "Check Clash Day")
+    static var description: IntentDescription = IntentDescription("If the result is true, it is a Clash Day. Clash Day means that the public holiday template, base calendar, and user annotations (optional) for this day have different criteria for determining whether it is an Off Day.", categoryName: "Check Clash Day")
     
-    @Parameter(title: "Including Custom Mark", description: "Including Custom Mark", default: false)
+    @Parameter(title: "Including user annotaions", description: "Including user annotaions", default: false)
     var enableUserMark: Bool
     
     static var parameterSummary: some ParameterSummary {

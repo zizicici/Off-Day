@@ -858,7 +858,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Basic Calendar"
+            "value" : "Base Calendar"
           }
         },
         "zh-Hans" : {
@@ -1217,30 +1217,30 @@
         }
       }
     },
-    "If the result is true, it is a clash day." : {
+    "If the result is true, it is a Clash Day. Clash Day means that the public holiday template, base calendar, and user annotations (optional) for this day have different criteria for determining whether it is an Off Day." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "If the result is true, it is a clash day."
+            "value" : "If the result is true, it is a Clash Day. Clash Day means that the public holiday template, base calendar, and user annotations (optional) for this day have different criteria for determining whether it is an Off Day."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如果结果为 true 则是冲突日。"
+            "value" : "如果结果为 true 则是冲突日。冲突日意味着这一天的用户标注信息（可选）、公共假期模板以及基础日历对于“这一天是否是休息日”的判断是不同的。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如果結果爲 true 則是衝突日。"
+            "value" : "如果結果爲 true 則是衝突日。衝突日意味着這一天的用戶標註信息（可選）、公共假期模板以及基礎日曆對於“這一天是否是休息日”的判斷是不同的。"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如果結果爲 true 則是衝突日。"
+            "value" : "如果結果爲 true 則是衝突日。衝突日意味着這一天的用戶標註信息（可選）、公共假期模板以及基礎日曆對於“這一天是否是休息日”的判斷是不同的。"
           }
         }
       }
@@ -1273,30 +1273,30 @@
         }
       }
     },
-    "Including Custom Mark" : {
+    "Including user annotaions" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Including custom mark"
+            "value" : "Including user annotaions"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "包含用户标记"
+            "value" : "包含用户标注"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "包含用戶標記"
+            "value" : "包含用戶標註"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "包含用戶標記"
+            "value" : "包含用戶標註"
           }
         }
       }
@@ -1872,7 +1872,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Basic Calendar"
+            "value" : "Base Calendar"
           }
         },
         "zh-Hans" : {
