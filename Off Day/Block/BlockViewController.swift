@@ -205,6 +205,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         collectionView.backgroundColor = AppColor.background
         collectionView.delaysContentTouches = false
         collectionView.canCancelContentTouches = true
+        collectionView.scrollsToTop = false
         collectionView.delegate = self
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
