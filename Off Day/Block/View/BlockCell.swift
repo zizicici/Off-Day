@@ -90,6 +90,7 @@ class BlockCell: BlockBaseCell {
         
         isHover = false
         label.text = nil
+        label.backgroundColor = .clear
         paperView.backgroundColor = defaultBackgroundColor
         cornerMark.isHidden = true
     }
@@ -131,8 +132,12 @@ class BlockCell: BlockBaseCell {
         
         paperView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.edges.equalTo(paperView).inset(2)
+            make.edges.equalTo(paperView).inset(3)
         }
+        label.layer.cornerRadius = 3.0
+        label.clipsToBounds = true
+        
+        paperView.bringSubviewToFront(cornerMark)
         
         isAccessibilityElement = true
         accessibilityTraits = .button
@@ -162,13 +167,9 @@ class BlockCell: BlockBaseCell {
             }
             
             label.textColor = item.foregroundColor
-            
+            label.text = item.day.dayString()
             if item.isToday {
-                label.text = String(localized: "calendar.today")
-                label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-            } else {
-                label.text = item.day.dayString()
-                label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+                label.backgroundColor = AppColor.today
             }
             accessibilityLabel = item.day.formatString()
         }

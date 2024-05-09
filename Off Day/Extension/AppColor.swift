@@ -15,4 +15,5 @@ struct AppColor {
     static let paper = UIColor.paper
     static let background = UIColor.background
     static let navigationBar = UIColor.navigationBar
+    static let today = UIColor.today
 }
