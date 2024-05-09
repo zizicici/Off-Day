@@ -1713,13 +1713,13 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "繁体中文"
+            "value" : "繁體中文"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "繁体中文（香港）"
+            "value" : "繁體中文（香港）"
           }
         }
       }

@@ -521,7 +521,7 @@ struct Language {
     
     static func type() -> LanguageType {
         switch String(localized: "more.item.settings.language.value") {
-        case "简体中文", "繁体中文", "繁体中文（香港）":
+        case "简体中文", "繁體中文", "繁體中文（香港）":
             return .zh
         case "日本語":
             return .ja
