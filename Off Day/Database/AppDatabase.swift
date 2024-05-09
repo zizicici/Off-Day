@@ -35,6 +35,23 @@ final class AppDatabase {
                 table.column("day_type", .integer).notNull()
             }
         }
+        migrator.registerMigration("create_basic_calendar_config") { db in
+            try db.create(table: "basic_calendar_config") { table in
+                table.autoIncrementedPrimaryKey("id")
+                
+                table.column("type", .integer).notNull()
+                
+                table.column("standard_offday", .text).notNull()
+                
+                table.column("week_offset", .integer).notNull()
+                table.column("week_count", .integer).notNull()
+                table.column("week_indexs", .text).notNull()
+                
+                table.column("day_start", .integer).notNull()
+                table.column("day_work_count", .integer).notNull()
+                table.column("day_off_count", .integer).notNull()
+            }
+        }
         
         return migrator
     }
@@ -98,6 +115,43 @@ extension AppDatabase {
         do {
             _ = try dbWriter?.write{ db in
                 try CustomDay.deleteAll(db, ids: [customDayId])
+            }
+        }
+        catch {
+            print(error)
+            return false
+        }
+        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        return true
+    }
+}
+
+extension AppDatabase {
+    func add(basicCalendarConfig: BasicCalendarConfig) -> Bool {
+        guard basicCalendarConfig.id == nil else {
+            return false
+        }
+        do {
+            _ = try dbWriter?.write{ db in
+                var config = basicCalendarConfig
+                try config.save(db)
+            }
+        }
+        catch {
+            print(error)
+            return false
+        }
+        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        return true
+    }
+    
+    func update(basicCalendarConfig: BasicCalendarConfig) -> Bool {
+        guard basicCalendarConfig.id != nil else {
+            return false
+        }
+        do {
+            _ = try dbWriter?.write{ db in
+                try basicCalendarConfig.update(db)
             }
         }
         catch {

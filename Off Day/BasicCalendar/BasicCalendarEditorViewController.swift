@@ -92,7 +92,7 @@ class BasicCalendarEditorViewController: UIViewController, UITableViewDelegate {
         navigationItem.largeTitleDisplayMode = .never
         updateNavigationBarStyle()
         
-        self.selectedConfig = BasicCalendarManager.shared.getConfig()
+        self.selectedConfig = BasicCalendarManager.shared.config
         
         configureHierarchy()
         configureDataSource()

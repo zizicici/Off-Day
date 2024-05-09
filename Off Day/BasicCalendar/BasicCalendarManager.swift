@@ -8,7 +8,7 @@
 import Foundation
 import ZCCalendar
 
-enum BasicCalendarType: Int {
+enum BasicCalendarType: Int, Codable {
     case standard = 0
     case weeksCircle
     case daysCircle
@@ -49,10 +49,6 @@ struct DaysCircleConfig: Hashable, Codable {
     var offCount: Int
 }
 
-extension Notification.Name {
-    static let BasicCalendarUpdate = Notification.Name(rawValue: "com.zizicici.offday.basicCalendar.updated")
-}
-
 class BasicCalendarManager {
     static let shared = BasicCalendarManager()
     
@@ -71,102 +67,64 @@ class BasicCalendarManager {
                 return .daysCircle
             }
         }
-    }
-    
-    static let configKey: String = UserDefaults.Settings.BasicCalendarConfig.rawValue
-    static let typeKey: String = UserDefaults.Settings.BasicCalendarType.rawValue
-
-    func getConfigType() -> BasicCalendarType {
-        if let storedValue = UserDefaults.standard.getInt(forKey: Self.typeKey), let type = BasicCalendarType(rawValue: storedValue) {
-            return type
-        } else {
-            return .standard
+        
+        static func generate(by config: BasicCalendarConfig) -> Self {
+            switch config.type {
+            case .standard:
+                return .standard(StandardConfig(weekdayOrders: config.standardWeekdayOrders()))
+            case .weeksCircle:
+                return .weeksCircle(WeeksCircleConfig(offset: Int(config.weekOffset), weekCount: config.weekCount, indexs: config.weeksCircleIndexs()))
+            case .daysCircle:
+                return .daysCircle(DaysCircleConfig(start: Int(config.dayStart), workCount: Int(config.dayWorkCount), offCount: Int(config.dayOffCount)))
+            }
         }
     }
     
-    func getConfig() -> Config {
-        if let storedValue = UserDefaults.standard.getInt(forKey: Self.typeKey), let type = BasicCalendarType(rawValue: storedValue) {
-            if let savedData = UserDefaults.standard.object(forKey: Self.configKey) as? Data {
-                switch type {
-                case .standard:
-                    if let loadedConfig = try? JSONDecoder().decode(StandardConfig.self, from: savedData) {
-                        return .standard(loadedConfig)
-                    } else {
-                        let result = Config.standard(StandardConfig.default)
-                        save(config: result)
-                        return result
-                    }
-                case .weeksCircle:
-                    if let loadedConfig = try? JSONDecoder().decode(WeeksCircleConfig.self, from: savedData) {
-                        return .weeksCircle(loadedConfig)
-                    } else {
-                        let result = Config.standard(StandardConfig.default)
-                        save(config: result)
-                        return result
-                    }
-                case .daysCircle:
-                    if let loadedConfig = try? JSONDecoder().decode(DaysCircleConfig.self, from: savedData) {
-                        return .daysCircle(loadedConfig)
-                    } else {
-                        let result = Config.standard(StandardConfig.default)
-                        save(config: result)
-                        return result
-                    }
-                }
-            } else {
-                let result = Config.standard(StandardConfig.default)
-                save(config: result)
-                return result
-            }
+    private(set) var config: Config
+
+    init() {
+        if let storedConfig = BasicCalendarConfigManager.fetch() {
+            config = Config.generate(by: storedConfig)
         } else {
-            // Translate WeekendType to Config
+            let standardOffday: String
             switch WeekEndOffDayType.getValue() {
             case .two:
-                let config: StandardConfig = StandardConfig(weekdayOrders: [.sat, .sun])
-                let result: Config = .standard(config)
-                save(config: result)
-                return result
+                standardOffday = "6/7"
             case .one:
-                let config: StandardConfig = StandardConfig(weekdayOrders: [.sun])
-                let result: Config = .standard(config)
-                save(config: result)
-                return result
+                standardOffday = "7"
             case .zero:
-                let config: StandardConfig = StandardConfig(weekdayOrders: [])
-                let result: Config = .standard(config)
-                save(config: result)
-                return result
+                standardOffday = ""
             }
+            let needSaveConfig = BasicCalendarConfig(type: .standard, standardOffday: standardOffday, weekOffset: 0, weekCount: .two, weekIndexs: "", dayStart: 0, dayWorkCount: 1, dayOffCount: 1)
+            BasicCalendarConfigManager.add(config: needSaveConfig)
+            
+            config = Config.generate(by: needSaveConfig)
         }
     }
     
     func save(config: Config) {
-        var result: Bool = false
+        guard var databaseConfig = BasicCalendarConfigManager.fetch() else {
+            return
+        }
+        databaseConfig.type = config.type
         switch config {
         case .standard(let standardConfig):
-            if let encodedData = try? JSONEncoder().encode(standardConfig) {
-                result = true
-                UserDefaults.standard.set(encodedData, forKey: Self.configKey)
-            }
+            databaseConfig.standardOffday = standardConfig.weekdayOrders.map{ "\($0.rawValue)" }.joined(separator: "/")
         case .weeksCircle(let weeksCircleConfig):
-            if let encodedData = try? JSONEncoder().encode(weeksCircleConfig) {
-                result = true
-                UserDefaults.standard.set(encodedData, forKey: Self.configKey)
-            }
+            databaseConfig.weekCount = weeksCircleConfig.weekCount
+            databaseConfig.weekOffset = Int64(weeksCircleConfig.offset)
+            databaseConfig.weekIndexs = weeksCircleConfig.indexs.map{ "\($0)" }.joined(separator: "/")
         case .daysCircle(let daysCircleConfig):
-            if let encodedData = try? JSONEncoder().encode(daysCircleConfig) {
-                result = true
-                UserDefaults.standard.set(encodedData, forKey: Self.configKey)
-            }
+            databaseConfig.dayStart = Int64(daysCircleConfig.start)
+            databaseConfig.dayOffCount = Int64(daysCircleConfig.offCount)
+            databaseConfig.dayWorkCount = Int64(daysCircleConfig.workCount)
         }
-        if result {
-            UserDefaults.standard.setValue(config.type.rawValue, forKey: Self.typeKey)
-            NotificationCenter.default.post(name: NSNotification.Name.SettingsUpdate, object: nil)
-        }
+        self.config = Config.generate(by: databaseConfig)
+        BasicCalendarConfigManager.update(config: databaseConfig)
     }
     
     func isOff(day: GregorianDay) -> Bool {
-        switch getConfig() {
+        switch config {
         case .standard(let config):
             return config.weekdayOrders.contains(day.weekdayOrder())
         case .weeksCircle(let config):
@@ -179,5 +137,35 @@ class BasicCalendarManager {
             }
             return offset >= config.workCount
         }
+    }
+}
+
+// Database
+struct BasicCalendarConfigManager {
+    static func fetch() -> BasicCalendarConfig? {
+        var result: BasicCalendarConfig?
+        do {
+            try AppDatabase.shared.reader?.read{ db in
+                result = try BasicCalendarConfig.fetchOne(db)
+            }
+        }
+        catch {
+            print(error)
+        }
+        return result
+    }
+    
+    static func add(config: BasicCalendarConfig) {
+        guard config.id == nil else {
+            return
+        }
+        _ = AppDatabase.shared.add(basicCalendarConfig: config)
+    }
+    
+    static func update(config: BasicCalendarConfig) {
+        guard config.id != nil else {
+            return
+        }
+        _ = AppDatabase.shared.update(basicCalendarConfig: config)
     }
 }

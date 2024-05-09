@@ -13,6 +13,7 @@
 		14D6F9282BEB6B5E008712E1 /* WeekCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F9272BEB6B5E008712E1 /* WeekCalendarCell.swift */; };
 		14D6F92A2BEB6C86008712E1 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F9292BEB6C86008712E1 /* DateCell.swift */; };
 		14D6F92C2BEB90F6008712E1 /* BasicCalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F92B2BEB90F6008712E1 /* BasicCalendarManager.swift */; };
+		14D6F92E2BEBDDF4008712E1 /* BasicCalendarConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F92D2BEBDDF4008712E1 /* BasicCalendarConfig.swift */; };
 		14DD50B22BE1F5C4004329E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */; };
 		14DD50B42BE1F5C4004329E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */; };
 		14DD50BB2BE1F5C5004329E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14DD50BA2BE1F5C5004329E2 /* Assets.xcassets */; };
@@ -88,6 +89,7 @@
 		14D6F9272BEB6B5E008712E1 /* WeekCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCalendarCell.swift; sourceTree = "<group>"; };
 		14D6F9292BEB6C86008712E1 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		14D6F92B2BEB90F6008712E1 /* BasicCalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCalendarManager.swift; sourceTree = "<group>"; };
+		14D6F92D2BEBDDF4008712E1 /* BasicCalendarConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCalendarConfig.swift; sourceTree = "<group>"; };
 		14DD50AE2BE1F5C4004329E2 /* Off Day.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Off Day.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 			children = (
 				14DD51132BE21050004329E2 /* CustomDay.swift */,
 				14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */,
+				14D6F92D2BEBDDF4008712E1 /* BasicCalendarConfig.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -579,6 +582,7 @@
 				14DD51432BE24642004329E2 /* TutorialsViewController.swift in Sources */,
 				14DD51212BE21050004329E2 /* AppDatabase.swift in Sources */,
 				14D6F92A2BEB6C86008712E1 /* DateCell.swift in Sources */,
+				14D6F92E2BEBDDF4008712E1 /* BasicCalendarConfig.swift in Sources */,
 				14DD50B22BE1F5C4004329E2 /* AppDelegate.swift in Sources */,
 				14DD511A2BE21050004329E2 /* Date+Extension.swift in Sources */,
 				14DD50FD2BE20BC1004329E2 /* ImpactGenerator.swift in Sources */,

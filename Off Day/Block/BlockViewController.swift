@@ -91,7 +91,6 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .DatabaseUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .TodayUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .SettingsUpdate, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .BasicCalendarUpdate, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -208,7 +208,7 @@ class MoreViewController: UIViewController {
         reloadData()
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .SettingsUpdate, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .BasicCalendarUpdate, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .DatabaseUpdated, object: nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -294,7 +294,7 @@ class MoreViewController: UIViewController {
         snapshot.appendItems([.settings(.language), .settings(.tutorial(TutorialEntranceType.getValue()))], toSection: .general)
         
         snapshot.appendSections([.dataSource])
-        snapshot.appendItems([.dataSource(.publicPlan(DayInfoManager.shared.publicPlan)), .dataSource(.basicCalendar(BasicCalendarManager.shared.getConfigType()))], toSection: .dataSource)
+        snapshot.appendItems([.dataSource(.publicPlan(DayInfoManager.shared.publicPlan)), .dataSource(.basicCalendar(BasicCalendarManager.shared.config.type))], toSection: .dataSource)
         
         snapshot.appendSections([.appjun])
         var appItems: [Item] = [.appjun(.otherApps(.lemon)), .appjun(.otherApps(.moontake)), .appjun(.otherApps(.coconut)), .appjun(.otherApps(.pigeon))]
