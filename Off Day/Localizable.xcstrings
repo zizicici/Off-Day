@@ -3132,25 +3132,25 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Weekend Color"
+            "value" : "Basic Off Day Color"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "周末颜色"
+            "value" : "基础休息日颜色"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "週末顏色"
+            "value" : "基礎休息日顏色"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "週末顏色"
+            "value" : "基礎休息日顏色"
           }
         }
       }

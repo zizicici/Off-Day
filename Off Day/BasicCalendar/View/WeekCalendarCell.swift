@@ -96,7 +96,7 @@ class WeekCalendarCell: UITableViewCell {
                 button.configuration = configuration
                 button.configurationUpdateHandler = { button in
                     if button.isHighlighted || button.isSelected {
-                        button.configuration?.baseBackgroundColor = AppColor.offDay
+                        button.configuration?.baseBackgroundColor = WeekEndColorType.getValue().getColor()
                         button.configuration?.baseForegroundColor = .white
                     } else {
                         button.configuration?.baseBackgroundColor = .clear
