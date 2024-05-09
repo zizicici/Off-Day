@@ -196,10 +196,16 @@ class TutorialsViewController: UIViewController {
         } else {
             addShortcutsButton.menu = UIMenu(title: "", children: [normalAction])
         }
+        
+        publicPlanButton.configurationUpdateHandler = { button in
+            button.configuration?.subtitle = (DayInfoManager.shared.publicPlan == nil) ? String(localized: "tutorials.shortcuts.subtitle") : DayInfoManager.shared.publicPlan?.title
+        }
 
         publicPlanButton.addTarget(self, action: #selector(choosePublicPlan), for: .touchUpInside)
         tutorialsButton.addTarget(self, action: #selector(openShortcutsHelp), for: .touchUpInside)
         automationButton.addTarget(self, action: #selector(openAutomationHelp), for: .touchUpInside)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .SettingsUpdate, object: nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -238,5 +244,10 @@ class TutorialsViewController: UIViewController {
         if let url = automationHelpURL {
             openSF(with: url)
         }
+    }
+    
+    @objc
+    func reloadData() {
+        publicPlanButton.setNeedsUpdateConfiguration()
     }
 }
