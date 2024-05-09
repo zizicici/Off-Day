@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14CFA1272BEC92A90004D15E /* CheckDayClashIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */; };
 		14D6F9202BEB05FA008712E1 /* BasicCalendarEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F91F2BEB05FA008712E1 /* BasicCalendarEditorViewController.swift */; };
 		14D6F9242BEB31E6008712E1 /* StandardConfigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F9232BEB31E6008712E1 /* StandardConfigCell.swift */; };
 		14D6F9262BEB412A008712E1 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F9252BEB412A008712E1 /* MenuCell.swift */; };
@@ -83,6 +84,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDayClashIntent.swift; sourceTree = "<group>"; };
 		14D6F91F2BEB05FA008712E1 /* BasicCalendarEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCalendarEditorViewController.swift; sourceTree = "<group>"; };
 		14D6F9232BEB31E6008712E1 /* StandardConfigCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardConfigCell.swift; sourceTree = "<group>"; };
 		14D6F9252BEB412A008712E1 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 			isa = PBXGroup;
 			children = (
 				14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */,
+				14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */,
 			);
 			path = Intent;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 				14DD513D2BE2356A004329E2 /* TabbarController.swift in Sources */,
 				14DD50F32BE20BC1004329E2 /* LayoutGenerator.swift in Sources */,
 				14E6D9BC2BE4A81C00931F3D /* PublicDayViewController.swift in Sources */,
+				14CFA1272BEC92A90004D15E /* CheckDayClashIntent.swift in Sources */,
 				14DD50F92BE20BC1004329E2 /* TitleCell.swift in Sources */,
 				14F371252BE3CB9F00254C39 /* BlockViewController+Menu.swift in Sources */,
 			);

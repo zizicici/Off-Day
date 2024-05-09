@@ -11,7 +11,7 @@ import ZCCalendar
 struct CheckDayIntent: AppIntent {
     static var title: LocalizedStringResource = "intent.check.title"
     
-    static var description: IntentDescription = IntentDescription("If the result is true, it is an off day, otherwise, it is a work day.", categoryName: "Check")
+    static var description: IntentDescription = IntentDescription("If the result is true, it is an off day, otherwise, it is a work day.", categoryName: "Check Off Day")
     
     @Parameter(title: "Date", description: "Date", kind: .date, requestValueDialog: IntentDialog("Which day?"))
     var date: Date
@@ -37,7 +37,7 @@ struct CheckDayIntent: AppIntent {
 struct CheckTodayIntent: AppIntent {
     static var title: LocalizedStringResource = "intent.check.today.title"
     
-    static var description: IntentDescription = IntentDescription("If the result is true, it is an off day, otherwise, it is a work day.", categoryName: "Check")
+    static var description: IntentDescription = IntentDescription("If the result is true, it is an off day, otherwise, it is a work day.", categoryName: "Check Off Day")
     
     static var parameterSummary: some ParameterSummary {
         Summary("Is Today an Off Day?")
@@ -60,7 +60,7 @@ struct CheckTodayIntent: AppIntent {
 struct CheckTomorrowIntent: AppIntent {
     static var title: LocalizedStringResource = "intent.check.tomorrow.title"
     
-    static var description: IntentDescription = IntentDescription("If the result is true, it is an off day, otherwise, it is a work day.", categoryName: "Check")
+    static var description: IntentDescription = IntentDescription("If the result is true, it is an off day, otherwise, it is a work day.", categoryName: "Check Off Day")
     
     static var parameterSummary: some ParameterSummary {
         Summary("Is Tomorrow an Off Day?")
