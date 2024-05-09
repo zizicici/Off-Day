@@ -14,9 +14,8 @@ extension UserDefaults {
         case WeekStartType = "com.zizicici.common.settings.WeekStartType"
         case WeekEndColorType = "com.zizicici.common.settings.WeekEndColorType"
         case WeekEndOffDayType = "com.zizicici.common.settings.WeekEndOffDayType"
-        case BasicCalendarType = "com.zizicici.common.settings.BasicCalendarType"
-        case BasicCalendarConfig = "com.zizicici.common.settings.BasicCalendarConfig"
         case TutorialEntranceType = "com.zizicici.common.settings.TutorialEntranceType"
+        case HolidayWorkColorType = "com.zizicici.offday.settings.HolidayWorkColorType"
     }
 }
 
@@ -163,6 +162,34 @@ extension WeekEndColorType: UserDefaultSettable {
     
     static func getTitle() -> String {
         return String(localized: "settings.weekEndColorType.title")
+    }
+}
+
+enum HolidayWorkColorType: Int, CaseIterable {
+    case workDay
+    case paper
+}
+
+extension HolidayWorkColorType: UserDefaultSettable {
+    static func getKey() -> UserDefaults.Settings {
+        return .HolidayWorkColorType
+    }
+    
+    static var defaultOption: HolidayWorkColorType {
+        return .workDay
+    }
+    
+    func getName() -> String {
+        switch self {
+        case .workDay:
+            return String(localized: "settings.holidayWorkColorType.workDay")
+        case .paper:
+            return String(localized: "settings.holidayWorkColorType.papaer")
+        }
+    }
+    
+    static func getTitle() -> String {
+        return String(localized: "settings.holidayWorkColorType.title")
     }
 }
 

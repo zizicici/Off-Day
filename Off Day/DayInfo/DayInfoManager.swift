@@ -229,4 +229,17 @@ final class DayInfoManager {
     public func publicDay(at julianDay: Int) -> DayInfo? {
         return publicPlanProvider?.days[julianDay]
     }
+    
+    public func hasHolidayShift() -> Bool {
+        var result: Bool = false
+        if let values = publicPlanProvider?.days.values {
+            for value in values {
+                if value.type == .workDay {
+                    result = true
+                    break
+                }
+            }
+        }
+        return result
+    }
 }

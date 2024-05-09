@@ -76,7 +76,6 @@
 		14ECFF052BE64983005D2D79 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ECFF042BE64983005D2D79 /* AppColor.swift */; };
 		14ECFF082BE68AE1005D2D79 /* sg.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFF062BE68AE1005D2D79 /* sg.json */; };
 		14ECFF092BE68AE1005D2D79 /* us.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFF072BE68AE1005D2D79 /* us.json */; };
-		14F371202BE3355900254C39 /* CustomDay+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */; };
 		14F371222BE3CA6500254C39 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371212BE3CA6500254C39 /* Settings.swift */; };
 		14F371252BE3CB9F00254C39 /* BlockViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */; };
 		14F371272BE3EACF00254C39 /* AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371262BE3EACF00254C39 /* AppCell.swift */; };
@@ -152,7 +151,6 @@
 		14ECFF042BE64983005D2D79 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
 		14ECFF062BE68AE1005D2D79 /* sg.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sg.json; sourceTree = "<group>"; };
 		14ECFF072BE68AE1005D2D79 /* us.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = us.json; sourceTree = "<group>"; };
-		14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomDay+UIColor.swift"; sourceTree = "<group>"; };
 		14F371212BE3CA6500254C39 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BlockViewController+Menu.swift"; sourceTree = "<group>"; };
 		14F371262BE3EACF00254C39 /* AppCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCell.swift; sourceTree = "<group>"; };
@@ -315,7 +313,6 @@
 			isa = PBXGroup;
 			children = (
 				14DD51132BE21050004329E2 /* CustomDay.swift */,
-				14F3711F2BE3355900254C39 /* CustomDay+UIColor.swift */,
 				14D6F92D2BEBDDF4008712E1 /* BasicCalendarConfig.swift */,
 			);
 			path = Model;
@@ -590,7 +587,6 @@
 				14DD511A2BE21050004329E2 /* Date+Extension.swift in Sources */,
 				14DD50FD2BE20BC1004329E2 /* ImpactGenerator.swift in Sources */,
 				14DD50EF2BE20BC1004329E2 /* BlockViewController+Popover.swift in Sources */,
-				14F371202BE3355900254C39 /* CustomDay+UIColor.swift in Sources */,
 				14DD513C2BE2356A004329E2 /* NavigationViewController.swift in Sources */,
 				14DD50FC2BE20BC1004329E2 /* HoverGestureRecognizer.swift in Sources */,
 				14D6F9262BEB412A008712E1 /* MenuCell.swift in Sources */,

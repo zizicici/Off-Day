@@ -36,8 +36,20 @@ struct LayoutGenerater {
                 let foregroundColor: UIColor
                 
                 if let dayType = publicDay?.type {
-                    backgroundColor = dayType.color
-                    foregroundColor = .white
+                    switch dayType {
+                    case .offDay:
+                        backgroundColor = AppColor.offDay
+                        foregroundColor = .white
+                    case .workDay:
+                        switch HolidayWorkColorType.getValue() {
+                        case .workDay:
+                            backgroundColor = AppColor.workDay
+                            foregroundColor = .white
+                        case .paper:
+                            backgroundColor = AppColor.paper
+                            foregroundColor = AppColor.text
+                        }
+                    }
                 } else {
                     if BasicCalendarManager.shared.isOff(day: gregorianDay) {
                         backgroundColor = WeekEndColorType.getValue().getColor()

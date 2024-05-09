@@ -252,12 +252,13 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     }
     
     private func updateMoreMenu() {
-        var children: [UIMenuElement] = []
+        var children: [UIMenuElement] = [getWeekStartTypeMenu(), getWeekEndColorMenu()]
         
-        let divider = UIMenu(title: "", options: .displayInline, children: [getWeekStartTypeMenu(), getWeekEndColorMenu()])
-        children.append(divider)
+        if DayInfoManager.shared.hasHolidayShift() {
+            children.append(getHolidayWorkColorMenu())
+        }
         
-        moreButton?.menu = UIMenu(title: "", children: children)
+        moreButton?.menu = UIMenu(title: "", options: .displayInline, children: children)
     }
     
     @objc
