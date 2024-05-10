@@ -29,7 +29,7 @@ struct LayoutGenerater {
             snapshot.appendItems(Array(1...ZCCalendar.manager.dayCount(at: month, year: year)).map({ day in
                 let gregorianDay = GregorianDay(year: year, month: month, day: day)
                 let julianDay = gregorianDay.julianDay
-                let publicDay = DayInfoManager.shared.publicDay(at: julianDay)
+                let publicDay = PublicDayManager.shared.publicDay(at: julianDay)
                 let customDay = customDaysDict[julianDay]
                 
                 let backgroundColor: UIColor

@@ -1,5 +1,5 @@
 //
-//  DayInfo.swift
+//  PublicDay.swift
 //  Off Day
 //
 //  Created by zici on 1/5/24.
@@ -13,7 +13,7 @@ enum DayType: Int, Codable {
     case workDay
 }
 
-struct DayInfo: Codable, Equatable, Hashable {
+struct PublicDay: Codable, Equatable, Hashable {
     let name: String
     let date: GregorianDay
     let type: DayType

@@ -1,5 +1,5 @@
 //
-//  DayInfoManager.swift
+//  PublicDayManager.swift
 //  Off Day
 //
 //  Created by zici on 4/5/24.
@@ -8,9 +8,9 @@
 import Foundation
 import ZCCalendar
 
-struct DayInfoProvider: Codable {
+struct PublicDayProvider: Codable {
     let name: String
-    let days: [Int: DayInfo] // julian day as Key
+    let days: [Int: PublicDay] // julian day as Key
     let start: Int
     let end: Int
     
@@ -26,7 +26,7 @@ struct DayInfoProvider: Codable {
         
         name = try container.decode(String.self, forKey: .name)
         
-        if let dayArray = try? container.decode([DayInfo].self, forKey: .days) {
+        if let dayArray = try? container.decode([PublicDay].self, forKey: .days) {
             days = Dictionary(grouping: dayArray, by: { Int($0.date.julianDay) }).compactMapValues { $0.first }
         } else {
             throw DecodingError.dataCorruptedError(forKey: .start, in: container, debugDescription: "Expected to decode Array(DayInfo)")
@@ -49,7 +49,7 @@ struct DayInfoProvider: Codable {
     }
 }
 
-final class DayInfoManager {
+final class PublicDayManager {
     enum PublicPlan: String {
         case cn
         case cn_xj
@@ -166,9 +166,9 @@ final class DayInfoManager {
         }
     }
     
-    static let shared: DayInfoManager = DayInfoManager()
+    static let shared: PublicDayManager = PublicDayManager()
     
-    private var publicPlanProvider: DayInfoProvider?
+    private var publicPlanProvider: PublicDayProvider?
     
     public func load() {
         load(publicPlan: planByUserDefault())
@@ -181,7 +181,7 @@ final class DayInfoManager {
         }
         if let url = Bundle.main.url(forResource: publicPlan.resource, withExtension: "json"), let data = try? Data(contentsOf: url) {
             do {
-                publicPlanProvider = try JSONDecoder().decode(DayInfoProvider.self, from: data)
+                publicPlanProvider = try JSONDecoder().decode(PublicDayProvider.self, from: data)
             } catch {
                 print("Unexpected error: \(error).")
             }
@@ -226,7 +226,7 @@ final class DayInfoManager {
         return targetPlan
     }
     
-    public func publicDay(at julianDay: Int) -> DayInfo? {
+    public func publicDay(at julianDay: Int) -> PublicDay? {
         return publicPlanProvider?.days[julianDay]
     }
     

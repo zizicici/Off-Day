@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         _ = AppDatabase.shared
         
-        DayInfoManager.shared.load()
+        PublicDayManager.shared.load()
         
         return true
     }

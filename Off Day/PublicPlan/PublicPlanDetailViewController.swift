@@ -11,17 +11,17 @@ import SnapKit
 class PublicPlanDetailViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
-    private var publicPlanProvider: DayInfoProvider?
+    private var publicPlanProvider: PublicDayProvider?
 
     enum Section: Hashable {
         case year(Int)
     }
     
     enum Item: Hashable {
-        case dayInfo(DayInfo)
+        case dayInfo(PublicDay)
     }
     
-    convenience init(publicPlan: DayInfoManager.PublicPlan) {
+    convenience init(publicPlan: PublicDayManager.PublicPlan) {
         self.init(nibName: nil, bundle: nil)
         load(publicPlan: publicPlan)
     }
@@ -32,7 +32,7 @@ class PublicPlanDetailViewController: UIViewController {
         title = publicPlanProvider?.name
         updateNavigationBarStyle()
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: String(localized: "controller.publicDetail.close"), style: .plain, target: self, action: #selector(dismissAction))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: String(localized: "publicDetail.close.title"), style: .plain, target: self, action: #selector(dismissAction))
         
         configureHierarchy()
         configureDataSource()
@@ -43,10 +43,10 @@ class PublicPlanDetailViewController: UIViewController {
         print("PublicPlanDetailViewController is deinited")
     }
     
-    private func load(publicPlan: DayInfoManager.PublicPlan) {
+    private func load(publicPlan: PublicDayManager.PublicPlan) {
         if let url = Bundle.main.url(forResource: publicPlan.resource, withExtension: "json"), let data = try? Data(contentsOf: url) {
             do {
-                publicPlanProvider = try JSONDecoder().decode(DayInfoProvider.self, from: data)
+                publicPlanProvider = try JSONDecoder().decode(PublicDayProvider.self, from: data)
             } catch {
                 print("Unexpected error: \(error).")
             }

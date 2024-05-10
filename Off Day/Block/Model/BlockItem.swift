@@ -11,7 +11,7 @@ import UIKit
 
 struct BlockItem: Hashable {
     var index: Int
-    var publicDay: DayInfo?
+    var publicDay: PublicDay?
     var customDay: CustomDay?
     var backgroundColor: UIColor
     var foregroundColor: UIColor

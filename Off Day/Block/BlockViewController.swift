@@ -223,7 +223,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         }
         self.updateNavigationTitleView()
         
-        if DayInfoManager.shared.publicPlan == nil {
+        if PublicDayManager.shared.publicPlan == nil {
             publicPlanButton?.image = UIImage(systemName: "calendar.badge.exclamationmark")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors: [.systemPink, .white]))
         } else {
             publicPlanButton?.image = UIImage(systemName: "calendar.badge.checkmark")
@@ -254,7 +254,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     private func updateMoreMenu() {
         var children: [UIMenuElement] = [getWeekStartTypeMenu(), getWeekEndColorMenu()]
         
-        if DayInfoManager.shared.hasHolidayShift() {
+        if PublicDayManager.shared.hasHolidayShift() {
             children.append(getHolidayWorkColorMenu())
         }
         
@@ -270,7 +270,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     }
     
     func updateNavigationTitleView() {
-        let publicPlan = DayInfoManager.shared.publicPlan
+        let publicPlan = PublicDayManager.shared.publicPlan
         let subtitle = (publicPlan == nil) ? String(localized: "controller.calendar.noPublicPlan") : publicPlan!.title
         
         navigationItem.setTitle(String(localized: "controller.calendar.title"), subtitle: subtitle)

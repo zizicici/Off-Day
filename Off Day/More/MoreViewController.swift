@@ -64,7 +64,7 @@ class MoreViewController: UIViewController {
         }
         
         enum DataSourceItem: Hashable {
-            case publicPlan(DayInfoManager.PublicPlan?)
+            case publicPlan(PublicDayManager.PublicPlan?)
             case basicCalendar(BasicCalendarType)
             
             var title: String {
@@ -294,7 +294,7 @@ class MoreViewController: UIViewController {
         snapshot.appendItems([.settings(.language), .settings(.tutorial(TutorialEntranceType.getValue()))], toSection: .general)
         
         snapshot.appendSections([.dataSource])
-        snapshot.appendItems([.dataSource(.publicPlan(DayInfoManager.shared.publicPlan)), .dataSource(.basicCalendar(BasicCalendarManager.shared.config.type))], toSection: .dataSource)
+        snapshot.appendItems([.dataSource(.publicPlan(PublicDayManager.shared.publicPlan)), .dataSource(.basicCalendar(BasicCalendarManager.shared.config.type))], toSection: .dataSource)
         
         snapshot.appendSections([.appjun])
         var appItems: [Item] = [.appjun(.otherApps(.lemon)), .appjun(.otherApps(.moontake)), .appjun(.otherApps(.coconut)), .appjun(.otherApps(.pigeon))]
