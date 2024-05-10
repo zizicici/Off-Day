@@ -37,7 +37,7 @@ class PublicPlanViewController: UIViewController {
     enum Item: Hashable {
         case empty
         case create
-        case plan(PublicDayManager.PublicPlan)
+        case plan(PublicPlanManager.FixedPlan)
         
         var title: String {
             switch self {
@@ -185,8 +185,8 @@ class PublicPlanViewController: UIViewController {
         }
     }
     
-    func createCustomTemplate(publicPlan: PublicDayManager.PublicPlan?) {
-        let editorViewController = PublicPlanDetailViewController(template: publicPlan)
+    func createCustomTemplate(fixedPlan: PublicPlanManager.FixedPlan?) {
+        let editorViewController = PublicPlanDetailViewController(template: fixedPlan)
         let nav = NavigationController(rootViewController: editorViewController)
         
         navigationController?.present(nav, animated: true)
@@ -226,7 +226,7 @@ class PublicPlanViewController: UIViewController {
     }
     
     func updateSelection() {
-        if let plan = PublicDayManager.shared.publicPlan, let index = dataSource.indexPath(for: .plan(plan)) {
+        if let plan = PublicPlanManager.shared.plan, let index = dataSource.indexPath(for: .plan(plan)) {
             selectedItem = .plan(plan)
             collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
         } else {
@@ -249,11 +249,11 @@ class PublicPlanViewController: UIViewController {
         }
         switch selectedItem {
         case .empty:
-            PublicDayManager.shared.publicPlan = nil
+            PublicPlanManager.shared.plan = nil
         case .create:
             return
         case .plan(let publicPlan):
-            PublicDayManager.shared.publicPlan = publicPlan
+            PublicPlanManager.shared.plan = publicPlan
         }
         dismiss(animated: true)
     }
@@ -272,7 +272,7 @@ extension PublicPlanViewController: UICollectionViewDelegate {
             case .empty:
                 return true
             case .create:
-                createCustomTemplate(publicPlan: nil)
+                createCustomTemplate(fixedPlan: nil)
                 return false
             case .plan:
                 return true
@@ -280,68 +280,5 @@ extension PublicPlanViewController: UICollectionViewDelegate {
         } else {
             return false
         }
-    }
-}
-
-class PublicPlanCell: UICollectionViewListCell {
-    var detail: UICellAccessory?
-    
-    var customBackgroundView: UIView = {
-        let view = UIView()
-        
-        view.backgroundColor = .secondarySystemGroupedBackground
-        
-        return view
-    }()
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        detail = nil
-    }
-    
-    private func setupViewsIfNeeded() {
-        guard customBackgroundView.superview == nil else { return }
-        
-        contentView.addSubview(customBackgroundView)
-        contentView.sendSubviewToBack(customBackgroundView)
-        customBackgroundView.snp.makeConstraints { make in
-            make.edges.equalTo(self)
-        }
-    }
-    
-    override func updateConfiguration(using state: UICellConfigurationState) {
-        setupViewsIfNeeded()
-
-        if state.isSelected {
-            let checkmark = UIImageView(image: UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18, weight: .medium)))
-            accessories = [detail, .customView(configuration: .init(customView: checkmark, placement: .leading(), reservedLayoutWidth: .custom(12), tintColor: AppColor.offDay))].compactMap{ $0 }
-        } else {
-            accessories = [detail, (.customView(configuration: .init(customView: UIView(), placement: .leading(), reservedLayoutWidth: .custom(12), tintColor: AppColor.offDay)))].compactMap{ $0 }
-        }
-        if state.isHighlighted {
-            if state.isSelected {
-                customBackgroundView.alpha = 1.0
-                customBackgroundView.backgroundColor = .systemGray4
-            } else {
-                customBackgroundView.alpha = 0.0
-                customBackgroundView.backgroundColor = .secondarySystemGroupedBackground
-            }
-        } else {
-            customBackgroundView.alpha = 1.0
-            customBackgroundView.backgroundColor = .secondarySystemGroupedBackground
-        }
-        
-        backgroundConfiguration = PublicPlanCellBackgroundConfiguration.configuration(for: state)
-    }
-}
-
-struct PublicPlanCellBackgroundConfiguration {
-    static func configuration(for state: UICellConfigurationState) -> UIBackgroundConfiguration {
-        var background = UIBackgroundConfiguration.listGroupedCell()
-        if state.isSelected {
-            background.backgroundColor = .clear
-        }
-        return background
     }
 }

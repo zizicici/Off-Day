@@ -1,5 +1,5 @@
 //
-//  PublicDayManager.swift
+//  PublicPlanManager.swift
 //  Off Day
 //
 //  Created by zici on 4/5/24.
@@ -8,35 +8,8 @@
 import Foundation
 import ZCCalendar
 
-struct PublicDayProvider: Codable {
-    var name: String
-    var days: [Int: PublicDay] // julian day as Key
-    
-    enum CodingKeys: String, CodingKey {
-        case name
-        case days
-    }
-    
-    init(name: String, days: [Int: PublicDay]) {
-        self.name = name
-        self.days = days
-    }
-    
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        name = try container.decode(String.self, forKey: .name)
-        
-        if let dayArray = try? container.decode([PublicDay].self, forKey: .days) {
-            days = Dictionary(grouping: dayArray, by: { Int($0.date.julianDay) }).compactMapValues { $0.first }
-        } else {
-            throw DecodingError.dataCorruptedError(forKey: .days, in: container, debugDescription: "Expected to decode Array(DayInfo)")
-        }
-    }
-}
-
-final class PublicDayManager {
-    enum PublicPlan: String {
+final class PublicPlanManager {
+    enum FixedPlan: String {
         case cn
         case cn_xj
         case cn_xz
@@ -152,34 +125,34 @@ final class PublicDayManager {
         }
     }
     
-    static let shared: PublicDayManager = PublicDayManager()
+    static let shared: PublicPlanManager = PublicPlanManager()
     
-    private var publicPlanProvider: PublicDayProvider?
+    private var publicPlanProvider: PublicPlanInfo?
     
     public func load() {
-        load(publicPlan: planByUserDefault())
+        load(fixedPlan: planByUserDefault())
     }
     
-    private func load(publicPlan: PublicPlan?) {
-        guard let publicPlan = publicPlan else {
+    private func load(fixedPlan: FixedPlan?) {
+        guard let fixedPlan = fixedPlan else {
             publicPlanProvider = nil
             return
         }
-        if let url = Bundle.main.url(forResource: publicPlan.resource, withExtension: "json"), let data = try? Data(contentsOf: url) {
+        if let url = Bundle.main.url(forResource: fixedPlan.resource, withExtension: "json"), let data = try? Data(contentsOf: url) {
             do {
-                publicPlanProvider = try JSONDecoder().decode(PublicDayProvider.self, from: data)
+                publicPlanProvider = try JSONDecoder().decode(PublicPlanInfo.self, from: data)
             } catch {
                 print("Unexpected error: \(error).")
             }
         }
     }
     
-    var publicPlan: PublicPlan? {
+    var plan: FixedPlan? {
         get {
             return planByUserDefault()
         }
         set {
-            guard publicPlan != newValue else {
+            guard plan != newValue else {
                 return
             }
             let key = UserDefaults.Settings.PublicPlanType.rawValue
@@ -188,21 +161,21 @@ final class PublicDayManager {
             } else {
                 UserDefaults.standard.removeObject(forKey: key)
             }
-            load(publicPlan: planByUserDefault())
+            load(fixedPlan: planByUserDefault())
             NotificationCenter.default.post(name: NSNotification.Name.SettingsUpdate, object: nil)
         }
     }
     
-    private func planByUserDefault() -> PublicPlan? {
-        if let storedPlan = UserDefaults.standard.string(forKey: UserDefaults.Settings.PublicPlanType.rawValue), let plan = PublicPlan(rawValue: storedPlan) {
+    private func planByUserDefault() -> FixedPlan? {
+        if let storedPlan = UserDefaults.standard.string(forKey: UserDefaults.Settings.PublicPlanType.rawValue), let plan = FixedPlan(rawValue: storedPlan) {
             return plan
         } else {
             return nil
         }
     }
     
-    private func planForCurrentLocale() -> PublicPlan? {
-        var targetPlan: PublicPlan? = nil
+    private func planForCurrentLocale() -> FixedPlan? {
+        var targetPlan: FixedPlan? = nil
         let localeIdentifier = Locale.current.identifier
         if localeIdentifier.hasSuffix("CN") {
             targetPlan = .cn

@@ -198,7 +198,7 @@ class TutorialsViewController: UIViewController {
         }
         
         publicPlanButton.configurationUpdateHandler = { button in
-            button.configuration?.subtitle = (PublicDayManager.shared.publicPlan == nil) ? String(localized: "tutorials.shortcuts.subtitle") : PublicDayManager.shared.publicPlan?.title
+            button.configuration?.subtitle = (PublicPlanManager.shared.plan == nil) ? String(localized: "tutorials.shortcuts.subtitle") : PublicPlanManager.shared.plan?.title
         }
 
         publicPlanButton.addTarget(self, action: #selector(showPublicPlanPicker), for: .touchUpInside)

@@ -12,8 +12,8 @@ import ZCCalendar
 class PublicPlanDetailViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
-    private var publicPlanProvider: PublicDayProvider?
-    private var plan: PublicDayManager.PublicPlan?
+    private var publicPlanInfo: PublicPlanInfo?
+    private var plan: PublicPlanManager.FixedPlan?
     private var mode: Mode = .viewer
     private var titleButton: UIButton?
     
@@ -32,13 +32,13 @@ class PublicPlanDetailViewController: UIViewController {
         case add
     }
     
-    convenience init(publicPlan: PublicDayManager.PublicPlan) {
+    convenience init(publicPlan: PublicPlanManager.FixedPlan) {
         self.init(nibName: nil, bundle: nil)
         self.plan = publicPlan
         load(publicPlan: publicPlan)
     }
     
-    convenience init(template: PublicDayManager.PublicPlan?) {
+    convenience init(template: PublicPlanManager.FixedPlan?) {
         self.init(nibName: nil, bundle: nil)
         self.mode = .editor
         self.plan = template
@@ -46,7 +46,7 @@ class PublicPlanDetailViewController: UIViewController {
             load(publicPlan: template)
         } else {
             let day = GregorianDay(year: ZCCalendar.manager.today.year, month: .jan, day: 1)
-            self.publicPlanProvider = PublicDayProvider(name: String(localized: "publicDetail.title.new"), days: [day.julianDay: PublicDay(name: String(localized: "publicDetail.newYear.name"), date: day, type: .offDay)])
+            self.publicPlanInfo = PublicPlanInfo(name: String(localized: "publicDetail.title.new"), days: [day.julianDay: PublicDay(name: String(localized: "publicDetail.newYear.name"), date: day, type: .offDay)])
         }
     }
     
@@ -57,7 +57,7 @@ class PublicPlanDetailViewController: UIViewController {
         
         switch mode {
         case .viewer:
-            title = publicPlanProvider?.name
+            title = publicPlanInfo?.name
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: String(localized: "publicDetail.close.title"), style: .plain, target: self, action: #selector(dismissAction))
             let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
             let action = UIAction(title: String(localized: "publicDetail.create.title"), image: UIImage(systemName: "pencil.and.list.clipboard")) { [weak self] _ in
@@ -84,7 +84,7 @@ class PublicPlanDetailViewController: UIViewController {
                 guard let self = self else { return }
                 
                 var config = button.configuration
-                config?.title = self.publicPlanProvider?.name
+                config?.title = self.publicPlanInfo?.name
                 
                 button.configuration = config
             }
@@ -106,10 +106,10 @@ class PublicPlanDetailViewController: UIViewController {
         print("PublicPlanDetailViewController is deinited")
     }
     
-    private func load(publicPlan: PublicDayManager.PublicPlan) {
+    private func load(publicPlan: PublicPlanManager.FixedPlan) {
         if let url = Bundle.main.url(forResource: publicPlan.resource, withExtension: "json"), let data = try? Data(contentsOf: url) {
             do {
-                publicPlanProvider = try JSONDecoder().decode(PublicDayProvider.self, from: data)
+                publicPlanInfo = try JSONDecoder().decode(PublicPlanInfo.self, from: data)
             } catch {
                 print("Unexpected error: \(error).")
             }
@@ -178,8 +178,8 @@ class PublicPlanDetailViewController: UIViewController {
     
     @objc
     func reloadData() {
-        guard let publicPlanProvider = publicPlanProvider else { return }
-        let days = Array(publicPlanProvider.days.values)
+        guard let publicPlanInfo = publicPlanInfo else { return }
+        let days = Array(publicPlanInfo.days.values)
         let dicts = Dictionary(grouping: days, by: { $0.date.year })
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
@@ -212,7 +212,7 @@ class PublicPlanDetailViewController: UIViewController {
     func duplicateTemplate() {
         if let nav = presentingViewController as? NavigationController, let root = nav.topViewController as? PublicPlanViewController {
             dismiss(animated: true) { [weak root, weak self] in
-                root?.createCustomTemplate(publicPlan: self?.plan)
+                root?.createCustomTemplate(fixedPlan: self?.plan)
             }
         }
     }
@@ -250,27 +250,27 @@ class PublicPlanDetailViewController: UIViewController {
     }
     
     func add(_ newDay: PublicDay) -> Bool {
-        guard let publicPlanProvider = publicPlanProvider else { return false }
-        for day in publicPlanProvider.days.values.compactMap({ $0 }) {
+        guard let publicPlanInfo = publicPlanInfo else { return false }
+        for day in publicPlanInfo.days.values.compactMap({ $0 }) {
             if day.date == newDay.date {
                 return false
             }
         }
-        self.publicPlanProvider?.days[newDay.date.julianDay] = newDay
+        self.publicPlanInfo?.days[newDay.date.julianDay] = newDay
         reloadData()
         return true
     }
     
     func delete(_ oldDay: PublicDay) -> Bool {
-        guard publicPlanProvider != nil else { return false }
-        self.publicPlanProvider?.days.removeValue(forKey: oldDay.date.julianDay)
+        guard publicPlanInfo != nil else { return false }
+        self.publicPlanInfo?.days.removeValue(forKey: oldDay.date.julianDay)
         reloadData()
         return true
     }
     
     func update(_ oldDay: PublicDay, with newDay: PublicDay) -> Bool {
-        guard let publicPlanProvider = publicPlanProvider else { return false }
-        var targetArray = publicPlanProvider.days.values.compactMap({ $0 })
+        guard let publicPlanInfo = publicPlanInfo else { return false }
+        var targetArray = publicPlanInfo.days.values.compactMap({ $0 })
         targetArray.removeAll { $0 == oldDay }
         for day in targetArray {
             if day.date == newDay.date {
@@ -282,7 +282,7 @@ class PublicPlanDetailViewController: UIViewController {
         let dict = targetArray.reduce(into: [Int: PublicDay](), { (partialResult, publicDay) in
             partialResult[publicDay.date.julianDay] = publicDay
         })
-        self.publicPlanProvider?.days = dict
+        self.publicPlanInfo?.days = dict
         reloadData()
         return true
     }
@@ -292,14 +292,14 @@ class PublicPlanDetailViewController: UIViewController {
         let alertController = UIAlertController(title: String(localized: "publicDetail.alert.title"), message: nil, preferredStyle: .alert)
         alertController.addTextField { [weak self] textField in
             textField.placeholder = ""
-            textField.text = self?.publicPlanProvider?.name
+            textField.text = self?.publicPlanInfo?.name
         }
         let cancelAction = UIAlertAction(title: String(localized: "publicDetail.alert.cancel"), style: .cancel) { _ in
             //
         }
         let okAction = UIAlertAction(title: String(localized: "publicDetail.alert.confirm"), style: .default) { [weak self] _ in
             if let text = alertController.textFields?.first?.text {
-                self?.publicPlanProvider?.name = text
+                self?.publicPlanInfo?.name = text
                 self?.titleButton?.setNeedsUpdateConfiguration()
             }
         }

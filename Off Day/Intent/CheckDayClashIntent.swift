@@ -132,7 +132,7 @@ extension GregorianDay {
     fileprivate func isClashDay(including customMarkEnabled: Bool) -> Bool {
         let basicOffValue = BasicCalendarManager.shared.isOff(day: self)
         var publicOffValue: Bool? = nil
-        if let publicDay = PublicDayManager.shared.publicDay(at: julianDay) {
+        if let publicDay = PublicPlanManager.shared.publicDay(at: julianDay) {
             publicOffValue = publicDay.type == .offDay
         }
         if customMarkEnabled {
