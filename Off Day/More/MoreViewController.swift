@@ -329,7 +329,7 @@ extension MoreViewController: UITableViewDelegate {
                 case .publicPlan:
                     showPublicPlanPicker()
                 case .baseCalendar:
-                    showBasicCalendarEditor()
+                    showBaseCalendarEditor()
                 }
             case .appjun(let item):
                 switch item {
@@ -377,7 +377,7 @@ extension MoreViewController {
         navigationController?.present(nav, animated: true)
     }
     
-    func showBasicCalendarEditor() {
+    func showBaseCalendarEditor() {
         let baseCalendarViewController = BaseCalendarEditorViewController()
         let nav = NavigationController(rootViewController: baseCalendarViewController)
         

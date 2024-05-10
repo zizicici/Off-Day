@@ -83,7 +83,7 @@ class BaseCalendarManager {
     private(set) var config: Config
 
     init() {
-        if let storedConfig = BasicCalendarConfigManager.fetch() {
+        if let storedConfig = BaseCalendarConfigManager.fetch() {
             config = Config.generate(by: storedConfig)
         } else {
             let standardOffday: String
@@ -96,14 +96,14 @@ class BaseCalendarManager {
                 standardOffday = ""
             }
             let needSaveConfig = BaseCalendarConfig(type: .standard, standardOffday: standardOffday, weekOffset: 0, weekCount: .two, weekIndexs: "", dayStart: 0, dayWorkCount: 1, dayOffCount: 1)
-            BasicCalendarConfigManager.add(config: needSaveConfig)
+            BaseCalendarConfigManager.add(config: needSaveConfig)
             
             config = Config.generate(by: needSaveConfig)
         }
     }
     
     func save(config: Config) {
-        guard var databaseConfig = BasicCalendarConfigManager.fetch() else {
+        guard var databaseConfig = BaseCalendarConfigManager.fetch() else {
             return
         }
         databaseConfig.type = config.type
@@ -120,7 +120,7 @@ class BaseCalendarManager {
             databaseConfig.dayWorkCount = Int64(daysCircleConfig.workCount)
         }
         self.config = Config.generate(by: databaseConfig)
-        BasicCalendarConfigManager.update(config: databaseConfig)
+        BaseCalendarConfigManager.update(config: databaseConfig)
     }
     
     func isOff(day: GregorianDay) -> Bool {
@@ -141,7 +141,7 @@ class BaseCalendarManager {
 }
 
 // Database
-struct BasicCalendarConfigManager {
+struct BaseCalendarConfigManager {
     static func fetch() -> BaseCalendarConfig? {
         var result: BaseCalendarConfig?
         do {
