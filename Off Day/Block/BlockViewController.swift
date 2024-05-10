@@ -263,8 +263,8 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     
     @objc
     func showPublicPlanPicker() {
-        let calendarSectionViewController = PublicDayViewController()
-        let nav = UINavigationController(rootViewController: calendarSectionViewController)
+        let publicPlanViewController = PublicPlanViewController()
+        let nav = UINavigationController(rootViewController: publicPlanViewController)
         
         navigationController?.present(nav, animated: true)
     }

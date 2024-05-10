@@ -61,7 +61,7 @@
 		14E49C992BEA078A00431EA9 /* th.json in Resources */ = {isa = PBXBuildFile; fileRef = 14E49C982BEA078A00431EA9 /* th.json */; };
 		14E49C9B2BEA117000431EA9 /* kr.json in Resources */ = {isa = PBXBuildFile; fileRef = 14E49C9A2BEA117000431EA9 /* kr.json */; };
 		14E6D9BA2BE495F000931F3D /* Toast+Stryle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6D9B92BE495F000931F3D /* Toast+Stryle.swift */; };
-		14E6D9BC2BE4A81C00931F3D /* PublicDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6D9BB2BE4A81C00931F3D /* PublicDayViewController.swift */; };
+		14E6D9BC2BE4A81C00931F3D /* PublicPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6D9BB2BE4A81C00931F3D /* PublicPlanViewController.swift */; };
 		14ECFEED2BE5F30C005D2D79 /* DayInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ECFEEC2BE5F30C005D2D79 /* DayInfoManager.swift */; };
 		14ECFEF52BE5FBEE005D2D79 /* cn-xinjiang.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEEF2BE5FBED005D2D79 /* cn-xinjiang.json */; };
 		14ECFEF62BE5FBEE005D2D79 /* cn-guangxi.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEF02BE5FBED005D2D79 /* cn-guangxi.json */; };
@@ -76,6 +76,7 @@
 		14ECFF052BE64983005D2D79 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ECFF042BE64983005D2D79 /* AppColor.swift */; };
 		14ECFF082BE68AE1005D2D79 /* sg.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFF062BE68AE1005D2D79 /* sg.json */; };
 		14ECFF092BE68AE1005D2D79 /* us.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFF072BE68AE1005D2D79 /* us.json */; };
+		14ED08A22BEDCCB800100E2D /* PublicPlanDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED08A12BEDCCB800100E2D /* PublicPlanDetailViewController.swift */; };
 		14F371222BE3CA6500254C39 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371212BE3CA6500254C39 /* Settings.swift */; };
 		14F371252BE3CB9F00254C39 /* BlockViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */; };
 		14F371272BE3EACF00254C39 /* AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371262BE3EACF00254C39 /* AppCell.swift */; };
@@ -136,7 +137,7 @@
 		14E49C982BEA078A00431EA9 /* th.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = th.json; sourceTree = "<group>"; };
 		14E49C9A2BEA117000431EA9 /* kr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = kr.json; sourceTree = "<group>"; };
 		14E6D9B92BE495F000931F3D /* Toast+Stryle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Toast+Stryle.swift"; sourceTree = "<group>"; };
-		14E6D9BB2BE4A81C00931F3D /* PublicDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicDayViewController.swift; sourceTree = "<group>"; };
+		14E6D9BB2BE4A81C00931F3D /* PublicPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPlanViewController.swift; sourceTree = "<group>"; };
 		14ECFEEC2BE5F30C005D2D79 /* DayInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayInfoManager.swift; sourceTree = "<group>"; };
 		14ECFEEF2BE5FBED005D2D79 /* cn-xinjiang.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cn-xinjiang.json"; sourceTree = "<group>"; };
 		14ECFEF02BE5FBED005D2D79 /* cn-guangxi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cn-guangxi.json"; sourceTree = "<group>"; };
@@ -151,6 +152,7 @@
 		14ECFF042BE64983005D2D79 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
 		14ECFF062BE68AE1005D2D79 /* sg.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sg.json; sourceTree = "<group>"; };
 		14ECFF072BE68AE1005D2D79 /* us.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = us.json; sourceTree = "<group>"; };
+		14ED08A12BEDCCB800100E2D /* PublicPlanDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPlanDetailViewController.swift; sourceTree = "<group>"; };
 		14F371212BE3CA6500254C39 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BlockViewController+Menu.swift"; sourceTree = "<group>"; };
 		14F371262BE3EACF00254C39 /* AppCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCell.swift; sourceTree = "<group>"; };
@@ -218,7 +220,7 @@
 				14DD51032BE20C57004329E2 /* ZCCalendar */,
 				14ECFEEE2BE5F523005D2D79 /* DayInfo */,
 				14DD513A2BE2356A004329E2 /* BaseViewController */,
-				14E6D9BD2BE4A82800931F3D /* PublicDay */,
+				14E6D9BD2BE4A82800931F3D /* PublicPlan */,
 				14DD50E92BE20BC1004329E2 /* Block */,
 				14DD51442BE24648004329E2 /* Tutorials */,
 				14D6F9212BEB31B5008712E1 /* BasicCalendar */,
@@ -395,12 +397,13 @@
 			path = Intent;
 			sourceTree = "<group>";
 		};
-		14E6D9BD2BE4A82800931F3D /* PublicDay */ = {
+		14E6D9BD2BE4A82800931F3D /* PublicPlan */ = {
 			isa = PBXGroup;
 			children = (
-				14E6D9BB2BE4A81C00931F3D /* PublicDayViewController.swift */,
+				14E6D9BB2BE4A81C00931F3D /* PublicPlanViewController.swift */,
+				14ED08A12BEDCCB800100E2D /* PublicPlanDetailViewController.swift */,
 			);
-			path = PublicDay;
+			path = PublicPlan;
 			sourceTree = "<group>";
 		};
 		14ECFEEE2BE5F523005D2D79 /* DayInfo */ = {
@@ -585,6 +588,7 @@
 				14D6F92E2BEBDDF4008712E1 /* BasicCalendarConfig.swift in Sources */,
 				14DD50B22BE1F5C4004329E2 /* AppDelegate.swift in Sources */,
 				14DD511A2BE21050004329E2 /* Date+Extension.swift in Sources */,
+				14ED08A22BEDCCB800100E2D /* PublicPlanDetailViewController.swift in Sources */,
 				14DD50FD2BE20BC1004329E2 /* ImpactGenerator.swift in Sources */,
 				14DD50EF2BE20BC1004329E2 /* BlockViewController+Popover.swift in Sources */,
 				14DD513C2BE2356A004329E2 /* NavigationViewController.swift in Sources */,
@@ -597,7 +601,7 @@
 				14DD51002BE20BC1004329E2 /* BlockBaseViewController.swift in Sources */,
 				14DD513D2BE2356A004329E2 /* TabbarController.swift in Sources */,
 				14DD50F32BE20BC1004329E2 /* LayoutGenerator.swift in Sources */,
-				14E6D9BC2BE4A81C00931F3D /* PublicDayViewController.swift in Sources */,
+				14E6D9BC2BE4A81C00931F3D /* PublicPlanViewController.swift in Sources */,
 				14CFA1272BEC92A90004D15E /* CheckDayClashIntent.swift in Sources */,
 				14DD50F92BE20BC1004329E2 /* TitleCell.swift in Sources */,
 				14F371252BE3CB9F00254C39 /* BlockViewController+Menu.swift in Sources */,

@@ -201,7 +201,7 @@ class TutorialsViewController: UIViewController {
             button.configuration?.subtitle = (DayInfoManager.shared.publicPlan == nil) ? String(localized: "tutorials.shortcuts.subtitle") : DayInfoManager.shared.publicPlan?.title
         }
 
-        publicPlanButton.addTarget(self, action: #selector(choosePublicPlan), for: .touchUpInside)
+        publicPlanButton.addTarget(self, action: #selector(showPublicPlanPicker), for: .touchUpInside)
         tutorialsButton.addTarget(self, action: #selector(openShortcutsHelp), for: .touchUpInside)
         automationButton.addTarget(self, action: #selector(openAutomationHelp), for: .touchUpInside)
         
@@ -213,8 +213,8 @@ class TutorialsViewController: UIViewController {
     }
     
     @objc
-    func choosePublicPlan() {
-        let calendarSectionViewController = PublicDayViewController()
+    func showPublicPlanPicker() {
+        let calendarSectionViewController = PublicPlanViewController()
         let nav = UINavigationController(rootViewController: calendarSectionViewController)
         
         navigationController?.present(nav, animated: true)

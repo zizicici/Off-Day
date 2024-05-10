@@ -1,5 +1,5 @@
 //
-//  PublicDayViewController.swift
+//  PublicPlanViewController.swift
 //  Off Day
 //
 //  Created by zici on 3/5/24.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class PublicDayViewController: UIViewController {
+class PublicPlanViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
     
@@ -75,6 +75,10 @@ class PublicDayViewController: UIViewController {
         }
     }
     
+    deinit {
+        print("PublicPlanViewController is deinited")
+    }
+    
     func createLayout() -> UICollectionViewLayout {
         let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             var configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
@@ -106,7 +110,7 @@ class PublicDayViewController: UIViewController {
     
     func createListCellRegistration() -> UICollectionView.CellRegistration<PublicPlanCell, Item> {
         return UICollectionView.CellRegistration<PublicPlanCell, Item> { [weak self] (cell, indexPath, item) in
-            guard self != nil else { return }
+            guard let self = self else { return }
             switch item {
             case .empty:
                 var content = UIListContentConfiguration.valueCell()
@@ -128,7 +132,7 @@ class PublicDayViewController: UIViewController {
                 layoutMargins.bottom = 10.0
                 content.directionalLayoutMargins = layoutMargins
                 cell.contentConfiguration = content
-                cell.detail = nil//self.detailAccessoryForListCellItem(item)
+                cell.detail = self.detailAccessoryForListCellItem(item)
             }
         }
     }
@@ -140,7 +144,15 @@ class PublicDayViewController: UIViewController {
     }
     
     func goToDetail(for item: Item) {
-        print(item)
+        switch item {
+        case .empty:
+            break
+        case .plan(let publicPlan):
+            let detailViewController = PublicPlanDetailViewController(publicPlan: publicPlan)
+            let nav = UINavigationController(rootViewController: detailViewController)
+            
+            navigationController?.present(nav, animated: true)
+        }
     }
     
     @objc
@@ -208,7 +220,7 @@ class PublicDayViewController: UIViewController {
     }
 }
 
-extension PublicDayViewController: UICollectionViewDelegate {
+extension PublicPlanViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let item = dataSource.itemIdentifier(for: indexPath) {
             selectedItem = item
