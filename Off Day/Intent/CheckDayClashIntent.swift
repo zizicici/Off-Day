@@ -131,11 +131,9 @@ struct CheckOffsetDayClashIntent: AppIntent {
 extension GregorianDay {
     fileprivate func isClashDay(including customMarkEnabled: Bool) -> Bool {
         let basicOffValue = BasicCalendarManager.shared.isOff(day: self)
-        let publicOffValue: Bool
+        var publicOffValue: Bool? = nil
         if let publicDay = DayInfoManager.shared.publicDay(at: julianDay) {
             publicOffValue = publicDay.type == .offDay
-        } else {
-            publicOffValue = false
         }
         if customMarkEnabled {
             let customOffValue: Bool
@@ -144,9 +142,17 @@ extension GregorianDay {
             } else {
                 customOffValue = false
             }
-            return !((basicOffValue == publicOffValue) && (customOffValue == basicOffValue))
+            if let publicOffValue = publicOffValue {
+                return !((basicOffValue == publicOffValue) && (customOffValue == basicOffValue))
+            } else {
+                return customOffValue != basicOffValue
+            }
         } else {
-            return basicOffValue != publicOffValue
+            if let publicOffValue = publicOffValue {
+                return basicOffValue != publicOffValue
+            } else {
+                return false
+            }
         }
     }
 }
