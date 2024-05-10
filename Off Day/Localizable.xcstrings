@@ -77,13 +77,13 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "今天的節日是？"
+            "value" : "今日的節日是？"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "今天的節日是？"
+            "value" : "今日的節日是？"
           }
         }
       }
@@ -506,13 +506,13 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "多天循環（輪休/倒班）"
+            "value" : "多日循環（輪休/倒班）"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "多天循環（輪休/倒班）"
+            "value" : "多日循環（輪休/倒班）"
           }
         }
       }
@@ -1133,6 +1133,34 @@
         }
       }
     },
+    "Day Count" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day Count"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "天数"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日數"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日數"
+          }
+        }
+      }
+    },
     "detail.custom" : {
       "localizations" : {
         "en" : {
@@ -1234,13 +1262,13 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如果結果爲 true 則是衝突日。衝突日意味着這一天的用戶標註信息（可選）、公共假期模板以及基礎日曆對於“這一天是否是休息日”的判斷是不同的。"
+            "value" : "如果結果爲 true 則是衝突日。衝突日意味着這一日的用戶標註信息（可選）、公共假期模板以及基礎日曆對於“這一日是否是休息日”的判斷是不同的。"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如果結果爲 true 則是衝突日。衝突日意味着這一天的用戶標註信息（可選）、公共假期模板以及基礎日曆對於“這一天是否是休息日”的判斷是不同的。"
+            "value" : "如果結果爲 true 則是衝突日。衝突日意味着這一日的用戶標註信息（可選）、公共假期模板以及基礎日曆對於“這一日是否是休息日”的判斷是不同的。"
           }
         }
       }
@@ -1297,6 +1325,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "包含用戶標註"
+          }
+        }
+      }
+    },
+    "intent.check.offset.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If it is an Off Day in n day(s)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "几天后是否是休息日"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "幾日後是否是休息日"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "幾日後是否是休息日"
           }
         }
       }
@@ -1381,6 +1437,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "明日是否是休息日"
+          }
+        }
+      }
+    },
+    "intent.clash.offset.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If it is an Clash Day in n day(s)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "几天后是否是冲突日"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "幾日後是否是衝突日"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "幾日後是否是衝突日"
           }
         }
       }
@@ -1523,6 +1607,64 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "${date}是休息日嗎？"
+          }
+        }
+      }
+    },
+    "Is it an Clash Day in ${dayCount} day(s)?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Is it an Clash Day in ${dayCount} day(s)?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${dayCount}天后是冲突日吗？"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${dayCount}日後是衝突日嗎？"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${dayCount}日後是衝突日嗎？"
+          }
+        }
+      }
+    },
+    "Is it an Off Day in ${dayCount} day(s)?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Is it an Off Day in ${dayCount} day(s)?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${dayCount}天后是休息日吗？"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${dayCount}日後是休息日嗎？"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${dayCount}日後是休息日嗎？"
           }
         }
       }
@@ -3396,13 +3538,13 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "一週的第一天"
+            "value" : "一週的第一日"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "一週的第一天"
+            "value" : "一週的第一日"
           }
         }
       }
@@ -4076,13 +4218,13 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "哪一天？"
+            "value" : "哪一日？"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "哪一天？"
+            "value" : "哪一日？"
           }
         }
       }

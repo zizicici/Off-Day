@@ -96,6 +96,38 @@ struct CheckTomorrowClashIntent: AppIntent {
     static var openAppWhenRun: Bool = false
 }
 
+struct CheckOffsetDayClashIntent: AppIntent {
+    static var title: LocalizedStringResource = "intent.clash.offset.title"
+    
+    static var description: IntentDescription = IntentDescription("If the result is true, it is a Clash Day. Clash Day means that the public holiday template, base calendar, and user annotations (optional) for this day have different criteria for determining whether it is an Off Day.", categoryName: "Check Clash Day")
+    
+    @Parameter(title: "Day Count", default: 2)
+    var dayCount: Int
+    
+    @Parameter(title: "Including user annotaions", description: "Including user annotaions", default: false)
+    var enableUserMark: Bool
+    
+    static var parameterSummary: some ParameterSummary {
+        Summary("Is it a Clash Day in \(\.$dayCount) day(s)?") {
+            \.$enableUserMark
+        }
+    }
+    
+    @MainActor
+    func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
+        var isOffDay = false
+        let tomorrow = Calendar.current.date(byAdding: .day, value: dayCount, to: Date())!
+        let components = Calendar.current.dateComponents([.year, .month, .day], from: tomorrow)
+        if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
+            let target = GregorianDay(year: year, month: month, day: day)
+            isOffDay = target.isClashDay(including: enableUserMark)
+        }
+        return .result(value: isOffDay)
+    }
+
+    static var openAppWhenRun: Bool = false
+}
+
 extension GregorianDay {
     fileprivate func isClashDay(including customMarkEnabled: Bool) -> Bool {
         let basicOffValue = BasicCalendarManager.shared.isOff(day: self)
