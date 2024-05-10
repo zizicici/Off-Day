@@ -215,7 +215,7 @@ class TutorialsViewController: UIViewController {
     @objc
     func showPublicPlanPicker() {
         let calendarSectionViewController = PublicPlanViewController()
-        let nav = UINavigationController(rootViewController: calendarSectionViewController)
+        let nav = NavigationController(rootViewController: calendarSectionViewController)
         
         navigationController?.present(nav, animated: true)
     }

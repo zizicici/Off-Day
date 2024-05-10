@@ -264,7 +264,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     @objc
     func showPublicPlanPicker() {
         let publicPlanViewController = PublicPlanViewController()
-        let nav = UINavigationController(rootViewController: publicPlanViewController)
+        let nav = NavigationController(rootViewController: publicPlanViewController)
         
         navigationController?.present(nav, animated: true)
     }

@@ -81,7 +81,7 @@ class MenuCell: MenuBaseCell {
         contentView.addSubview(valueButton)
         valueButton.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.trailing.equalTo(contentView).inset(12)
+            make.trailing.equalTo(contentView).inset(16)
         }
         
         contentView.addSubview(tapButton)

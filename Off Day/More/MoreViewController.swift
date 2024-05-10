@@ -372,14 +372,14 @@ extension MoreViewController {
     
     func showPublicPlanPicker() {
         let publicPlanViewController = PublicPlanViewController()
-        let nav = UINavigationController(rootViewController: publicPlanViewController)
+        let nav = NavigationController(rootViewController: publicPlanViewController)
         
         navigationController?.present(nav, animated: true)
     }
     
     func showBasicCalendarEditor() {
         let basicCalendarViewController = BasicCalendarEditorViewController()
-        let nav = UINavigationController(rootViewController: basicCalendarViewController)
+        let nav = NavigationController(rootViewController: basicCalendarViewController)
         
         navigationController?.present(nav, animated: true)
     }

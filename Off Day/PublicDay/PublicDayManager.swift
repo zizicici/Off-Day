@@ -9,16 +9,17 @@ import Foundation
 import ZCCalendar
 
 struct PublicDayProvider: Codable {
-    let name: String
-    let days: [Int: PublicDay] // julian day as Key
-    let start: Int
-    let end: Int
+    var name: String
+    var days: [Int: PublicDay] // julian day as Key
     
     enum CodingKeys: String, CodingKey {
         case name
         case days
-        case start
-        case end
+    }
+    
+    init(name: String, days: [Int: PublicDay]) {
+        self.name = name
+        self.days = days
     }
     
     init(from decoder: any Decoder) throws {
@@ -29,22 +30,7 @@ struct PublicDayProvider: Codable {
         if let dayArray = try? container.decode([PublicDay].self, forKey: .days) {
             days = Dictionary(grouping: dayArray, by: { Int($0.date.julianDay) }).compactMapValues { $0.first }
         } else {
-            throw DecodingError.dataCorruptedError(forKey: .start, in: container, debugDescription: "Expected to decode Array(DayInfo)")
-        }
-        
-        if let startString = try? container.decode(String.self, forKey: .start), let startInt = Int(startString) {
-            start = startInt
-        } else if let startInt = try? container.decode(Int.self, forKey: .start) {
-            start = startInt
-        } else {
-            throw DecodingError.dataCorruptedError(forKey: .start, in: container, debugDescription: "Expected to decode Int")
-        }
-        if let endString = try? container.decode(String.self, forKey: .end), let endInt = Int(endString) {
-            end = endInt
-        } else if let endInt = try? container.decode(Int.self, forKey: .end) {
-            end = endInt
-        } else {
-            throw DecodingError.dataCorruptedError(forKey: .start, in: container, debugDescription: "Expected to decode Int")
+            throw DecodingError.dataCorruptedError(forKey: .days, in: container, debugDescription: "Expected to decode Array(DayInfo)")
         }
     }
 }

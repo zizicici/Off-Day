@@ -36,21 +36,26 @@ class PublicPlanViewController: UIViewController {
     
     enum Item: Hashable {
         case empty
+        case create
         case plan(PublicDayManager.PublicPlan)
         
         var title: String {
             switch self {
             case .empty:
                 return String(localized: "publicDay.item.special.empty")
+            case .create:
+                return String(localized: "publicDay.item.special.create")
             case .plan(let plan):
                 return plan.title
             }
         }
         
-        var subtitle: String {
+        var subtitle: String? {
             switch self {
             case .empty:
-                return String(localized: "publicDay.item.special.empty")
+                return nil
+            case .create:
+                return nil
             case .plan(let plan):
                 return plan.subtitle
             }
@@ -102,9 +107,17 @@ class PublicPlanViewController: UIViewController {
     
     func configureDataSource() {
         let listCellRegistration = createListCellRegistration()
+        let normalCellRegistration = createNormalCellRegistration()
         
         dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
+            switch itemIdentifier {
+            case .empty:
+                return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
+            case .create:
+                return collectionView.dequeueConfiguredReusableCell(using: normalCellRegistration, for: indexPath, item: itemIdentifier)
+            case .plan(_):
+                return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
+            }
         })
     }
     
@@ -120,6 +133,8 @@ class PublicPlanViewController: UIViewController {
                 content.directionalLayoutMargins = layoutMargins
                 cell.contentConfiguration = content
                 cell.detail = nil
+            case .create:
+                return
             default:
                 var content = UIListContentConfiguration.subtitleCell()
                 content.text = item.title
@@ -137,6 +152,19 @@ class PublicPlanViewController: UIViewController {
         }
     }
     
+    func createNormalCellRegistration() -> UICollectionView.CellRegistration<UICollectionViewListCell, Item> {
+        return UICollectionView.CellRegistration<UICollectionViewListCell, Item> { (cell, indexPath, item) in
+            var content = UIListContentConfiguration.valueCell()
+            content.text = item.title
+            content.textProperties.alignment = .center
+            content.textProperties.color = AppColor.offDay
+            var layoutMargins = content.directionalLayoutMargins
+            layoutMargins.leading = 0.0
+            content.directionalLayoutMargins = layoutMargins
+            cell.contentConfiguration = content
+        }
+    }
+    
     func detailAccessoryForListCellItem(_ item: Item) -> UICellAccessory {
         return UICellAccessory.detail(options: UICellAccessory.DetailOptions(tintColor: AppColor.offDay), actionHandler: { [weak self] in
             self?.goToDetail(for: item)
@@ -147,19 +175,28 @@ class PublicPlanViewController: UIViewController {
         switch item {
         case .empty:
             break
+        case .create:
+            break
         case .plan(let publicPlan):
             let detailViewController = PublicPlanDetailViewController(publicPlan: publicPlan)
-            let nav = UINavigationController(rootViewController: detailViewController)
+            let nav = NavigationController(rootViewController: detailViewController)
             
             navigationController?.present(nav, animated: true)
         }
+    }
+    
+    func createCustomTemplate(publicPlan: PublicDayManager.PublicPlan?) {
+        let editorViewController = PublicPlanDetailViewController(template: publicPlan)
+        let nav = NavigationController(rootViewController: editorViewController)
+        
+        navigationController?.present(nav, animated: true)
     }
     
     @objc
     func reloadData() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.special])
-        snapshot.appendItems([.empty], toSection: .special)
+        snapshot.appendItems([.empty, .create], toSection: .special)
         
         snapshot.appendSections([.cn])
         snapshot.appendItems([.plan(.cn), .plan(.cn_xj), .plan(.cn_xz), .plan(.cn_gx), .plan(.cn_nx)], toSection: .cn)
@@ -213,6 +250,8 @@ class PublicPlanViewController: UIViewController {
         switch selectedItem {
         case .empty:
             PublicDayManager.shared.publicPlan = nil
+        case .create:
+            return
         case .plan(let publicPlan):
             PublicDayManager.shared.publicPlan = publicPlan
         }
@@ -224,6 +263,22 @@ extension PublicPlanViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let item = dataSource.itemIdentifier(for: indexPath) {
             selectedItem = item
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        if let item = dataSource.itemIdentifier(for: indexPath) {
+            switch item {
+            case .empty:
+                return true
+            case .create:
+                createCustomTemplate(publicPlan: nil)
+                return false
+            case .plan:
+                return true
+            }
+        } else {
+            return false
         }
     }
 }

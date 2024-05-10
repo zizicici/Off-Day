@@ -77,6 +77,8 @@
 		14ECFF082BE68AE1005D2D79 /* sg.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFF062BE68AE1005D2D79 /* sg.json */; };
 		14ECFF092BE68AE1005D2D79 /* us.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFF072BE68AE1005D2D79 /* us.json */; };
 		14ED08A22BEDCCB800100E2D /* PublicPlanDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED08A12BEDCCB800100E2D /* PublicPlanDetailViewController.swift */; };
+		14ED08A42BEE0E8F00100E2D /* PublicDayDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED08A32BEE0E8F00100E2D /* PublicDayDetailViewController.swift */; };
+		14ED08A62BEE117500100E2D /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED08A52BEE117500100E2D /* TextInputCell.swift */; };
 		14F371222BE3CA6500254C39 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371212BE3CA6500254C39 /* Settings.swift */; };
 		14F371252BE3CB9F00254C39 /* BlockViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */; };
 		14F371272BE3EACF00254C39 /* AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371262BE3EACF00254C39 /* AppCell.swift */; };
@@ -153,6 +155,8 @@
 		14ECFF062BE68AE1005D2D79 /* sg.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sg.json; sourceTree = "<group>"; };
 		14ECFF072BE68AE1005D2D79 /* us.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = us.json; sourceTree = "<group>"; };
 		14ED08A12BEDCCB800100E2D /* PublicPlanDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPlanDetailViewController.swift; sourceTree = "<group>"; };
+		14ED08A32BEE0E8F00100E2D /* PublicDayDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicDayDetailViewController.swift; sourceTree = "<group>"; };
+		14ED08A52BEE117500100E2D /* TextInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
 		14F371212BE3CA6500254C39 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BlockViewController+Menu.swift"; sourceTree = "<group>"; };
 		14F371262BE3EACF00254C39 /* AppCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCell.swift; sourceTree = "<group>"; };
@@ -177,8 +181,8 @@
 		14D6F9212BEB31B5008712E1 /* BasicCalendar */ = {
 			isa = PBXGroup;
 			children = (
-				14D6F91F2BEB05FA008712E1 /* BasicCalendarEditorViewController.swift */,
 				14D6F92B2BEB90F6008712E1 /* BasicCalendarManager.swift */,
+				14D6F91F2BEB05FA008712E1 /* BasicCalendarEditorViewController.swift */,
 				14D6F9222BEB31D2008712E1 /* View */,
 			);
 			path = BasicCalendar;
@@ -220,7 +224,6 @@
 				14DD51032BE20C57004329E2 /* ZCCalendar */,
 				14ECFEEE2BE5F523005D2D79 /* PublicDay */,
 				14DD513A2BE2356A004329E2 /* BaseViewController */,
-				14E6D9BD2BE4A82800931F3D /* PublicPlan */,
 				14DD50E92BE20BC1004329E2 /* Block */,
 				14DD51442BE24648004329E2 /* Tutorials */,
 				14D6F9212BEB31B5008712E1 /* BasicCalendar */,
@@ -397,21 +400,16 @@
 			path = Intent;
 			sourceTree = "<group>";
 		};
-		14E6D9BD2BE4A82800931F3D /* PublicPlan */ = {
-			isa = PBXGroup;
-			children = (
-				14E6D9BB2BE4A81C00931F3D /* PublicPlanViewController.swift */,
-				14ED08A12BEDCCB800100E2D /* PublicPlanDetailViewController.swift */,
-			);
-			path = PublicPlan;
-			sourceTree = "<group>";
-		};
 		14ECFEEE2BE5F523005D2D79 /* PublicDay */ = {
 			isa = PBXGroup;
 			children = (
-				14ECFEFB2BE5FBF8005D2D79 /* JSON */,
-				14DD51472BE24EA9004329E2 /* PublicDay.swift */,
 				14ECFEEC2BE5F30C005D2D79 /* PublicDayManager.swift */,
+				14E6D9BB2BE4A81C00931F3D /* PublicPlanViewController.swift */,
+				14ED08A12BEDCCB800100E2D /* PublicPlanDetailViewController.swift */,
+				14ED08A32BEE0E8F00100E2D /* PublicDayDetailViewController.swift */,
+				14ECFEFB2BE5FBF8005D2D79 /* JSON */,
+				14ED08A82BEE11AC00100E2D /* Model */,
+				14ED08A72BEE118900100E2D /* View */,
 			);
 			path = PublicDay;
 			sourceTree = "<group>";
@@ -435,6 +433,22 @@
 				14ECFF072BE68AE1005D2D79 /* us.json */,
 			);
 			path = JSON;
+			sourceTree = "<group>";
+		};
+		14ED08A72BEE118900100E2D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				14ED08A52BEE117500100E2D /* TextInputCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		14ED08A82BEE11AC00100E2D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				14DD51472BE24EA9004329E2 /* PublicDay.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		14F371232BE3CA7100254C39 /* Settings */ = {
@@ -558,6 +572,7 @@
 				14DD50FE2BE20BC1004329E2 /* UIDraggableCollectionView.swift in Sources */,
 				14F371272BE3EACF00254C39 /* AppCell.swift in Sources */,
 				14DD51012BE20BC1004329E2 /* BlockDetailViewController.swift in Sources */,
+				14ED08A62BEE117500100E2D /* TextInputCell.swift in Sources */,
 				14DD50ED2BE20BC1004329E2 /* BlockViewController+Layout.swift in Sources */,
 				14ECFF052BE64983005D2D79 /* AppColor.swift in Sources */,
 				14D6F9282BEB6B5E008712E1 /* WeekCalendarCell.swift in Sources */,
@@ -566,6 +581,7 @@
 				14F371222BE3CA6500254C39 /* Settings.swift in Sources */,
 				14DD50EC2BE20BC1004329E2 /* BlockViewController+Enum.swift in Sources */,
 				14DD50F62BE20BC1004329E2 /* BlockItem.swift in Sources */,
+				14ED08A42BEE0E8F00100E2D /* PublicDayDetailViewController.swift in Sources */,
 				14DD511F2BE21050004329E2 /* CustomDay.swift in Sources */,
 				14DD51482BE24EA9004329E2 /* PublicDay.swift in Sources */,
 				14DD50F82BE20BC1004329E2 /* BlockCell.swift in Sources */,
