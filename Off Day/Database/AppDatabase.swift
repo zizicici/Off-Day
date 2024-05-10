@@ -127,13 +127,13 @@ extension AppDatabase {
 }
 
 extension AppDatabase {
-    func add(basicCalendarConfig: BasicCalendarConfig) -> Bool {
-        guard basicCalendarConfig.id == nil else {
+    func add(baseCalendarConfig: BaseCalendarConfig) -> Bool {
+        guard baseCalendarConfig.id == nil else {
             return false
         }
         do {
             _ = try dbWriter?.write{ db in
-                var config = basicCalendarConfig
+                var config = baseCalendarConfig
                 try config.save(db)
             }
         }
@@ -145,13 +145,13 @@ extension AppDatabase {
         return true
     }
     
-    func update(basicCalendarConfig: BasicCalendarConfig) -> Bool {
-        guard basicCalendarConfig.id != nil else {
+    func update(baseCalendarConfig: BaseCalendarConfig) -> Bool {
+        guard baseCalendarConfig.id != nil else {
             return false
         }
         do {
             _ = try dbWriter?.write{ db in
-                try basicCalendarConfig.update(db)
+                try baseCalendarConfig.update(db)
             }
         }
         catch {

@@ -51,7 +51,7 @@ struct LayoutGenerater {
                         }
                     }
                 } else {
-                    if BasicCalendarManager.shared.isOff(day: gregorianDay) {
+                    if BaseCalendarManager.shared.isOff(day: gregorianDay) {
                         backgroundColor = WeekEndColorType.getValue().getColor()
                         foregroundColor = .white
                     } else {

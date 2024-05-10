@@ -110,7 +110,7 @@ struct CheckOffsetDayOffIntent: AppIntent {
 
 extension GregorianDay {
     fileprivate func isOffDay() -> Bool {
-        var isOffDay = BasicCalendarManager.shared.isOff(day: self)
+        var isOffDay = BaseCalendarManager.shared.isOff(day: self)
         if let publicDay = PublicPlanManager.shared.publicDay(at: julianDay) {
             isOffDay = publicDay.type == .offDay
         }

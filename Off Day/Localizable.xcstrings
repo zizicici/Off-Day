@@ -291,7 +291,7 @@
         }
       }
     },
-    "basicCalendar.days.day%i" : {
+    "baseCalendar.days.day%i" : {
       "localizations" : {
         "en" : {
           "variations" : {
@@ -349,7 +349,7 @@
         }
       }
     },
-    "basicCalendar.days.off" : {
+    "baseCalendar.days.off" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -377,7 +377,7 @@
         }
       }
     },
-    "basicCalendar.days.start" : {
+    "baseCalendar.days.start" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -405,7 +405,7 @@
         }
       }
     },
-    "basicCalendar.days.work" : {
+    "baseCalendar.days.work" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -433,7 +433,7 @@
         }
       }
     },
-    "basicCalendar.main.header" : {
+    "baseCalendar.main.header" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -461,7 +461,7 @@
         }
       }
     },
-    "basicCalendar.standard.footer" : {
+    "baseCalendar.standard.footer" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -489,7 +489,7 @@
         }
       }
     },
-    "basicCalendar.type.days" : {
+    "baseCalendar.type.days" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -517,7 +517,7 @@
         }
       }
     },
-    "basicCalendar.type.standard" : {
+    "baseCalendar.type.standard" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -545,7 +545,7 @@
         }
       }
     },
-    "basicCalendar.type.weeks" : {
+    "baseCalendar.type.weeks" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -573,7 +573,7 @@
         }
       }
     },
-    "basicCalendar.weeks.2" : {
+    "baseCalendar.weeks.2" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -601,7 +601,7 @@
         }
       }
     },
-    "basicCalendar.weeks.3" : {
+    "baseCalendar.weeks.3" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -629,7 +629,7 @@
         }
       }
     },
-    "basicCalendar.weeks.4" : {
+    "baseCalendar.weeks.4" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -657,7 +657,7 @@
         }
       }
     },
-    "basicCalendar.weeks.count" : {
+    "baseCalendar.weeks.count" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -853,7 +853,7 @@
         }
       }
     },
-    "controller.basicCalendar.title" : {
+    "controller.baseCalendar.title" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2041,7 +2041,7 @@
         }
       }
     },
-    "more.item.settings.basicCalendar" : {
+    "more.item.settings.baseCalendar" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {

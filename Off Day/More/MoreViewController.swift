@@ -65,14 +65,14 @@ class MoreViewController: UIViewController {
         
         enum DataSourceItem: Hashable {
             case publicPlan(PublicPlanManager.FixedPlan?)
-            case basicCalendar(BasicCalendarType)
+            case baseCalendar(BaseCalendarType)
             
             var title: String {
                 switch self {
                 case .publicPlan:
                     return String(localized: "more.item.settings.publicPlan")
-                case .basicCalendar:
-                    return String(localized: "more.item.settings.basicCalendar")
+                case .baseCalendar:
+                    return String(localized: "more.item.settings.baseCalendar")
                 }
             }
             
@@ -84,7 +84,7 @@ class MoreViewController: UIViewController {
                     } else {
                         return String(localized: "more.item.settings.publicPlan.noSet")
                     }
-                case .basicCalendar(let type):
+                case .baseCalendar(let type):
                     return type.title
                 }
             }
@@ -294,7 +294,7 @@ class MoreViewController: UIViewController {
         snapshot.appendItems([.settings(.language), .settings(.tutorial(TutorialEntranceType.getValue()))], toSection: .general)
         
         snapshot.appendSections([.dataSource])
-        snapshot.appendItems([.dataSource(.publicPlan(PublicPlanManager.shared.plan)), .dataSource(.basicCalendar(BasicCalendarManager.shared.config.type))], toSection: .dataSource)
+        snapshot.appendItems([.dataSource(.publicPlan(PublicPlanManager.shared.plan)), .dataSource(.baseCalendar(BaseCalendarManager.shared.config.type))], toSection: .dataSource)
         
         snapshot.appendSections([.appjun])
         var appItems: [Item] = [.appjun(.otherApps(.lemon)), .appjun(.otherApps(.moontake)), .appjun(.otherApps(.coconut)), .appjun(.otherApps(.pigeon))]
@@ -328,7 +328,7 @@ extension MoreViewController: UITableViewDelegate {
                 switch item {
                 case .publicPlan:
                     showPublicPlanPicker()
-                case .basicCalendar:
+                case .baseCalendar:
                     showBasicCalendarEditor()
                 }
             case .appjun(let item):
@@ -378,8 +378,8 @@ extension MoreViewController {
     }
     
     func showBasicCalendarEditor() {
-        let basicCalendarViewController = BasicCalendarEditorViewController()
-        let nav = NavigationController(rootViewController: basicCalendarViewController)
+        let baseCalendarViewController = BaseCalendarEditorViewController()
+        let nav = NavigationController(rootViewController: baseCalendarViewController)
         
         navigationController?.present(nav, animated: true)
     }

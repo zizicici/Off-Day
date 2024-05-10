@@ -1,5 +1,5 @@
 //
-//  BasicCalendarManager.swift
+//  BaseCalendarManager.swift
 //  Off Day
 //
 //  Created by zici on 8/5/24.
@@ -8,7 +8,7 @@
 import Foundation
 import ZCCalendar
 
-enum BasicCalendarType: Int, Codable {
+enum BaseCalendarType: Int, Codable {
     case standard = 0
     case weeksCircle
     case daysCircle
@@ -28,11 +28,11 @@ enum WeekCount: Int, CaseIterable, Hashable, Equatable, Codable {
     var title: String {
         switch self {
         case .two:
-            return String(localized: "basicCalendar.weeks.2")
+            return String(localized: "baseCalendar.weeks.2")
         case .three:
-            return String(localized: "basicCalendar.weeks.3")
+            return String(localized: "baseCalendar.weeks.3")
         case .four:
-            return String(localized: "basicCalendar.weeks.4")
+            return String(localized: "baseCalendar.weeks.4")
         }
     }
 }
@@ -49,15 +49,15 @@ struct DaysCircleConfig: Hashable, Codable {
     var offCount: Int
 }
 
-class BasicCalendarManager {
-    static let shared = BasicCalendarManager()
+class BaseCalendarManager {
+    static let shared = BaseCalendarManager()
     
     enum Config {
         case standard(StandardConfig)
         case weeksCircle(WeeksCircleConfig)
         case daysCircle(DaysCircleConfig)
         
-        var type: BasicCalendarType {
+        var type: BaseCalendarType {
             switch self {
             case .standard:
                 return .standard
@@ -68,7 +68,7 @@ class BasicCalendarManager {
             }
         }
         
-        static func generate(by config: BasicCalendarConfig) -> Self {
+        static func generate(by config: BaseCalendarConfig) -> Self {
             switch config.type {
             case .standard:
                 return .standard(StandardConfig(weekdayOrders: config.standardWeekdayOrders()))
@@ -95,7 +95,7 @@ class BasicCalendarManager {
             case .zero:
                 standardOffday = ""
             }
-            let needSaveConfig = BasicCalendarConfig(type: .standard, standardOffday: standardOffday, weekOffset: 0, weekCount: .two, weekIndexs: "", dayStart: 0, dayWorkCount: 1, dayOffCount: 1)
+            let needSaveConfig = BaseCalendarConfig(type: .standard, standardOffday: standardOffday, weekOffset: 0, weekCount: .two, weekIndexs: "", dayStart: 0, dayWorkCount: 1, dayOffCount: 1)
             BasicCalendarConfigManager.add(config: needSaveConfig)
             
             config = Config.generate(by: needSaveConfig)
@@ -142,11 +142,11 @@ class BasicCalendarManager {
 
 // Database
 struct BasicCalendarConfigManager {
-    static func fetch() -> BasicCalendarConfig? {
-        var result: BasicCalendarConfig?
+    static func fetch() -> BaseCalendarConfig? {
+        var result: BaseCalendarConfig?
         do {
             try AppDatabase.shared.reader?.read{ db in
-                result = try BasicCalendarConfig.fetchOne(db)
+                result = try BaseCalendarConfig.fetchOne(db)
             }
         }
         catch {
@@ -155,17 +155,17 @@ struct BasicCalendarConfigManager {
         return result
     }
     
-    static func add(config: BasicCalendarConfig) {
+    static func add(config: BaseCalendarConfig) {
         guard config.id == nil else {
             return
         }
-        _ = AppDatabase.shared.add(basicCalendarConfig: config)
+        _ = AppDatabase.shared.add(baseCalendarConfig: config)
     }
     
-    static func update(config: BasicCalendarConfig) {
+    static func update(config: BaseCalendarConfig) {
         guard config.id != nil else {
             return
         }
-        _ = AppDatabase.shared.update(basicCalendarConfig: config)
+        _ = AppDatabase.shared.update(baseCalendarConfig: config)
     }
 }

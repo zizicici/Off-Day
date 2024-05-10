@@ -9,10 +9,10 @@ import Foundation
 import GRDB
 import ZCCalendar
 
-struct BasicCalendarConfig: Identifiable, Hashable, MutablePersistableRecord {
+struct BaseCalendarConfig: Identifiable, Hashable, MutablePersistableRecord {
     var id: Int64?
     
-    var type: BasicCalendarType
+    var type: BaseCalendarType
     var standardOffday: String
     
     var weekOffset: Int64
@@ -24,23 +24,23 @@ struct BasicCalendarConfig: Identifiable, Hashable, MutablePersistableRecord {
     var dayOffCount: Int64
 }
 
-extension BasicCalendarConfig: Codable {
+extension BaseCalendarConfig: Codable {
     enum CodingKeys: String, CodingKey {
         case id, type, standardOffday = "standard_offday", weekOffset = "week_offset", weekCount = "week_count", weekIndexs = "week_indexs", dayStart = "day_start", dayWorkCount = "day_work_count", dayOffCount = "day_off_count"
     }
 }
 
-extension BasicCalendarConfig: TableRecord {
+extension BaseCalendarConfig: TableRecord {
     static var databaseTableName: String = "basic_calendar_config"
 }
 
-extension BasicCalendarConfig: FetchableRecord {
+extension BaseCalendarConfig: FetchableRecord {
     mutating func didInsert(_ inserted: InsertionSuccess) {
         id = inserted.rowID
     }
 }
 
-extension BasicCalendarConfig {
+extension BaseCalendarConfig {
     func standardWeekdayOrders() -> [WeekdayOrder] {
         return standardOffday.split(separator: "/").compactMap{ Int($0) }.compactMap{ WeekdayOrder(rawValue: $0) }
     }

@@ -1,5 +1,5 @@
 //
-//  BasicCalendarEditorViewController.swift
+//  BaseCalendarEditorViewController.swift
 //  Off Day
 //
 //  Created by zici on 8/5/24.
@@ -9,24 +9,24 @@ import UIKit
 import SnapKit
 import ZCCalendar
 
-extension BasicCalendarType {
+extension BaseCalendarType {
     var title: String {
         switch self {
         case .standard:
-            return String(localized: "basicCalendar.type.standard")
+            return String(localized: "baseCalendar.type.standard")
         case .weeksCircle:
-            return String(localized: "basicCalendar.type.weeks")
+            return String(localized: "baseCalendar.type.weeks")
         case .daysCircle:
-            return String(localized: "basicCalendar.type.days")
+            return String(localized: "baseCalendar.type.days")
         }
     }
 }
 
-class BasicCalendarEditorViewController: UIViewController, UITableViewDelegate {
+class BaseCalendarEditorViewController: UIViewController, UITableViewDelegate {
     private var tableView: UITableView!
     private var dataSource: DataSource!
     
-    private var selectedConfig: BasicCalendarManager.Config!
+    private var selectedConfig: BaseCalendarManager.Config!
     
     enum Section: Hashable {
         case main
@@ -37,7 +37,7 @@ class BasicCalendarEditorViewController: UIViewController, UITableViewDelegate {
         var header: String? {
             switch self {
             case .main:
-                return String(localized: "basicCalendar.main.header")
+                return String(localized: "baseCalendar.main.header")
             case .standardConfig:
                 return nil
             case .weeksCircleConfig:
@@ -52,9 +52,9 @@ class BasicCalendarEditorViewController: UIViewController, UITableViewDelegate {
             case .main:
                 return nil
             case .standardConfig:
-                return String(localized: "basicCalendar.standard.footer")
+                return String(localized: "baseCalendar.standard.footer")
             case .weeksCircleConfig:
-                return String(localized: "basicCalendar.standard.footer")
+                return String(localized: "baseCalendar.standard.footer")
             case .daysCircleConfig:
                 return nil
             }
@@ -62,7 +62,7 @@ class BasicCalendarEditorViewController: UIViewController, UITableViewDelegate {
     }
     
     enum Item: Hashable {
-        case calendarType(BasicCalendarType, Bool)
+        case calendarType(BaseCalendarType, Bool)
         case stadardConfig([WeekdayOrder])
         case weekCount(WeekCount)
         case weekCalendar(WeeksCircleConfig)
@@ -86,13 +86,13 @@ class BasicCalendarEditorViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = String(localized: "controller.basicCalendar.title")
+        self.title = String(localized: "controller.baseCalendar.title")
         
         view.backgroundColor = AppColor.background
         navigationItem.largeTitleDisplayMode = .never
         updateNavigationBarStyle()
         
-        self.selectedConfig = BasicCalendarManager.shared.config
+        self.selectedConfig = BaseCalendarManager.shared.config
         
         configureHierarchy()
         configureDataSource()
@@ -148,7 +148,7 @@ class BasicCalendarEditorViewController: UIViewController, UITableViewDelegate {
             case .weekCount(let weekCount):
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(MenuCell.self), for: indexPath)
                 if let cell = cell as? MenuCell {
-                    cell.update(with: MenuCellItem(title: String(localized: "basicCalendar.weeks.count"), value: weekCount.title))
+                    cell.update(with: MenuCellItem(title: String(localized: "baseCalendar.weeks.count"), value: weekCount.title))
                     let actions = WeekCount.allCases.map { target in
                         let action = UIAction(title: target.title, state: weekCount == target ? .on : .off) { [weak self] _ in
                             self?.resetWeeksCircle(with: target)
@@ -173,7 +173,7 @@ class BasicCalendarEditorViewController: UIViewController, UITableViewDelegate {
             case .date(let day):
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(DateCell.self), for: indexPath)
                 if let cell = cell as? DateCell {
-                    cell.update(with: DateCellItem(title: String(localized: "basicCalendar.days.start"), date: day))
+                    cell.update(with: DateCellItem(title: String(localized: "baseCalendar.days.start"), date: day))
                     cell.selectDateAction = { [weak self] date in
                         guard let self = self else { return }
                         let day = GregorianDay(from: date)
@@ -184,9 +184,9 @@ class BasicCalendarEditorViewController: UIViewController, UITableViewDelegate {
             case .workCount(let count):
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(MenuCell.self), for: indexPath)
                 if let cell = cell as? MenuCell {
-                    cell.update(with: MenuCellItem(title: String(localized: "basicCalendar.days.work"), value: String(format: (String(localized: "basicCalendar.days.day%i")), count)))
+                    cell.update(with: MenuCellItem(title: String(localized: "baseCalendar.days.work"), value: String(format: (String(localized: "baseCalendar.days.day%i")), count)))
                     let actions = (1...10).map { target in
-                        let action = UIAction(title: String(format: (String(localized: "basicCalendar.days.day%i")), target), state: count == target ? .on : .off) { [weak self] _ in
+                        let action = UIAction(title: String(format: (String(localized: "baseCalendar.days.day%i")), target), state: count == target ? .on : .off) { [weak self] _ in
                             self?.updateDaysCircleConfig(workCount: target)
                         }
                         return action
@@ -198,9 +198,9 @@ class BasicCalendarEditorViewController: UIViewController, UITableViewDelegate {
             case .offCount(let count):
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(MenuCell.self), for: indexPath)
                 if let cell = cell as? MenuCell {
-                    cell.update(with: MenuCellItem(title: String(localized: "basicCalendar.days.off"), value: String(format: (String(localized: "basicCalendar.days.day%i")), count)))
+                    cell.update(with: MenuCellItem(title: String(localized: "baseCalendar.days.off"), value: String(format: (String(localized: "baseCalendar.days.day%i")), count)))
                     let actions = (1...10).map { target in
-                        let action = UIAction(title: String(format: (String(localized: "basicCalendar.days.day%i")), target), state: count == target ? .on : .off) { [weak self] _ in
+                        let action = UIAction(title: String(format: (String(localized: "baseCalendar.days.day%i")), target), state: count == target ? .on : .off) { [weak self] _ in
                             self?.updateDaysCircleConfig(offCount: target)
                         }
                         return action
@@ -218,7 +218,7 @@ class BasicCalendarEditorViewController: UIViewController, UITableViewDelegate {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.main])
         
-        let options: [BasicCalendarType] = [.standard, .weeksCircle, .daysCircle]
+        let options: [BaseCalendarType] = [.standard, .weeksCircle, .daysCircle]
         snapshot.appendItems(options.map{ .calendarType($0, self.selectedConfig.type == $0) })
         
         switch selectedConfig {
@@ -320,7 +320,7 @@ class BasicCalendarEditorViewController: UIViewController, UITableViewDelegate {
     }
 }
 
-extension BasicCalendarEditorViewController {
+extension BaseCalendarEditorViewController {
     @objc
     func cancelAction() {
         dismiss(animated: true)
@@ -328,7 +328,7 @@ extension BasicCalendarEditorViewController {
     
     @objc
     func confirmAction() {
-        BasicCalendarManager.shared.save(config: selectedConfig)
+        BaseCalendarManager.shared.save(config: selectedConfig)
         
         dismiss(animated: true)
     }
