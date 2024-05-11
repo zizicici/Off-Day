@@ -168,7 +168,7 @@ class BlockDetailViewController: UIViewController {
     }
     
     var customDayType: DayType? {
-        return blockItem.customDay?.dayType
+        return blockItem.customDayType
     }
     
     func updateDateLabelColor() {
@@ -206,7 +206,7 @@ class BlockDetailViewController: UIViewController {
     
     @objc
     func reloadData() {
-        blockItem.customDay = CustomDayManager.shared.fetchCustomDay(by: blockItem.day.julianDay)
+        blockItem.customDayType = CustomDayManager.shared.fetchCustomDay(by: blockItem.day.julianDay)?.dayType
         updateButtons()
     }
     

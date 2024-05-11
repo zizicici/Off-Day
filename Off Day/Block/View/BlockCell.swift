@@ -10,7 +10,7 @@ import SnapKit
 import ZCCalendar
 
 fileprivate extension UIConfigurationStateCustomKey {
-    static let blockItem = UIConfigurationStateCustomKey("com.zizicici.pigeon.cell.block.item")
+    static let blockItem = UIConfigurationStateCustomKey("com.zizicici.offday.cell.block.item")
 }
 
 private extension UICellConfigurationState {
@@ -149,9 +149,9 @@ class BlockCell: BlockBaseCell {
         
         if let item = state.blockItem {
             paperView.backgroundColor = item.backgroundColor
-            if let customDay = item.customDay {
+            if let customDayType = item.customDayType {
                 cornerMark.isHidden = false
-                switch customDay.dayType {
+                switch customDayType {
                 case .offDay:
                     cornerMark.image = UIImage(named: "OffDayMark")
                 case .workDay:

@@ -11,8 +11,7 @@ import UIKit
 
 struct BlockItem: Hashable {
     var index: Int
-    var publicDay: PublicDay?
-    var customDay: CustomDay?
+    var customDayType: DayType?
     var backgroundColor: UIColor
     var foregroundColor: UIColor
     var isToday: Bool
@@ -27,7 +26,7 @@ extension BlockItem {
 extension BlockItem {
     var calendarString: String {
         var suffix = ""
-        if let name = publicDay?.name {
+        if let name = PublicPlanManager.shared.dataSource?.days[day.julianDay]?.name {
             suffix = "\n\(name)"
         }
         return (day.completeFormatString() ?? "") + suffix

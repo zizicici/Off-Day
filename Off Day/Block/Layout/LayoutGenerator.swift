@@ -60,7 +60,7 @@ struct LayoutGenerater {
                     }
                 }
                 
-                return Item.block(BlockItem(index: julianDay, publicDay: publicDay, customDay: customDay, backgroundColor: backgroundColor, foregroundColor: foregroundColor, isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay)))
+                return Item.block(BlockItem(index: julianDay, customDayType: customDay?.dayType, backgroundColor: backgroundColor, foregroundColor: foregroundColor, isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay)))
             }))
         }
     }
