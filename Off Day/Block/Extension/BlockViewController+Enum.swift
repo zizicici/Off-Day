@@ -18,7 +18,7 @@ enum Section: Hashable {
 }
 
 enum Item: Hashable {
-    case info(TitleInfoCellItem)
+    case info(TitleCellItem)
     case tag(String, Bool)
     case block(BlockItem)
     case invisible(String)

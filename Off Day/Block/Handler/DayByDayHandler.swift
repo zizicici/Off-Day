@@ -101,7 +101,7 @@ class DayDisplayHandler: DisplayHandler {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         
         snapshot.appendSections([.info])
-        snapshot.appendItems([.info(TitleInfoCellItem(catalogue: .targetYear(currentYear)))])
+        snapshot.appendItems([.info(TitleCellItem(catalogue: .targetYear(currentYear)))])
         
         LayoutGenerater.dayLayout(for: &snapshot, year: currentYear, customDaysDict: customDaysDict)
         

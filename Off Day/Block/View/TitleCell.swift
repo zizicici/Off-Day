@@ -8,33 +8,33 @@
 import UIKit
 import SnapKit
 
-struct TitleInfoCellItem: Hashable {
+struct TitleCellItem: Hashable {
     var catalogue: Catalogue
 }
 
 fileprivate extension UIConfigurationStateCustomKey {
-    static let titleInfoItem = UIConfigurationStateCustomKey("com.zizicici.off-day.cell.book.info.item")
+    static let titleInfoItem = UIConfigurationStateCustomKey("com.zizicici.offday.cell.title.item")
 }
 
 private extension UICellConfigurationState {
-    var titleInfoItem: TitleInfoCellItem? {
+    var titleItem: TitleCellItem? {
         set { self[.titleInfoItem] = newValue }
-        get { return self[.titleInfoItem] as? TitleInfoCellItem }
+        get { return self[.titleInfoItem] as? TitleCellItem }
     }
 }
 
 class TitleBaseCell: UICollectionViewCell {
-    private var titleInfoItem: TitleInfoCellItem? = nil
+    private var titleItem: TitleCellItem? = nil
 
-    func update(with newBookInfo: TitleInfoCellItem) {
-        guard titleInfoItem != newBookInfo else { return }
-        titleInfoItem = newBookInfo
+    func update(with newTitleItem: TitleCellItem) {
+        guard titleItem != newTitleItem else { return }
+        titleItem = newTitleItem
         setNeedsUpdateConfiguration()
     }
     
     override var configurationState: UICellConfigurationState {
         var state = super.configurationState
-        state.titleInfoItem = self.titleInfoItem
+        state.titleItem = self.titleItem
         return state
     }
 }
@@ -96,7 +96,7 @@ class TitleCell: TitleBaseCell {
     override func updateConfiguration(using state: UICellConfigurationState) {
         super.updateConfiguration(using: state)
         setupViewsIfNeeded()
-        if let bookInfoCellItem = state.titleInfoItem {
+        if let bookInfoCellItem = state.titleItem {
             switch bookInfoCellItem.catalogue {
             case .targetYear(let year):
 //                titleLabel.text = String(localized: "calendar.title.hint")
