@@ -76,7 +76,9 @@ class CustomPublicDayDetailViewController: UIViewController {
         super.viewDidAppear(animated)
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25) { [weak self] in
-            _ = self?.titleCell?.becomeFirstResponder()
+            if self?.day.name.count == 0 {
+                _ = self?.titleCell?.becomeFirstResponder()
+            }
         }
     }
     

@@ -362,10 +362,6 @@ class PublicPlanDetailViewController: UIViewController {
     @objc
     func showTitleAlert() {
         let alertController = UIAlertController(title: String(localized: "publicDetail.alert.title"), message: nil, preferredStyle: .alert)
-        alertController.addTextField { [weak self] textField in
-            textField.placeholder = ""
-            textField.text = self?.publicPlanInfo?.name
-        }
         let cancelAction = UIAlertAction(title: String(localized: "publicDetail.alert.cancel"), style: .cancel) { _ in
             //
         }
@@ -375,10 +371,37 @@ class PublicPlanDetailViewController: UIViewController {
                 self?.setupTitleButton()
             }
         }
+        okAction.isEnabled = publicPlanInfo?.name.count ?? 0 > 0
+        alertController.addTextField { [weak self] textField in
+            textField.placeholder = ""
+            textField.text = self?.publicPlanInfo?.name
+            textField.addTarget(alertController, action: #selector(alertController.textDidChangeInTitle), for: .editingChanged)
+        }
 
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    func showDeleteAlert() {
+        let alertController = UIAlertController(title: String(localized: "publicPlan.alert.delete.title"), message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: String(localized: "publicPlan.alert.delete.cancel"), style: .cancel) { _ in
+            //
+        }
+        let deleteAction = UIAlertAction(title: String(localized: "publicPlan.alert.delete.confirm"), style: .destructive) { [weak self] _ in
+            self?.deleteAction()
+        }
+
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func deleteAction() {
+        guard let publicPlanInfo = publicPlanInfo else { return }
+        dismiss(animated: true) {
+            _ = PublicPlanManager.shared.delete(publicPlanInfo)
+        }
     }
 }
 
@@ -396,12 +419,19 @@ extension PublicPlanDetailViewController: UICollectionViewDelegate {
             case .add:
                 enterDayDetail(day: nil)
             case .delete:
-                if let publicPlanInfo = publicPlanInfo {
-                    dismiss(animated: true) {
-                        _ = PublicPlanManager.shared.delete(publicPlanInfo)
-                    }
+                if publicPlanInfo != nil {
+                    showDeleteAlert()
                 }
             }
+        }
+    }
+}
+
+extension UIAlertController {
+    @objc
+    func textDidChangeInTitle() {
+        if let title = textFields?[0].text, let action = actions.last {
+            action.isEnabled = title.count > 0
         }
     }
 }

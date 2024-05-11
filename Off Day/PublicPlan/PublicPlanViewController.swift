@@ -246,17 +246,28 @@ class PublicPlanViewController: UIViewController {
     }
     
     func updateSelection() {
-        if let publicPlan = PublicPlanManager.shared.dataSource?.plan {
-            switch publicPlan {
-            case .app(let plan):
-                if let index = dataSource.indexPath(for: .appPlan(plan)) {
-                    selectedItem = .appPlan(plan)
-                    collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
-                }
-            case .custom(let plan):
-                if let index = dataSource.indexPath(for: .customPlan(plan)) {
-                    selectedItem = .customPlan(plan)
-                    collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
+        var needUseManagerDataSource: Bool = false
+        if let selectedItem = selectedItem {
+            if dataSource.indexPath(for: selectedItem) == nil {
+                needUseManagerDataSource = true
+                self.selectedItem = nil
+            }
+        } else {
+            needUseManagerDataSource = true
+        }
+        if needUseManagerDataSource {
+            if let publicPlan = PublicPlanManager.shared.dataSource?.plan {
+                switch publicPlan {
+                case .app(let plan):
+                    if let index = dataSource.indexPath(for: .appPlan(plan)) {
+                        selectedItem = .appPlan(plan)
+                        collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
+                    }
+                case .custom(let plan):
+                    if let index = dataSource.indexPath(for: .customPlan(plan)) {
+                        selectedItem = .customPlan(plan)
+                        collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
+                    }
                 }
             }
         }
