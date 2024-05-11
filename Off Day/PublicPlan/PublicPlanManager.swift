@@ -85,7 +85,7 @@ final class PublicPlanManager {
 }
 
 extension PublicPlanManager {
-    public func save(_ planInfo: PublicPlanInfo) -> Bool {
+    public func create(_ planInfo: PublicPlanInfo) -> Bool {
         if let plan = AppDatabase.shared.add(publicPlan: CustomPublicPlan(name: planInfo.name)), let planId = plan.id {
             for day in planInfo.days.values.sorted(by: { $0.date.julianDay < $1.date.julianDay }) {
                 if var saveDay = day as? CustomPublicDay {
@@ -167,5 +167,23 @@ extension PublicPlanManager {
         })
         
         return result
+    }
+}
+
+extension PublicPlanManager {
+    func importPlan(from url: URL) -> Bool {
+        if let data = try? Data(contentsOf: url) {
+            do {
+                let detail = try JSONDecoder().decode(AppPublicPlan.Detail.self, from: data)
+                let newCustomPlan = CustomPublicPlan.Detail(plan: CustomPublicPlan(name: detail.name), days: detail.days.map({ CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }))
+                let planInfo = PublicPlanInfo.generate(by: newCustomPlan)
+                return create(planInfo)
+            } catch {
+                print("Unexpected error: \(error).")
+                return false
+            }
+        } else {
+            return false
+        }
     }
 }

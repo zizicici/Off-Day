@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import ZCCalendar
+import UniformTypeIdentifiers
+import Toast
 
 class PublicPlanViewController: UIViewController {
     private var collectionView: UICollectionView!
@@ -38,6 +40,7 @@ class PublicPlanViewController: UIViewController {
     enum Item: Hashable {
         case empty
         case create
+        case importPlan
         case appPlan(AppPublicPlan)
         case customPlan(CustomPublicPlan)
         
@@ -47,6 +50,8 @@ class PublicPlanViewController: UIViewController {
                 return String(localized: "publicDay.item.special.empty")
             case .create:
                 return String(localized: "publicDay.item.special.create")
+            case .importPlan:
+                return String(localized: "publicDay.item.special.import")
             case .appPlan(let plan):
                 return plan.title
             case .customPlan(let plan):
@@ -59,6 +64,8 @@ class PublicPlanViewController: UIViewController {
             case .empty:
                 return nil
             case .create:
+                return nil
+            case .importPlan:
                 return nil
             case .appPlan(let plan):
                 return plan.subtitle
@@ -117,7 +124,7 @@ class PublicPlanViewController: UIViewController {
             switch itemIdentifier {
             case .empty:
                 return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
-            case .create:
+            case .create, .importPlan:
                 return collectionView.dequeueConfiguredReusableCell(using: normalCellRegistration, for: indexPath, item: itemIdentifier)
             case .appPlan:
                 return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
@@ -139,7 +146,7 @@ class PublicPlanViewController: UIViewController {
                 content.directionalLayoutMargins = layoutMargins
                 cell.contentConfiguration = content
                 cell.detail = nil
-            case .create:
+            case .create, .importPlan:
                 return
             case .appPlan, .customPlan:
                 var content = UIListContentConfiguration.subtitleCell()
@@ -181,7 +188,7 @@ class PublicPlanViewController: UIViewController {
         switch item {
         case .empty:
             break
-        case .create:
+        case .create, .importPlan:
             break
         case .appPlan(let plan):
             if let detailViewController = PublicPlanDetailViewController(appPlan: plan) {
@@ -214,6 +221,7 @@ class PublicPlanViewController: UIViewController {
             }
         }
         topItems.append(.create)
+        topItems.append(.importPlan)
         snapshot.appendItems(topItems, toSection: .top)
         
         snapshot.appendSections([.cn])
@@ -292,7 +300,7 @@ class PublicPlanViewController: UIViewController {
         switch selectedItem {
         case .empty:
             PublicPlanManager.shared.select(plan: nil)
-        case .create:
+        case .create, .importPlan:
             return
         case .appPlan(let plan):
             PublicPlanManager.shared.select(plan: .app(plan))
@@ -300,6 +308,27 @@ class PublicPlanViewController: UIViewController {
             PublicPlanManager.shared.select(plan: .custom(plan))
         }
         dismiss(animated: true)
+    }
+    
+    func createTemplate() {
+        let day = GregorianDay(year: ZCCalendar.manager.today.year, month: .jan, day: 1)
+        let publicPlanInfo = PublicPlanInfo(plan: .custom(CustomPublicPlan(name: String(localized: "publicDetail.title.new"))), days: [day.julianDay : CustomPublicDay(name: String(localized: "publicDetail.newYear.name"), date: day, type: .offDay)])
+        createCustomTemplate(prefill: publicPlanInfo)
+    }
+    
+    func importPlanAction() {
+        let documentPickerViewController = UIDocumentPickerViewController(forOpeningContentTypes: [.json])
+        documentPickerViewController.allowsMultipleSelection = false
+        documentPickerViewController.shouldShowFileExtensions = true
+        documentPickerViewController.delegate = self
+        present(documentPickerViewController, animated: true)
+    }
+    
+    func importPlan(from url: URL) {
+        let result = PublicPlanManager.shared.importPlan(from: url)
+        let style = ToastStyle.getStyle(messageColor: .white, backgroundColor: AppColor.offDay)
+        view.makeToast(
+            result ? String(localized: "publicDetail.import.success") : String(localized: "publicDetail.import.failure"), position: .center, style: style)
     }
 }
 
@@ -316,9 +345,10 @@ extension PublicPlanViewController: UICollectionViewDelegate {
             case .empty:
                 return true
             case .create:
-                let day = GregorianDay(year: ZCCalendar.manager.today.year, month: .jan, day: 1)
-                let publicPlanInfo = PublicPlanInfo(plan: .custom(CustomPublicPlan(name: String(localized: "publicDetail.title.new"))), days: [day.julianDay : CustomPublicDay(name: String(localized: "publicDetail.newYear.name"), date: day, type: .offDay)])
-                createCustomTemplate(prefill: publicPlanInfo)
+                createTemplate()
+                return false
+            case .importPlan:
+                importPlanAction()
                 return false
             case .appPlan, .customPlan:
                 return true
@@ -326,5 +356,35 @@ extension PublicPlanViewController: UICollectionViewDelegate {
         } else {
             return false
         }
+    }
+}
+
+extension PublicPlanViewController: UIDocumentPickerDelegate {
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let url = urls.first else {
+            return
+        }
+        // Start accessing a security-scoped resource.
+        guard url.startAccessingSecurityScopedResource() else {
+            // Handle the failure here.
+            return
+        }
+        
+        defer { url.stopAccessingSecurityScopedResource() }
+        
+        guard let pickedURL = urls.first else {
+            return
+        }
+        
+        let coordinator = NSFileCoordinator()
+        
+        coordinator.coordinate(readingItemAt: pickedURL, options: [], error: nil) { [weak self] (url) in
+            self?.importPlan(from: url)
+            pickedURL.stopAccessingSecurityScopedResource()
+        }
+    }
+    
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        print("documentPickerWasCancelled")
     }
 }

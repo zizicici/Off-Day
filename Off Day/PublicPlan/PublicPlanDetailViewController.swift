@@ -287,7 +287,7 @@ class PublicPlanDetailViewController: UIViewController {
                             dismissAction()
                         }
                     } else {
-                        let result = PublicPlanManager.shared.save(planInfo)
+                        let result = PublicPlanManager.shared.create(planInfo)
                         if result {
                             dismissAction()
                         }

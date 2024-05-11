@@ -126,19 +126,22 @@ enum AppPublicPlan: String {
     struct Detail: Codable {
         var plan: AppPublicPlan?
         var days: [AppPublicDay] // julian day as Key
+        var name: String
         
         enum CodingKeys: String, CodingKey {
             case days
+            case name
         }
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
+            name = try container.decode(String.self, forKey: .name)
             days = try container.decode([AppPublicDay].self, forKey: .days)
-            plan = nil
         }
 
         func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
+            try container.encode(name, forKey: .name)
             try container.encode(days, forKey: .days)
         }
         
