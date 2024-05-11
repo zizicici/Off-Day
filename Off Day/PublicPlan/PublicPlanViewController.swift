@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import ZCCalendar
 
 class PublicPlanViewController: UIViewController {
     private var collectionView: UICollectionView!
@@ -15,7 +16,7 @@ class PublicPlanViewController: UIViewController {
     private var selectedItem: Item?
         
     enum Section: Hashable {
-        case special
+        case top
         case cn
         case hk
         case mo
@@ -37,7 +38,8 @@ class PublicPlanViewController: UIViewController {
     enum Item: Hashable {
         case empty
         case create
-        case plan(PublicPlanManager.FixedPlan)
+        case appPlan(AppPublicPlan)
+        case customPlan(CustomPublicPlan)
         
         var title: String {
             switch self {
@@ -45,8 +47,10 @@ class PublicPlanViewController: UIViewController {
                 return String(localized: "publicDay.item.special.empty")
             case .create:
                 return String(localized: "publicDay.item.special.create")
-            case .plan(let plan):
+            case .appPlan(let plan):
                 return plan.title
+            case .customPlan(let plan):
+                return plan.name
             }
         }
         
@@ -56,8 +60,10 @@ class PublicPlanViewController: UIViewController {
                 return nil
             case .create:
                 return nil
-            case .plan(let plan):
+            case .appPlan(let plan):
                 return plan.subtitle
+            case .customPlan:
+                return nil
             }
         }
     }
@@ -75,9 +81,7 @@ class PublicPlanViewController: UIViewController {
         configureDataSource()
         reloadData()
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25) { [weak self] in
-            self?.updateSelection()
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .DatabaseUpdated, object: nil)
     }
     
     deinit {
@@ -115,7 +119,9 @@ class PublicPlanViewController: UIViewController {
                 return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
             case .create:
                 return collectionView.dequeueConfiguredReusableCell(using: normalCellRegistration, for: indexPath, item: itemIdentifier)
-            case .plan(_):
+            case .appPlan:
+                return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
+            case .customPlan:
                 return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
             }
         })
@@ -135,7 +141,7 @@ class PublicPlanViewController: UIViewController {
                 cell.detail = nil
             case .create:
                 return
-            default:
+            case .appPlan, .customPlan:
                 var content = UIListContentConfiguration.subtitleCell()
                 content.text = item.title
                 content.secondaryText = item.subtitle
@@ -177,16 +183,21 @@ class PublicPlanViewController: UIViewController {
             break
         case .create:
             break
-        case .plan(let publicPlan):
-            let detailViewController = PublicPlanDetailViewController(publicPlan: publicPlan)
-            let nav = NavigationController(rootViewController: detailViewController)
-            
-            navigationController?.present(nav, animated: true)
+        case .appPlan(let plan):
+            if let detailViewController = PublicPlanDetailViewController(appPlan: plan) {
+                let nav = NavigationController(rootViewController: detailViewController)
+                navigationController?.present(nav, animated: true)
+            }
+        case .customPlan(let plan):
+            if let detailViewController = PublicPlanDetailViewController(customPlan: plan, allowEditing: true) {
+                let nav = NavigationController(rootViewController: detailViewController)
+                navigationController?.present(nav, animated: true)
+            }
         }
     }
     
-    func createCustomTemplate(fixedPlan: PublicPlanManager.FixedPlan?) {
-        let editorViewController = PublicPlanDetailViewController(template: fixedPlan)
+    func createCustomTemplate(prefill: PublicPlanInfo) {
+        let editorViewController = PublicPlanDetailViewController(publicPlan: prefill, allowEditing: true)
         let nav = NavigationController(rootViewController: editorViewController)
         
         navigationController?.present(nav, animated: true)
@@ -195,41 +206,61 @@ class PublicPlanViewController: UIViewController {
     @objc
     func reloadData() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        snapshot.appendSections([.special])
-        snapshot.appendItems([.empty, .create], toSection: .special)
+        snapshot.appendSections([.top])
+        var topItems: [Item] = [.empty]
+        if let customPlans = try? PublicPlanManager.shared.fetchAllPublicPlan() {
+            for customPlan in customPlans {
+                topItems.append(.customPlan(customPlan))
+            }
+        }
+        topItems.append(.create)
+        snapshot.appendItems(topItems, toSection: .top)
         
         snapshot.appendSections([.cn])
-        snapshot.appendItems([.plan(.cn), .plan(.cn_xj), .plan(.cn_xz), .plan(.cn_gx), .plan(.cn_nx)], toSection: .cn)
+        snapshot.appendItems([.appPlan(.cn), .appPlan(.cn_xj), .appPlan(.cn_xz), .appPlan(.cn_gx), .appPlan(.cn_nx)], toSection: .cn)
         
         snapshot.appendSections([.hk])
-        snapshot.appendItems([.plan(.hk)], toSection: .hk)
+        snapshot.appendItems([.appPlan(.hk)], toSection: .hk)
         
         snapshot.appendSections([.mo])
-        snapshot.appendItems([.plan(.mo_public), .plan(.mo_force), .plan(.mo_cs)], toSection: .mo)
+        snapshot.appendItems([.appPlan(.mo_public), .appPlan(.mo_force), .appPlan(.mo_cs)], toSection: .mo)
         
         snapshot.appendSections([.sg])
-        snapshot.appendItems([.plan(.sg)], toSection: .sg)
+        snapshot.appendItems([.appPlan(.sg)], toSection: .sg)
         
         snapshot.appendSections([.th])
-        snapshot.appendItems([.plan(.th)], toSection: .th)
+        snapshot.appendItems([.appPlan(.th)], toSection: .th)
         
         snapshot.appendSections([.kr])
-        snapshot.appendItems([.plan(.kr)], toSection: .kr)
+        snapshot.appendItems([.appPlan(.kr)], toSection: .kr)
         
         snapshot.appendSections([.jp])
-        snapshot.appendItems([.plan(.jp)], toSection: .jp)
+        snapshot.appendItems([.appPlan(.jp)], toSection: .jp)
         
         snapshot.appendSections([.us])
-        snapshot.appendItems([.plan(.us)], toSection: .us)
+        snapshot.appendItems([.appPlan(.us)], toSection: .us)
         
-        dataSource.apply(snapshot, animatingDifferences: false)
+        dataSource.apply(snapshot, animatingDifferences: false) { [weak self] in
+            self?.updateSelection()
+        }
     }
     
     func updateSelection() {
-        if let plan = PublicPlanManager.shared.plan, let index = dataSource.indexPath(for: .plan(plan)) {
-            selectedItem = .plan(plan)
-            collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
-        } else {
+        if let publicPlan = PublicPlanManager.shared.dataSource?.plan {
+            switch publicPlan {
+            case .app(let plan):
+                if let index = dataSource.indexPath(for: .appPlan(plan)) {
+                    selectedItem = .appPlan(plan)
+                    collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
+                }
+            case .custom(let plan):
+                if let index = dataSource.indexPath(for: .customPlan(plan)) {
+                    selectedItem = .customPlan(plan)
+                    collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
+                }
+            }
+        }
+        if selectedItem == nil {
             if let index = dataSource.indexPath(for: .empty) {
                 selectedItem = .empty
                 collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
@@ -249,11 +280,13 @@ class PublicPlanViewController: UIViewController {
         }
         switch selectedItem {
         case .empty:
-            PublicPlanManager.shared.plan = nil
+            PublicPlanManager.shared.select(plan: nil)
         case .create:
             return
-        case .plan(let publicPlan):
-            PublicPlanManager.shared.plan = publicPlan
+        case .appPlan(let plan):
+            PublicPlanManager.shared.select(plan: .app(plan))
+        case .customPlan(let plan):
+            PublicPlanManager.shared.select(plan: .custom(plan))
         }
         dismiss(animated: true)
     }
@@ -272,9 +305,11 @@ extension PublicPlanViewController: UICollectionViewDelegate {
             case .empty:
                 return true
             case .create:
-                createCustomTemplate(fixedPlan: nil)
+                let day = GregorianDay(year: ZCCalendar.manager.today.year, month: .jan, day: 1)
+                let publicPlanInfo = PublicPlanInfo(plan: .custom(CustomPublicPlan(name: String(localized: "publicDetail.title.new"))), days: [day.julianDay : CustomPublicDay(name: String(localized: "publicDetail.newYear.name"), date: day, type: .offDay)])
+                createCustomTemplate(prefill: publicPlanInfo)
                 return false
-            case .plan:
+            case .appPlan, .customPlan:
                 return true
             }
         } else {

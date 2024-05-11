@@ -7,191 +7,49 @@
 
 import Foundation
 import ZCCalendar
+import GRDB
 
 final class PublicPlanManager {
-    enum FixedPlan: String {
-        case cn
-        case cn_xj
-        case cn_xz
-        case cn_gx
-        case cn_nx
-        case hk
-        case mo_public
-        case mo_force
-        case mo_cs
-        case jp
-        case sg
-        case us
-        case th
-        case kr
-        
-        var resource: String {
-            switch self {
-            case .cn:
-                return "cn-mainland"
-            case .cn_xj:
-                return "cn-xinjiang"
-            case .cn_xz:
-                return "cn-xizang"
-            case .cn_gx:
-                return "cn-guangxi"
-            case .cn_nx:
-                return "cn-ningxia"
-            case .hk:
-                return "hk"
-            case .mo_public:
-                return "mo-public"
-            case .mo_force:
-                return "mo-force"
-            case .mo_cs:
-                return "mo-civil-servant"
-            case .jp:
-                return "jp"
-            case .sg:
-                return "sg"
-            case .us:
-                return "us"
-            case .th:
-                return "th"
-            case .kr:
-                return "kr"
-            }
-        }
-        
-        var title: String {
-            switch self {
-            case .cn:
-                return String(localized: "publicDay.item.cn.mainland")
-            case .cn_xj:
-                return String(localized: "publicDay.item.cn.xinjiang")
-            case .cn_xz:
-                return String(localized: "publicDay.item.cn.xizang")
-            case .cn_nx:
-                return String(localized: "publicDay.item.cn.ningxia")
-            case .cn_gx:
-                return String(localized: "publicDay.item.cn.guangxi")
-            case .hk:
-                return String(localized: "publicDay.item.hk")
-            case .mo_public:
-                return String(localized: "publicDay.item.mo.public")
-            case .mo_force:
-                return String(localized: "publicDay.item.mo.force")
-            case .mo_cs:
-                return String(localized: "publicDay.item.mo.cs")
-            case .jp:
-                return String(localized: "publicDay.item.jp")
-            case .sg:
-                return String(localized: "publicDay.item.sg")
-            case .us:
-                return String(localized: "publicDay.item.us")
-            case .th:
-                return String(localized: "publicDay.item.th")
-            case .kr:
-                return String(localized: "publicDay.item.kr")
-            }
-        }
-        
-        var subtitle: String {
-            switch self {
-            case .cn:
-                return String(localized: "publicDay.item.cn.mainland.subtitle")
-            case .cn_xj:
-                return String(localized: "publicDay.item.cn.xinjiang.subtitle")
-            case .cn_xz:
-                return String(localized: "publicDay.item.cn.xizang.subtitle")
-            case .cn_nx:
-                return String(localized: "publicDay.item.cn.ningxia.subtitle")
-            case .cn_gx:
-                return String(localized: "publicDay.item.cn.guangxi.subtitle")
-            case .hk:
-                return String(localized: "publicDay.item.hk.subtitle")
-            case .mo_public:
-                return String(localized: "publicDay.item.mo.public.subtitle")
-            case .mo_force:
-                return String(localized: "publicDay.item.mo.force.subtitle")
-            case .mo_cs:
-                return String(localized: "publicDay.item.mo.cs.subtitle")
-            case .jp:
-                return String(localized: "publicDay.item.jp.subtitle")
-            case .sg:
-                return String(localized: "publicDay.item.sg.subtitle")
-            case .us:
-                return String(localized: "publicDay.item.us.subtitle")
-            case .th:
-                return String(localized: "publicDay.item.th.subtitle")
-            case .kr:
-                return String(localized: "publicDay.item.kr.subtitle")
-            }
-        }
-    }
-    
     static let shared: PublicPlanManager = PublicPlanManager()
     
-    private var publicPlanProvider: PublicPlanInfo?
+    private(set) var dataSource: PublicPlanInfo?
     
+    init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(load), name: .DatabaseUpdated, object: nil)
+    }
+    
+    @objc
     public func load() {
-        load(fixedPlan: planByUserDefault())
-    }
-    
-    private func load(fixedPlan: FixedPlan?) {
-        guard let fixedPlan = fixedPlan else {
-            publicPlanProvider = nil
-            return
-        }
-        if let url = Bundle.main.url(forResource: fixedPlan.resource, withExtension: "json"), let data = try? Data(contentsOf: url) {
-            do {
-                publicPlanProvider = try JSONDecoder().decode(PublicPlanInfo.self, from: data)
-            } catch {
-                print("Unexpected error: \(error).")
+        var appPlanDetail: AppPublicPlan.Detail?
+        if let appPlanFile = UserDefaults.standard.string(forKey: UserDefaults.Settings.AppPublicPlanType.rawValue) {
+            if let appPlan = AppPublicPlan(rawValue: appPlanFile) {
+                appPlanDetail = AppPublicPlan.Detail(plan: appPlan)
             }
         }
-    }
-    
-    var plan: FixedPlan? {
-        get {
-            return planByUserDefault()
+        var customPlanDetail: CustomPublicPlan.Detail?
+        if let customPlanId = UserDefaults.standard.getInt(forKey: UserDefaults.Settings.CustomPublicPlanType.rawValue) {
+            customPlanDetail = try? fetchCustomPublicPlan(with: Int64(customPlanId))
         }
-        set {
-            guard plan != newValue else {
-                return
-            }
-            let key = UserDefaults.Settings.PublicPlanType.rawValue
-            if let value = newValue {
-                UserDefaults.standard.setValue(value.rawValue, forKey: key)
-            } else {
-                UserDefaults.standard.removeObject(forKey: key)
-            }
-            load(fixedPlan: planByUserDefault())
-            NotificationCenter.default.post(name: NSNotification.Name.SettingsUpdate, object: nil)
+        switch (appPlanDetail != nil, customPlanDetail != nil) {
+        case (true, false):
+            // Use AppPlan
+            dataSource = PublicPlanInfo.generate(by: appPlanDetail!)
+        case (false, true):
+            // Use CustomPlan
+            dataSource = PublicPlanInfo.generate(by: customPlanDetail!)
+        default:
+            // Use NONE
+            dataSource = nil
         }
     }
     
-    private func planByUserDefault() -> FixedPlan? {
-        if let storedPlan = UserDefaults.standard.string(forKey: UserDefaults.Settings.PublicPlanType.rawValue), let plan = FixedPlan(rawValue: storedPlan) {
-            return plan
-        } else {
-            return nil
-        }
-    }
-    
-    private func planForCurrentLocale() -> FixedPlan? {
-        var targetPlan: FixedPlan? = nil
-        let localeIdentifier = Locale.current.identifier
-        if localeIdentifier.hasSuffix("CN") {
-            targetPlan = .cn
-        } else if localeIdentifier.hasPrefix("JP") {
-            targetPlan = .jp
-        }
-        return targetPlan
-    }
-    
-    public func publicDay(at julianDay: Int) -> PublicDay? {
-        return publicPlanProvider?.days[julianDay]
+    public func publicDay(at julianDay: Int) -> (any PublicDay)? {
+        return dataSource?.days[julianDay]
     }
     
     public func hasHolidayShift() -> Bool {
         var result: Bool = false
-        if let values = publicPlanProvider?.days.values {
+        if let values = dataSource?.days.values {
             for value in values {
                 if value.type == .workDay {
                     result = true
@@ -199,6 +57,115 @@ final class PublicPlanManager {
                 }
             }
         }
+        return result
+    }
+    
+    public func select(plan: PublicPlanInfo.Plan?) {
+        guard dataSource?.plan != plan else {
+            return
+        }
+        let appPlanStoredKey = UserDefaults.Settings.AppPublicPlanType.rawValue
+        let customPlanStoredKey = UserDefaults.Settings.CustomPublicPlanType.rawValue
+        if let plan = plan {
+            switch plan {
+            case .app(let appPublicPlan):
+                UserDefaults.standard.setValue(appPublicPlan.rawValue, forKey: appPlanStoredKey)
+                UserDefaults.standard.removeObject(forKey: customPlanStoredKey)
+            case .custom(let customPublicPlan):
+                UserDefaults.standard.setValue(customPublicPlan.id, forKey: customPlanStoredKey)
+                UserDefaults.standard.removeObject(forKey: appPlanStoredKey)
+            }
+        } else {
+            UserDefaults.standard.removeObject(forKey: appPlanStoredKey)
+            UserDefaults.standard.removeObject(forKey: customPlanStoredKey)
+        }
+        load()
+        NotificationCenter.default.post(name: NSNotification.Name.SettingsUpdate, object: nil)
+    }
+}
+
+extension PublicPlanManager {
+    public func save(_ planInfo: PublicPlanInfo) -> Bool {
+        if let plan = AppDatabase.shared.add(publicPlan: CustomPublicPlan(name: planInfo.name)), let planId = plan.id {
+            for day in planInfo.days.values.sorted(by: { $0.date.julianDay < $1.date.julianDay }) {
+                if var saveDay = day as? CustomPublicDay {
+                    saveDay.planId = planId
+                    _ = AppDatabase.shared.add(publicDay: saveDay)
+                }
+            }
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    public func update(_ planInfo: PublicPlanInfo) -> Bool {
+        switch planInfo.plan {
+        case .app:
+            return false
+        case .custom(let customPlan):
+            if AppDatabase.shared.update(publicPlan: customPlan), let planId = customPlan.id {
+                _ = AppDatabase.shared.deleteCustomPublicDays(with: planId)
+                for day in planInfo.days.values.sorted(by: { $0.date.julianDay < $1.date.julianDay }) {
+                    if var saveDay = day as? CustomPublicDay {
+                        saveDay.id = nil
+                        saveDay.planId = planId
+                        _ = AppDatabase.shared.add(publicDay: saveDay)
+                    }
+                }
+            }
+            return true
+        case .none:
+            return false
+        }
+    }
+    
+    public func delete(_ planInfo: PublicPlanInfo) -> Bool {
+        switch planInfo.plan {
+        case .app:
+            return false
+        case .custom(let customPlan):
+            _ = AppDatabase.shared.delete(publicPlan: customPlan)
+            return false
+        case .none:
+            return false
+        }
+    }
+    
+    public func fetchCustomPublicPlan(with id: Int64) throws -> CustomPublicPlan.Detail? {
+        var result: CustomPublicPlan.Detail?
+        try AppDatabase.shared.reader?.read({ db in
+            do {
+                result = try CustomPublicPlan
+                    .filter(id: id)
+                    .including(all: CustomPublicPlan.days)
+                    .asRequest(of: CustomPublicPlan.Detail.self)
+                    .fetchOne(db)
+            }
+            catch {
+                print(error)
+            }
+        })
+        
+        return result
+    }
+    
+    public func fetchAllPublicPlan() throws -> [CustomPublicPlan] {
+        var result: [CustomPublicPlan] = []
+        try AppDatabase.shared.reader?.read({ db in
+            do {
+                let idColumn = CustomPublicPlan.Columns.id
+                result = try CustomPublicPlan
+                    .order(idColumn)
+                    .including(all: CustomPublicPlan.days)
+                    .asRequest(of: CustomPublicPlan.self)
+                    .fetchAll(db)
+            }
+            catch {
+                print(error)
+            }
+        })
+        
         return result
     }
 }

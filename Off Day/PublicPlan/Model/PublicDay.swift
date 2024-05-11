@@ -2,38 +2,29 @@
 //  PublicDay.swift
 //  Off Day
 //
-//  Created by zici on 1/5/24.
+//  Created by zici on 11/5/24.
 //
 
 import Foundation
 import ZCCalendar
 
-enum DayType: Int, Codable {
-    case offDay = 0
-    case workDay
-    
-    var title: String {
-        switch self {
-        case .offDay:
-            return String(localized: "dayType.offDay.title")
-        case .workDay:
-            return String(localized: "dayType.workDay.title")
-        }
-    }
-}
-
-struct PublicDay: Codable, Equatable, Hashable {
-    var name: String
-    var date: GregorianDay
-    var type: DayType
+protocol PublicDay: Hashable {
+    var name: String { get set }
+    var date: GregorianDay { get set }
+    var type: DayType { get set }
 }
 
 extension PublicDay {
-    func allowSave() -> Bool {
-        if name.count == 0 {
+    func isEqual(_ otherDay: (any PublicDay)?) -> Bool {
+        guard let otherDay = otherDay else {
             return false
-        } else {
-            return true
         }
+        return (date == otherDay.date) && (type == otherDay.type) && (name == otherDay.name) && Swift.type(of: self) == Swift.type(of: otherDay)
     }
+}
+
+struct AppPublicDay: Hashable, Codable, PublicDay {
+    var name: String
+    var date: GregorianDay
+    var type: DayType
 }

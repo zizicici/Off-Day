@@ -9,15 +9,15 @@ import UIKit
 import SnapKit
 import ZCCalendar
 
-class PublicDayDetailViewController: UIViewController {
+class CustomPublicDayDetailViewController: UIViewController {
     private var tableView: UITableView!
     private var dataSource: DataSource!
-    private var day: PublicDay!
+    private var day: CustomPublicDay!
     private var editMode: EditMode = .add
     private var titleCell: TextInputCell?
     private var saveBarItem: UIBarButtonItem?
     
-    var saveClosure: ((PublicDay?) -> (Bool))?
+    var saveClosure: ((CustomPublicDay?) -> (Bool))?
     
     enum EditMode {
         case add
@@ -39,11 +39,11 @@ class PublicDayDetailViewController: UIViewController {
     class DataSource: UITableViewDiffableDataSource<Section, Item> {
     }
     
-    convenience init(day: PublicDay?, saveClosure: @escaping (PublicDay?) -> (Bool)) {
+    convenience init(day: CustomPublicDay?, saveClosure: @escaping (CustomPublicDay?) -> (Bool)) {
         self.init(nibName: nil, bundle: nil)
         self.editMode = (day == nil) ? .add : .update
         self.saveClosure = saveClosure
-        self.day = day ?? PublicDay(name: "", date: ZCCalendar.manager.today, type: .offDay)
+        self.day = day ?? CustomPublicDay(name: "", date: ZCCalendar.manager.today, type: .offDay)
     }
     
     override func viewDidLoad() {
@@ -81,7 +81,7 @@ class PublicDayDetailViewController: UIViewController {
     }
     
     deinit {
-        print("PublicDayDetailViewController is deinited")
+        print("CustomPublicDayDetailViewController is deinited")
     }
     
     func createLayout() -> UICollectionViewLayout {
@@ -233,7 +233,7 @@ class PublicDayDetailViewController: UIViewController {
     }
 }
 
-extension PublicDayDetailViewController: UITableViewDelegate {
+extension CustomPublicDayDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if let item = dataSource.itemIdentifier(for: indexPath) {

@@ -3393,6 +3393,9 @@
         }
       }
     },
+    "publicDetail.button.delete" : {
+
+    },
     "publicDetail.button.new" : {
       "localizations" : {
         "en" : {

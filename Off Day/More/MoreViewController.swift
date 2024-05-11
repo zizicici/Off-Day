@@ -64,7 +64,7 @@ class MoreViewController: UIViewController {
         }
         
         enum DataSourceItem: Hashable {
-            case publicPlan(PublicPlanManager.FixedPlan?)
+            case publicPlan(PublicPlanInfo.Plan?)
             case baseCalendar(BaseCalendarType)
             
             var title: String {
@@ -80,7 +80,12 @@ class MoreViewController: UIViewController {
                 switch self {
                 case .publicPlan(let plan):
                     if let plan = plan {
-                        return plan.title
+                        switch plan {
+                        case .app(let appPublicPlan):
+                            return appPublicPlan.title
+                        case .custom(let customPublicPlan):
+                            return customPublicPlan.name
+                        }
                     } else {
                         return String(localized: "more.item.settings.publicPlan.noSet")
                     }
@@ -294,7 +299,7 @@ class MoreViewController: UIViewController {
         snapshot.appendItems([.settings(.language), .settings(.tutorial(TutorialEntranceType.getValue()))], toSection: .general)
         
         snapshot.appendSections([.dataSource])
-        snapshot.appendItems([.dataSource(.publicPlan(PublicPlanManager.shared.plan)), .dataSource(.baseCalendar(BaseCalendarManager.shared.config.type))], toSection: .dataSource)
+        snapshot.appendItems([.dataSource(.publicPlan(PublicPlanManager.shared.dataSource?.plan)), .dataSource(.baseCalendar(BaseCalendarManager.shared.config.type))], toSection: .dataSource)
         
         snapshot.appendSections([.appjun])
         var appItems: [Item] = [.appjun(.otherApps(.lemon)), .appjun(.otherApps(.moontake)), .appjun(.otherApps(.coconut)), .appjun(.otherApps(.pigeon))]

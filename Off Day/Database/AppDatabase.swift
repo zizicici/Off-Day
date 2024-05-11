@@ -52,6 +52,27 @@ final class AppDatabase {
                 table.column("day_off_count", .integer).notNull()
             }
         }
+        migrator.registerMigration("create_custom_public_plan") { db in
+            try db.create(table: "custom_public_plan") { table in
+                table.autoIncrementedPrimaryKey("id")
+                
+                table.column("creation_time", .integer).notNull()
+                table.column("modification_time", .integer).notNull()
+                
+                table.column("name", .text).notNull()
+            }
+            try db.create(table: "custom_public_day") { table in
+                table.autoIncrementedPrimaryKey("id")
+                
+                table.column("name", .text).notNull()
+                table.column("date", .text).notNull()
+                table.column("type", .integer).notNull()
+                
+                table.column("plan_id", .integer).notNull()
+                    .indexed()
+                    .references("custom_public_plan", onDelete: .cascade)
+            }
+        }
         
         return migrator
     }
@@ -152,6 +173,133 @@ extension AppDatabase {
         do {
             _ = try dbWriter?.write{ db in
                 try baseCalendarConfig.update(db)
+            }
+        }
+        catch {
+            print(error)
+            return false
+        }
+        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        return true
+    }
+}
+
+extension AppDatabase {
+    func add(publicPlan: CustomPublicPlan) -> CustomPublicPlan? {
+        guard publicPlan.id == nil else {
+            return nil
+        }
+        var savePublicPlan = publicPlan
+        do {
+            try dbWriter?.write{ db in
+                try savePublicPlan.save(db)
+            }
+        }
+        catch {
+            print(error)
+            return nil
+        }
+        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        return savePublicPlan
+    }
+    
+    func update(publicPlan: CustomPublicPlan) -> Bool {
+        guard publicPlan.id != nil else {
+            return false
+        }
+        do {
+            _ = try dbWriter?.write{ db in
+                var savePublicPlan = publicPlan
+                try savePublicPlan.updateWithTimestamp(db)
+            }
+        }
+        catch {
+            print(error)
+            return false
+        }
+        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        return true
+    }
+    
+    func delete(publicPlan: CustomPublicPlan) -> Bool {
+        guard let publicPlanId = publicPlan.id else {
+            return false
+        }
+        do {
+            _ = try dbWriter?.write{ db in
+                try CustomPublicPlan.deleteAll(db, ids: [publicPlanId])
+            }
+        }
+        catch {
+            print(error)
+            return false
+        }
+        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        return true
+    }
+}
+
+extension AppDatabase {
+    func add(publicDay: CustomPublicDay) -> Bool {
+        guard publicDay.id == nil else {
+            return false
+        }
+        do {
+            try dbWriter?.write{ db in
+                var savePublicDay = publicDay
+                try savePublicDay.save(db)
+            }
+        }
+        catch {
+            print(error)
+            return false
+        }
+        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        return true
+    }
+    
+    func update(publicDay: CustomPublicDay) -> Bool {
+        guard publicDay.id != nil else {
+            return false
+        }
+        do {
+            _ = try dbWriter?.write{ db in
+                try publicDay.update(db)
+            }
+        }
+        catch {
+            print(error)
+            return false
+        }
+        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        return true
+    }
+    
+    func deleteCustomPublicDays(with planId: Int64) -> Bool {
+        do {
+            _ = try dbWriter?.write{ db in
+                let planIdColumn = CustomPublicDay.Columns.planId
+                let records = try CustomPublicDay.filter(planIdColumn == planId).fetchAll(db)
+                let ids = records.compactMap{ $0.id }
+                
+                try CustomPublicDay.deleteAll(db, ids: ids)
+            }
+        }
+        catch {
+            print(error)
+            return false
+        }
+        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        return true
+    }
+    
+    func delete(publicDay: CustomPublicDay) -> Bool {
+        guard let publicPlanId = publicDay.id else {
+            return false
+        }
+        do {
+            _ = try dbWriter?.write{ db in
+                try CustomPublicDay.deleteAll(db, ids: [publicPlanId])
             }
         }
         catch {

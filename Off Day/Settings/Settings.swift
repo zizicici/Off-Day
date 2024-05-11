@@ -10,7 +10,8 @@ import ZCCalendar
 
 extension UserDefaults {
     enum Settings: String {
-        case PublicPlanType = "com.zizicici.common.settings.PublicPlanType"
+        case AppPublicPlanType = "com.zizicici.common.settings.PublicPlanType"
+        case CustomPublicPlanType = "com.zizicici.common.settings.CustomPublicPlanType"
         case WeekStartType = "com.zizicici.common.settings.WeekStartType"
         case WeekEndColorType = "com.zizicici.common.settings.WeekEndColorType"
         case WeekEndOffDayType = "com.zizicici.common.settings.WeekEndOffDayType"

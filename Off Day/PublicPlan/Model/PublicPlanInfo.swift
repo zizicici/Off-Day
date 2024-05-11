@@ -7,29 +7,66 @@
 
 import Foundation
 
-struct PublicPlanInfo: Codable {
-    var name: String
-    var days: [Int: PublicDay] // julian day as Key
-    
-    enum CodingKeys: String, CodingKey {
-        case name
-        case days
+struct PublicPlanInfo {
+    enum Plan: Equatable, Hashable {
+        case app(AppPublicPlan)
+        case custom(CustomPublicPlan)
     }
     
-    init(name: String, days: [Int: PublicDay]) {
-        self.name = name
-        self.days = days
-    }
+    var plan: Plan!
+    var days: [Int: any PublicDay]
     
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        name = try container.decode(String.self, forKey: .name)
-        
-        if let dayArray = try? container.decode([PublicDay].self, forKey: .days) {
-            days = Dictionary(grouping: dayArray, by: { Int($0.date.julianDay) }).compactMapValues { $0.first }
+    static func generate(by detail: AppPublicPlan.Detail) -> Self? {
+        if let plan = detail.plan {
+            return Self.init(
+                plan: .app(plan),
+                days: Dictionary(
+                    grouping: detail.days,
+                    by: { Int($0.date.julianDay) }
+                ).compactMapValues { $0.first }
+            )
         } else {
-            throw DecodingError.dataCorruptedError(forKey: .days, in: container, debugDescription: "Expected to decode Array(DayInfo)")
+            return nil
         }
+    }
+    
+    static func generate(by detail: CustomPublicPlan.Detail) -> Self {
+        return Self.init(
+            plan: .custom(detail.plan),
+            days: Dictionary(
+                grouping: detail.days,
+                by: { Int($0.date.julianDay) }
+            ).compactMapValues { $0.first })
+    }
+    
+    var name: String {
+        get {
+            switch plan {
+            case .app(let appPublicPlan):
+                return appPublicPlan.title
+            case .custom(let customPublicPlan):
+                return customPublicPlan.name
+            case .none:
+                return ""
+            }
+        }
+        set {
+            switch plan {
+            case .app:
+                break
+            case .custom(let customPublicPlan):
+                var plan = customPublicPlan
+                plan.name = newValue
+                self.plan = .custom(plan)
+            case .none:
+                break
+            }
+        }
+    }
+    
+    func getDuplicateCustomPlan() -> PublicPlanInfo {
+        let newPlan = Plan.custom(CustomPublicPlan(name: self.name))
+        
+        return PublicPlanInfo(plan: newPlan, days: days.mapValues({ CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }))
     }
 }

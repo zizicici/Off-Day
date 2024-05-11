@@ -223,7 +223,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         }
         self.updateNavigationTitleView()
         
-        if PublicPlanManager.shared.plan == nil {
+        if PublicPlanManager.shared.dataSource?.plan == nil {
             publicPlanButton?.image = UIImage(systemName: "calendar.badge.exclamationmark")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors: [.systemPink, .white]))
         } else {
             publicPlanButton?.image = UIImage(systemName: "calendar.badge.checkmark")
@@ -270,8 +270,17 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     }
     
     func updateNavigationTitleView() {
-        let publicPlan = PublicPlanManager.shared.plan
-        let subtitle = (publicPlan == nil) ? String(localized: "controller.calendar.noPublicPlan") : publicPlan!.title
+        let subtitle: String
+        if let publicPlan = PublicPlanManager.shared.dataSource?.plan {
+            switch publicPlan {
+            case .app(let appPublicPlan):
+                subtitle = appPublicPlan.title
+            case .custom(let customPublicPlan):
+                subtitle = customPublicPlan.name
+            }
+        } else {
+            subtitle = String(localized: "controller.calendar.noPublicPlan")
+        }
         
         navigationItem.setTitle(String(localized: "controller.calendar.title"), subtitle: subtitle)
     }

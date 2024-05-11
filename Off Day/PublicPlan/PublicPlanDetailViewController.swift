@@ -13,7 +13,6 @@ class PublicPlanDetailViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
     private var publicPlanInfo: PublicPlanInfo?
-    private var plan: PublicPlanManager.FixedPlan?
     private var mode: Mode = .viewer
     private var titleButton: UIButton?
     
@@ -25,28 +24,73 @@ class PublicPlanDetailViewController: UIViewController {
     enum Section: Hashable {
         case year(Int)
         case add
+        case delete
     }
     
     enum Item: Hashable {
-        case dayInfo(PublicDay)
+        static func == (lhs: Item, rhs: Item) -> Bool {
+            switch (lhs, rhs) {
+            case (.add, .add):
+                return true
+            case (.dayInfo(let lhsDay), .dayInfo(let rhsDay)):
+                return lhsDay.isEqual(rhsDay)
+            default:
+                return false
+            }
+        }
+
+        func hash(into hasher: inout Hasher) {
+            switch self {
+            case .add:
+                hasher.combine("add")
+            case .dayInfo(let day):
+                day.hash(into: &hasher)
+            case .delete:
+                hasher.combine("delete")
+            }
+        }
+        
+        case dayInfo(any PublicDay)
         case add
+        case delete
     }
     
-    convenience init(publicPlan: PublicPlanManager.FixedPlan) {
+    convenience init(publicPlan: PublicPlanInfo, allowEditing: Bool = false) {
         self.init(nibName: nil, bundle: nil)
-        self.plan = publicPlan
-        load(publicPlan: publicPlan)
-    }
-    
-    convenience init(template: PublicPlanManager.FixedPlan?) {
-        self.init(nibName: nil, bundle: nil)
-        self.mode = .editor
-        self.plan = template
-        if let template = template {
-            load(publicPlan: template)
+        self.publicPlanInfo = publicPlan
+        if allowEditing {
+            mode = .editor
         } else {
-            let day = GregorianDay(year: ZCCalendar.manager.today.year, month: .jan, day: 1)
-            self.publicPlanInfo = PublicPlanInfo(name: String(localized: "publicDetail.title.new"), days: [day.julianDay: PublicDay(name: String(localized: "publicDetail.newYear.name"), date: day, type: .offDay)])
+            mode = .viewer
+        }
+    }
+    
+    convenience init?(appPlan: AppPublicPlan, allowEditing: Bool = false) {
+        if let detail = AppPublicPlan.Detail(plan: appPlan), let publicPlanInfo = PublicPlanInfo.generate(by: detail) {
+            self.init(nibName: nil, bundle: nil)
+            self.publicPlanInfo = publicPlanInfo
+            if allowEditing {
+                mode = .editor
+            } else {
+                mode = .viewer
+            }
+        } else {
+            return nil
+        }
+    }
+    
+    convenience init?(customPlan: CustomPublicPlan, allowEditing: Bool = false) {
+        guard let id = customPlan.id else { return nil }
+        if let detail = try? PublicPlanManager.shared.fetchCustomPublicPlan(with: id) {
+            self.init(nibName: nil, bundle: nil)
+            self.publicPlanInfo = PublicPlanInfo.generate(by: detail)
+            if allowEditing {
+                mode = .editor
+            } else {
+                mode = .viewer
+            }
+        } else {
+            return nil
         }
     }
     
@@ -67,31 +111,7 @@ class PublicPlanDetailViewController: UIViewController {
             moreButton.menu = UIMenu(title: "", children: [action])
             navigationItem.rightBarButtonItem = moreButton
         case .editor:
-            var configuration = UIButton.Configuration.plain()
-            configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
-                var outgoing = incoming
-                outgoing.font = UIFont.preferredFont(forTextStyle: .headline)
-
-                return outgoing
-            })
-            configuration.image = UIImage(systemName: "pencil")
-            configuration.imagePlacement = .trailing
-            configuration.imagePadding = 6.0
-            
-            let button = UIButton(configuration: configuration)
-            button.tintColor = .white
-            button.configurationUpdateHandler = { [weak self] button in
-                guard let self = self else { return }
-                
-                var config = button.configuration
-                config?.title = self.publicPlanInfo?.name
-                
-                button.configuration = config
-            }
-            button.addTarget(self, action: #selector(showTitleAlert), for: .touchUpInside)
-            titleButton = button
-            
-            navigationItem.titleView = button
+            setupTitleButton()
             
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: String(localized: "publicDetail.cancel.title"), style: .plain, target: self, action: #selector(dismissAction))
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: String(localized: "publicDetail.save.title"), style: .plain, target: self, action: #selector(saveAction))
@@ -104,16 +124,6 @@ class PublicPlanDetailViewController: UIViewController {
     
     deinit {
         print("PublicPlanDetailViewController is deinited")
-    }
-    
-    private func load(publicPlan: PublicPlanManager.FixedPlan) {
-        if let url = Bundle.main.url(forResource: publicPlan.resource, withExtension: "json"), let data = try? Data(contentsOf: url) {
-            do {
-                publicPlanInfo = try JSONDecoder().decode(PublicPlanInfo.self, from: data)
-            } catch {
-                print("Unexpected error: \(error).")
-            }
-        }
     }
     
     func createLayout() -> UICollectionViewLayout {
@@ -172,6 +182,12 @@ class PublicPlanDetailViewController: UIViewController {
                 content.textProperties.color = AppColor.offDay
                 content.textProperties.alignment = .center
                 cell.contentConfiguration = content
+            case .delete:
+                var content = UIListContentConfiguration.cell()
+                content.text = String(localized: "publicDetail.button.delete")
+                content.textProperties.color = .systemRed
+                content.textProperties.alignment = .center
+                cell.contentConfiguration = content
             }
         }
     }
@@ -199,9 +215,44 @@ class PublicPlanDetailViewController: UIViewController {
         case .editor:
             snapshot.appendSections([.add])
             snapshot.appendItems([.add], toSection: .add)
+            
+            switch publicPlanInfo.plan {
+            case .custom(let plan):
+                if plan.id != nil {
+                    snapshot.appendSections([.delete])
+                    snapshot.appendItems([.delete], toSection: .delete)
+                }
+            default:
+                break
+            }
         }
         
         dataSource.apply(snapshot, animatingDifferences: false)
+    }
+    
+    func setupTitleButton() {
+        if titleButton != nil {
+            titleButton?.removeFromSuperview()
+            titleButton = nil
+        }
+        var configuration = UIButton.Configuration.plain()
+        configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.preferredFont(forTextStyle: .headline)
+
+            return outgoing
+        })
+        configuration.title = self.publicPlanInfo?.name
+        configuration.image = UIImage(systemName: "pencil")
+        configuration.imagePlacement = .trailing
+        configuration.imagePadding = 6.0
+        
+        let button = UIButton(configuration: configuration)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(showTitleAlert), for: .touchUpInside)
+        titleButton = button
+        
+        navigationItem.titleView = button
     }
     
     @objc
@@ -211,8 +262,10 @@ class PublicPlanDetailViewController: UIViewController {
     
     func duplicateTemplate() {
         if let nav = presentingViewController as? NavigationController, let root = nav.topViewController as? PublicPlanViewController {
-            dismiss(animated: true) { [weak root, weak self] in
-                root?.createCustomTemplate(fixedPlan: self?.plan)
+            if let customTemplateInfo = publicPlanInfo?.getDuplicateCustomPlan() {
+                dismiss(animated: true) { [weak root] in
+                    root?.createCustomTemplate(prefill: customTemplateInfo)
+                }
             }
         }
     }
@@ -223,12 +276,31 @@ class PublicPlanDetailViewController: UIViewController {
         case .viewer:
             break
         case .editor:
-            print("")
+            if let planInfo = publicPlanInfo {
+                switch planInfo.plan {
+                case .app:
+                    break
+                case .custom(let customPublicPlan):
+                    if customPublicPlan.id != nil {
+                        let result = PublicPlanManager.shared.update(planInfo)
+                        if result {
+                            dismissAction()
+                        }
+                    } else {
+                        let result = PublicPlanManager.shared.save(planInfo)
+                        if result {
+                            dismissAction()
+                        }
+                    }
+                case .none:
+                    break
+                }
+            }
         }
     }
     
-    func enterDayDetail(day: PublicDay?) {
-        let detailViewController = PublicDayDetailViewController(day: day) { [weak self] publicDay in
+    func enterDayDetail(day: CustomPublicDay?) {
+        let detailViewController = CustomPublicDayDetailViewController(day: day) { [weak self] publicDay in
             guard let self = self else { return false }
             if let day = day {
                 if let newPublicDay = publicDay {
@@ -249,7 +321,7 @@ class PublicPlanDetailViewController: UIViewController {
         navigationController?.present(nav, animated: true)
     }
     
-    func add(_ newDay: PublicDay) -> Bool {
+    func add(_ newDay: CustomPublicDay) -> Bool {
         guard let publicPlanInfo = publicPlanInfo else { return false }
         for day in publicPlanInfo.days.values.compactMap({ $0 }) {
             if day.date == newDay.date {
@@ -261,16 +333,16 @@ class PublicPlanDetailViewController: UIViewController {
         return true
     }
     
-    func delete(_ oldDay: PublicDay) -> Bool {
+    func delete(_ oldDay: CustomPublicDay) -> Bool {
         guard publicPlanInfo != nil else { return false }
         self.publicPlanInfo?.days.removeValue(forKey: oldDay.date.julianDay)
         reloadData()
         return true
     }
     
-    func update(_ oldDay: PublicDay, with newDay: PublicDay) -> Bool {
+    func update(_ oldDay: CustomPublicDay, with newDay: CustomPublicDay) -> Bool {
         guard let publicPlanInfo = publicPlanInfo else { return false }
-        var targetArray = publicPlanInfo.days.values.compactMap({ $0 })
+        var targetArray = publicPlanInfo.days.values.compactMap({ $0 as? CustomPublicDay })
         targetArray.removeAll { $0 == oldDay }
         for day in targetArray {
             if day.date == newDay.date {
@@ -279,7 +351,7 @@ class PublicPlanDetailViewController: UIViewController {
         }
         targetArray.append(newDay)
         targetArray = targetArray.sorted(by: { $0.date.julianDay < $1.date.julianDay })
-        let dict = targetArray.reduce(into: [Int: PublicDay](), { (partialResult, publicDay) in
+        let dict = targetArray.reduce(into: [Int: CustomPublicDay](), { (partialResult, publicDay) in
             partialResult[publicDay.date.julianDay] = publicDay
         })
         self.publicPlanInfo?.days = dict
@@ -300,7 +372,7 @@ class PublicPlanDetailViewController: UIViewController {
         let okAction = UIAlertAction(title: String(localized: "publicDetail.alert.confirm"), style: .default) { [weak self] _ in
             if let text = alertController.textFields?.first?.text {
                 self?.publicPlanInfo?.name = text
-                self?.titleButton?.setNeedsUpdateConfiguration()
+                self?.setupTitleButton()
             }
         }
 
@@ -317,10 +389,18 @@ extension PublicPlanDetailViewController: UICollectionViewDelegate {
             switch item {
             case .dayInfo(let publicDay):
                 if self.mode == .editor {
-                    enterDayDetail(day: publicDay)
+                    if let publicDay = publicDay as? CustomPublicDay {
+                        enterDayDetail(day: publicDay)
+                    }
                 }
             case .add:
                 enterDayDetail(day: nil)
+            case .delete:
+                if let publicPlanInfo = publicPlanInfo {
+                    dismiss(animated: true) {
+                        _ = PublicPlanManager.shared.delete(publicPlanInfo)
+                    }
+                }
             }
         }
     }
