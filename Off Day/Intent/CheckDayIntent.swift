@@ -10,11 +10,14 @@ import ZCCalendar
 
 enum FetchError: Swift.Error, CustomLocalizedStringResourceConvertible {
     case overReach
+    case notFound
 
     var localizedStringResource: LocalizedStringResource {
         switch self {
         case .overReach:
             return "intent.error.overReach"
+        case .notFound:
+            return "intent.error.notFound"
         }
     }
 }

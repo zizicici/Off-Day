@@ -87,6 +87,7 @@
 		14ED08B22BEE570D00100E2D /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED08B12BEE570D00100E2D /* DayType.swift */; };
 		14F2FA732BF05CB700BBE7FB /* JSONPublicPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2FA722BF05CB700BBE7FB /* JSONPublicPlan.swift */; };
 		14F2FA752BF093CF00BBE7FB /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2FA742BF093CF00BBE7FB /* DatePickerCell.swift */; };
+		14F2FA772BF102C600BBE7FB /* DayDetailIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2FA762BF102C600BBE7FB /* DayDetailIntent.swift */; };
 		14F371222BE3CA6500254C39 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371212BE3CA6500254C39 /* Settings.swift */; };
 		14F371252BE3CB9F00254C39 /* BlockViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */; };
 		14F371272BE3EACF00254C39 /* AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371262BE3EACF00254C39 /* AppCell.swift */; };
@@ -173,6 +174,7 @@
 		14ED08B12BEE570D00100E2D /* DayType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayType.swift; sourceTree = "<group>"; };
 		14F2FA722BF05CB700BBE7FB /* JSONPublicPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPublicPlan.swift; sourceTree = "<group>"; };
 		14F2FA742BF093CF00BBE7FB /* DatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
+		14F2FA762BF102C600BBE7FB /* DayDetailIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDetailIntent.swift; sourceTree = "<group>"; };
 		14F371212BE3CA6500254C39 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BlockViewController+Menu.swift"; sourceTree = "<group>"; };
 		14F371262BE3EACF00254C39 /* AppCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCell.swift; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 			children = (
 				14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */,
 				14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */,
+				14F2FA762BF102C600BBE7FB /* DayDetailIntent.swift */,
 			);
 			path = Intent;
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 				14ED08A62BEE117500100E2D /* TextInputCell.swift in Sources */,
 				14F2FA752BF093CF00BBE7FB /* DatePickerCell.swift in Sources */,
 				14DD50ED2BE20BC1004329E2 /* BlockViewController+Layout.swift in Sources */,
+				14F2FA772BF102C600BBE7FB /* DayDetailIntent.swift in Sources */,
 				14ECFF052BE64983005D2D79 /* AppColor.swift in Sources */,
 				14D6F9282BEB6B5E008712E1 /* WeekCalendarCell.swift in Sources */,
 				14ED08AE2BEE511000100E2D /* PublicPlanCell.swift in Sources */,
