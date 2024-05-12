@@ -85,7 +85,7 @@ class WeekCalendarCell: UITableViewCell {
                     return outgoing
                 })
                 if today == day {
-                    configuration.subtitle = "今天"
+                    configuration.subtitle = String(localized: "weekCalendar.today")
                 } else {
                     configuration.title = day.weekdayOrder().getVeryShortSymbol()
                     configuration.subtitle = day.dayString()
