@@ -105,6 +105,27 @@ class PublicPlanViewController: UIViewController {
                 guard let item = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
                 return self.trailingSwipeActionConfigurationForListCellItem(item)
             }
+            configuration.itemSeparatorHandler = { [weak self] (indexPath, sectionSeparatorConfiguration) in
+                guard let self = self else { return sectionSeparatorConfiguration }
+                guard let item = self.dataSource.itemIdentifier(for: indexPath) else { return sectionSeparatorConfiguration }
+                if let createIndex = self.dataSource.indexPath(for: .create) {
+                    if (indexPath.section == createIndex.section) && (indexPath.row + 1 == createIndex.row) {
+                        var configuration = sectionSeparatorConfiguration
+                        configuration.bottomSeparatorVisibility = .hidden
+                        return configuration
+                    }
+                }
+                switch item {
+                case .empty, .appPlan,.customPlan:
+                    return sectionSeparatorConfiguration
+                case .create, .importPlan:
+                    var configuration = sectionSeparatorConfiguration
+                    configuration.topSeparatorVisibility = .visible
+                    configuration.topSeparatorInsets = .zero
+                    configuration.bottomSeparatorVisibility = .hidden
+                    return configuration
+                }
+            }
             let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
             
             return section
@@ -176,9 +197,6 @@ class PublicPlanViewController: UIViewController {
             content.text = item.title
             content.textProperties.alignment = .center
             content.textProperties.color = AppColor.offDay
-            var layoutMargins = content.directionalLayoutMargins
-            layoutMargins.leading = 0.0
-            content.directionalLayoutMargins = layoutMargins
             cell.contentConfiguration = content
         }
     }
