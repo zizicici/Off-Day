@@ -66,7 +66,7 @@ class PublicPlanDetailViewController: UIViewController {
     }
     
     convenience init?(appPlan: AppPublicPlan, allowEditing: Bool = false) {
-        if let detail = AppPublicPlan.Detail(plan: appPlan), let publicPlanInfo = PublicPlanInfo.generate(by: detail) {
+        if let detail = AppPublicPlan.Detail(plan: appPlan), let publicPlanInfo = PublicPlanInfo(detail: detail) {
             self.init(nibName: nil, bundle: nil)
             self.publicPlanInfo = publicPlanInfo
             if allowEditing {
@@ -83,7 +83,7 @@ class PublicPlanDetailViewController: UIViewController {
         guard let id = customPlan.id else { return nil }
         if let detail = try? PublicPlanManager.shared.fetchCustomPublicPlan(with: id) {
             self.init(nibName: nil, bundle: nil)
-            self.publicPlanInfo = PublicPlanInfo.generate(by: detail)
+            self.publicPlanInfo = PublicPlanInfo(detail: detail)
             if allowEditing {
                 mode = .editor
             } else {

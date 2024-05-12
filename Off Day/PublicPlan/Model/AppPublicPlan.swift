@@ -123,32 +123,17 @@ enum AppPublicPlan: String {
         }
     }
     
-    struct Detail: Codable {
+    struct Detail {
         var plan: AppPublicPlan?
-        var days: [AppPublicDay] // julian day as Key
+        var days: [any PublicDay]
         var name: String
         
-        enum CodingKeys: String, CodingKey {
-            case days
-            case name
-        }
-        
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            name = try container.decode(String.self, forKey: .name)
-            days = try container.decode([AppPublicDay].self, forKey: .days)
-        }
-
-        func encode(to encoder: Encoder) throws {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try container.encode(name, forKey: .name)
-            try container.encode(days, forKey: .days)
-        }
-        
         init?(plan: AppPublicPlan) {
-            if let url = Bundle.main.url(forResource: plan.resource, withExtension: "json"), let data = try? Data(contentsOf: url) {
+            if let url = Bundle.main.url(forResource: plan.resource, withExtension: "json") {
                 do {
-                    self = try JSONDecoder().decode(Detail.self, from: data)
+                    let jsonPlan = try JSONPublicPlan(from: url)
+                    self.name = jsonPlan.name
+                    self.days = jsonPlan.days
                     self.plan = plan
                 } catch {
                     print("Unexpected error: \(error).")

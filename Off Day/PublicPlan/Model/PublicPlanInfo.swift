@@ -14,29 +14,31 @@ struct PublicPlanInfo {
     }
     
     var plan: Plan!
-    var days: [Int: any PublicDay]
+    var days: [Int: any PublicDay] // julian day as Key
     
-    static func generate(by detail: AppPublicPlan.Detail) -> Self? {
+    init(plan: Plan!, days: [Int : any PublicDay]) {
+        self.plan = plan
+        self.days = days
+    }
+    
+    init?(detail: AppPublicPlan.Detail) {
         if let plan = detail.plan {
-            return Self.init(
-                plan: .app(plan),
-                days: Dictionary(
-                    grouping: detail.days,
-                    by: { Int($0.date.julianDay) }
-                ).compactMapValues { $0.first }
-            )
+            self.plan = .app(plan)
+            self.days = Dictionary(
+                grouping: detail.days,
+                by: { Int($0.date.julianDay) }
+            ).compactMapValues { $0.first }
         } else {
             return nil
         }
     }
     
-    static func generate(by detail: CustomPublicPlan.Detail) -> Self {
-        return Self.init(
-            plan: .custom(detail.plan),
-            days: Dictionary(
-                grouping: detail.days,
-                by: { Int($0.date.julianDay) }
-            ).compactMapValues { $0.first })
+    init(detail: CustomPublicPlan.Detail) {
+        self.plan = .custom(detail.plan)
+        self.days = Dictionary(
+            grouping: detail.days,
+            by: { Int($0.date.julianDay) }
+        ).compactMapValues { $0.first }
     }
     
     var name: String {

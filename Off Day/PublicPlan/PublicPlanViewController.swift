@@ -100,6 +100,11 @@ class PublicPlanViewController: UIViewController {
             var configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
             configuration.separatorConfiguration = UIListSeparatorConfiguration(listAppearance: .insetGrouped)
             configuration.backgroundColor = AppColor.background
+            configuration.trailingSwipeActionsConfigurationProvider = { [weak self] (indexPath) in
+                guard let self = self else { return nil }
+                guard let item = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
+                return self.trailingSwipeActionConfigurationForListCellItem(item)
+            }
             let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
             
             return section
@@ -176,6 +181,34 @@ class PublicPlanViewController: UIViewController {
             content.directionalLayoutMargins = layoutMargins
             cell.contentConfiguration = content
         }
+    }
+    
+    func trailingSwipeActionConfigurationForListCellItem(_ item: Item) -> UISwipeActionsConfiguration? {
+        switch item {
+        case .empty:
+            return nil
+        case .create:
+            return nil
+        case .importPlan:
+            return nil
+        case .appPlan:
+            return nil
+        case .customPlan(let customPublicPlan):
+            let shareAction = UIContextualAction(style: .normal, title: nil) { [weak self] (_, _, completion) in
+                guard let self = self else {
+                    completion(false)
+                    return
+                }
+                
+                self.sharePlan(customPlan: customPublicPlan)
+                
+                completion(true)
+            }
+            shareAction.title = String(localized: "publicPlan.share.title")
+            shareAction.backgroundColor = AppColor.offDay
+            return UISwipeActionsConfiguration(actions: [shareAction])
+        }
+
     }
     
     func detailAccessoryForListCellItem(_ item: Item) -> UICellAccessory {
@@ -329,6 +362,28 @@ class PublicPlanViewController: UIViewController {
         let style = ToastStyle.getStyle(messageColor: .white, backgroundColor: AppColor.offDay)
         view.makeToast(
             result ? String(localized: "publicDetail.import.success") : String(localized: "publicDetail.import.failure"), position: .center, style: style)
+    }
+    
+    func sharePlan(customPlan: CustomPublicPlan) {
+        if let url = PublicPlanManager.shared.exportCustomPlanToFile(from: customPlan) {
+            showActivityController(url: url)
+        }
+    }
+    
+    func showActivityController(url: URL) {
+        let controller = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        
+        controller.completionWithItemsHandler = { activityType, completed, returnedItems, error in
+            // Drop exported file
+            do {
+                try FileManager.default.removeItem(at: url)
+            }
+            catch {
+                print(error)
+            }
+        }
+        
+        present(controller, animated: true)
     }
 }
 

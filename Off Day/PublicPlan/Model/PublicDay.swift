@@ -22,9 +22,3 @@ extension PublicDay {
         return (date == otherDay.date) && (type == otherDay.type) && (name == otherDay.name) && Swift.type(of: self) == Swift.type(of: otherDay)
     }
 }
-
-struct AppPublicDay: Hashable, Codable, PublicDay {
-    var name: String
-    var date: GregorianDay
-    var type: DayType
-}

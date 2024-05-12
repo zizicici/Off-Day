@@ -33,10 +33,10 @@ final class PublicPlanManager {
         switch (appPlanDetail != nil, customPlanDetail != nil) {
         case (true, false):
             // Use AppPlan
-            dataSource = PublicPlanInfo.generate(by: appPlanDetail!)
+            dataSource = PublicPlanInfo(detail: appPlanDetail!)
         case (false, true):
             // Use CustomPlan
-            dataSource = PublicPlanInfo.generate(by: customPlanDetail!)
+            dataSource = PublicPlanInfo(detail: customPlanDetail!)
         default:
             // Use NONE
             dataSource = nil
@@ -172,18 +172,41 @@ extension PublicPlanManager {
 
 extension PublicPlanManager {
     func importPlan(from url: URL) -> Bool {
-        if let data = try? Data(contentsOf: url) {
-            do {
-                let detail = try JSONDecoder().decode(AppPublicPlan.Detail.self, from: data)
-                let newCustomPlan = CustomPublicPlan.Detail(plan: CustomPublicPlan(name: detail.name), days: detail.days.map({ CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }))
-                let planInfo = PublicPlanInfo.generate(by: newCustomPlan)
-                return create(planInfo)
-            } catch {
-                print("Unexpected error: \(error).")
-                return false
-            }
+        if let jsonPlan = try? JSONPublicPlan(from: url) {
+            let newCustomPlan = CustomPublicPlan.Detail(plan: CustomPublicPlan(name: jsonPlan.name), days: jsonPlan.days.map({ CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }))
+            let planInfo = PublicPlanInfo(detail: newCustomPlan)
+            return create(planInfo)
         } else {
             return false
         }
+    }
+    
+    func exportCustomPlanToFile(from customPlan: CustomPublicPlan) -> URL? {
+        guard let customPlanId = customPlan.id else { return nil }
+
+        do {
+            guard let planDetail = try fetchCustomPublicPlan(with: customPlanId) else { return nil }
+            
+            let exportPlan = JSONPublicPlan(name: planDetail.plan.name, days: planDetail.days.map{ JSONPublicDay(name: $0.name, date: $0.date, type: $0.type)})
+            
+            guard let jsonString = try exportPlan.jsonContent() else { return nil }
+            
+            let fileName = "\(exportPlan.name).json"
+            let url = try saveContentToTemporary(content: jsonString, fileName: fileName)
+            
+            return url
+        }
+        catch {
+            print("Error encoding JSON: \(error)")
+            return nil
+        }
+    }
+    
+    func saveContentToTemporary(content: String, fileName: String) throws -> URL? {
+        let tempDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+        let targetURL = tempDirectoryURL.appendingPathComponent(fileName)
+        try content.write(to: targetURL, atomically: true, encoding: .utf8)
+
+        return targetURL
     }
 }
