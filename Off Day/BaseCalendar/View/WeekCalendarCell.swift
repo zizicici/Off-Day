@@ -78,15 +78,21 @@ class WeekCalendarCell: UITableViewCell {
 
                     return outgoing
                 })
-                configuration.subtitleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
-                    var outgoing = incoming
-                    outgoing.font = UIFont.systemFont(ofSize: 15)
-
-                    return outgoing
-                })
                 if today == day {
+                    configuration.subtitleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
+                        var outgoing = incoming
+                        outgoing.font = UIFont.systemFont(ofSize: 14)
+
+                        return outgoing
+                    })
                     configuration.subtitle = String(localized: "weekCalendar.today")
                 } else {
+                    configuration.subtitleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
+                        var outgoing = incoming
+                        outgoing.font = UIFont.systemFont(ofSize: 16)
+
+                        return outgoing
+                    })
                     configuration.title = day.weekdayOrder().getVeryShortSymbol()
                     configuration.subtitle = day.dayString()
                 }
