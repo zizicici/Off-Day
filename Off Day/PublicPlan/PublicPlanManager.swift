@@ -48,6 +48,17 @@ final class PublicPlanManager {
         return dataSource?.days[julianDay]
     }
     
+    public func isOverReach(at julianDay: Int) -> Bool {
+        guard let dataSource = dataSource else {
+            return false
+        }
+        if julianDay < dataSource.start.julianDay || julianDay > dataSource.end.julianDay {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     public func hasHolidayShift() -> Bool {
         var result: Bool = false
         if let values = dataSource?.days.values {

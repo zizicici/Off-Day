@@ -1609,6 +1609,34 @@
         }
       }
     },
+    "intent.error.overReach" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The day you are querying is no longer within the validity period of the Public Holiday Template. Please update the template or update the Off Day App"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你查询的这一天，已经不在公共假期模板的有效期内，请更新模板或者更新休息日App。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你查詢的這一天，已經不在公共假期模板的有效期內，請更新模板或者更新休息日App。"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你查詢的這一天，已經不在公共假期模板的有效期內，請更新模板或者更新休息日App。"
+          }
+        }
+      }
+    },
     "Is ${date} a Clash Day?" : {
       "extractionState" : "manual",
       "localizations" : {

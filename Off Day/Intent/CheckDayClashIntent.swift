@@ -31,6 +31,9 @@ struct CheckDayClashIntent: AppIntent {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
         if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
             let target = GregorianDay(year: year, month: month, day: day)
+            if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
+                throw FetchError.overReach
+            }
             isOffDay = target.isClashDay(including: enableUserMark)
         }
         return .result(value: isOffDay)
@@ -59,6 +62,9 @@ struct CheckTodayClashIntent: AppIntent {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
         if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
             let target = GregorianDay(year: year, month: month, day: day)
+            if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
+                throw FetchError.overReach
+            }
             isOffDay = target.isClashDay(including: enableUserMark)
         }
         return .result(value: isOffDay)
@@ -88,6 +94,9 @@ struct CheckTomorrowClashIntent: AppIntent {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: tomorrow)
         if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
             let target = GregorianDay(year: year, month: month, day: day)
+            if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
+                throw FetchError.overReach
+            }
             isOffDay = target.isClashDay(including: enableUserMark)
         }
         return .result(value: isOffDay)
@@ -120,6 +129,9 @@ struct CheckOffsetDayClashIntent: AppIntent {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: tomorrow)
         if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
             let target = GregorianDay(year: year, month: month, day: day)
+            if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
+                throw FetchError.overReach
+            }
             isOffDay = target.isClashDay(including: enableUserMark)
         }
         return .result(value: isOffDay)

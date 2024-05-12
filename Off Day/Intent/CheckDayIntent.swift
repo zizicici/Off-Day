@@ -8,6 +8,17 @@
 import AppIntents
 import ZCCalendar
 
+enum FetchError: Swift.Error, CustomLocalizedStringResourceConvertible {
+    case overReach
+
+    var localizedStringResource: LocalizedStringResource {
+        switch self {
+        case .overReach:
+            return "intent.error.overReach"
+        }
+    }
+}
+
 struct CheckDayIntent: AppIntent {
     static var title: LocalizedStringResource = "intent.check.title"
     
@@ -26,6 +37,9 @@ struct CheckDayIntent: AppIntent {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
         if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
             let target = GregorianDay(year: year, month: month, day: day)
+            if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
+                throw FetchError.overReach
+            }
             isOffDay = target.isOffDay()
         }
         return .result(value: isOffDay)
@@ -49,6 +63,9 @@ struct CheckTodayIntent: AppIntent {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
         if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
             let target = GregorianDay(year: year, month: month, day: day)
+            if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
+                throw FetchError.overReach
+            }
             isOffDay = target.isOffDay()
         }
         return .result(value: isOffDay)
@@ -73,6 +90,9 @@ struct CheckTomorrowIntent: AppIntent {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: tomorrow)
         if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
             let target = GregorianDay(year: year, month: month, day: day)
+            if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
+                throw FetchError.overReach
+            }
             isOffDay = target.isOffDay()
         }
         return .result(value: isOffDay)
@@ -100,6 +120,9 @@ struct CheckOffsetDayOffIntent: AppIntent {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: tomorrow)
         if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
             let target = GregorianDay(year: year, month: month, day: day)
+            if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
+                throw FetchError.overReach
+            }
             isOffDay = target.isOffDay()
         }
         return .result(value: isOffDay)
