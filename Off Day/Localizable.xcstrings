@@ -2065,6 +2065,34 @@
         }
       }
     },
+    "more.item.help" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "User Manual"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用说明"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用說明"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用說明"
+          }
+        }
+      }
+    },
     "more.item.settings.baseCalendar" : {
       "localizations" : {
         "en" : {
@@ -2313,6 +2341,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "一般"
+          }
+        }
+      }
+    },
+    "more.section.help" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help Center"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "帮助中心"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "幫助中心"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "幫助中心"
           }
         }
       }
@@ -5121,6 +5177,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "https://fxwl60qzgjx.feishu.cn/wiki/XHQewsdx4ibM5Ok3UNUc6VQdnqb?from=from_copylink"
+          }
+        }
+      }
+    },
+    "url.help.center" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://fxwl60qzgjx.feishu.cn/wiki/IIOhwCrlbivcFdkghv0c2A1xnSh?from=from_copylink"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://fxwl60qzgjx.feishu.cn/wiki/JnKrw8KF1iFYYHkKK6yciw2znih?from=from_copylink"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://fxwl60qzgjx.feishu.cn/wiki/JnKrw8KF1iFYYHkKK6yciw2znih?from=from_copylink"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://fxwl60qzgjx.feishu.cn/wiki/JnKrw8KF1iFYYHkKK6yciw2znih?from=from_copylink"
           }
         }
       }

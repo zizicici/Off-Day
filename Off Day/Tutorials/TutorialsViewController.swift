@@ -8,12 +8,15 @@
 import UIKit
 import SnapKit
 
-class TutorialsViewController: UIViewController {
-    let shortcutsNormalURL = URL(string: String(localized: "url.shortcuts.normal"))
-    let shortcutsSleepURL = URL(string: String(localized: "url.shortcuts.sleep"))
-    let shortcutsHelpURL = URL(string: String(localized: "url.help.shortcuts"))
-    let automationHelpURL = URL(string: String(localized: "url.help.automation"))
+struct HelpURL {
+    static let shortcutsNormalURL = URL(string: String(localized: "url.shortcuts.normal"))
+    static let shortcutsSleepURL = URL(string: String(localized: "url.shortcuts.sleep"))
+    static let shortcutsHelpURL = URL(string: String(localized: "url.help.shortcuts"))
+    static let automationHelpURL = URL(string: String(localized: "url.help.automation"))
+    static let helpCenterURL = URL(string: String(localized: "url.help.center"))
+}
 
+class TutorialsViewController: UIViewController {
     private var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -158,6 +161,9 @@ class TutorialsViewController: UIViewController {
         view.backgroundColor = AppColor.background
         updateNavigationBarStyle()
         
+        let helpButton = UIBarButtonItem(image: UIImage(systemName: "questionmark.circle"), style: .plain, target: self, action: #selector(enterHelpCenter))
+        navigationItem.rightBarButtonItem = helpButton
+        
         view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.centerX.equalTo(view)
@@ -220,28 +226,35 @@ class TutorialsViewController: UIViewController {
         navigationController?.present(nav, animated: true)
     }
     
+    @objc
+    func enterHelpCenter() {
+        if let url = HelpURL.helpCenterURL {
+            openSF(with: url)
+        }
+    }
+    
     func addNormalShortcuts() {
-        if let shortcutsURL = shortcutsNormalURL {
+        if let shortcutsURL = HelpURL.shortcutsNormalURL {
             UIApplication.shared.open(shortcutsURL, options: [:], completionHandler: nil)
         }
     }
     
     func addSleepShortcuts() {
-        if let shortcutsURL = shortcutsSleepURL {
+        if let shortcutsURL = HelpURL.shortcutsSleepURL {
             UIApplication.shared.open(shortcutsURL, options: [:], completionHandler: nil)
         }
     }
     
     @objc
     func openShortcutsHelp() {
-        if let url = shortcutsHelpURL {
+        if let url = HelpURL.shortcutsHelpURL {
             openSF(with: url)
         }
     }
     
     @objc
     func openAutomationHelp() {
-        if let url = automationHelpURL {
+        if let url = HelpURL.automationHelpURL {
             openSF(with: url)
         }
     }

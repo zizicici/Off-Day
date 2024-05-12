@@ -14,10 +14,11 @@ class MoreViewController: UIViewController {
 
     private var tableView: UITableView!
     private var dataSource: DataSource!
-        
+    
     enum Section: Hashable {
         case general
         case dataSource
+        case help
         case appjun
         case about
         
@@ -27,6 +28,8 @@ class MoreViewController: UIViewController {
                 return String(localized: "more.section.general")
             case .dataSource:
                 return String(localized: "more.section.dataSource")
+            case .help:
+                return String(localized: "more.section.help")
             case .appjun:
                 return String(localized: "more.section.appjun")
             case .about:
@@ -158,6 +161,7 @@ class MoreViewController: UIViewController {
         
         case settings(GeneralItem)
         case dataSource(DataSourceItem)
+        case help
         case appjun(AppJunItem)
         case about(AboutItem)
         
@@ -167,6 +171,8 @@ class MoreViewController: UIViewController {
                 return item.title
             case .dataSource(let item):
                 return item.title
+            case .help:
+                return String(localized: "more.item.help")
             case .appjun(let item):
                 return item.title
             case .about(let item):
@@ -259,6 +265,14 @@ class MoreViewController: UIViewController {
                 content.secondaryText = item.value
                 cell.contentConfiguration = content
                 return cell
+            case .help:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+                cell.accessoryType = .disclosureIndicator
+                var content = UIListContentConfiguration.valueCell()
+                content.text = identifier.title
+                content.textProperties.color = .label
+                cell.contentConfiguration = content
+                return cell
             case .appjun(let item):
                 switch item {
                 case .otherApps(let app):
@@ -301,6 +315,9 @@ class MoreViewController: UIViewController {
         snapshot.appendSections([.dataSource])
         snapshot.appendItems([.dataSource(.publicPlan(PublicPlanManager.shared.dataSource?.plan)), .dataSource(.baseCalendar(BaseCalendarManager.shared.config.type))], toSection: .dataSource)
         
+        snapshot.appendSections([.help])
+        snapshot.appendItems([.help], toSection: .help)
+        
         snapshot.appendSections([.appjun])
         var appItems: [Item] = [.appjun(.otherApps(.lemon)), .appjun(.otherApps(.moontake)), .appjun(.otherApps(.coconut)), .appjun(.otherApps(.pigeon))]
         if Language.type() == .zh {
@@ -336,6 +353,8 @@ extension MoreViewController: UITableViewDelegate {
                 case .baseCalendar:
                     showBaseCalendarEditor()
                 }
+            case .help:
+                enterHelpCenter()
             case .appjun(let item):
                 switch item {
                 case .otherApps(let app):
@@ -394,6 +413,12 @@ extension MoreViewController {
         settingsOptionViewController.hidesBottomBarWhenPushed = true
         
         navigationController?.pushViewController(settingsOptionViewController, animated: true)
+    }
+    
+    func enterHelpCenter() {
+        if let url = HelpURL.helpCenterURL {
+            openSF(with: url)
+        }
     }
     
     func enterSpecifications() {
