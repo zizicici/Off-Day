@@ -258,28 +258,28 @@ class PublicPlanViewController: UIViewController {
         snapshot.appendItems(topItems, toSection: .top)
         
         snapshot.appendSections([.cn])
-        snapshot.appendItems([.appPlan(.cn), .appPlan(.cn_xj), .appPlan(.cn_xz), .appPlan(.cn_gx), .appPlan(.cn_nx)], toSection: .cn)
+        snapshot.appendItems([.appPlan(AppPublicPlan(file: .cn)), .appPlan(AppPublicPlan(file: .cn_xj)), .appPlan(AppPublicPlan(file: .cn_xz)), .appPlan(AppPublicPlan(file: .cn_gx)), .appPlan(AppPublicPlan(file: .cn_nx))], toSection: .cn)
         
         snapshot.appendSections([.hk])
-        snapshot.appendItems([.appPlan(.hk)], toSection: .hk)
+        snapshot.appendItems([.appPlan(AppPublicPlan(file: .hk))], toSection: .hk)
         
         snapshot.appendSections([.mo])
-        snapshot.appendItems([.appPlan(.mo_public), .appPlan(.mo_force), .appPlan(.mo_cs)], toSection: .mo)
+        snapshot.appendItems([.appPlan(AppPublicPlan(file: .mo_public)), .appPlan(AppPublicPlan(file: .mo_force)), .appPlan(AppPublicPlan(file: .mo_cs))], toSection: .mo)
         
         snapshot.appendSections([.sg])
-        snapshot.appendItems([.appPlan(.sg)], toSection: .sg)
+        snapshot.appendItems([.appPlan(AppPublicPlan(file: .sg))], toSection: .sg)
         
         snapshot.appendSections([.th])
-        snapshot.appendItems([.appPlan(.th)], toSection: .th)
+        snapshot.appendItems([.appPlan(AppPublicPlan(file: .th))], toSection: .th)
         
         snapshot.appendSections([.kr])
-        snapshot.appendItems([.appPlan(.kr)], toSection: .kr)
+        snapshot.appendItems([.appPlan(AppPublicPlan(file: .kr))], toSection: .kr)
         
         snapshot.appendSections([.jp])
-        snapshot.appendItems([.appPlan(.jp)], toSection: .jp)
+        snapshot.appendItems([.appPlan(AppPublicPlan(file: .jp))], toSection: .jp)
         
         snapshot.appendSections([.us])
-        snapshot.appendItems([.appPlan(.us)], toSection: .us)
+        snapshot.appendItems([.appPlan(AppPublicPlan(file: .us))], toSection: .us)
         
         dataSource.apply(snapshot, animatingDifferences: false) { [weak self] in
             self?.updateSelection()
@@ -344,8 +344,9 @@ class PublicPlanViewController: UIViewController {
     }
     
     func createTemplate() {
-        let day = GregorianDay(year: ZCCalendar.manager.today.year, month: .jan, day: 1)
-        let publicPlanInfo = PublicPlanInfo(plan: .custom(CustomPublicPlan(name: String(localized: "publicDetail.title.new"))), days: [day.julianDay : CustomPublicDay(name: String(localized: "publicDetail.newYear.name"), date: day, type: .offDay)])
+        let firstDay = GregorianDay(year: ZCCalendar.manager.today.year, month: .jan, day: 1)
+        let lastDay = GregorianDay(year: ZCCalendar.manager.today.year, month: .dec, day: 31)
+        let publicPlanInfo = PublicPlanInfo(plan: .custom(CustomPublicPlan(name: String(localized: "publicDetail.title.new"), start: firstDay, end: lastDay)), days: [firstDay.julianDay : CustomPublicDay(name: String(localized: "publicDetail.newYear.name"), date: firstDay, type: .offDay)])
         createCustomTemplate(prefill: publicPlanInfo)
     }
     

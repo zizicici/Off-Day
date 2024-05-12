@@ -17,10 +17,14 @@ struct JSONPublicDay: Hashable, Codable, PublicDay {
 struct JSONPublicPlan: Codable {
     var name: String
     var days: [JSONPublicDay]
+    var start: GregorianDay
+    var end: GregorianDay
     
-    init(name: String, days: [JSONPublicDay]) {
+    init(name: String, days: [JSONPublicDay], start: GregorianDay, end: GregorianDay) {
         self.name = name
         self.days = days
+        self.start = start
+        self.end = end
     }
     
     init(from url: URL) throws {

@@ -22,7 +22,8 @@ final class PublicPlanManager {
     public func load() {
         var appPlanDetail: AppPublicPlan.Detail?
         if let appPlanFile = UserDefaults.standard.string(forKey: UserDefaults.Settings.AppPublicPlanType.rawValue) {
-            if let appPlan = AppPublicPlan(rawValue: appPlanFile) {
+            if let appPlanFile = AppPublicPlan.File(rawValue: appPlanFile) {
+                let appPlan = AppPublicPlan(file: appPlanFile)
                 appPlanDetail = AppPublicPlan.Detail(plan: appPlan)
             }
         }
@@ -69,7 +70,7 @@ final class PublicPlanManager {
         if let plan = plan {
             switch plan {
             case .app(let appPublicPlan):
-                UserDefaults.standard.setValue(appPublicPlan.rawValue, forKey: appPlanStoredKey)
+                UserDefaults.standard.setValue(appPublicPlan.file.rawValue, forKey: appPlanStoredKey)
                 UserDefaults.standard.removeObject(forKey: customPlanStoredKey)
             case .custom(let customPublicPlan):
                 UserDefaults.standard.setValue(customPublicPlan.id, forKey: customPlanStoredKey)
@@ -86,7 +87,7 @@ final class PublicPlanManager {
 
 extension PublicPlanManager {
     public func create(_ planInfo: PublicPlanInfo) -> Bool {
-        if let plan = AppDatabase.shared.add(publicPlan: CustomPublicPlan(name: planInfo.name)), let planId = plan.id {
+        if let plan = AppDatabase.shared.add(publicPlan: CustomPublicPlan(name: planInfo.name, start: planInfo.start, end: planInfo.end)), let planId = plan.id {
             for day in planInfo.days.values.sorted(by: { $0.date.julianDay < $1.date.julianDay }) {
                 if var saveDay = day as? CustomPublicDay {
                     saveDay.planId = planId
@@ -173,7 +174,7 @@ extension PublicPlanManager {
 extension PublicPlanManager {
     func importPlan(from url: URL) -> Bool {
         if let jsonPlan = try? JSONPublicPlan(from: url) {
-            let newCustomPlan = CustomPublicPlan.Detail(plan: CustomPublicPlan(name: jsonPlan.name), days: jsonPlan.days.map({ CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }))
+            let newCustomPlan = CustomPublicPlan.Detail(plan: CustomPublicPlan(name: jsonPlan.name, start: jsonPlan.start, end: jsonPlan.end), days: jsonPlan.days.map({ CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }))
             let planInfo = PublicPlanInfo(detail: newCustomPlan)
             return create(planInfo)
         } else {
@@ -186,8 +187,7 @@ extension PublicPlanManager {
 
         do {
             guard let planDetail = try fetchCustomPublicPlan(with: customPlanId) else { return nil }
-            
-            let exportPlan = JSONPublicPlan(name: planDetail.plan.name, days: planDetail.days.map{ JSONPublicDay(name: $0.name, date: $0.date, type: $0.type)})
+            let exportPlan = JSONPublicPlan(name: planDetail.plan.name, days: planDetail.days.map{ JSONPublicDay(name: $0.name, date: $0.date, type: $0.type)}, start: planDetail.plan.start, end: planDetail.plan.end)
             
             guard let jsonString = try exportPlan.jsonContent() else { return nil }
             

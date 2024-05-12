@@ -86,6 +86,7 @@
 		14ED08B02BEE55DB00100E2D /* CustomPublicPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED08AF2BEE55DB00100E2D /* CustomPublicPlan.swift */; };
 		14ED08B22BEE570D00100E2D /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED08B12BEE570D00100E2D /* DayType.swift */; };
 		14F2FA732BF05CB700BBE7FB /* JSONPublicPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2FA722BF05CB700BBE7FB /* JSONPublicPlan.swift */; };
+		14F2FA752BF093CF00BBE7FB /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2FA742BF093CF00BBE7FB /* DatePickerCell.swift */; };
 		14F371222BE3CA6500254C39 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371212BE3CA6500254C39 /* Settings.swift */; };
 		14F371252BE3CB9F00254C39 /* BlockViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */; };
 		14F371272BE3EACF00254C39 /* AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371262BE3EACF00254C39 /* AppCell.swift */; };
@@ -171,6 +172,7 @@
 		14ED08AF2BEE55DB00100E2D /* CustomPublicPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPublicPlan.swift; sourceTree = "<group>"; };
 		14ED08B12BEE570D00100E2D /* DayType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayType.swift; sourceTree = "<group>"; };
 		14F2FA722BF05CB700BBE7FB /* JSONPublicPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPublicPlan.swift; sourceTree = "<group>"; };
+		14F2FA742BF093CF00BBE7FB /* DatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
 		14F371212BE3CA6500254C39 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BlockViewController+Menu.swift"; sourceTree = "<group>"; };
 		14F371262BE3EACF00254C39 /* AppCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCell.swift; sourceTree = "<group>"; };
@@ -457,6 +459,7 @@
 			children = (
 				14ED08A52BEE117500100E2D /* TextInputCell.swift */,
 				14ED08AD2BEE511000100E2D /* PublicPlanCell.swift */,
+				14F2FA742BF093CF00BBE7FB /* DatePickerCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -595,6 +598,7 @@
 				14F371272BE3EACF00254C39 /* AppCell.swift in Sources */,
 				14DD51012BE20BC1004329E2 /* BlockDetailViewController.swift in Sources */,
 				14ED08A62BEE117500100E2D /* TextInputCell.swift in Sources */,
+				14F2FA752BF093CF00BBE7FB /* DatePickerCell.swift in Sources */,
 				14DD50ED2BE20BC1004329E2 /* BlockViewController+Layout.swift in Sources */,
 				14ECFF052BE64983005D2D79 /* AppColor.swift in Sources */,
 				14D6F9282BEB6B5E008712E1 /* WeekCalendarCell.swift in Sources */,
@@ -806,7 +810,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.8;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zizicici.zzz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -836,7 +840,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.8;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zizicici.zzz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

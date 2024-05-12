@@ -22,6 +22,7 @@ class PublicPlanDetailViewController: UIViewController {
     }
 
     enum Section: Hashable {
+        case info
         case year(Int)
         case add
         case delete
@@ -34,6 +35,10 @@ class PublicPlanDetailViewController: UIViewController {
                 return true
             case (.dayInfo(let lhsDay), .dayInfo(let rhsDay)):
                 return lhsDay.isEqual(rhsDay)
+            case (.start(let lDay), .start(let rDay)):
+                return lDay == rDay
+            case (.end(let lDay), .end(let rDay)):
+                return lDay == rDay
             default:
                 return false
             }
@@ -47,9 +52,15 @@ class PublicPlanDetailViewController: UIViewController {
                 day.hash(into: &hasher)
             case .delete:
                 hasher.combine("delete")
+            case .start(let day):
+                day.hash(into: &hasher)
+            case .end(let day):
+                day.hash(into: &hasher)
             }
         }
         
+        case start(GregorianDay)
+        case end(GregorianDay)
         case dayInfo(any PublicDay)
         case add
         case delete
@@ -149,9 +160,21 @@ class PublicPlanDetailViewController: UIViewController {
     
     func configureDataSource() {
         let listCellRegistration = createListCellRegistration()
+        let dateCellRegistration = createDateCellRegistration()
         
-        dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
+        dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, itemIdentifier in
+            guard let self = self else { return nil }
+            switch itemIdentifier {
+            case .start, .end:
+                switch self.mode {
+                case .viewer:
+                    return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
+                case .editor:
+                    return collectionView.dequeueConfiguredReusableCell(using: dateCellRegistration, for: indexPath, item: itemIdentifier)
+                }
+            default:
+                return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
+            }
         })
     }
     
@@ -188,6 +211,40 @@ class PublicPlanDetailViewController: UIViewController {
                 content.textProperties.color = .systemRed
                 content.textProperties.alignment = .center
                 cell.contentConfiguration = content
+            case .start(let day):
+                var content = UIListContentConfiguration.valueCell()
+                content.text = String(localized: "publicDetail.start")
+                content.secondaryText = day.formatString()
+                cell.contentConfiguration = content
+            case .end(let day):
+                var content = UIListContentConfiguration.valueCell()
+                content.text = String(localized: "publicDetail.end")
+                content.secondaryText = day.formatString()
+                cell.contentConfiguration = content
+            }
+        }
+    }
+    
+    func createDateCellRegistration() -> UICollectionView.CellRegistration<DatePickerCell, Item> {
+        return UICollectionView.CellRegistration<DatePickerCell, Item> { [weak self] (cell, indexPath, item) in
+            guard let self = self else { return }
+            switch item {
+            case .start(let day):
+                cell.update(with: DateCellItem(title: String(localized: "publicDetail.start"), date: day))
+                cell.selectDateAction = { [weak self] date in
+                    guard let self = self else { return }
+                    let day = GregorianDay(from: date)
+                    self.publicPlanInfo?.start = day
+                }
+            case .end(let day):
+                cell.update(with: DateCellItem(title: String(localized: "publicDetail.end"), date: day))
+                cell.selectDateAction = { [weak self] date in
+                    guard let self = self else { return }
+                    let day = GregorianDay(from: date)
+                    self.publicPlanInfo?.end = day
+                }
+            default:
+                break
             }
         }
     }
@@ -199,6 +256,9 @@ class PublicPlanDetailViewController: UIViewController {
         let dicts = Dictionary(grouping: days, by: { $0.date.year })
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        
+        snapshot.appendSections([.info])
+        snapshot.appendItems([.start(publicPlanInfo.start), .end(publicPlanInfo.end)], toSection: .info)
         
         for key in dicts.keys.sorted() {
             snapshot.appendSections([.year(key)])
@@ -272,30 +332,30 @@ class PublicPlanDetailViewController: UIViewController {
     
     @objc
     func saveAction() {
-        switch mode {
-        case .viewer:
+        guard mode == .editor else {
+            return
+        }
+        guard let planInfo = publicPlanInfo, planInfo.start.julianDay <= planInfo.end.julianDay else {
+            showDateErrorAlert()
+            return
+        }
+        switch planInfo.plan {
+        case .app:
             break
-        case .editor:
-            if let planInfo = publicPlanInfo {
-                switch planInfo.plan {
-                case .app:
-                    break
-                case .custom(let customPublicPlan):
-                    if customPublicPlan.id != nil {
-                        let result = PublicPlanManager.shared.update(planInfo)
-                        if result {
-                            dismissAction()
-                        }
-                    } else {
-                        let result = PublicPlanManager.shared.create(planInfo)
-                        if result {
-                            dismissAction()
-                        }
-                    }
-                case .none:
-                    break
+        case .custom(let customPublicPlan):
+            if customPublicPlan.id != nil {
+                let result = PublicPlanManager.shared.update(planInfo)
+                if result {
+                    dismissAction()
+                }
+            } else {
+                let result = PublicPlanManager.shared.create(planInfo)
+                if result {
+                    dismissAction()
                 }
             }
+        case .none:
+            break
         }
     }
     
@@ -397,6 +457,16 @@ class PublicPlanDetailViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
+    func showDateErrorAlert() {
+        let alertController = UIAlertController(title: String(localized: "publicPlan.alert.dateError.title"), message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: String(localized: "publicPlan.alert.dateError.cancel"), style: .cancel) { _ in
+            //
+        }
+
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     func deleteAction() {
         guard let publicPlanInfo = publicPlanInfo else { return }
         dismiss(animated: true) {
@@ -422,6 +492,8 @@ extension PublicPlanDetailViewController: UICollectionViewDelegate {
                 if publicPlanInfo != nil {
                     showDeleteAlert()
                 }
+            case .start, .end:
+                break
             }
         }
     }

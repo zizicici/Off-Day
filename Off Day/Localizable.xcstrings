@@ -3442,25 +3442,25 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Create Custom Template..."
+            "value" : "New Template..."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "创建自定义模板…"
+            "value" : "创建模板…"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "創建自訂模板…"
+            "value" : "創建模板…"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "創建自訂模板…"
+            "value" : "創建模板…"
           }
         }
       }
@@ -3857,6 +3857,34 @@
         }
       }
     },
+    "publicDetail.end" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End Time"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "结束时间"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "結束時間"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "結束時間"
+          }
+        }
+      }
+    },
     "publicDetail.import.failure" : {
       "localizations" : {
         "en" : {
@@ -3969,6 +3997,34 @@
         }
       }
     },
+    "publicDetail.start" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Time"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "起始时间"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "起始時間"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "起始時間"
+          }
+        }
+      }
+    },
     "publicDetail.title.new" : {
       "localizations" : {
         "en" : {
@@ -3993,6 +4049,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新建模板"
+          }
+        }
+      }
+    },
+    "publicPlan.alert.dateError.cancel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Start Time cannot be later than the End Time."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "起始时间不能晚于结束时间。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "起始時間不能晚於結束時間。"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "起始時間不能晚於結束時間。"
+          }
+        }
+      }
+    },
+    "publicPlan.alert.dateError.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "好的"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "好的"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "好的"
           }
         }
       }

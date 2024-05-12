@@ -7,6 +7,7 @@
 
 import Foundation
 import GRDB
+import ZCCalendar
 
 struct CustomPublicPlan: Identifiable, Hashable {
     struct Detail: Decodable, FetchableRecord {
@@ -20,6 +21,8 @@ struct CustomPublicPlan: Identifiable, Hashable {
     var modificationTime: Int64?
     
     var name: String
+    var start: GregorianDay
+    var end: GregorianDay
 }
 
 extension CustomPublicPlan: Codable {
@@ -28,7 +31,7 @@ extension CustomPublicPlan: Codable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case id, creationTime = "creation_time", modificationTime = "modification_time", name
+        case id, creationTime = "creation_time", modificationTime = "modification_time", name, start, end
     }
 }
 

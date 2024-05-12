@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ZCCalendar
 
 struct PublicPlanInfo {
     enum Plan: Equatable, Hashable {
@@ -66,8 +67,58 @@ struct PublicPlanInfo {
         }
     }
     
+    var start: GregorianDay {
+        get {
+            switch plan {
+            case .app(let appPublicPlan):
+                return appPublicPlan.start
+            case .custom(let customPublicPlan):
+                return customPublicPlan.start
+            case .none:
+                return ZCCalendar.manager.today
+            }
+        }
+        set {
+            switch plan {
+            case .app:
+                break
+            case .custom(let customPublicPlan):
+                var plan = customPublicPlan
+                plan.start = newValue
+                self.plan = .custom(plan)
+            case .none:
+                break
+            }
+        }
+    }
+    
+    var end: GregorianDay {
+        get {
+            switch plan {
+            case .app(let appPublicPlan):
+                return appPublicPlan.end
+            case .custom(let customPublicPlan):
+                return customPublicPlan.end
+            case .none:
+                return ZCCalendar.manager.today
+            }
+        }
+        set {
+            switch plan {
+            case .app:
+                break
+            case .custom(let customPublicPlan):
+                var plan = customPublicPlan
+                plan.end = newValue
+                self.plan = .custom(plan)
+            case .none:
+                break
+            }
+        }
+    }
+    
     func getDuplicateCustomPlan() -> PublicPlanInfo {
-        let newPlan = Plan.custom(CustomPublicPlan(name: self.name))
+        let newPlan = Plan.custom(CustomPublicPlan(name: self.name, start: self.start, end: self.end))
         
         return PublicPlanInfo(plan: newPlan, days: days.mapValues({ CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }))
     }

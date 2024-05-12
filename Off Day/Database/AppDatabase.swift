@@ -60,6 +60,8 @@ final class AppDatabase {
                 table.column("modification_time", .integer).notNull()
                 
                 table.column("name", .text).notNull()
+                table.column("start", .integer).notNull()
+                table.column("end", .integer).notNull()
             }
             try db.create(table: "custom_public_day") { table in
                 table.autoIncrementedPrimaryKey("id")

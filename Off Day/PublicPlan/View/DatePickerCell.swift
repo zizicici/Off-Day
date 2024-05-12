@@ -1,31 +1,15 @@
 //
-//  DateCell.swift
+//  DatePickerCell.swift
 //  Off Day
 //
-//  Created by zici on 2023/12/22.
+//  Created by zici on 12/5/24.
 //
 
 import UIKit
 import SnapKit
 import ZCCalendar
 
-struct DateCellItem: Hashable {
-    var title: String
-    var date: GregorianDay
-}
-
-extension UIConfigurationStateCustomKey {
-    static let dateItem = UIConfigurationStateCustomKey("com.zizicici.offday.cell.date.item")
-}
-
-extension UICellConfigurationState {
-    var dateItem: DateCellItem? {
-        set { self[.dateItem] = newValue }
-        get { return self[.dateItem] as? DateCellItem }
-    }
-}
-
-class DateBaseCell: UITableViewCell {
+class DatePickerBaseCell: UICollectionViewListCell {
     private var dateItem: DateCellItem? = nil
     
     func update(with newDate: DateCellItem) {
@@ -41,7 +25,7 @@ class DateBaseCell: UITableViewCell {
     }
 }
 
-class DateCell: DateBaseCell {
+class DatePickerCell: DatePickerBaseCell {
     private func defaultListContentConfiguration() -> UIListContentConfiguration { return .valueCell() }
     private lazy var listContentView = UIListContentView(configuration: defaultListContentConfiguration())
     
@@ -76,6 +60,7 @@ class DateCell: DateBaseCell {
     
     override func updateConfiguration(using state: UICellConfigurationState) {
         setupViewsIfNeeded()
+        
         var content = defaultListContentConfiguration().updated(for: state)
         if let dateItem = state.dateItem {
             content.text = dateItem.title
@@ -94,4 +79,3 @@ class DateCell: DateBaseCell {
         accessibilityTraits = .button
     }
 }
-
