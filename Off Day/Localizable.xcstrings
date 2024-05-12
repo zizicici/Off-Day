@@ -1502,7 +1502,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "If it is an Clash Day in n day(s)"
+            "value" : "If it is a Clash Day in n day(s)"
           }
         },
         "zh-Hans" : {
@@ -1695,13 +1695,13 @@
         }
       }
     },
-    "Is it an Clash Day in ${dayCount} day(s)?" : {
+    "Is it a Clash Day in ${dayCount} day(s)?" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Is it an Clash Day in ${dayCount} day(s)?"
+            "value" : "Is it a Clash Day in ${dayCount} day(s)?"
           }
         },
         "zh-Hans" : {

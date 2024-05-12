@@ -148,16 +148,24 @@ extension GregorianDay {
             publicOffValue = publicDay.type == .offDay
         }
         if customMarkEnabled {
-            let customOffValue: Bool
+            let customOffValue: Bool?
             if let customDay = CustomDayManager.shared.fetchCustomDay(by: julianDay) {
                 customOffValue = customDay.dayType == .offDay
             } else {
-                customOffValue = false
+                customOffValue = nil
             }
             if let publicOffValue = publicOffValue {
-                return !((baseOffValue == publicOffValue) && (customOffValue == baseOffValue))
+                if let customOffValue = customOffValue {
+                    return !((baseOffValue == publicOffValue) && (customOffValue == baseOffValue))
+                } else {
+                    return publicOffValue != baseOffValue
+                }
             } else {
-                return customOffValue != baseOffValue
+                if let customOffValue = customOffValue {
+                    return customOffValue != baseOffValue
+                } else {
+                    return false
+                }
             }
         } else {
             if let publicOffValue = publicOffValue {
