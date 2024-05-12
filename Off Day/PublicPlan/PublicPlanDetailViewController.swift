@@ -458,7 +458,7 @@ class PublicPlanDetailViewController: UIViewController {
     }
     
     func showDateErrorAlert() {
-        let alertController = UIAlertController(title: String(localized: "publicPlan.alert.dateError.title"), message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(title: String(localized: "publicPlan.alert.dateError.title"), message: String(localized: "publicPlan.alert.dateError.message"), preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: String(localized: "publicPlan.alert.dateError.cancel"), style: .cancel) { _ in
             //
         }

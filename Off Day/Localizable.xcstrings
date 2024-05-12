@@ -4058,6 +4058,34 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "好的"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "好的"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "好的"
+          }
+        }
+      }
+    },
+    "publicPlan.alert.dateError.message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "The Start Time cannot be later than the End Time."
           }
         },
@@ -4086,25 +4114,25 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OK"
+            "value" : "Invalid Date"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "好的"
+            "value" : "日期无效"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "好的"
+            "value" : "日期無效"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "好的"
+            "value" : "日期無效"
           }
         }
       }

@@ -69,8 +69,8 @@ class PublicPlanViewController: UIViewController {
                 return nil
             case .appPlan(let plan):
                 return plan.subtitle
-            case .customPlan:
-                return nil
+            case .customPlan(let plan):
+                return "\(plan.start.formatString() ?? "") - \(plan.end.formatString() ?? "")"
             }
         }
     }
@@ -386,6 +386,16 @@ class PublicPlanViewController: UIViewController {
         
         present(controller, animated: true)
     }
+    
+    func showDateErrorAlert() {
+        let alertController = UIAlertController(title: String(localized: "publicPlan.alert.dateError.title"), message: String(localized: "publicPlan.alert.dateError.message"), preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: String(localized: "publicPlan.alert.dateError.cancel"), style: .cancel) { _ in
+            //
+        }
+
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
 }
 
 extension PublicPlanViewController: UICollectionViewDelegate {
@@ -406,8 +416,15 @@ extension PublicPlanViewController: UICollectionViewDelegate {
             case .importPlan:
                 importPlanAction()
                 return false
-            case .appPlan, .customPlan:
+            case .appPlan:
                 return true
+            case .customPlan(let customPlan):
+                if customPlan.start.julianDay <= customPlan.end.julianDay {
+                    return true
+                } else {
+                    showDateErrorAlert()
+                    return false
+                }
             }
         } else {
             return false
