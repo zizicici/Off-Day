@@ -172,7 +172,6 @@
 		14ED08AD2BEE511000100E2D /* PublicPlanCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPlanCell.swift; sourceTree = "<group>"; };
 		14ED08AF2BEE55DB00100E2D /* CustomPublicPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPublicPlan.swift; sourceTree = "<group>"; };
 		14ED08B12BEE570D00100E2D /* DayType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayType.swift; sourceTree = "<group>"; };
-		14EF2B6C2BFB3FAE00F8C684 /* AppInfo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AppInfo; path = ../../AppInfo; sourceTree = "<group>"; };
 		14F2FA722BF05CB700BBE7FB /* JSONPublicPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPublicPlan.swift; sourceTree = "<group>"; };
 		14F2FA742BF093CF00BBE7FB /* DatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
 		14F2FA762BF102C600BBE7FB /* DayDetailIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDetailIntent.swift; sourceTree = "<group>"; };
@@ -240,7 +239,6 @@
 			children = (
 				14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */,
 				14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */,
-				14EF2B6C2BFB3FAE00F8C684 /* AppInfo */,
 				14DD51032BE20C57004329E2 /* ZCCalendar */,
 				14DD513A2BE2356A004329E2 /* BaseViewController */,
 				14ECFEEE2BE5F523005D2D79 /* PublicPlan */,

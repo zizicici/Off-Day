@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "appinfo",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/zizicici/AppInfo",
+      "state" : {
+        "revision" : "c6a9499446cc94edca648695444bdf5a9f7f7b0e",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "grdb.swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/groue/GRDB.swift",
