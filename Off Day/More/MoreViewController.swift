@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import SafariServices
+import AppInfo
 
 class MoreViewController: UIViewController {
     static let supportEmail = "offday@zi.ci"
@@ -134,7 +135,7 @@ class MoreViewController: UIViewController {
         }
         
         enum AppJunItem: Hashable {
-            case otherApps(App)
+            case otherApps(AppInfo.App)
             case bilibili
             case xiaohongshu
             
