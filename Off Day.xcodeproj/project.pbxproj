@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1498CF0F2C3F72F8005562AA /* UpdateDayMarkIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */; };
 		14CFA1272BEC92A90004D15E /* CheckDayClashIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */; };
 		14D6F9202BEB05FA008712E1 /* BaseCalendarEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F91F2BEB05FA008712E1 /* BaseCalendarEditorViewController.swift */; };
 		14D6F9242BEB31E6008712E1 /* StandardConfigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F9232BEB31E6008712E1 /* StandardConfigCell.swift */; };
@@ -95,6 +96,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDayMarkIntent.swift; sourceTree = "<group>"; };
 		14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDayClashIntent.swift; sourceTree = "<group>"; };
 		14D6F91F2BEB05FA008712E1 /* BaseCalendarEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCalendarEditorViewController.swift; sourceTree = "<group>"; };
 		14D6F9232BEB31E6008712E1 /* StandardConfigCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardConfigCell.swift; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 				14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */,
 				14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */,
 				14F2FA762BF102C600BBE7FB /* DayDetailIntent.swift */,
+				1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */,
 			);
 			path = Intent;
 			sourceTree = "<group>";
@@ -605,6 +608,7 @@
 				14DD50EC2BE20BC1004329E2 /* BlockViewController+Enum.swift in Sources */,
 				14DD50F62BE20BC1004329E2 /* BlockItem.swift in Sources */,
 				14ED08AC2BEE503D00100E2D /* PublicPlanInfo.swift in Sources */,
+				1498CF0F2C3F72F8005562AA /* UpdateDayMarkIntent.swift in Sources */,
 				14ED08A42BEE0E8F00100E2D /* CustomPublicDayDetailViewController.swift in Sources */,
 				14DD511F2BE21050004329E2 /* CustomDay.swift in Sources */,
 				14EC7FDC2BEF3CEE003BB07E /* PublicDay.swift in Sources */,
@@ -806,7 +810,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zizicici.zzz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -836,7 +840,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zizicici.zzz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -216,23 +216,7 @@ class BlockDetailViewController: UIViewController {
     }
     
     func commit(dayType: DayType?) {
-        if let dayType = dayType {
-            if var customDay = CustomDayManager.shared.fetchCustomDay(by: blockItem.day.julianDay) {
-                if customDay.dayType != dayType{
-                    customDay.dayType = dayType
-                    CustomDayManager.shared.update(customDay: customDay)
-                }
-            } else {
-                let customDay = CustomDay(dayIndex: Int64(blockItem.day.julianDay), dayType: dayType)
-                CustomDayManager.shared.add(customDay: customDay)
-            }
-        } else {
-            if let customDay = CustomDayManager.shared.fetchCustomDay(by: blockItem.day.julianDay) {
-                CustomDayManager.shared.delete(customDay: customDay)
-            } else {
-                //
-            }
-        }
+        CustomDayManager.shared.update(dayType: dayType, to: blockItem.day.julianDay)
     }
 }
 
