@@ -40,6 +40,6 @@ The determination of 'Off Day' involves three levels of data: 1. User Annotation
 2. If the user has not annotated, then it checks if there is any holiday information on that day in the Public Holiday Template. If there is holiday information, the type of that day is determined according to the holiday information.
 3. If there is no information in the public holiday template, it then checks if that day is an 'Off Day' in the base calendar. (For example, if the base calendar is set to a two-day weekend, then Saturday and Sunday are 'Off Day's.)
 
-## License
+# License
 
 Off Day is available under the [MIT license](LICENSE).
