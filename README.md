@@ -10,6 +10,7 @@
 [![Swift Version](https://img.shields.io/badge/swift-5.0-orange.svg)](https://swift.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://makeapullrequest.com)
+[![iTunes App Store](https://img.shields.io/itunes/v/6501973975)](https://apps.apple.com/app/id6501973975)
 
 Off Day is a holiday alarm clock app on iOS. Users can easily and elegantly mark holidays and toggle alarms based on conditions using the built-in shortcuts in Off Day.
 
@@ -39,6 +40,11 @@ The determination of 'Off Day' involves three levels of data: 1. User Annotation
 1. If the user has manually annotated a specific day as an 'Off Day' or 'Working Day,' then that day is of the user's annotated type, regardless of the information in the Public Holiday Template and Base calendar.
 2. If the user has not annotated, then it checks if there is any holiday information on that day in the Public Holiday Template. If there is holiday information, the type of that day is determined according to the holiday information.
 3. If there is no information in the public holiday template, it then checks if that day is an 'Off Day' in the base calendar. (For example, if the base calendar is set to a two-day weekend, then Saturday and Sunday are 'Off Day's.)
+
+# Requirements
+
+- iOS/iPadOS 16+
+- Xcode 15
 
 # License
 
