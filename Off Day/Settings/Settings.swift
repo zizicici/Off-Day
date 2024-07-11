@@ -229,23 +229,6 @@ extension WeekEndOffDayType: UserDefaultSettable {
     }
 }
 
-extension WeekEndOffDayType {
-    static func checkIsWeekOffDay(for day: GregorianDay) -> Bool {
-        var isOffDay: Bool
-        
-        switch getValue() {
-        case .two:
-            isOffDay = day.weekdayOrder().isWeekEnd(twoDaysOff: true)
-        case .one:
-            isOffDay = day.weekdayOrder().isWeekEnd(twoDaysOff: false)
-        case .zero:
-            isOffDay = false
-        }
-        
-        return isOffDay
-    }
-}
-
 enum TutorialEntranceType: Int, CaseIterable, Codable {
     case firstTab = 0
     case secondTab

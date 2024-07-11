@@ -1,4 +1,5 @@
 {
+  "originHash" : "1446d68c6d91cc650a9e74835e63d52a1ea3cebe782d3bbe0487c85f7923504b",
   "pins" : [
     {
       "identity" : "appinfo",
@@ -35,7 +36,16 @@
         "revision" : "ddccd20d6fb718448d9b179c454c561653fda7d5",
         "version" : "5.1.1"
       }
+    },
+    {
+      "identity" : "zccalendar",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/zizicici/ZCCalendar",
+      "state" : {
+        "revision" : "5ddbd875014e5e6e656e8c0868d58aa9966cc4f3",
+        "version" : "0.1.0"
+      }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

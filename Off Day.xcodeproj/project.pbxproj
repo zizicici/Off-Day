@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1498CF0F2C3F72F8005562AA /* UpdateDayMarkIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */; };
+		1498CF1B2C402CD2005562AA /* ZCCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1498CF1A2C402CD2005562AA /* ZCCalendar */; };
 		14CFA1272BEC92A90004D15E /* CheckDayClashIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */; };
 		14D6F9202BEB05FA008712E1 /* BaseCalendarEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F91F2BEB05FA008712E1 /* BaseCalendarEditorViewController.swift */; };
 		14D6F9242BEB31E6008712E1 /* StandardConfigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F9232BEB31E6008712E1 /* StandardConfigCell.swift */; };
@@ -41,7 +42,6 @@
 		14DD51002BE20BC1004329E2 /* BlockBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50E62BE20BC1004329E2 /* BlockBaseViewController.swift */; };
 		14DD51012BE20BC1004329E2 /* BlockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50E72BE20BC1004329E2 /* BlockDetailViewController.swift */; };
 		14DD51022BE20BC1004329E2 /* BlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50E82BE20BC1004329E2 /* BlockViewController.swift */; };
-		14DD51062BE20CF8004329E2 /* ZCCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 14DD51052BE20CF8004329E2 /* ZCCalendar */; };
 		14DD51092BE20D8D004329E2 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 14DD51082BE20D8D004329E2 /* Toast */; };
 		14DD510C2BE20F3A004329E2 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 14DD510B2BE20F3A004329E2 /* GRDB */; };
 		14DD511A2BE21050004329E2 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD510D2BE21050004329E2 /* Date+Extension.swift */; };
@@ -131,7 +131,6 @@
 		14DD50E62BE20BC1004329E2 /* BlockBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockBaseViewController.swift; sourceTree = "<group>"; };
 		14DD50E72BE20BC1004329E2 /* BlockDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockDetailViewController.swift; sourceTree = "<group>"; };
 		14DD50E82BE20BC1004329E2 /* BlockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockViewController.swift; sourceTree = "<group>"; };
-		14DD51032BE20C57004329E2 /* ZCCalendar */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ZCCalendar; path = ../../ZCCalendar; sourceTree = "<group>"; };
 		14DD510D2BE21050004329E2 /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		14DD51132BE21050004329E2 /* CustomDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDay.swift; sourceTree = "<group>"; };
 		14DD51162BE21050004329E2 /* AppDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
@@ -190,8 +189,8 @@
 				14EF2B742BFB44FA00F8C684 /* AppInfo in Frameworks */,
 				14DD51092BE20D8D004329E2 /* Toast in Frameworks */,
 				14DD50C72BE1F78F004329E2 /* SnapKit in Frameworks */,
-				14DD51062BE20CF8004329E2 /* ZCCalendar in Frameworks */,
 				14DD510C2BE20F3A004329E2 /* GRDB in Frameworks */,
+				1498CF1B2C402CD2005562AA /* ZCCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,7 +240,6 @@
 			children = (
 				14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */,
 				14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */,
-				14DD51032BE20C57004329E2 /* ZCCalendar */,
 				14DD513A2BE2356A004329E2 /* BaseViewController */,
 				14ECFEEE2BE5F523005D2D79 /* PublicPlan */,
 				14DD50E92BE20BC1004329E2 /* Block */,
@@ -506,10 +504,10 @@
 			name = "Off Day";
 			packageProductDependencies = (
 				14DD50C62BE1F78F004329E2 /* SnapKit */,
-				14DD51052BE20CF8004329E2 /* ZCCalendar */,
 				14DD51082BE20D8D004329E2 /* Toast */,
 				14DD510B2BE20F3A004329E2 /* GRDB */,
 				14EF2B732BFB44FA00F8C684 /* AppInfo */,
+				1498CF1A2C402CD2005562AA /* ZCCalendar */,
 			);
 			productName = "Off Day";
 			productReference = 14DD50AE2BE1F5C4004329E2 /* Off Day.app */;
@@ -547,6 +545,7 @@
 				14DD51072BE20D8D004329E2 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				14DD510A2BE20F3A004329E2 /* XCRemoteSwiftPackageReference "GRDB" */,
 				14EF2B722BFB44FA00F8C684 /* XCRemoteSwiftPackageReference "AppInfo" */,
+				1498CF192C402CD2005562AA /* XCRemoteSwiftPackageReference "ZCCalendar" */,
 			);
 			productRefGroup = 14DD50AF2BE1F5C4004329E2 /* Products */;
 			projectDirPath = "";
@@ -873,6 +872,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1498CF192C402CD2005562AA /* XCRemoteSwiftPackageReference "ZCCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/zizicici/ZCCalendar";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
 		14DD50C52BE1F78F004329E2 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -908,14 +915,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1498CF1A2C402CD2005562AA /* ZCCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1498CF192C402CD2005562AA /* XCRemoteSwiftPackageReference "ZCCalendar" */;
+			productName = ZCCalendar;
+		};
 		14DD50C62BE1F78F004329E2 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 14DD50C52BE1F78F004329E2 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		14DD51052BE20CF8004329E2 /* ZCCalendar */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ZCCalendar;
 		};
 		14DD51082BE20D8D004329E2 /* Toast */ = {
 			isa = XCSwiftPackageProductDependency;
