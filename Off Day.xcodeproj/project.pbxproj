@@ -93,6 +93,7 @@
 		14F371222BE3CA6500254C39 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371212BE3CA6500254C39 /* Settings.swift */; };
 		14F371252BE3CB9F00254C39 /* BlockViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */; };
 		14F3712A2BE3EB4E00254C39 /* SpecificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F371292BE3EB4E00254C39 /* SpecificationsViewController.swift */; };
+		14F8D7CE2C5C6776000B48A3 /* WeekdayOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F8D7CD2C5C6776000B48A3 /* WeekdayOrderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -179,6 +180,7 @@
 		14F371212BE3CA6500254C39 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		14F371242BE3CB9F00254C39 /* BlockViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BlockViewController+Menu.swift"; sourceTree = "<group>"; };
 		14F371292BE3EB4E00254C39 /* SpecificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecificationsViewController.swift; sourceTree = "<group>"; };
+		14F8D7CD2C5C6776000B48A3 /* WeekdayOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayOrderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -295,6 +297,7 @@
 				14DD50DE2BE20BC1004329E2 /* TitleCell.swift */,
 				14DD50DD2BE20BC1004329E2 /* BlockCell.swift */,
 				14DD50E42BE20BC1004329E2 /* MonthTagView.swift */,
+				14F8D7CD2C5C6776000B48A3 /* WeekdayOrderView.swift */,
 				14DD50E12BE20BC1004329E2 /* HoverGestureRecognizer.swift */,
 				14DD50E32BE20BC1004329E2 /* UIDraggableCollectionView.swift */,
 				14DD50E22BE20BC1004329E2 /* ImpactGenerator.swift */,
@@ -607,6 +610,7 @@
 				14DD50EC2BE20BC1004329E2 /* BlockViewController+Enum.swift in Sources */,
 				14DD50F62BE20BC1004329E2 /* BlockItem.swift in Sources */,
 				14ED08AC2BEE503D00100E2D /* PublicPlanInfo.swift in Sources */,
+				14F8D7CE2C5C6776000B48A3 /* WeekdayOrderView.swift in Sources */,
 				1498CF0F2C3F72F8005562AA /* UpdateDayMarkIntent.swift in Sources */,
 				14ED08A42BEE0E8F00100E2D /* CustomPublicDayDetailViewController.swift in Sources */,
 				14DD511F2BE21050004329E2 /* CustomDay.swift in Sources */,

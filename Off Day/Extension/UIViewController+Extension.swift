@@ -9,13 +9,15 @@ import UIKit
 import SafariServices
 
 extension UIViewController {
-    func updateNavigationBarStyle() {
+    func updateNavigationBarStyle(hideShadow: Bool = false) {
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         navBarAppearance.backgroundColor = AppColor.navigationBar
-//        navBarAppearance.shadowColor = UIColor.clear
+        if hideShadow {
+            navBarAppearance.shadowColor = UIColor.clear            
+        }
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
         navigationController?.navigationBar.tintColor = UIColor.white

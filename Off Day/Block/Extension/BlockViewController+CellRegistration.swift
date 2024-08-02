@@ -35,21 +35,6 @@ extension BlockViewController {
         return cellRegistration
     }
     
-    func getWeekCellRegistration() -> UICollectionView.CellRegistration<WeekOrderTagCell, Item> {
-        let cellRegistration = UICollectionView.CellRegistration<WeekOrderTagCell, Item> { (cell, indexPath, identifier) in
-            switch identifier {
-            case .info, .block, .invisible:
-                break
-            case .tag(let weekOrder, let showSpecialColor):
-                if showSpecialColor {
-                    cell.setupSpecialColor()
-                }
-                cell.titleLabel.text = weekOrder
-            }
-        }
-        return cellRegistration
-    }
-    
     func getMonthTagRegistration() -> UICollectionView.SupplementaryRegistration<MonthTagView> {
         let monthTagRegistration = UICollectionView.SupplementaryRegistration<MonthTagView>(elementKind: Self.monthTagElementKind) { [weak self] supplementaryView, elementKind, indexPath in
             guard let self = self else { return }
@@ -57,8 +42,6 @@ extension BlockViewController {
             switch section {
             case .info:
                 return
-            case .topTag:
-                supplementaryView.titleLabel.text = ""
             case .row(_, let text):
                 if indexPath.item == 0 {
                     supplementaryView.titleLabel.text = text

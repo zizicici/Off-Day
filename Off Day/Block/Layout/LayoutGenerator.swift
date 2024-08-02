@@ -12,9 +12,6 @@ struct LayoutGenerater {
     static func dayLayout(for snapshot: inout NSDiffableDataSourceSnapshot<Section, Item>, year: Int, customDaysDict: [Int : CustomDay]) {
         let firstDayOfWeek: WeekdayOrder = WeekdayOrder(rawValue: WeekStartType.current.rawValue) ?? WeekdayOrder.firstDayOfWeek
         
-        snapshot.appendSections([.topTag])
-        snapshot.appendItems(rearrangeArray(startingFrom: firstDayOfWeek, in: WeekdayOrder.allCases).map({ .tag($0.getShortSymbol(), false) }), toSection: .topTag)
-        
         for month in Month.allCases {
             snapshot.appendSections([.row(month.rawValue, month.getShortSymbol())])
             let firstDay = GregorianDay(year: year, month: month, day: 1)

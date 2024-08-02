@@ -25,7 +25,7 @@ extension BlockViewController {
         return section
     }
     
-    func getDayRowSection(environment: NSCollectionLayoutEnvironment, allowBottomInset: Bool) -> NSCollectionLayoutSection {
+    func getDayRowSection(environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let containerWidth = environment.container.contentSize.width
 
         let itemWidth = DayGrid.itemWidth(in: containerWidth)
@@ -52,23 +52,21 @@ extension BlockViewController {
         section.interGroupSpacing = interSpacing
         
         let inset = (containerWidth - CGFloat(count)*itemWidth - CGFloat(count - 1) * interSpacing) / 2.0
-        section.contentInsets = NSDirectionalEdgeInsets(top: interSpacing / 2.0, leading: inset, bottom: allowBottomInset ? (interSpacing + itemWidth) : interSpacing / 2.0, trailing: inset)
+        section.contentInsets = NSDirectionalEdgeInsets(top: interSpacing / 2.0, leading: inset, bottom: (interSpacing + itemWidth), trailing: inset)
         
         return section
     }
     
     func sectionProvider(index: Int, environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
         let infoSectionProvider = getInfoSection()
-        let dayRowSectionProvider: (NSCollectionLayoutEnvironment, Bool) -> NSCollectionLayoutSection = getDayRowSection(environment:allowBottomInset:)
+        let dayRowSectionProvider: (NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection = getDayRowSection(environment:)
         
         if let section = dataSource.sectionIdentifier(for: index) {
             switch section {
             case .info:
                 return infoSectionProvider
             case .row:
-                return dayRowSectionProvider(environment, true)
-            case .topTag:
-                return dayRowSectionProvider(environment, false)
+                return dayRowSectionProvider(environment)
             }
         } else {
             return nil

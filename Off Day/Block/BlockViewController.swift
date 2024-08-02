@@ -13,6 +13,10 @@ import ZCCalendar
 class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     static let monthTagElementKind: String = "monthTagElementKind"
     
+    // UI
+    
+    private var weekdayOrderView: WeekdayOrderView!
+    
     // UIBarButtonItem
     
     private var publicPlanButton: UIBarButtonItem?
@@ -70,7 +74,15 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         super.viewDidLoad()
         
         view.backgroundColor = AppColor.background
-        updateNavigationBarStyle()
+        updateNavigationBarStyle(hideShadow: true)
+        weekdayOrderView = WeekdayOrderView(itemCount: 7, itemWidth: DayGrid.itemWidth(in: view.frame.width), interSpacing: DayGrid.interSpacing)
+        weekdayOrderView.backgroundColor = AppColor.navigationBar
+        view.addSubview(weekdayOrderView)
+        weekdayOrderView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalTo(view)
+            make.height.equalTo(18)
+        }
         updateNavigationTitleView()
         
         configureHierarchy()
@@ -164,7 +176,6 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     private func configureDataSource() {
         let infoCellRegistration = getInfoSectionCellRegistration()
         let blockCellRegistration = getBlockCellRegistration()
-        let weekCellRegistration = getWeekCellRegistration()
         let invisibleCellRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Item> { (cell, indexPath, identifier) in
         }
         let monthTagRegistration = getMonthTagRegistration()
@@ -177,8 +188,6 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
             switch section {
             case .info:
                 return collectionView.dequeueConfiguredReusableCell(using: infoCellRegistration, for: indexPath, item: identifier)
-            case .topTag:
-                return collectionView.dequeueConfiguredReusableCell(using: weekCellRegistration, for: indexPath, item: identifier)
             case .row:
                 switch identifier {
                 case .info, .tag:
@@ -209,7 +218,8 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         collectionView.delegate = self
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.edges.equalTo(view)
+            make.top.equalTo(weekdayOrderView.snp.bottom)
+            make.leading.trailing.bottom.equalTo(view)
         }
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: CGFloat.leastNormalMagnitude, left: 0.0, bottom: 0.0, right: 0.0)
     }
@@ -217,6 +227,8 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     @objc
     internal func reloadData() {
         // TODO: Apply Active Handler for reduce request
+        let startWeekdayOrder = WeekdayOrder(rawValue: WeekStartType.current.rawValue) ?? WeekdayOrder.firstDayOfWeek
+        weekdayOrderView.startWeekdayOrder = startWeekdayOrder
         CustomDayManager.shared.fetchAll { [weak self] customDays in
             guard let self = self else { return }
             self.customDays = filter(customDays: customDays.sortedByStart(), from: self.displayHandler.getLeading(), to: self.displayHandler.getTrailing())

@@ -19,7 +19,7 @@ class DayDisplayHandler: DisplayHandler {
     
     func getStart(for section: Section) -> Int? {
         switch section {
-        case .info, .topTag:
+        case .info:
             switch currentCatalogue {
             case .targetYear(let year):
                 return GregorianDay(year: year, month: .jan, day: 1).julianDay
@@ -34,7 +34,7 @@ class DayDisplayHandler: DisplayHandler {
     
     func getEnd(for section: Section) -> Int? {
         switch section {
-        case .info, .topTag:
+        case .info:
             return nil
         case .row(let int, _):
             switch currentCatalogue {

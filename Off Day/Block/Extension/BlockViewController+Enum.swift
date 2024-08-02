@@ -13,7 +13,6 @@ enum Catalogue: Hashable {
 
 enum Section: Hashable {
     case info
-    case topTag
     case row(Int, String)
 }
 
