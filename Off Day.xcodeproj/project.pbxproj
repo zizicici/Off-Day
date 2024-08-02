@@ -34,7 +34,6 @@
 		14DD50F52BE20BC1004329E2 /* DayGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50D82BE20BC1004329E2 /* DayGrid.swift */; };
 		14DD50F62BE20BC1004329E2 /* BlockItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50DA2BE20BC1004329E2 /* BlockItem.swift */; };
 		14DD50F82BE20BC1004329E2 /* BlockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50DD2BE20BC1004329E2 /* BlockCell.swift */; };
-		14DD50F92BE20BC1004329E2 /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50DE2BE20BC1004329E2 /* TitleCell.swift */; };
 		14DD50FC2BE20BC1004329E2 /* HoverGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50E12BE20BC1004329E2 /* HoverGestureRecognizer.swift */; };
 		14DD50FD2BE20BC1004329E2 /* ImpactGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50E22BE20BC1004329E2 /* ImpactGenerator.swift */; };
 		14DD50FE2BE20BC1004329E2 /* UIDraggableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50E32BE20BC1004329E2 /* UIDraggableCollectionView.swift */; };
@@ -125,7 +124,6 @@
 		14DD50D82BE20BC1004329E2 /* DayGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayGrid.swift; sourceTree = "<group>"; };
 		14DD50DA2BE20BC1004329E2 /* BlockItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockItem.swift; sourceTree = "<group>"; };
 		14DD50DD2BE20BC1004329E2 /* BlockCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockCell.swift; sourceTree = "<group>"; };
-		14DD50DE2BE20BC1004329E2 /* TitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
 		14DD50E12BE20BC1004329E2 /* HoverGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoverGestureRecognizer.swift; sourceTree = "<group>"; };
 		14DD50E22BE20BC1004329E2 /* ImpactGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImpactGenerator.swift; sourceTree = "<group>"; };
 		14DD50E32BE20BC1004329E2 /* UIDraggableCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDraggableCollectionView.swift; sourceTree = "<group>"; };
@@ -296,7 +294,6 @@
 		14DD50E52BE20BC1004329E2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				14DD50DE2BE20BC1004329E2 /* TitleCell.swift */,
 				14DD50DD2BE20BC1004329E2 /* BlockCell.swift */,
 				14F8D7D32C5C9194000B48A3 /* MonthTitleCell.swift */,
 				14F8D7CD2C5C6776000B48A3 /* WeekdayOrderView.swift */,
@@ -658,7 +655,6 @@
 				14F8D7D42C5C9194000B48A3 /* MonthTitleCell.swift in Sources */,
 				14E6D9BC2BE4A81C00931F3D /* PublicPlanViewController.swift in Sources */,
 				14CFA1272BEC92A90004D15E /* CheckDayClashIntent.swift in Sources */,
-				14DD50F92BE20BC1004329E2 /* TitleCell.swift in Sources */,
 				14F371252BE3CB9F00254C39 /* BlockViewController+Menu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

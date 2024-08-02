@@ -17,6 +17,22 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     
     private var weekdayOrderView: WeekdayOrderView!
     
+    private var yearButton: UIButton = {
+        var configuration = UIButton.Configuration.borderedProminent()
+        configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.preferredFont(forTextStyle: .body)
+
+            return outgoing
+        })
+        
+        let button = UIButton(configuration: configuration)
+        button.tintColor = AppColor.offDay
+        button.showsMenuAsPrimaryAction = true
+        
+        return button
+    }()
+    
     // UIBarButtonItem
     
     private var publicPlanButton: UIBarButtonItem?
@@ -88,6 +104,20 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         configureHierarchy()
         configureDataSource()
         
+        view.addSubview(yearButton)
+        yearButton.snp.makeConstraints { make in
+            make.top.equalTo(weekdayOrderView.snp.bottom).offset(24)
+            make.leading.equalTo(view.safeAreaLayoutGuide).inset(24)
+        }
+        yearButton.setContentHuggingPriority(.required, for: .vertical)
+        yearButton.setContentCompressionResistancePriority(.required, for: .vertical)
+        yearButton.configurationUpdateHandler = { [weak self] button in
+            var buttonConfig = button.configuration
+            buttonConfig?.title = self?.displayHandler.getTitle()
+            
+            button.configuration = buttonConfig
+        }
+        
         addGestures()
         
         let publicPlanButton = UIBarButtonItem(image: UIImage(systemName: "calendar.badge.checkmark"), style: .plain, target: self, action: #selector(showPublicPlanPicker))
@@ -122,7 +152,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
             return
         }
         switch item {
-        case .info, .invisible, .month:
+        case .invisible, .month:
             break
         case .block(let blockItem):
             impactFeedbackGeneratorCoourred()
@@ -148,7 +178,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
             return
         }
         switch blockItem {
-        case .info, .invisible, .month:
+        case .invisible, .month:
             break
         case .block(let blockItem):
             let style = ToastStyle.getStyle(messageColor: blockItem.foregroundColor, backgroundColor: blockItem.backgroundColor)
@@ -174,7 +204,6 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     }
     
     private func configureDataSource() {
-        let infoCellRegistration = getInfoSectionCellRegistration()
         let monthCellRegistration = getMonthSectionCellRegistration()
         let blockCellRegistration = getBlockCellRegistration()
         let invisibleCellRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Item> { (cell, indexPath, identifier) in
@@ -186,11 +215,9 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
             guard let self = self else { return nil }
             guard let section = self.dataSource.sectionIdentifier(for: indexPath.section) else { fatalError("Unknown section") }
             switch section {
-            case .info:
-                return collectionView.dequeueConfiguredReusableCell(using: infoCellRegistration, for: indexPath, item: identifier)
             case .month:
                 switch identifier {
-                case .info, .block:
+                case .block:
                     fatalError("Wrong Identifier")
                 case .month:
                     return collectionView.dequeueConfiguredReusableCell(using: monthCellRegistration, for: indexPath, item: identifier)
@@ -199,7 +226,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
                 }
             case .row:
                 switch identifier {
-                case .info, .month:
+                case .month:
                     fatalError("Wrong Identifier")
                 case .block:
                     return collectionView.dequeueConfiguredReusableCell(using: blockCellRegistration, for: indexPath, item: identifier)
@@ -223,11 +250,13 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
             make.leading.trailing.bottom.equalTo(view)
         }
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: CGFloat.leastNormalMagnitude, left: 0.0, bottom: 0.0, right: 0.0)
+        collectionView.contentInset = .init(top: 60.0, left: 0.0, bottom: 20.0, right: 0.0)
     }
 
     @objc
     internal func reloadData() {
-        // TODO: Apply Active Handler for reduce request
+        yearButton.setNeedsUpdateConfiguration()
+        yearButton.menu = getCatalogueMenu()
         let startWeekdayOrder = WeekdayOrder(rawValue: WeekStartType.current.rawValue) ?? WeekdayOrder.firstDayOfWeek
         weekdayOrderView.startWeekdayOrder = startWeekdayOrder
         CustomDayManager.shared.fetchAll { [weak self] customDays in
@@ -262,7 +291,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     func scrollToToday() {
         let item = dataSource.snapshot().itemIdentifiers.first { item in
             switch item {
-            case .info, .month, .invisible:
+            case .month, .invisible:
                 return false
             case .block(let blockItem):
                 if blockItem.day == ZCCalendar.manager.today {

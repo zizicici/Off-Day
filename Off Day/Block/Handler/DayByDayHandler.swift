@@ -14,7 +14,7 @@ class DayDisplayHandler: DisplayHandler {
     required init(delegate: DisplayHandlerDelegate) {
         self.delegate = delegate
         self.anchorYear = ZCCalendar.manager.today.year
-        self.currentCatalogue = .targetYear(ZCCalendar.manager.today.year)
+        self.currentYear = ZCCalendar.manager.today.year
     }
     
     func getLeading() -> Int {
@@ -25,19 +25,13 @@ class DayDisplayHandler: DisplayHandler {
         return GregorianDay(year: currentYear, month: .dec, day: 31).julianDay
     }
     
-    private var currentCatalogue: Catalogue {
+    private var currentYear: Int {
         didSet {
             delegate?.reloadData()
         }
     }
     
     private var anchorYear: Int!
-    private var currentYear: Int {
-        switch currentCatalogue {
-        case .targetYear(let year):
-            return year
-        }
-    }
     
     func getCatalogueMenuElements() -> [UIMenuElement] {
         let anchorAction = UIAction(title: "\(anchorYear + 0)", subtitle: String(localized: "calendar.preferred.year"), state: currentYear == anchorYear ? .on : .off) { [weak self] _ in
@@ -67,17 +61,19 @@ class DayDisplayHandler: DisplayHandler {
     }
     
     func updateCurrentYear(to year: Int) {
-        currentCatalogue = .targetYear(year)
+        currentYear = year
     }
     
     func getSnapshot(customDaysDict: [Int : CustomDay]) -> NSDiffableDataSourceSnapshot<Section, Item>? {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         
-        snapshot.appendSections([.info])
-        snapshot.appendItems([.info(TitleCellItem(catalogue: .targetYear(currentYear)))])
-        
         LayoutGenerater.dayLayout(for: &snapshot, year: currentYear, customDaysDict: customDaysDict)
         
         return snapshot
+    }
+    
+    func getTitle() -> String {
+        let title = String(format: (String(localized: "calendar.title.year%i")), currentYear)
+        return title
     }
 }
