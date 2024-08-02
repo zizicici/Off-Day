@@ -13,10 +13,22 @@ struct LayoutGenerater {
         let firstDayOfWeek: WeekdayOrder = WeekdayOrder(rawValue: WeekStartType.current.rawValue) ?? WeekdayOrder.firstDayOfWeek
         
         for month in Month.allCases {
-            snapshot.appendSections([.row(GregorianMonth(year: year, month: month))])
             let firstDay = GregorianDay(year: year, month: month, day: 1)
             let firstWeekOrder = firstDay.weekdayOrder()
+            
             let firstOffset = (firstWeekOrder.rawValue - (firstDayOfWeek.rawValue % 7) + 7) % 7
+
+            let gregorianMonth = GregorianMonth(year: year, month: month)
+            snapshot.appendSections([.month(gregorianMonth)])
+            if firstOffset >= 1 {
+                snapshot.appendItems(Array(1...firstOffset).map({ index in
+                    let uuid = UUID().uuidString
+                    return Item.invisible(uuid)
+                }))
+            }
+            snapshot.appendItems([.month(MonthItem(text: gregorianMonth.month.name, color: .label.withAlphaComponent(0.8)))])
+            
+            snapshot.appendSections([.row(gregorianMonth)])
             if firstOffset >= 1 {
                 snapshot.appendItems(Array(1...firstOffset).map({ index in
                     let uuid = "\(month)-\(index)"

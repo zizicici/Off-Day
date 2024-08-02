@@ -122,7 +122,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
             return
         }
         switch item {
-        case .info, .tag, .invisible:
+        case .info, .invisible, .month:
             break
         case .block(let blockItem):
             impactFeedbackGeneratorCoourred()
@@ -148,7 +148,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
             return
         }
         switch blockItem {
-        case .info, .tag, .invisible:
+        case .info, .invisible, .month:
             break
         case .block(let blockItem):
             let style = ToastStyle.getStyle(messageColor: blockItem.foregroundColor, backgroundColor: blockItem.backgroundColor)
@@ -175,10 +175,10 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     
     private func configureDataSource() {
         let infoCellRegistration = getInfoSectionCellRegistration()
+        let monthCellRegistration = getMonthSectionCellRegistration()
         let blockCellRegistration = getBlockCellRegistration()
         let invisibleCellRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Item> { (cell, indexPath, identifier) in
         }
-        let monthTagRegistration = getMonthTagRegistration()
         
         dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView) { [weak self]
             (collectionView: UICollectionView, indexPath: IndexPath, identifier: Item) -> UICollectionViewCell? in
@@ -188,23 +188,24 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
             switch section {
             case .info:
                 return collectionView.dequeueConfiguredReusableCell(using: infoCellRegistration, for: indexPath, item: identifier)
+            case .month:
+                switch identifier {
+                case .info, .block:
+                    fatalError("Wrong Identifier")
+                case .month:
+                    return collectionView.dequeueConfiguredReusableCell(using: monthCellRegistration, for: indexPath, item: identifier)
+                case .invisible:
+                    return collectionView.dequeueConfiguredReusableCell(using: invisibleCellRegistration, for: indexPath, item: identifier)
+                }
             case .row:
                 switch identifier {
-                case .info, .tag:
+                case .info, .month:
                     fatalError("Wrong Identifier")
                 case .block:
                     return collectionView.dequeueConfiguredReusableCell(using: blockCellRegistration, for: indexPath, item: identifier)
                 case .invisible:
                     return collectionView.dequeueConfiguredReusableCell(using: invisibleCellRegistration, for: indexPath, item: identifier)
                 }
-            }
-        }
-        dataSource.supplementaryViewProvider = { [weak self] (view, kind, index) in
-            guard let self = self else { return nil }
-            if kind == Self.monthTagElementKind {
-                return self.collectionView.dequeueConfiguredReusableSupplementary(using: monthTagRegistration, for: index)
-            } else {
-                return nil
             }
         }
     }
@@ -259,8 +260,21 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     }
     
     func scrollToToday() {
-        let today = ZCCalendar.manager.today
-        collectionView.scrollToItem(at: IndexPath(item: today.day, section: today.month.rawValue + 1), at: .centeredVertically, animated: true)
+        let item = dataSource.snapshot().itemIdentifiers.first { item in
+            switch item {
+            case .info, .month, .invisible:
+                return false
+            case .block(let blockItem):
+                if blockItem.day == ZCCalendar.manager.today {
+                    return true
+                } else {
+                    return false
+                }
+            }
+        }
+        if let item = item, let indexPath = dataSource.indexPath(for: item) {
+            collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+        }
     }
     
     private func updateMoreMenu() {

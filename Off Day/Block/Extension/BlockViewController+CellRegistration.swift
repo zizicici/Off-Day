@@ -16,7 +16,7 @@ extension BlockViewController {
             case .info(let bookCellItem):
                 cell.update(with: bookCellItem)
                 cell.setup(menu: self.getCatalogueMenu())
-            case .block, .tag, .invisible:
+            case .block, .invisible, .month:
                 break
             }
         }
@@ -24,32 +24,27 @@ extension BlockViewController {
         return cellRegistration
     }
     
+    func getMonthSectionCellRegistration() -> UICollectionView.CellRegistration<MonthTitleCell, Item> {
+        let cellRegistration = UICollectionView.CellRegistration<MonthTitleCell, Item> {(cell, indexPath, identifier) in
+            switch identifier {
+            case .info, .block, .invisible:
+                break
+            case .month(let monthItem):
+                cell.update(with: monthItem)
+            }
+        }
+        return cellRegistration
+    }
+    
     func getBlockCellRegistration() -> UICollectionView.CellRegistration<BlockCell, Item> {
         let cellRegistration = UICollectionView.CellRegistration<BlockCell, Item> { (cell, indexPath, identifier) in
             switch identifier {
-            case .info, .tag, .invisible:
+            case .info, .invisible, .month:
                 break
             case .block(let blockItem):
                 cell.update(with: blockItem)
             }
         }
         return cellRegistration
-    }
-    
-    func getMonthTagRegistration() -> UICollectionView.SupplementaryRegistration<CalendarTitleView> {
-        let monthTagRegistration = UICollectionView.SupplementaryRegistration<CalendarTitleView>(elementKind: Self.monthTagElementKind) { [weak self] supplementaryView, elementKind, indexPath in
-            guard let self = self else { return }
-            guard let section = self.dataSource.sectionIdentifier(for: indexPath.section) else { fatalError("Unknown section") }
-            switch section {
-            case .info:
-                return
-            case .row(let month):
-                let firstDay = GregorianDay(year: month.year, month: month.month, day: 1)
-                let firstIndex = (firstDay.weekdayOrder().rawValue) % 7
-                supplementaryView.update(text: month.month.getShortSymbol(), at: firstIndex, spilt: 7, color: AppColor.text.withAlphaComponent(0.8))
-                return
-            }
-        }
-        return monthTagRegistration
     }
 }
