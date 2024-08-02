@@ -39,20 +39,16 @@ extension BlockViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                          subitems: [item])
         group.interItemSpacing = .fixed(interSpacing)
-        
-        let monthTagView = NSCollectionLayoutSupplementaryItem(
-            layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(DayGrid.monthTagWidth(in: containerWidth)),
-                                               heightDimension: .absolute(itemWidth)),
-            elementKind: Self.monthTagElementKind,
-            containerAnchor: NSCollectionLayoutAnchor.init(edges: [.leading], fractionalOffset: CGPoint(x: -1.0, y: 0.0)))
-        group.supplementaryItems = [monthTagView]
 
         let section = NSCollectionLayoutSection(group: group)
         let count: Int = DayGrid.getCount(in: containerWidth)
         section.interGroupSpacing = interSpacing
         
+        let monthTagView = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(itemWidth)), elementKind: Self.monthTagElementKind, alignment: .top)
+        section.boundarySupplementaryItems = [monthTagView]
+        
         let inset = (containerWidth - CGFloat(count)*itemWidth - CGFloat(count - 1) * interSpacing) / 2.0
-        section.contentInsets = NSDirectionalEdgeInsets(top: interSpacing / 2.0, leading: inset, bottom: (interSpacing + itemWidth), trailing: inset)
+        section.contentInsets = NSDirectionalEdgeInsets(top: interSpacing / 2.0, leading: inset, bottom: interSpacing / 2.0 + 20.0, trailing: inset)
         
         return section
     }

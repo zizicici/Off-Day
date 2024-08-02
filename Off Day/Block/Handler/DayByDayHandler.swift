@@ -17,33 +17,6 @@ class DayDisplayHandler: DisplayHandler {
         self.currentCatalogue = .targetYear(ZCCalendar.manager.today.year)
     }
     
-    func getStart(for section: Section) -> Int? {
-        switch section {
-        case .info:
-            switch currentCatalogue {
-            case .targetYear(let year):
-                return GregorianDay(year: year, month: .jan, day: 1).julianDay
-            }
-        case .row(let int, _):
-            switch currentCatalogue {
-            case .targetYear(let year):
-                return GregorianDay(year: year, month: Month(rawValue: int) ?? .jan, day: 1).julianDay
-            }
-        }
-    }
-    
-    func getEnd(for section: Section) -> Int? {
-        switch section {
-        case .info:
-            return nil
-        case .row(let int, _):
-            switch currentCatalogue {
-            case .targetYear(let year):
-                return GregorianDay(year: year, month: Month(rawValue: int) ?? .dec, day: 31).julianDay
-            }
-        }
-    }
-    
     func getLeading() -> Int {
         return GregorianDay(year: currentYear, month: .jan, day: 1).julianDay
     }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ZCCalendar
 
 enum Catalogue: Hashable {
     case targetYear(Int)
@@ -13,7 +14,7 @@ enum Catalogue: Hashable {
 
 enum Section: Hashable {
     case info
-    case row(Int, String)
+    case row(GregorianMonth)
 }
 
 enum Item: Hashable {

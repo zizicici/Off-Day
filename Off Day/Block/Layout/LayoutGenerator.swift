@@ -13,7 +13,7 @@ struct LayoutGenerater {
         let firstDayOfWeek: WeekdayOrder = WeekdayOrder(rawValue: WeekStartType.current.rawValue) ?? WeekdayOrder.firstDayOfWeek
         
         for month in Month.allCases {
-            snapshot.appendSections([.row(month.rawValue, month.getShortSymbol())])
+            snapshot.appendSections([.row(GregorianMonth(year: year, month: month))])
             let firstDay = GregorianDay(year: year, month: month, day: 1)
             let firstWeekOrder = firstDay.weekdayOrder()
             let firstOffset = (firstWeekOrder.rawValue - (firstDayOfWeek.rawValue % 7) + 7) % 7

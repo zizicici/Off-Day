@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ZCCalendar
 
 extension BlockViewController {
     func getInfoSectionCellRegistration() -> UICollectionView.CellRegistration<TitleCell, Item> {
@@ -35,19 +36,18 @@ extension BlockViewController {
         return cellRegistration
     }
     
-    func getMonthTagRegistration() -> UICollectionView.SupplementaryRegistration<MonthTagView> {
-        let monthTagRegistration = UICollectionView.SupplementaryRegistration<MonthTagView>(elementKind: Self.monthTagElementKind) { [weak self] supplementaryView, elementKind, indexPath in
+    func getMonthTagRegistration() -> UICollectionView.SupplementaryRegistration<CalendarTitleView> {
+        let monthTagRegistration = UICollectionView.SupplementaryRegistration<CalendarTitleView>(elementKind: Self.monthTagElementKind) { [weak self] supplementaryView, elementKind, indexPath in
             guard let self = self else { return }
             guard let section = self.dataSource.sectionIdentifier(for: indexPath.section) else { fatalError("Unknown section") }
             switch section {
             case .info:
                 return
-            case .row(_, let text):
-                if indexPath.item == 0 {
-                    supplementaryView.titleLabel.text = text
-                } else {
-                    supplementaryView.titleLabel.text = ""
-                }
+            case .row(let month):
+                let firstDay = GregorianDay(year: month.year, month: month.month, day: 1)
+                let firstIndex = (firstDay.weekdayOrder().rawValue) % 7
+                supplementaryView.update(text: month.month.getShortSymbol(), at: firstIndex, spilt: 7, color: AppColor.text.withAlphaComponent(0.8))
+                return
             }
         }
         return monthTagRegistration

@@ -14,9 +14,6 @@ protocol DisplayHandlerDelegate: AnyObject {
 protocol DisplayHandler {
     init(delegate: DisplayHandlerDelegate)
     
-    func getStart(for section: Section) -> Int?
-    func getEnd(for section: Section) -> Int?
-    
     func getLeading() -> Int
     func getTrailing() -> Int
     
