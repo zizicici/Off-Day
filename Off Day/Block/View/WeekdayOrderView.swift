@@ -36,7 +36,7 @@ class WeekdayOrderView: UIView {
     var startWeekdayOrder: WeekdayOrder = WeekdayOrder.sun {
         didSet {
             if startWeekdayOrder != oldValue {
-                updateLabels()                
+                updateLabels()
             }
         }
     }
