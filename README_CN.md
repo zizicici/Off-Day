@@ -46,7 +46,7 @@
 # 项目编译要求
 
 - iOS/iPadOS 16+
-- Xcode 15
+- Xcode 16
 
 # 协议
 

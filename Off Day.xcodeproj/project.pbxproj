@@ -97,6 +97,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		141F38D92C9974D600347225 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		141F38DA2C9974D600347225 /* README_CN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README_CN.md; sourceTree = "<group>"; };
 		1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDayMarkIntent.swift; sourceTree = "<group>"; };
 		14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDayClashIntent.swift; sourceTree = "<group>"; };
 		14D6F91F2BEB05FA008712E1 /* BaseCalendarEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCalendarEditorViewController.swift; sourceTree = "<group>"; };
@@ -223,6 +225,8 @@
 		14DD50A52BE1F5C4004329E2 = {
 			isa = PBXGroup;
 			children = (
+				141F38D92C9974D600347225 /* README.md */,
+				141F38DA2C9974D600347225 /* README_CN.md */,
 				14DD50B02BE1F5C4004329E2 /* Off Day */,
 				14DD50AF2BE1F5C4004329E2 /* Products */,
 				14DD51042BE20CF8004329E2 /* Frameworks */,
