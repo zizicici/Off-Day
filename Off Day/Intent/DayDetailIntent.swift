@@ -88,7 +88,7 @@ struct DayDetailIntent: AppIntent {
             let publicDay = PublicPlanManager.shared.publicDay(at: target.julianDay)
             let publicOffValue: Bool = publicDay?.type == .offDay
             let customOffValue: Bool? = CustomDayManager.shared.fetchCustomDay(by: target.julianDay)?.dayType == .offDay
-            let detail = DayDetailEntity(id: target.julianDay, date: Date(), userOffDay: customOffValue, publicOffDay: publicOffValue, baseOffDay: baseOffValue, publicDayName: publicDay?.name)
+            let detail = DayDetailEntity(id: target.julianDay, date: date, userOffDay: customOffValue, publicOffDay: publicOffValue, baseOffDay: baseOffValue, publicDayName: publicDay?.name)
             return .result(value: detail)
         } else {
             throw FetchError.notFound
