@@ -1,7 +1,7 @@
 {
     "name": "U.S. Federal Holidays",
     "start": "2024-01-01",
-    "end": "2025-12-31",
+    "end": "2026-12-31",
     "days": [
         {
             "date": "2024-01-01",
@@ -110,6 +110,61 @@
         },
         {
             "date": "2025-12-25",
+            "name": "Christmas Day",
+            "type": 0
+        },
+        {
+            "date": "2026-01-01",
+            "name": "New Year's Day",
+            "type": 0
+        },
+        {
+            "date": "2026-01-19",
+            "name": "Birthday of Martin Luther King, Jr.",
+            "type": 0
+        },
+        {
+            "date": "2026-02-16",
+            "name": "Washington’s Birthday",
+            "type": 0
+        },
+        {
+            "date": "2026-05-25",
+            "name": "Memorial Day",
+            "type": 0
+        },
+        {
+            "date": "2026-06-19",
+            "name": "Juneteenth National Independence Day",
+            "type": 0
+        },
+        {
+            "date": "2026-07-03",
+            "name": "Independence Day",
+            "type": 0
+        },
+        {
+            "date": "2026-09-07",
+            "name": "Labor Day",
+            "type": 0
+        },
+        {
+            "date": "2026-10-12",
+            "name": "Columbus Day",
+            "type": 0
+        },
+        {
+            "date": "2026-11-11",
+            "name": "Veterans Day",
+            "type": 0
+        },
+        {
+            "date": "2026-11-26",
+            "name": "Thanksgiving Day",
+            "type": 0
+        },
+        {
+            "date": "2026-12-25",
             "name": "Christmas Day",
             "type": 0
         }
