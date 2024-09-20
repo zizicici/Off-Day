@@ -1,7 +1,7 @@
 {
-    "name": "美国公共假日",
+    "name": "U.S. Federal Holidays",
     "start": "2024-01-01",
-    "end": "2024-12-31",
+    "end": "2025-12-31",
     "days": [
         {
             "date": "2024-01-01",
@@ -55,6 +55,61 @@
         },
         {
             "date": "2024-12-25",
+            "name": "Christmas Day",
+            "type": 0
+        },
+        {
+            "date": "2025-01-01",
+            "name": "New Year's Day",
+            "type": 0
+        },
+        {
+            "date": "2025-01-20",
+            "name": "Birthday of Martin Luther King, Jr.",
+            "type": 0
+        },
+        {
+            "date": "2025-02-17",
+            "name": "Washington’s Birthday",
+            "type": 0
+        },
+        {
+            "date": "2025-05-26",
+            "name": "Memorial Day",
+            "type": 0
+        },
+        {
+            "date": "2025-06-19",
+            "name": "Juneteenth National Independence Day",
+            "type": 0
+        },
+        {
+            "date": "2025-07-04",
+            "name": "Independence Day",
+            "type": 0
+        },
+        {
+            "date": "2025-09-01",
+            "name": "Labor Day",
+            "type": 0
+        },
+        {
+            "date": "2025-10-13",
+            "name": "Columbus Day",
+            "type": 0
+        },
+        {
+            "date": "2025-11-11",
+            "name": "Veterans Day",
+            "type": 0
+        },
+        {
+            "date": "2025-11-27",
+            "name": "Thanksgiving Day",
+            "type": 0
+        },
+        {
+            "date": "2025-12-25",
             "name": "Christmas Day",
             "type": 0
         }
