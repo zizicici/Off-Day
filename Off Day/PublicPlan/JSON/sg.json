@@ -1,7 +1,7 @@
 {
     "name": "新加坡公共假日",
     "start": "2024-01-01",
-    "end": "2024-12-31",
+    "end": "2025-12-31",
     "days": [
         {
             "date": "2024-01-01",
@@ -60,6 +60,61 @@
         },
         {
             "date": "2024-12-25",
+            "name": "Christmas Day",
+            "type": 0
+        },
+        {
+            "date": "2025-01-01",
+            "name": "New Year's Day",
+            "type": 0
+        },
+        {
+            "date": "2025-01-29",
+            "name": "Chinese New Year",
+            "type": 0
+        },
+        {
+            "date": "2025-01-30",
+            "name": "Chinese New Year",
+            "type": 0
+        },
+        {
+            "date": "2025-03-31",
+            "name": "Hari Raya Puasa",
+            "type": 0
+        },
+        {
+            "date": "2025-04-18",
+            "name": "Good Friday",
+            "type": 0
+        },
+        {
+            "date": "2025-05-01",
+            "name": "Labour Day",
+            "type": 0
+        },
+        {
+            "date": "2025-05-12",
+            "name": "Vesak Day",
+            "type": 0
+        },
+        {
+            "date": "2025-06-07",
+            "name": "Hari Raya Haji",
+            "type": 0
+        },
+        {
+            "date": "2025-08-09",
+            "name": "National Day",
+            "type": 0
+        },
+        {
+            "date": "2025-10-20",
+            "name": "Deepavali",
+            "type": 0
+        },
+        {
+            "date": "2025-12-25",
             "name": "Christmas Day",
             "type": 0
         }
