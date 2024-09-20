@@ -73,7 +73,7 @@ class SpecificationsViewController: UIViewController {
                 case .publisher:
                     return "ZIZICICI LIMITED"
                 case .date:
-                    return "2024/08/02"
+                    return "2024/09/20"
                 case .license:
                     return "闽ICP备2023015823号-8A"
                 }
@@ -89,7 +89,7 @@ class SpecificationsViewController: UIViewController {
                 let GRDB = ThirdParty(
                     urlString: "https://github.com/groue/GRDB.swift",
                     name: "GRDB",
-                    version: "6.27.0"
+                    version: "6.29.3"
                 )
                 let SnapKit = ThirdParty(
                     urlString: "https://github.com/SnapKit/SnapKit",
@@ -228,10 +228,12 @@ extension SpecificationsViewController {
     }
     
     static func getAppName() -> String? {
-        guard let version = Bundle.main.localizedInfoDictionary?["CFBundleName"] as? String else {
-            return nil
+        if let appName = Bundle.main.localizedInfoDictionary?["CFBundleDisplayName"] as? String {
+            return appName
+        } else if let appName = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String {
+            return appName
         }
         
-        return version
+        return nil
     }
 }
