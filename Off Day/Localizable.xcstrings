@@ -1039,6 +1039,34 @@
         }
       }
     },
+    "From which day onward?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From which day onward?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从哪天往后查找？"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "從哪天往後查找？"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "從哪天往後查找？"
+          }
+        }
+      }
+    },
     "Get Day Detail of ${date}" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1908,6 +1936,118 @@
         }
       }
     },
+    "intent.nextOffDayDetail.intent.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can get the detail of the first next Off Day by date."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你能根据日期获得下一个休息日的详情"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你能根據日期獲得下一個休息日的詳情"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你能根據日期獲得下一個休息日的詳情"
+          }
+        }
+      }
+    },
+    "intent.nextOffDayDetail.intent.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get Next Off Day Detail"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一个休息日的详情"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一個休息日的詳情"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一個休息日的詳情"
+          }
+        }
+      }
+    },
+    "intent.nextWorkDayDetail.intent.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can get the detail of the first next Work Day by date."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你能根据日期获得下一个工作日的详情"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你能根據日期獲得下一個工作日的詳情"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你能根據日期獲得下一個工作日的詳情"
+          }
+        }
+      }
+    },
+    "intent.nextWorkDayDetail.intent.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get Next Work Day Detail"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一个工作日的详情"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一個工作日的詳情"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一個工作日的詳情"
+          }
+        }
+      }
+    },
     "Is ${date} a Clash Day?" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2668,6 +2808,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "幫助中心"
+          }
+        }
+      }
+    },
+    "Next Off Day Detail after ${date}" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next Off Day Detail after ${date}"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "获取 ${date}后第一个休息日的详情"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "獲取 ${date}後第一個休息日的詳情"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "獲取 ${date}後第一個休息日的詳情"
+          }
+        }
+      }
+    },
+    "Next Work Day Detail after ${date}" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next Work Day Detail after ${date}"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "获取 ${date}后第一个工作日的详情"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "獲取 ${date}後第一個工作日的詳情"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "獲取 ${date}後第一個工作日的詳情"
           }
         }
       }

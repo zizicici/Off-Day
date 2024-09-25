@@ -48,6 +48,16 @@ final class PublicPlanManager {
         return dataSource?.days[julianDay]
     }
     
+    public func fetchPublicDay(after julianDay: Int, dayType: DayType) -> (any PublicDay)? {
+        guard let days = dataSource?.days else { return nil }
+        for (index, day) in days {
+            if index > julianDay && day.type == dayType {
+                return day
+            }
+        }
+        return nil
+    }
+    
     public func isOverReach(at julianDay: Int) -> Bool {
         guard let dataSource = dataSource else {
             return false

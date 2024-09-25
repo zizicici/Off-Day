@@ -17,6 +17,7 @@
 		14D6F92A2BEB6C86008712E1 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F9292BEB6C86008712E1 /* DateCell.swift */; };
 		14D6F92C2BEB90F6008712E1 /* BaseCalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F92B2BEB90F6008712E1 /* BaseCalendarManager.swift */; };
 		14D6F92E2BEBDDF4008712E1 /* BaseCalendarConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F92D2BEBDDF4008712E1 /* BaseCalendarConfig.swift */; };
+		14D9D71C2CA44A2E00257C07 /* NextDayIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D9D71B2CA44A2E00257C07 /* NextDayIntent.swift */; };
 		14DD50B22BE1F5C4004329E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */; };
 		14DD50B42BE1F5C4004329E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */; };
 		14DD50BB2BE1F5C5004329E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14DD50BA2BE1F5C5004329E2 /* Assets.xcassets */; };
@@ -108,6 +109,7 @@
 		14D6F9292BEB6C86008712E1 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		14D6F92B2BEB90F6008712E1 /* BaseCalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCalendarManager.swift; sourceTree = "<group>"; };
 		14D6F92D2BEBDDF4008712E1 /* BaseCalendarConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCalendarConfig.swift; sourceTree = "<group>"; };
+		14D9D71B2CA44A2E00257C07 /* NextDayIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextDayIntent.swift; sourceTree = "<group>"; };
 		14DD50AE2BE1F5C4004329E2 /* Off Day.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Off Day.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 				14DD51492BE27A9E004329E2 /* CheckDayIntent.swift */,
 				14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */,
 				14F2FA762BF102C600BBE7FB /* DayDetailIntent.swift */,
+				14D9D71B2CA44A2E00257C07 /* NextDayIntent.swift */,
 				1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */,
 			);
 			path = Intent;
@@ -656,6 +659,7 @@
 				14DD51002BE20BC1004329E2 /* BlockBaseViewController.swift in Sources */,
 				14DD513D2BE2356A004329E2 /* TabbarController.swift in Sources */,
 				14DD50F32BE20BC1004329E2 /* LayoutGenerator.swift in Sources */,
+				14D9D71C2CA44A2E00257C07 /* NextDayIntent.swift in Sources */,
 				14F8D7D42C5C9194000B48A3 /* MonthTitleCell.swift in Sources */,
 				14E6D9BC2BE4A81C00931F3D /* PublicPlanViewController.swift in Sources */,
 				14CFA1272BEC92A90004D15E /* CheckDayClashIntent.swift in Sources */,

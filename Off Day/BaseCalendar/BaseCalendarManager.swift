@@ -18,6 +18,18 @@ struct StandardConfig: Codable {
     var weekdayOrders: [WeekdayOrder]
     
     static let `default` = Self.init(weekdayOrders: [.sat, .sun])
+    
+    var length: Int {
+        return 7
+    }
+    
+    var hasOff: Bool {
+        return Set(weekdayOrders).count > 0
+    }
+    
+    var hasWork: Bool {
+        return Set(weekdayOrders).count < length
+    }
 }
 
 enum WeekCount: Int, CaseIterable, Hashable, Equatable, Codable {
@@ -41,12 +53,36 @@ struct WeeksCircleConfig: Hashable, Codable {
     var offset: Int
     var weekCount: WeekCount
     var indexs: [Int]
+    
+    var length: Int {
+        return weekCount.rawValue * 7
+    }
+    
+    var hasOff: Bool {
+        return indexs.count > 0
+    }
+    
+    var hasWork: Bool {
+        return indexs.count < length
+    }
 }
 
 struct DaysCircleConfig: Hashable, Codable {
     var start: Int
     var workCount: Int
     var offCount: Int
+    
+    var length: Int {
+        return workCount + offCount
+    }
+    
+    var hasOff: Bool {
+        return offCount > 0
+    }
+    
+    var hasWork: Bool {
+        return workCount > 0
+    }
 }
 
 class BaseCalendarManager {
@@ -76,6 +112,39 @@ class BaseCalendarManager {
                 return .weeksCircle(WeeksCircleConfig(offset: Int(config.weekOffset), weekCount: config.weekCount, indexs: config.weeksCircleIndexs()))
             case .daysCircle:
                 return .daysCircle(DaysCircleConfig(start: Int(config.dayStart), workCount: Int(config.dayWorkCount), offCount: Int(config.dayOffCount)))
+            }
+        }
+        
+        var length: Int {
+            switch self {
+            case .standard(let standardConfig):
+                return standardConfig.length
+            case .weeksCircle(let weeksCircleConfig):
+                return weeksCircleConfig.length
+            case .daysCircle(let daysCircleConfig):
+                return daysCircleConfig.length
+            }
+        }
+        
+        var hasOff: Bool {
+            switch self {
+            case .standard(let standardConfig):
+                return standardConfig.hasOff
+            case .weeksCircle(let weeksCircleConfig):
+                return weeksCircleConfig.hasOff
+            case .daysCircle(let daysCircleConfig):
+                return daysCircleConfig.hasOff
+            }
+        }
+        
+        var hasWork: Bool {
+            switch self {
+            case .standard(let standardConfig):
+                return standardConfig.hasWork
+            case .weeksCircle(let weeksCircleConfig):
+                return weeksCircleConfig.hasWork
+            case .daysCircle(let daysCircleConfig):
+                return daysCircleConfig.hasWork
             }
         }
     }
@@ -136,6 +205,36 @@ class BaseCalendarManager {
                 offset += cycle
             }
             return offset >= config.workCount
+        }
+    }
+    
+    public func fetchBaseDay(after julianDay: Int, dayType: DayType) -> GregorianDay? {
+        let targetDay = GregorianDay(JDN: julianDay)
+        switch dayType {
+        case .offDay:
+            if !config.hasOff {
+                return nil
+            } else {
+                for i in 1...config.length {
+                    let condidateDay = GregorianDay(JDN: julianDay + 1)
+                    if isOff(day: condidateDay) {
+                        return condidateDay
+                    }
+                }
+                return nil
+            }
+        case .workDay:
+            if !config.hasWork {
+                return nil
+            } else {
+                for i in 1...config.length {
+                    let condidateDay = GregorianDay(JDN: julianDay + 1)
+                    if !isOff(day: condidateDay) {
+                        return condidateDay
+                    }
+                }
+                return nil
+            }
         }
     }
 }

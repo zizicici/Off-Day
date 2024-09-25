@@ -40,6 +40,21 @@ struct CustomDayManager {
         return result
     }
     
+    func fetchCustomDay(after dayIndex: Int, dayType: DayType) -> CustomDay? {
+        var result: CustomDay?
+        do {
+            try AppDatabase.shared.reader?.read{ db in
+                let dayIndexColumn = CustomDay.Columns.dayIndex
+                let dayTypeColumn = CustomDay.Columns.dayType
+                result = try CustomDay.filter(dayIndexColumn > Int64(dayIndex)).filter(dayTypeColumn == dayType).fetchOne(db)
+            }
+        }
+        catch {
+            print(error)
+        }
+        return result
+    }
+    
     func add(customDay: CustomDay) {
         // Check is there a same CustomDay before save
         guard customDay.id == nil else {

@@ -63,3 +63,7 @@ extension Array<CustomDay> {
         })
     }
 }
+
+extension DayType: SQLSpecificExpressible {
+    
+}
