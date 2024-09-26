@@ -85,7 +85,7 @@ struct DayDetailIntent: AppIntent {
                 throw FetchError.overReach
             }
             
-            if let detail = target.getDayDetail() {
+            if let detail = DayManager.getDayDetail(from: target) {
                 return .result(value: detail)
             } else {
                 throw FetchError.notFound
@@ -96,19 +96,4 @@ struct DayDetailIntent: AppIntent {
     }
 
     static var openAppWhenRun: Bool = false
-}
-
-extension GregorianDay {
-    func getDayDetail() -> DayDetailEntity? {
-        let baseOffValue = BaseCalendarManager.shared.isOff(day: self)
-        let publicDay = PublicPlanManager.shared.publicDay(at: self.julianDay)
-        let publicOffValue: Bool = publicDay?.type == .offDay
-        let customOffValue: Bool? = CustomDayManager.shared.fetchCustomDay(by: julianDay)?.dayType == .offDay
-        if let date = generateDate(secondsFromGMT: Calendar.current.timeZone.secondsFromGMT()) {
-            let detail = DayDetailEntity(id: julianDay, date: date, userOffDay: customOffValue, publicOffDay: publicOffValue, baseOffDay: baseOffValue, publicDayName: publicDay?.name)
-            return detail
-        } else {
-            return nil
-        }
-    }
 }

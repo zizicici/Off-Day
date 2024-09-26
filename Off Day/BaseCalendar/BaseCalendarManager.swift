@@ -208,15 +208,14 @@ class BaseCalendarManager {
         }
     }
     
-    public func fetchBaseDay(after julianDay: Int, dayType: DayType) -> GregorianDay? {
-        let targetDay = GregorianDay(JDN: julianDay)
+    public func fetchBaseDay(after startDay: Int, dayType: DayType) -> GregorianDay? {
         switch dayType {
         case .offDay:
             if !config.hasOff {
                 return nil
             } else {
                 for i in 1...config.length {
-                    let condidateDay = GregorianDay(JDN: julianDay + 1)
+                    let condidateDay = GregorianDay(JDN: startDay + i)
                     if isOff(day: condidateDay) {
                         return condidateDay
                     }
@@ -228,7 +227,7 @@ class BaseCalendarManager {
                 return nil
             } else {
                 for i in 1...config.length {
-                    let condidateDay = GregorianDay(JDN: julianDay + 1)
+                    let condidateDay = GregorianDay(JDN: startDay + i)
                     if !isOff(day: condidateDay) {
                         return condidateDay
                     }

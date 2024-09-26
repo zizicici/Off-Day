@@ -62,6 +62,7 @@
 		14E49C9B2BEA117000431EA9 /* kr.json in Resources */ = {isa = PBXBuildFile; fileRef = 14E49C9A2BEA117000431EA9 /* kr.json */; };
 		14E6D9BA2BE495F000931F3D /* Toast+Stryle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6D9B92BE495F000931F3D /* Toast+Stryle.swift */; };
 		14E6D9BC2BE4A81C00931F3D /* PublicPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6D9BB2BE4A81C00931F3D /* PublicPlanViewController.swift */; };
+		14EA29F22CA500850055A496 /* DayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA29F12CA500850055A496 /* DayManager.swift */; };
 		14EC7FDA2BEF0FA3003BB07E /* AppPublicPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EC7FD92BEF0FA3003BB07E /* AppPublicPlan.swift */; };
 		14EC7FDC2BEF3CEE003BB07E /* PublicDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EC7FDB2BEF3CEE003BB07E /* PublicDay.swift */; };
 		14ECFEED2BE5F30C005D2D79 /* PublicPlanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ECFEEC2BE5F30C005D2D79 /* PublicPlanManager.swift */; };
@@ -153,6 +154,7 @@
 		14E49C9A2BEA117000431EA9 /* kr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = kr.json; sourceTree = "<group>"; };
 		14E6D9B92BE495F000931F3D /* Toast+Stryle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Toast+Stryle.swift"; sourceTree = "<group>"; };
 		14E6D9BB2BE4A81C00931F3D /* PublicPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPlanViewController.swift; sourceTree = "<group>"; };
+		14EA29F12CA500850055A496 /* DayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayManager.swift; sourceTree = "<group>"; };
 		14EC7FD92BEF0FA3003BB07E /* AppPublicPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPublicPlan.swift; sourceTree = "<group>"; };
 		14EC7FDB2BEF3CEE003BB07E /* PublicDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicDay.swift; sourceTree = "<group>"; };
 		14ECFEEC2BE5F30C005D2D79 /* PublicPlanManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPlanManager.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			children = (
 				14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */,
 				14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */,
+				14EA29F12CA500850055A496 /* DayManager.swift */,
 				14DD513A2BE2356A004329E2 /* BaseViewController */,
 				14ECFEEE2BE5F523005D2D79 /* PublicPlan */,
 				14DD50E92BE20BC1004329E2 /* Block */,
@@ -635,6 +638,7 @@
 				14D6F9202BEB05FA008712E1 /* BaseCalendarEditorViewController.swift in Sources */,
 				14DD50F12BE20BC1004329E2 /* DayByDayHandler.swift in Sources */,
 				14DD512C2BE21AB8004329E2 /* UIColor+Extension.swift in Sources */,
+				14EA29F22CA500850055A496 /* DayManager.swift in Sources */,
 				14DD51402BE2459C004329E2 /* MoreViewController.swift in Sources */,
 				14ED08B02BEE55DB00100E2D /* CustomPublicPlan.swift in Sources */,
 				14DD51232BE21050004329E2 /* TimestampedRecord.swift in Sources */,

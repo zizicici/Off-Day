@@ -43,7 +43,7 @@ struct CheckDayIntent: AppIntent {
             if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
                 throw FetchError.overReach
             }
-            isOffDay = target.isOffDay()
+            isOffDay = DayManager.check(target, is: .offDay)
         }
         return .result(value: isOffDay)
     }
@@ -69,7 +69,7 @@ struct CheckTodayIntent: AppIntent {
             if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
                 throw FetchError.overReach
             }
-            isOffDay = target.isOffDay()
+            isOffDay = DayManager.check(target, is: .offDay)
         }
         return .result(value: isOffDay)
     }
@@ -96,7 +96,7 @@ struct CheckTomorrowIntent: AppIntent {
             if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
                 throw FetchError.overReach
             }
-            isOffDay = target.isOffDay()
+            isOffDay = DayManager.check(target, is: .offDay)
         }
         return .result(value: isOffDay)
     }
@@ -126,23 +126,10 @@ struct CheckOffsetDayOffIntent: AppIntent {
             if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
                 throw FetchError.overReach
             }
-            isOffDay = target.isOffDay()
+            isOffDay = DayManager.check(target, is: .offDay)
         }
         return .result(value: isOffDay)
     }
 
     static var openAppWhenRun: Bool = false
-}
-
-extension GregorianDay {
-    fileprivate func isOffDay() -> Bool {
-        var isOffDay = BaseCalendarManager.shared.isOff(day: self)
-        if let publicDay = PublicPlanManager.shared.publicDay(at: julianDay) {
-            isOffDay = publicDay.type == .offDay
-        }
-        if let customDay = CustomDayManager.shared.fetchCustomDay(by: julianDay) {
-            isOffDay = customDay.dayType == .offDay
-        }
-        return isOffDay
-    }
 }

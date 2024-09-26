@@ -34,7 +34,7 @@ struct CheckDayClashIntent: AppIntent {
             if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
                 throw FetchError.overReach
             }
-            isOffDay = target.isClashDay(including: enableUserMark)
+            isOffDay = DayManager.checkClashDay(target, customMarkEnabled: enableUserMark)
         }
         return .result(value: isOffDay)
     }
@@ -65,7 +65,7 @@ struct CheckTodayClashIntent: AppIntent {
             if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
                 throw FetchError.overReach
             }
-            isOffDay = target.isClashDay(including: enableUserMark)
+            isOffDay = DayManager.checkClashDay(target, customMarkEnabled: enableUserMark)
         }
         return .result(value: isOffDay)
     }
@@ -97,7 +97,7 @@ struct CheckTomorrowClashIntent: AppIntent {
             if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
                 throw FetchError.overReach
             }
-            isOffDay = target.isClashDay(including: enableUserMark)
+            isOffDay = DayManager.checkClashDay(target, customMarkEnabled: enableUserMark)
         }
         return .result(value: isOffDay)
     }
@@ -132,47 +132,10 @@ struct CheckOffsetDayClashIntent: AppIntent {
             if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
                 throw FetchError.overReach
             }
-            isOffDay = target.isClashDay(including: enableUserMark)
+            isOffDay = DayManager.checkClashDay(target, customMarkEnabled: enableUserMark)
         }
         return .result(value: isOffDay)
     }
 
     static var openAppWhenRun: Bool = false
-}
-
-extension GregorianDay {
-    fileprivate func isClashDay(including customMarkEnabled: Bool) -> Bool {
-        let baseOffValue = BaseCalendarManager.shared.isOff(day: self)
-        var publicOffValue: Bool? = nil
-        if let publicDay = PublicPlanManager.shared.publicDay(at: julianDay) {
-            publicOffValue = publicDay.type == .offDay
-        }
-        if customMarkEnabled {
-            let customOffValue: Bool?
-            if let customDay = CustomDayManager.shared.fetchCustomDay(by: julianDay) {
-                customOffValue = customDay.dayType == .offDay
-            } else {
-                customOffValue = nil
-            }
-            if let publicOffValue = publicOffValue {
-                if let customOffValue = customOffValue {
-                    return !((baseOffValue == publicOffValue) && (customOffValue == baseOffValue))
-                } else {
-                    return publicOffValue != baseOffValue
-                }
-            } else {
-                if let customOffValue = customOffValue {
-                    return customOffValue != baseOffValue
-                } else {
-                    return false
-                }
-            }
-        } else {
-            if let publicOffValue = publicOffValue {
-                return baseOffValue != publicOffValue
-            } else {
-                return false
-            }
-        }
-    }
 }

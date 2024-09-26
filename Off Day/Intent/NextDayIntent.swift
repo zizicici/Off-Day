@@ -24,23 +24,9 @@ struct NextOffDayDetailIntent: AppIntent {
     func perform() async throws -> some IntentResult & ReturnsValue<DayDetailEntity> {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
         if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
-            let dayIndex = GregorianDay(year: year, month: month, day: day).julianDay
+            let day = GregorianDay(year: year, month: month, day: day)
             
-            var resultDay: GregorianDay? = nil
-            if let firstCustomOffDay = CustomDayManager.shared.fetchCustomDay(after: dayIndex, dayType: .offDay) {
-                // Find First Custom Off Day
-                resultDay = GregorianDay(JDN: Int(firstCustomOffDay.dayIndex))
-            } else if let firstPublicOffDay = PublicPlanManager.shared.fetchPublicDay(after: dayIndex, dayType: .offDay) {
-                // Find First Public Off Day
-                resultDay = firstPublicOffDay.date
-            } else if let firstBaseOffDay = BaseCalendarManager.shared.fetchBaseDay(after: dayIndex, dayType: .offDay) {
-                // Find First Base Off Day
-                resultDay = firstBaseOffDay
-            } else {
-                resultDay = nil
-            }
-            
-            if let resultDay = resultDay, let detail = resultDay.getDayDetail() {
+            if let resultDay = DayManager.fetchNextDay(type: .offDay, after: day), let detail = DayManager.getDayDetail(from: resultDay) {
                 return .result(value: detail)
             } else {
                 throw FetchError.notFound
@@ -69,23 +55,9 @@ struct NextWorkDayDetailIntent: AppIntent {
     func perform() async throws -> some IntentResult & ReturnsValue<DayDetailEntity> {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
         if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
-            let dayIndex = GregorianDay(year: year, month: month, day: day).julianDay
+            let day = GregorianDay(year: year, month: month, day: day)
             
-            var resultDay: GregorianDay? = nil
-            if let firstCustomOffDay = CustomDayManager.shared.fetchCustomDay(after: dayIndex, dayType: .workDay) {
-                // Find First Custom Off Day
-                resultDay = GregorianDay(JDN: Int(firstCustomOffDay.dayIndex))
-            } else if let firstPublicOffDay = PublicPlanManager.shared.fetchPublicDay(after: dayIndex, dayType: .workDay) {
-                // Find First Public Off Day
-                resultDay = firstPublicOffDay.date
-            } else if let firstBaseOffDay = BaseCalendarManager.shared.fetchBaseDay(after: dayIndex, dayType: .workDay) {
-                // Find First Base Off Day
-                resultDay = firstBaseOffDay
-            } else {
-                resultDay = nil
-            }
-            
-            if let resultDay = resultDay, let detail = resultDay.getDayDetail() {
+            if let resultDay = DayManager.fetchNextDay(type: .workDay, after: day), let detail = DayManager.getDayDetail(from: resultDay) {
                 return .result(value: detail)
             } else {
                 throw FetchError.notFound
