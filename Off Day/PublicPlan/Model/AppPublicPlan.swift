@@ -123,24 +123,6 @@ struct AppPublicPlan: Equatable, Hashable {
                 return String(localized: "publicDay.item.kr.subtitle")
             }
         }
-        
-        var start: GregorianDay {
-            switch self {
-            case .jp:
-                return GregorianDay(year: 1955, month: .jan, day: 1)
-            default:
-                return GregorianDay(year: 2024, month: .jan, day: 1)
-            }
-        }
-        
-        var end: GregorianDay {
-            switch self {
-            case .jp:
-                return GregorianDay(year: 2025, month: .dec, day: 31)
-            default:
-                return GregorianDay(year: 2024, month: .dec, day: 31)
-            }
-        }
     }
     
     var file: File
@@ -162,11 +144,13 @@ struct AppPublicPlan: Equatable, Hashable {
     }
     
     var start: GregorianDay {
-        return file.start
+        let detail = Detail(plan: self)
+        return detail?.start ?? GregorianDay(JDN: 0)
     }
     
     var end: GregorianDay {
-        return file.end
+        let detail = Detail(plan: self)
+        return detail?.end ?? GregorianDay(JDN: 0)
     }
     
     struct Detail {
