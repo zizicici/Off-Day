@@ -44,7 +44,7 @@ class MonthTitleCell: MonthTitleBaseCell {
     let monthLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.preferredSystemFont(for: .subheadline, weight: .medium)
+        label.font = UIFont.preferredSystemFont(for: .headline, weight: .regular)
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 1
         label.adjustsFontSizeToFitWidth = true

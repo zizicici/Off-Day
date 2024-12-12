@@ -24,7 +24,7 @@ extension BlockViewController {
         group.interItemSpacing = .fixed(interSpacing)
 
         let section = NSCollectionLayoutSection(group: group)
-        let count: Int = DayGrid.getCount(in: containerWidth)
+        let count: Int = DayGrid.countInRow
         section.interGroupSpacing = interSpacing
         
         let inset = (containerWidth - CGFloat(count)*itemWidth - CGFloat(count - 1) * interSpacing) / 2.0
@@ -49,7 +49,7 @@ extension BlockViewController {
         group.interItemSpacing = .fixed(interSpacing)
 
         let section = NSCollectionLayoutSection(group: group)
-        let count: Int = DayGrid.getCount(in: containerWidth)
+        let count: Int = DayGrid.countInRow
         section.interGroupSpacing = interSpacing
         
         let inset = (containerWidth - CGFloat(count)*itemWidth - CGFloat(count - 1) * interSpacing) / 2.0

@@ -34,30 +34,16 @@ class DayDisplayHandler: DisplayHandler {
     private var anchorYear: Int!
     
     func getCatalogueMenuElements() -> [UIMenuElement] {
-        let anchorAction = UIAction(title: "\(anchorYear + 0)", subtitle: String(localized: "calendar.preferred.year"), state: currentYear == anchorYear ? .on : .off) { [weak self] _ in
-            guard let self = self else { return }
-            self.updateCurrentYear(to: self.anchorYear)
-        }
-        var dividerChildren: [UIMenuElement] = []
-        let previousYearAction = UIAction(title: "\(currentYear - 1)", subtitle: String(localized: "calendar.previous.year"), image: UIImage(systemName: "arrow.up")) { [weak self] _ in
-            guard let self = self else { return }
-            self.updateCurrentYear(to: self.currentYear - 1)
-        }
-        dividerChildren.append(previousYearAction)
-        if currentYear != anchorYear {
-            let currentYearAction = UIAction(title: "\(currentYear + 0)", state: .on) { _ in
-                // Do nothing
+        var elements: [UIMenuElement] = []
+        for i in -3...3 {
+            let year = currentYear + i
+            let action = UIAction(title: String(format: (String(localized: "calendar.title.year%i")), year), subtitle: nil, state: currentYear == year ? .on : .off) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateCurrentYear(to: year)
             }
-            dividerChildren.append(currentYearAction)
+            elements.append(action)
         }
-        let nextYearAction = UIAction(title: "\(currentYear + 1)", subtitle: String(localized: "calendar.next.year"), image: UIImage(systemName: "arrow.down")) { [weak self] _ in
-            guard let self = self else { return }
-            self.updateCurrentYear(to: self.currentYear + 1)
-        }
-        dividerChildren.append(nextYearAction)
-        let divider = UIMenu(title: "", options: .displayInline, children: dividerChildren)
-        
-        return [anchorAction, divider]
+        return elements
     }
     
     func updateCurrentYear(to year: Int) {

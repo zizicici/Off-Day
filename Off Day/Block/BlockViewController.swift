@@ -17,22 +17,6 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     
     private var weekdayOrderView: WeekdayOrderView!
     
-    private var yearButton: UIButton = {
-        var configuration = UIButton.Configuration.borderedProminent()
-        configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
-            var outgoing = incoming
-            outgoing.font = UIFont.preferredFont(forTextStyle: .body)
-
-            return outgoing
-        })
-        
-        let button = UIButton(configuration: configuration)
-        button.tintColor = AppColor.offDay
-        button.showsMenuAsPrimaryAction = true
-        
-        return button
-    }()
-    
     // UIBarButtonItem
     
     private var publicPlanButton: UIBarButtonItem?
@@ -103,20 +87,6 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         
         configureHierarchy()
         configureDataSource()
-        
-        view.addSubview(yearButton)
-        yearButton.snp.makeConstraints { make in
-            make.top.equalTo(weekdayOrderView.snp.bottom).offset(24)
-            make.leading.equalTo(view.safeAreaLayoutGuide).inset(24)
-        }
-        yearButton.setContentHuggingPriority(.required, for: .vertical)
-        yearButton.setContentCompressionResistancePriority(.required, for: .vertical)
-        yearButton.configurationUpdateHandler = { [weak self] button in
-            var buttonConfig = button.configuration
-            buttonConfig?.title = self?.displayHandler.getTitle()
-            
-            button.configuration = buttonConfig
-        }
         
         addGestures()
         
@@ -250,13 +220,11 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
             make.leading.trailing.bottom.equalTo(view)
         }
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: CGFloat.leastNormalMagnitude, left: 0.0, bottom: 0.0, right: 0.0)
-        collectionView.contentInset = .init(top: 60.0, left: 0.0, bottom: 20.0, right: 0.0)
+        collectionView.contentInset = .init(top: 0.0, left: 0.0, bottom: 10.0, right: 0.0)
     }
 
     @objc
     internal func reloadData() {
-        yearButton.setNeedsUpdateConfiguration()
-        yearButton.menu = getCatalogueMenu()
         let startWeekdayOrder = WeekdayOrder(rawValue: WeekStartType.current.rawValue) ?? WeekdayOrder.firstDayOfWeek
         weekdayOrderView.startWeekdayOrder = startWeekdayOrder
         CustomDayManager.shared.fetchAll { [weak self] customDays in
@@ -283,8 +251,15 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         updateMoreMenu()
     }
     
-    internal func getCatalogueMenu() -> UIMenu? {
-        let children = displayHandler.getCatalogueMenuElements()
+    internal func getCatalogueMenu(publicPlanName: String) -> UIMenu? {
+        var children = displayHandler.getCatalogueMenuElements()
+        let pickerAction = UIAction(title: String(localized: "controller.publicDay.title"), subtitle: publicPlanName) { [weak self] _ in
+            guard let self = self else { return }
+            self.showPublicPlanPicker()
+        }
+        let divider = UIMenu(title: "", options: .displayInline, children: [pickerAction])
+        children.append(divider)
+        
         return UIMenu(children: children)
     }
     
@@ -325,42 +300,43 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     }
     
     func updateNavigationTitleView() {
-        let subtitle: String
+        let publicPlanName: String
         if let publicPlan = PublicPlanManager.shared.dataSource?.plan {
             switch publicPlan {
             case .app(let appPublicPlan):
-                subtitle = appPublicPlan.title
+                publicPlanName = appPublicPlan.title
             case .custom(let customPublicPlan):
-                subtitle = customPublicPlan.name
+                publicPlanName = customPublicPlan.name
             }
         } else {
-            subtitle = String(localized: "controller.calendar.noPublicPlan")
+            publicPlanName = String(localized: "controller.calendar.noPublicPlan")
         }
         
-        navigationItem.setTitle(String(localized: "controller.calendar.title"), subtitle: subtitle)
+        navigationItem.setTitle(displayHandler.getTitle(), subtitle: publicPlanName, menu: getCatalogueMenu(publicPlanName: publicPlanName))
     }
 }
 
 extension UINavigationItem {
-    func setTitle(_ title: String, subtitle: String) {
-        let textColor = UIColor.white
-        
-        let titleLabel = UILabel()
-        titleLabel.text = title
-        titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
-        titleLabel.textColor = textColor
-
-        let subtitleLabel = UILabel()
-        subtitleLabel.text = subtitle
-        subtitleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.caption2)
-        subtitleLabel.textColor = textColor
-
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
-        stackView.distribution = .equalCentering
-        stackView.alignment = .center
-        stackView.axis = .vertical
-        stackView.layoutSubviews()
-               
-        self.titleView = stackView
+    func setTitle(_ title: String, subtitle: String, menu: UIMenu?) {
+        var configuration = UIButton.Configuration.bordered()
+        configuration.title = title
+        configuration.subtitle = subtitle
+        configuration.titleAlignment = .center
+        configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.preferredFont(forTextStyle: .headline)
+            
+            return outgoing
+        })
+        configuration.subtitleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.preferredFont(forTextStyle: .caption2)
+            
+            return outgoing
+        })
+        let button = UIButton(configuration: configuration)
+        button.showsMenuAsPrimaryAction = true
+        button.menu = menu
+        titleView = button
     }
 }
