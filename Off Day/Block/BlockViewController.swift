@@ -233,11 +233,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         }
         self.updateNavigationTitleView()
         
-        if PublicPlanManager.shared.dataSource?.plan == nil {
-            publicPlanButton?.image = UIImage(systemName: "calendar.badge.exclamationmark")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors: [.systemPink, .white]))
-        } else {
-            publicPlanButton?.image = UIImage(systemName: "calendar.badge.checkmark")
-        }
+        publicPlanButton?.image = getPublicPlanIndicator()
     }
     
     private func applyData() {
@@ -251,9 +247,17 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         updateMoreMenu()
     }
     
+    internal func getPublicPlanIndicator(defaultColor: UIColor = .white) -> UIImage? {
+        if PublicPlanManager.shared.dataSource?.plan == nil {
+            return UIImage(systemName: "calendar.badge.exclamationmark")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors: [.systemPink, defaultColor]))
+        } else {
+            return UIImage(systemName: "calendar.badge.checkmark")
+        }
+    }
+    
     internal func getCatalogueMenu(publicPlanName: String) -> UIMenu? {
         var children = displayHandler.getCatalogueMenuElements()
-        let pickerAction = UIAction(title: String(localized: "controller.publicDay.title"), subtitle: publicPlanName) { [weak self] _ in
+        let pickerAction = UIAction(title: String(localized: "controller.publicDay.title"), subtitle: publicPlanName, image: getPublicPlanIndicator(defaultColor: AppColor.text)) { [weak self] _ in
             guard let self = self else { return }
             self.showPublicPlanPicker()
         }
