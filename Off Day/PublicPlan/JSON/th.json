@@ -1,7 +1,7 @@
 {
     "name": "Thailand Public Holiday",
     "start": "2024-01-01",
-    "end": "2024-12-31",
+    "end": "2025-12-31",
     "days": [
         {
             "date": "2024-01-01",
@@ -100,6 +100,101 @@
         },
         {
             "date": "2024-12-31",
+            "name": "New Year's Eve",
+            "type": 0
+        },
+        {
+            "date": "2025-01-01",
+            "name": "New Year's Day",
+            "type": 0
+        },
+        {
+            "date": "2025-02-12",
+            "name": "Makha Bucha Day",
+            "type": 0
+        },
+        {
+            "date": "2025-04-07",
+            "name": "Substitution for Chakri Memorial Day",
+            "type": 0
+        },
+        {
+            "date": "2025-04-14",
+            "name": "Songkran Festival",
+            "type": 0
+        },
+        {
+            "date": "2025-04-15",
+            "name": "Songkran Festival",
+            "type": 0
+        },
+        {
+            "date": "2025-05-01",
+            "name": "National Labour Day",
+            "type": 0
+        },
+        {
+            "date": "2025-05-05",
+            "name": "Substitution for Coronation Day",
+            "type": 0
+        },
+        {
+            "date": "2025-05-12",
+            "name": "Substitution for Visakha Bucha Day",
+            "type": 0
+        },
+        {
+            "date": "2025-06-02",
+            "name": "Additional special holiday (added)",
+            "type": 0
+        },
+        {
+            "date": "2025-06-03",
+            "name": "H.M. Queen Suthida Bajrasudhabimalalakshana's Birthday",
+            "type": 0
+        },
+        {
+            "date": "2025-07-10",
+            "name": "Asarnha Bucha Day",
+            "type": 0
+        },
+        {
+            "date": "2025-07-28",
+            "name": "H.M. King Maha Vajiralongkorn Phra Vajiraklaochaoyuhua's Birthday",
+            "type": 0
+        },
+        {
+            "date": "2025-08-11",
+            "name": "Additional special holiday",
+            "type": 0
+        },
+        {
+            "date": "2025-08-12",
+            "name": "H.M. Queen Sirikit The Queen Mother's Birthday / Mother's Day",
+            "type": 0
+        },
+        {
+            "date": "2025-10-13",
+            "name": "H.M. King Bhumibol Adulyadej The Great Memorial Day",
+            "type": 0
+        },
+        {
+            "date": "2025-10-23",
+            "name": "H.M. King Chulalongkorn The Great Memorial Day",
+            "type": 0
+        },
+        {
+            "date": "2025-12-5",
+            "name": "H.M. King Bhumibol Adulyadej The Great's Birthday / National Day / Father's Day",
+            "type": 0
+        },
+        {
+            "date": "2025-12-10",
+            "name": "Constitution Day",
+            "type": 0
+        },
+        {
+            "date": "2025-12-31",
             "name": "New Year's Eve",
             "type": 0
         }
