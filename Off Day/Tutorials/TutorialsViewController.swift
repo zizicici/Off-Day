@@ -162,6 +162,7 @@ class TutorialsViewController: UIViewController {
         updateNavigationBarStyle()
         
         let helpButton = UIBarButtonItem(image: UIImage(systemName: "questionmark.circle"), style: .plain, target: self, action: #selector(enterHelpCenter))
+        helpButton.accessibilityLabel = String(localized: "more.item.help")
         navigationItem.rightBarButtonItem = helpButton
         
         view.addSubview(stackView)

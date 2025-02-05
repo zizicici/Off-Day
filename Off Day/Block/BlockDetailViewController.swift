@@ -57,6 +57,7 @@ class BlockDetailViewController: UIViewController {
         
         let button = UIButton(configuration: configuration)
         button.tintColor = AppColor.workDay
+        button.accessibilityHint = String(localized: "detail.day.work.hint")
         
         return button
     }()
@@ -74,6 +75,7 @@ class BlockDetailViewController: UIViewController {
         
         let button = UIButton(configuration: configuration)
         button.tintColor = AppColor.offDay
+        button.accessibilityHint = String(localized: "detail.day.off.hint")
         
         return button
     }()
@@ -131,24 +133,29 @@ class BlockDetailViewController: UIViewController {
             guard let self = self else { return }
             var config = button.configuration
             
+            var isSelected: Bool = false
             switch self.customDayType {
             case .offDay:
                 config?.image = nil
             case .workDay:
+                isSelected = true
                 config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12.0))
             case nil:
                 config?.image = nil
             }
             
             button.configuration = config
+            button.isSelected = isSelected
         }
         
         offDayButton.configurationUpdateHandler = { [weak self] button in
             guard let self = self else { return }
             var config = button.configuration
             
+            var isSelected: Bool = false
             switch self.customDayType {
             case .offDay:
+                isSelected = true
                 config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12.0))
             case .workDay:
                 config?.image = nil
@@ -157,6 +164,7 @@ class BlockDetailViewController: UIViewController {
             }
             
             button.configuration = config
+            button.isSelected = isSelected
         }
         
         updateButtons()
@@ -182,25 +190,37 @@ class BlockDetailViewController: UIViewController {
     
     @objc
     func workDayButtonAction() {
+        let targetDayType: DayType?
         switch customDayType {
         case .offDay:
-            dateTypeDebounce.emit(value: .workDay)
+            targetDayType = .workDay
         case .workDay:
-            dateTypeDebounce.emit(value: nil)
+            targetDayType = nil
         case nil:
-            dateTypeDebounce.emit(value: .workDay)
+            targetDayType = .workDay
+        }
+        if UIAccessibility.isVoiceOverRunning {
+            commit(dayType: targetDayType)
+        } else {
+            dateTypeDebounce.emit(value: targetDayType)
         }
     }
     
     @objc
     func offDayButtonAction() {
+        let targetDayType: DayType?
         switch customDayType {
         case .offDay:
-            dateTypeDebounce.emit(value: nil)
+            targetDayType = nil
         case .workDay:
-            dateTypeDebounce.emit(value: .offDay)
+            targetDayType = .offDay
         case nil:
-            dateTypeDebounce.emit(value: .offDay)
+            targetDayType = .offDay
+        }
+        if UIAccessibility.isVoiceOverRunning {
+            commit(dayType: targetDayType)
+        } else {
+            dateTypeDebounce.emit(value: targetDayType)
         }
     }
     

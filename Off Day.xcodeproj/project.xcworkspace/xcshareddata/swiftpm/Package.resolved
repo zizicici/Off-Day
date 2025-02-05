@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/zizicici/ZCCalendar",
       "state" : {
-        "revision" : "5ddbd875014e5e6e656e8c0868d58aa9966cc4f3",
-        "version" : "0.1.0"
+        "revision" : "9b42577a20278f47c438685cc84979aacee36779",
+        "version" : "0.1.3"
       }
     }
   ],

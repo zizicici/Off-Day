@@ -10,19 +10,30 @@ import ZCCalendar
 
 struct DayManager {
     static func check(_ day: GregorianDay, is type: DayType) -> Bool {
-        var isOffDay = BaseCalendarManager.shared.isOff(day: day)
-        if let publicDay = PublicPlanManager.shared.publicDay(at: day.julianDay) {
-            isOffDay = publicDay.type == .offDay
-        }
-        if let customDay = CustomDayManager.shared.fetchCustomDay(by: day.julianDay) {
-            isOffDay = customDay.dayType == .offDay
-        }
+        let baseCalendarDayType: DayType = BaseCalendarManager.shared.isOff(day: day) ? .offDay : .workDay
+        let publicDayType = PublicPlanManager.shared.publicDay(at: day.julianDay)?.type
+        let customDayType = CustomDayManager.shared.fetchCustomDay(by: day.julianDay)?.dayType
+        
+        let isOffDay = isOffDay(baseCalendarDayType: baseCalendarDayType, publicDayType: publicDayType, customDayType: customDayType)
+        
         switch type {
         case .offDay:
             return isOffDay
         case .workDay:
             return !isOffDay
         }
+    }
+    
+    static func isOffDay(baseCalendarDayType: DayType, publicDayType: DayType?, customDayType: DayType?) -> Bool {
+        var isOffDay = baseCalendarDayType == .offDay
+        if let publicDayType = publicDayType {
+            isOffDay = publicDayType == .offDay
+        }
+        if let customDayType = customDayType {
+            isOffDay = customDayType == .offDay
+        }
+        
+        return isOffDay
     }
     
     static func checkClashDay(_ day: GregorianDay, customMarkEnabled: Bool) -> Bool {

@@ -897,7 +897,7 @@
 			repositoryURL = "https://github.com/zizicici/ZCCalendar";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.0;
+				minimumVersion = 0.1.3;
 			};
 		};
 		14DD50C52BE1F78F004329E2 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
@@ -921,7 +921,7 @@
 			repositoryURL = "https://github.com/groue/GRDB.swift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 6.29.0;
+				minimumVersion = 6.29.3;
 			};
 		};
 		14EF2B722BFB44FA00F8C684 /* XCRemoteSwiftPackageReference "AppInfo" */ = {

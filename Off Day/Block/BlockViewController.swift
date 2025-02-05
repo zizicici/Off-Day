@@ -234,6 +234,8 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         self.updateNavigationTitleView()
         
         publicPlanButton?.image = getPublicPlanIndicator()
+        publicPlanButton?.accessibilityLabel = String(localized: "controller.publicDay.title")
+        publicPlanButton?.accessibilityValue = getPublicPlanName()
     }
     
     private func applyData() {
@@ -303,7 +305,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         navigationController?.present(nav, animated: true)
     }
     
-    func updateNavigationTitleView() {
+    private func getPublicPlanName() -> String {
         let publicPlanName: String
         if let publicPlan = PublicPlanManager.shared.dataSource?.plan {
             switch publicPlan {
@@ -315,7 +317,11 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         } else {
             publicPlanName = String(localized: "controller.calendar.noPublicPlan")
         }
-        
+        return publicPlanName
+    }
+    
+    private func updateNavigationTitleView() {
+        let publicPlanName = getPublicPlanName()
         navigationItem.setTitle(displayHandler.getTitle(), subtitle: publicPlanName, menu: getCatalogueMenu(publicPlanName: publicPlanName))
     }
 }

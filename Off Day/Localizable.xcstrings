@@ -815,6 +815,62 @@
         }
       }
     },
+    "dayDetail.%@%@%@%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This day is %1$@, Base Calendar day type: %2$@, Public Holiday day type: %3$@, Custom day type: %4$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这一天是：%1$@，基础日历信息：%2$@，公共假期信息：%3$@，用户自定义信息：%4$@"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这一天是：%1$@，基础日历信息：%2$@，公共假期信息：%3$@，用户自定义信息：%4$@"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这一天是：%1$@，基础日历信息：%2$@，公共假期信息：%3$@，用户自定义信息：%4$@"
+          }
+        }
+      }
+    },
+    "dayDetail.noInformation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Null"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无信息"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无信息"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无信息"
+          }
+        }
+      }
+    },
     "dayType.offDay.title" : {
       "localizations" : {
         "en" : {
@@ -899,6 +955,34 @@
         }
       }
     },
+    "detail.day.off.hint" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Double-click to select or deselect, only one of the Off Day and Work Day options can be selected at a time."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "双击选中或取消选中，“休息日”选项和“工作日”选项最多只会有一个被选中。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "雙擊選中或取消選中，“休息日”選項和“工作日”選項最多隻會有一個被選中。"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "雙擊選中或取消選中，“休息日”選項和“工作日”選項最多隻會有一個被選中。"
+          }
+        }
+      }
+    },
     "detail.day.off.title" : {
       "localizations" : {
         "en" : {
@@ -923,6 +1007,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "休息日"
+          }
+        }
+      }
+    },
+    "detail.day.work.hint" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Double-click to select or deselect, only one of the Off Day and Work Day options can be selected at a time."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "双击选中或取消选中，“休息日”选项和“工作日”选项最多只会有一个被选中。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "雙擊選中或取消選中，“休息日”選項和“工作日”選項最多隻會有一個被選中。"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "雙擊選中或取消選中，“休息日”選項和“工作日”選項最多隻會有一個被選中。"
           }
         }
       }

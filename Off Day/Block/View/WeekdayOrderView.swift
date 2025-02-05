@@ -90,6 +90,7 @@ class WeekdayOrderView: UIView {
             label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
             label.textColor = .white
             label.text = weekdayOrder.getVeryShortSymbol()
+            label.accessibilityLabel = weekdayOrder.getSymbol()
             stackView.addArrangedSubview(label)
         }
     }

@@ -170,8 +170,13 @@ class BlockCell: BlockBaseCell {
             label.text = item.day.dayString()
             if item.isToday {
                 label.backgroundColor = AppColor.today
+                accessibilityLabel = String(localized: "weekCalendar.today") + (item.day.completeFormatString() ?? "")
+            } else {
+                accessibilityLabel = item.day.completeFormatString()
             }
-            accessibilityLabel = item.day.formatString()
+            
+            let dayType: DayType = DayManager.isOffDay(baseCalendarDayType: item.baseCalendarDayType, publicDayType: item.publicDayType, customDayType: item.customDayType) ? .offDay : .workDay
+            accessibilityValue = String(format: (String(localized: "dayDetail.%@%@%@%@")), dayType.title,  item.baseCalendarDayType.title, (item.publicDayType?.title ?? String(localized: "dayDetail.noInformation")), (item.customDayType?.title ?? String(localized: "dayDetail.noInformation")))            
         }
     }
     
