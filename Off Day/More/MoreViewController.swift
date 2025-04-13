@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import SafariServices
 import AppInfo
+import StoreKit
 
 class MoreViewController: UIViewController {
     static let supportEmail = "offday@zi.ci"
@@ -475,6 +476,24 @@ extension MoreViewController {
     }
     
     func openStorePage(for app: App) {
+        let storeViewController = SKStoreProductViewController()
+        storeViewController.delegate = self
+        
+        let parameters = [SKStoreProductParameterITunesItemIdentifier: app.storeId]
+        
+        storeViewController.loadProduct(withParameters: parameters) { [weak self] (loaded, error) in
+            if loaded {
+                // 成功加载，展示视图控制器
+                self?.present(storeViewController, animated: true, completion: nil)
+            } else if let error = error {
+                // 加载失败，可以选择跳转到 App Store 应用作为后备方案
+                print("Error loading App Store: \(error.localizedDescription)")
+                self?.jumpToAppStorePage(for: app)
+            }
+        }
+    }
+    
+    func jumpToAppStorePage(for app: App) {
         guard let appStoreURL = URL(string: "itms-apps://itunes.apple.com/app/" + app.storeId) else {
             return
         }
@@ -518,6 +537,12 @@ extension MoreViewController {
     func hideOverlayViewController() {
         // 隐藏覆盖全屏的遮罩层
         navigationController?.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension MoreViewController: SKStoreProductViewControllerDelegate {
+    func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
+        viewController.dismiss(animated: true, completion: nil)
     }
 }
 
