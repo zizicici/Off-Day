@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/zizicici/AppInfo",
       "state" : {
-        "revision" : "c6a9499446cc94edca648695444bdf5a9f7f7b0e",
-        "version" : "1.0.0"
+        "revision" : "1b69c46387f29c4c7183b73040ef1ddbd9988918",
+        "version" : "1.0.1"
       }
     },
     {
