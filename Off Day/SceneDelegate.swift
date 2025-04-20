@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         let tabBarController = TabbarController()
+        tabBarController.view.tintColor = AppColor.offDay
         tabBarController.tabBar.tintColor = AppColor.offDay
         self.tutorialSetting = TutorialEntranceType.getValue()
         switch TutorialEntranceType.getValue() {
