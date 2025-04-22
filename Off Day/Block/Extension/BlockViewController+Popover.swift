@@ -10,7 +10,8 @@ import UIKit
 extension BlockViewController {
     func showPopoverView(at sourceView: UIView, contentViewController: UIViewController) {
         let nav = contentViewController
-        nav.preferredContentSize = CGSize(width: 240, height: 130)
+        let size = contentViewController.view.systemLayoutSizeFitting(CGSize(width: 280, height: 1000), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        nav.preferredContentSize = size
         nav.modalPresentationStyle = .popover
 
         if let pres = nav.presentationController {

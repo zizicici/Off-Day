@@ -54,6 +54,8 @@ class BlockDetailViewController: UIViewController {
         })
         configuration.title = String(localized: "detail.day.work.title")
         configuration.imagePadding = 4.0
+        configuration.contentInsets.leading = 0
+        configuration.contentInsets.trailing = 0
         
         let button = UIButton(configuration: configuration)
         button.tintColor = AppColor.workDay
@@ -72,6 +74,8 @@ class BlockDetailViewController: UIViewController {
         })
         configuration.title = String(localized: "detail.day.off.title")
         configuration.imagePadding = 4.0
+        configuration.contentInsets.leading = 0
+        configuration.contentInsets.trailing = 0
         
         let button = UIButton(configuration: configuration)
         button.tintColor = AppColor.offDay
@@ -93,24 +97,28 @@ class BlockDetailViewController: UIViewController {
         
         view.backgroundColor = AppColor.background
         
-        view.addSubview(headView)
-        headView.snp.makeConstraints { make in
-            make.leading.trailing.top.equalTo(view)
-            make.bottom.equalTo(headView.safeAreaLayoutGuide.snp.top).offset(50.0)
-        }
-        headView.backgroundColor = blockItem.backgroundColor
-        
         view.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view).inset(12.0)
-            make.top.bottom.equalTo(headView.safeAreaLayoutGuide).inset(6.0)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(12.0)
         }
+        dateLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        dateLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        
+        view.insertSubview(headView, belowSubview: dateLabel)
+        headView.snp.makeConstraints { make in
+            make.leading.trailing.top.equalTo(view)
+            make.bottom.equalTo(dateLabel).offset(12.0)
+        }
+        headView.backgroundColor = blockItem.backgroundColor
         
         view.addSubview(customLabel)
         customLabel.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view).inset(14.0)
-            make.top.equalTo(headView.snp.bottom).offset(6.0)
+            make.top.equalTo(headView.snp.bottom).offset(12.0)
         }
+        customLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        customLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -119,11 +127,13 @@ class BlockDetailViewController: UIViewController {
         view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(12.0)
-            make.top.equalTo(customLabel.snp.bottom).offset(6.0)
+            make.top.equalTo(customLabel.snp.bottom).offset(8.0)
         }
         
         stackView.addArrangedSubview(offDayButton)
         stackView.addArrangedSubview(workDayButton)
+        stackView.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        stackView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         
         dateLabel.text = blockItem.calendarString
         
@@ -139,7 +149,7 @@ class BlockDetailViewController: UIViewController {
                 config?.image = nil
             case .workDay:
                 isSelected = true
-                config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12.0))
+                config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(textStyle: .footnote))
             case nil:
                 config?.image = nil
             }
@@ -156,7 +166,7 @@ class BlockDetailViewController: UIViewController {
             switch self.customDayType {
             case .offDay:
                 isSelected = true
-                config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12.0))
+                config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(textStyle: .footnote))
             case .workDay:
                 config?.image = nil
             case nil:
