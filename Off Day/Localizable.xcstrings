@@ -423,6 +423,90 @@
         }
       }
     },
+    "batchEditor.alert.message.normal%@,%@,%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All user annotations from %1$@ to\n%2$@ will be %3$@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从%1$@到%2$@的用户标注将全部更新为%3$@"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "從%1$@到%2$@的用戶標註將全部更新爲%3$@"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "從%1$@到%2$@的用戶標註將全部更新爲%3$@"
+          }
+        }
+      }
+    },
+    "batchEditor.alert.message.toBlank%@,%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All user annotations from %1$@ to\n%2$@ will be erased."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从%1$@到%2$@的用户标注将全部删除，变为空白"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "從%1$@到%2$@的用戶標註將全部刪除，變爲空白"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "從%1$@到%2$@的用戶標註將全部刪除，變爲空白"
+          }
+        }
+      }
+    },
+    "batchEditor.alert.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warning: This action is irreversible."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此操作一旦执行将不可撤销"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此操作一旦執行將不可撤銷"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此操作一旦執行將不可撤銷"
+          }
+        }
+      }
+    },
     "batchEditor.button.cancel" : {
       "localizations" : {
         "en" : {
@@ -447,6 +531,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "取消"
+          }
+        }
+      }
+    },
+    "batchEditor.button.confirm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Execute"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "执行"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "執行"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "執行"
           }
         }
       }

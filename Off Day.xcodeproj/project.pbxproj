@@ -325,8 +325,8 @@
 			children = (
 				14DD50E62BE20BC1004329E2 /* BlockBaseViewController.swift */,
 				14DD50E82BE20BC1004329E2 /* BlockViewController.swift */,
-				14C7BD1C2DB9EA4B00916361 /* BatchEditorViewController.swift */,
 				14DD50E72BE20BC1004329E2 /* BlockDetailViewController.swift */,
+				14C7BD1C2DB9EA4B00916361 /* BatchEditorViewController.swift */,
 				14DD50D32BE20BC1004329E2 /* Extension */,
 				14DD513E2BE24412004329E2 /* Handler */,
 				14DD50D92BE20BC1004329E2 /* Layout */,

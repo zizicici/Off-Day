@@ -88,7 +88,7 @@ class BatchEditorViewController: UIViewController {
         view.backgroundColor = .secondarySystemGroupedBackground
         
         title = String(localized: "batchEditor.title")
-        let saveItem = UIBarButtonItem(title: String(localized: "batchEditor.button.update"), style: .plain, target: self, action: #selector(save))
+        let saveItem = UIBarButtonItem(title: String(localized: "batchEditor.button.update"), style: .plain, target: self, action: #selector(showAlert))
         navigationItem.rightBarButtonItem = saveItem
         saveItem.isEnabled = false
         
@@ -102,8 +102,7 @@ class BatchEditorViewController: UIViewController {
         reloadData()
     }
     
-    @objc
-    func save() {
+    func saveAndClose() {
         guard allowSave() else {
             return
         }
@@ -111,6 +110,31 @@ class BatchEditorViewController: UIViewController {
         CustomDayManager.shared.update(dayType: dayType, from: start.julianDay, to: end.julianDay)
         os_log("end")
         close()
+    }
+    
+    @objc
+    func showAlert() {
+        guard allowSave() else {
+            return
+        }
+        let message: String
+        if let dayType = dayType {
+            message = String(format: String(localized: "batchEditor.alert.message.normal%@,%@,%@"), start.shortTitle(), end.shortTitle(), dayType.title)
+        } else {
+            message = String(format: String(localized: "batchEditor.alert.message.toBlank%@,%@"), start.shortTitle(), end.shortTitle())
+        }
+        let alertController = UIAlertController(title: String(localized: "batchEditor.alert.title"), message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: String(localized: "batchEditor.button.cancel"), style: .cancel) { _ in
+            //
+        }
+        let confirmAction = UIAlertAction(title: String(localized: "batchEditor.button.confirm"), style: .destructive) { [weak self] _ in
+            self?.saveAndClose()
+        }
+
+        alertController.addAction(cancelAction)
+        alertController.addAction(confirmAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     @objc
