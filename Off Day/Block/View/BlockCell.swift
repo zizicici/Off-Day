@@ -176,7 +176,7 @@ class BlockCell: BlockBaseCell {
             }
             
             let dayType: DayType = DayManager.isOffDay(baseCalendarDayType: item.baseCalendarDayType, publicDayType: item.publicDayType, customDayType: item.customDayType) ? .offDay : .workDay
-            accessibilityValue = String(format: (String(localized: "dayDetail.%@%@%@%@")), dayType.title,  item.baseCalendarDayType.title, (item.publicDayType?.title ?? String(localized: "dayDetail.noInformation")), (item.customDayType?.title ?? String(localized: "dayDetail.noInformation")))
+            accessibilityValue = String.assembleDetail(for: dayType, publicDayName: item.publicDayName, baseCalendarDayType: item.baseCalendarDayType, publicDayType: item.publicDayType, customDayType: item.customDayType)
         }
     }
     

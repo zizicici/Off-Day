@@ -1179,30 +1179,30 @@
         }
       }
     },
-    "dayDetail.%@%@%@%@" : {
+    "dayDetail.%@%@%@%@%@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This day is %1$@, Base Calendar day type: %2$@, Public Holiday day type: %3$@, Custom day type: %4$@"
+            "value" : "%2$@This day is %1$@, Base Calendar day type: %3$@, Public Holiday day type: %4$@, Custom day type: %5$@"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "这一天是：%1$@，基础日历信息：%2$@，公共假期信息：%3$@，用户自定义信息：%4$@"
+            "value" : "%2$@这一天是：%1$@，基础日历信息：%3$@，公共假期信息：%4$@，用户自定义信息：%5$@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "这一天是：%1$@，基础日历信息：%2$@，公共假期信息：%3$@，用户自定义信息：%4$@"
+            "value" : "%2$@這一天是：%1$@，基礎日曆信息：%3$@，公共假期信息：%4$@，用戶自定義信息：%5$@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "这一天是：%1$@，基础日历信息：%2$@，公共假期信息：%3$@，用户自定义信息：%4$@"
+            "value" : "%2$@這一天是：%1$@，基礎日曆信息：%3$@，公共假期信息：%4$@，用戶自定義信息：%5$@"
           }
         }
       }
@@ -1988,6 +1988,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "獲取一日的詳情"
+          }
+        }
+      }
+    },
+    "intent.dayDetail.offValue" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off Day State"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "休息日状态"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "休息日狀態"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "休息日狀態"
           }
         }
       }

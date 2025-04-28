@@ -10,6 +10,7 @@
 		1498CF0F2C3F72F8005562AA /* UpdateDayMarkIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */; };
 		1498CF1B2C402CD2005562AA /* ZCCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1498CF1A2C402CD2005562AA /* ZCCalendar */; };
 		14B239BD2DBF25FE0007152C /* DayTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B239BC2DBF25FE0007152C /* DayTypeCell.swift */; };
+		14B239BF2DBF57480007152C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B239BE2DBF57480007152C /* String+Extension.swift */; };
 		14C7BD1D2DB9EA4B00916361 /* BatchEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C7BD1C2DB9EA4B00916361 /* BatchEditorViewController.swift */; };
 		14CFA1272BEC92A90004D15E /* CheckDayClashIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */; };
 		14D6F9202BEB05FA008712E1 /* BaseCalendarEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F91F2BEB05FA008712E1 /* BaseCalendarEditorViewController.swift */; };
@@ -106,6 +107,7 @@
 		141F38DA2C9974D600347225 /* README_CN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README_CN.md; sourceTree = "<group>"; };
 		1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDayMarkIntent.swift; sourceTree = "<group>"; };
 		14B239BC2DBF25FE0007152C /* DayTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTypeCell.swift; sourceTree = "<group>"; };
+		14B239BE2DBF57480007152C /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		14C7BD1C2DB9EA4B00916361 /* BatchEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchEditorViewController.swift; sourceTree = "<group>"; };
 		14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDayClashIntent.swift; sourceTree = "<group>"; };
 		14D6F91F2BEB05FA008712E1 /* BaseCalendarEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCalendarEditorViewController.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 				14ECFF042BE64983005D2D79 /* AppColor.swift */,
 				14DD51292BE21AB8004329E2 /* UIColor+Extension.swift */,
 				14DD512A2BE21AB8004329E2 /* UIViewController+Extension.swift */,
+				14B239BE2DBF57480007152C /* String+Extension.swift */,
 				14E6D9B92BE495F000931F3D /* Toast+Stryle.swift */,
 				14F8D7D12C5C8471000B48A3 /* UIFont+Extension.swift */,
 				14E967E32D0DC029001CEB38 /* Debounce.swift */,
@@ -619,6 +622,7 @@
 				14DD51012BE20BC1004329E2 /* BlockDetailViewController.swift in Sources */,
 				14ED08A62BEE117500100E2D /* TextInputCell.swift in Sources */,
 				14F2FA752BF093CF00BBE7FB /* DatePickerCell.swift in Sources */,
+				14B239BF2DBF57480007152C /* String+Extension.swift in Sources */,
 				14DD50ED2BE20BC1004329E2 /* BlockViewController+Layout.swift in Sources */,
 				14F2FA772BF102C600BBE7FB /* DayDetailIntent.swift in Sources */,
 				14ECFF052BE64983005D2D79 /* AppColor.swift in Sources */,

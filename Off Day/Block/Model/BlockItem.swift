@@ -11,6 +11,7 @@ import UIKit
 
 struct BlockItem: Hashable {
     var index: Int
+    var publicDayName: String?
     var baseCalendarDayType: DayType
     var publicDayType: DayType?
     var customDayType: DayType?

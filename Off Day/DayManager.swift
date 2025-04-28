@@ -74,10 +74,20 @@ struct DayManager {
     static func getDayDetail(from day: GregorianDay) -> DayDetailEntity? {
         let baseOffValue = BaseCalendarManager.shared.isOff(day: day)
         let publicDay = PublicPlanManager.shared.publicDay(at: day.julianDay)
-        let publicOffValue: Bool = publicDay?.type == .offDay
-        let customOffValue: Bool? = CustomDayManager.shared.fetchCustomDay(by: day.julianDay)?.dayType == .offDay
+        let publicOffValue: Bool?
+        if let publicDayType = publicDay?.type {
+            publicOffValue = publicDayType == .offDay
+        } else {
+            publicOffValue = nil
+        }
+        let customOffValue: Bool?
+        if let customDayType = CustomDayManager.shared.fetchCustomDay(by: day.julianDay)?.dayType {
+            customOffValue = customDayType == .offDay
+        } else {
+            customOffValue = nil
+        }
         if let date = day.generateDate(secondsFromGMT: Calendar.current.timeZone.secondsFromGMT()) {
-            let detail = DayDetailEntity(id: day.julianDay, date: date, userOffDay: customOffValue, publicOffDay: publicOffValue, baseOffDay: baseOffValue, publicDayName: publicDay?.name)
+            let detail = DayDetailEntity(id: day.julianDay, date: date, finalOffDay: check(day, is: .offDay), userOffDay: customOffValue, publicOffDay: publicOffValue, baseOffDay: baseOffValue, publicDayName: publicDay?.name)
             return detail
         } else {
             return nil

@@ -12,16 +12,25 @@ struct DayDetailEntity: Identifiable, Hashable, Equatable, AppEntity {
     static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "intent.dayDetail.type")
     typealias DefaultQuery = DayIntentQuery
     static var defaultQuery = DayIntentQuery()
-
     var displayRepresentation: DisplayRepresentation {
         let day = GregorianDay(JDN: id)
-        return DisplayRepresentation(title: "\(day.formatString() ?? "")")
+        let subtitle = String.assembleDetail(
+            for: finalOffDay ? .offDay : .workDay,
+            publicDayName: publicDayName,
+            baseCalendarDayType: baseOffDay ? .offDay : .workDay,
+            publicDayType: publicOffDay == nil ? .none : publicOffDay! == true ? .offDay : .workDay,
+            customDayType: userOffDay == nil ? .none : userOffDay! == true ? .offDay : .workDay
+        )
+        return DisplayRepresentation(title: "\(day.formatString() ?? "")", subtitle: "\(subtitle)")
     }
     
     var id: Int
     
     @Property(title: "intent.dayDetail.dateValue")
     var date: Date
+    
+    @Property(title: "intent.dayDetail.offValue")
+    var finalOffDay: Bool
     
     @Property(title: "intent.dayDetail.userOffValue")
     var userOffDay: Bool?
@@ -36,9 +45,10 @@ struct DayDetailEntity: Identifiable, Hashable, Equatable, AppEntity {
     var publicDayName: String?
     
     
-    init(id: Int, date: Date, userOffDay: Bool? = nil, publicOffDay: Bool? = nil, baseOffDay: Bool, publicDayName: String?) {
+    init(id: Int, date: Date, finalOffDay: Bool, userOffDay: Bool? = nil, publicOffDay: Bool? = nil, baseOffDay: Bool, publicDayName: String?) {
         self.id = id
         self.date = date
+        self.finalOffDay = finalOffDay
         self.userOffDay = userOffDay
         self.publicOffDay = publicOffDay
         self.baseOffDay = baseOffDay
