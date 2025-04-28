@@ -130,18 +130,6 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         }
     }
     
-    func filter(customDays: [CustomDay], from startIndex: Int, to endIndex: Int) -> [CustomDay] {
-        return customDays.filter({ customDay in
-            if customDay.dayIndex < startIndex {
-                return false
-            } else if customDay.dayIndex > endIndex {
-                return false
-            } else {
-                return true
-            }
-        })
-    }
-    
     override func hover(in indexPath: IndexPath) {
         super.hover(in: indexPath)
         guard let blockItem = dataSource.itemIdentifier(for: indexPath) else {
@@ -227,9 +215,11 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     internal func reloadData() {
         let startWeekdayOrder = WeekdayOrder(rawValue: WeekStartType.current.rawValue) ?? WeekdayOrder.firstDayOfWeek
         weekdayOrderView.startWeekdayOrder = startWeekdayOrder
-        CustomDayManager.shared.fetchAll { [weak self] customDays in
+        let leading = displayHandler.getLeading()
+        let trailing = displayHandler.getTrailing()
+        CustomDayManager.shared.fetchAllBetween(start: leading, end: trailing) { [weak self] customDays in
             guard let self = self else { return }
-            self.customDays = filter(customDays: customDays.sortedByStart(), from: self.displayHandler.getLeading(), to: self.displayHandler.getTrailing())
+            self.customDays = customDays
         }
         self.updateNavigationTitleView()
         
@@ -293,6 +283,15 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         if PublicPlanManager.shared.hasHolidayShift() {
             children.append(getHolidayWorkColorMenu())
         }
+        
+        let batchEditorAction = UIAction(title: String(localized: "controller.calendar.batchEditor"), image: UIImage(systemName: "pencil")) { [weak self] _ in
+            let batchEditor = BatchEditorViewController()
+            let nav = NavigationController(rootViewController: batchEditor)
+            self?.navigationController?.present(nav, animated: true)
+        }
+        let editDivider = UIMenu(options: . displayInline, children: [batchEditorAction])
+
+        children.append(editDivider)
         
         moreButton?.menu = UIMenu(title: "", options: .displayInline, children: children)
     }

@@ -75,6 +75,9 @@ final class AppDatabase {
                     .references("custom_public_plan", onDelete: .cascade)
             }
         }
+        migrator.registerMigration("update_custom_day_index") { db in
+            try db.create(indexOn: "custom_day", columns: ["day_index"], options: .ifNotExists)
+        }
         
         return migrator
     }
@@ -138,6 +141,45 @@ extension AppDatabase {
         do {
             _ = try dbWriter?.write{ db in
                 try CustomDay.deleteAll(db, ids: [customDayId])
+            }
+        }
+        catch {
+            print(error)
+            return false
+        }
+        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        return true
+    }
+    
+    func batchDeleteCustomDay(from startJulianDay: Int, to endJulianDay: Int) -> Bool {
+        guard startJulianDay <= endJulianDay else {
+            return false
+        }
+        do {
+            _ = try dbWriter?.write{ db in
+                let dayIndex = CustomDay.Columns.dayIndex
+                let request = CustomDay.filter(dayIndex >= startJulianDay).filter(dayIndex <= endJulianDay)
+                try request.deleteAll(db)
+            }
+        }
+        catch {
+            print(error)
+            return false
+        }
+        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        return true
+    }
+    
+    func batchAddCustomDay(dayType: DayType, from startJulianDay: Int, to endJulianDay: Int) -> Bool {
+        guard startJulianDay <= endJulianDay else {
+            return false
+        }
+        do {
+            _ = try dbWriter?.write{ db in
+                for index in startJulianDay...endJulianDay {
+                    var saveCustomDay = CustomDay(dayIndex: Int64(index), dayType: dayType)
+                    try saveCustomDay.save(db)
+                }
             }
         }
         catch {

@@ -11,13 +11,30 @@ import GRDB
 struct CustomDayManager {
     static let shared: CustomDayManager = CustomDayManager()
     
-    func fetchAll(completion: (([CustomDay]) -> ())? ) {
+    func fetchAll(completion: (([CustomDay]) -> ())?) {
         AppDatabase.shared.reader?.asyncRead{ dbResult in
             do {
                 let db = try dbResult.get()
-                let customDayss = try CustomDay.fetchAll(db)
+                let customDays = try CustomDay.fetchAll(db)
                 DispatchQueue.main.async {
-                    completion?(customDayss)
+                    completion?(customDays)
+                }
+            }
+            catch {
+                print(error)
+            }
+        }
+    }
+    
+    func fetchAllBetween(start: Int, end: Int, completion: (([CustomDay]) -> ())?) {
+        AppDatabase.shared.reader?.asyncRead{ dbResult in
+            do {
+                let db = try dbResult.get()
+                let dayIndex = CustomDay.Columns.dayIndex
+                let request = CustomDay.filter(dayIndex >= start).filter(dayIndex <= end).order(dayIndex.asc)
+                let resultDays = try request.fetchAll(db)
+                DispatchQueue.main.async {
+                    completion?(resultDays)
                 }
             }
             catch {
@@ -76,6 +93,14 @@ struct CustomDayManager {
         }
         _ = AppDatabase.shared.delete(customDay: customDay)
     }
+    
+    func add(dayType: DayType, from startJulianDay: Int, to endJulianDay: Int) {
+        _ = AppDatabase.shared.batchAddCustomDay(dayType: dayType, from: startJulianDay, to: endJulianDay)
+    }
+    
+    func delete(from startJulianDay: Int, to endJulianDay: Int) {
+        _ = AppDatabase.shared.batchDeleteCustomDay(from: startJulianDay, to: endJulianDay)
+    }
 }
 
 extension CustomDayManager {
@@ -96,6 +121,13 @@ extension CustomDayManager {
             } else {
                 //
             }
+        }
+    }
+    
+    func update(dayType: DayType?, from startJulianDay: Int, to endJulianDay: Int) {
+        delete(from: startJulianDay, to: endJulianDay)
+        if let dayType = dayType {
+            add(dayType: dayType, from: startJulianDay, to: endJulianDay)
         }
     }
 }

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1498CF0F2C3F72F8005562AA /* UpdateDayMarkIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */; };
 		1498CF1B2C402CD2005562AA /* ZCCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1498CF1A2C402CD2005562AA /* ZCCalendar */; };
+		14B239BD2DBF25FE0007152C /* DayTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B239BC2DBF25FE0007152C /* DayTypeCell.swift */; };
+		14C7BD1D2DB9EA4B00916361 /* BatchEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C7BD1C2DB9EA4B00916361 /* BatchEditorViewController.swift */; };
 		14CFA1272BEC92A90004D15E /* CheckDayClashIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */; };
 		14D6F9202BEB05FA008712E1 /* BaseCalendarEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F91F2BEB05FA008712E1 /* BaseCalendarEditorViewController.swift */; };
 		14D6F9242BEB31E6008712E1 /* StandardConfigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6F9232BEB31E6008712E1 /* StandardConfigCell.swift */; };
@@ -103,6 +105,8 @@
 		141F38D92C9974D600347225 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		141F38DA2C9974D600347225 /* README_CN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README_CN.md; sourceTree = "<group>"; };
 		1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDayMarkIntent.swift; sourceTree = "<group>"; };
+		14B239BC2DBF25FE0007152C /* DayTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTypeCell.swift; sourceTree = "<group>"; };
+		14C7BD1C2DB9EA4B00916361 /* BatchEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchEditorViewController.swift; sourceTree = "<group>"; };
 		14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDayClashIntent.swift; sourceTree = "<group>"; };
 		14D6F91F2BEB05FA008712E1 /* BaseCalendarEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCalendarEditorViewController.swift; sourceTree = "<group>"; };
 		14D6F9232BEB31E6008712E1 /* StandardConfigCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardConfigCell.swift; sourceTree = "<group>"; };
@@ -306,6 +310,7 @@
 			isa = PBXGroup;
 			children = (
 				14DD50DD2BE20BC1004329E2 /* BlockCell.swift */,
+				14B239BC2DBF25FE0007152C /* DayTypeCell.swift */,
 				14F8D7D32C5C9194000B48A3 /* MonthTitleCell.swift */,
 				14F8D7CD2C5C6776000B48A3 /* WeekdayOrderView.swift */,
 				14DD50E12BE20BC1004329E2 /* HoverGestureRecognizer.swift */,
@@ -320,6 +325,7 @@
 			children = (
 				14DD50E62BE20BC1004329E2 /* BlockBaseViewController.swift */,
 				14DD50E82BE20BC1004329E2 /* BlockViewController.swift */,
+				14C7BD1C2DB9EA4B00916361 /* BatchEditorViewController.swift */,
 				14DD50E72BE20BC1004329E2 /* BlockDetailViewController.swift */,
 				14DD50D32BE20BC1004329E2 /* Extension */,
 				14DD513E2BE24412004329E2 /* Handler */,
@@ -606,6 +612,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14DD512D2BE21AB8004329E2 /* UIViewController+Extension.swift in Sources */,
+				14B239BD2DBF25FE0007152C /* DayTypeCell.swift in Sources */,
 				14DD51282BE213AD004329E2 /* CustomDayManager.swift in Sources */,
 				14ED08B22BEE570D00100E2D /* DayType.swift in Sources */,
 				14DD50FE2BE20BC1004329E2 /* UIDraggableCollectionView.swift in Sources */,
@@ -615,6 +622,7 @@
 				14DD50ED2BE20BC1004329E2 /* BlockViewController+Layout.swift in Sources */,
 				14F2FA772BF102C600BBE7FB /* DayDetailIntent.swift in Sources */,
 				14ECFF052BE64983005D2D79 /* AppColor.swift in Sources */,
+				14C7BD1D2DB9EA4B00916361 /* BatchEditorViewController.swift in Sources */,
 				14D6F9282BEB6B5E008712E1 /* WeekCalendarCell.swift in Sources */,
 				14ED08AE2BEE511000100E2D /* PublicPlanCell.swift in Sources */,
 				14E6D9BA2BE495F000931F3D /* Toast+Stryle.swift in Sources */,
