@@ -63,6 +63,7 @@ class WeekdayOrderView: UIView {
         self.itemCount = itemCount
         self.itemWidth = itemWidth
         self.interSpacing = interSpacing
+        self.stackView.spacing = interSpacing
     }
     
     override func layoutSubviews() {
