@@ -79,9 +79,9 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         weekdayOrderView.backgroundColor = AppColor.navigationBar
         view.addSubview(weekdayOrderView)
         weekdayOrderView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(-2)
             make.leading.trailing.equalTo(view)
-            make.height.equalTo(18)
+            make.height.equalTo(20)
         }
         updateNavigationTitleView()
         
