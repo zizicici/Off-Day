@@ -47,7 +47,7 @@ class WeekdayOrderView: UIView {
         self.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self).inset(12)
-            make.top.equalTo(self).inset(2)
+            make.top.equalTo(self).inset(6)
             make.bottom.equalTo(self).inset(2)
         }
         

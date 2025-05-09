@@ -81,7 +81,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         weekdayOrderView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(-2)
             make.leading.trailing.equalTo(view)
-            make.height.equalTo(20)
+            make.height.equalTo(24)
         }
         updateNavigationTitleView()
         
