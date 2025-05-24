@@ -15,5 +15,9 @@ class TabbarController: UITabBarController {
         tabBarAppearance.configureWithOpaqueBackground()
         tabBar.standardAppearance = tabBarAppearance
         tabBar.scrollEdgeAppearance = tabBarAppearance
+        
+        if #available(iOS 18, *), UIDevice.current.userInterfaceIdiom == .pad {
+            setOverrideTraitCollection( UITraitCollection(horizontalSizeClass: .compact), forChild: self)
+        }
     }
 }
