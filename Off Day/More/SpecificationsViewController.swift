@@ -89,7 +89,7 @@ class SpecificationsViewController: UIViewController {
                 let GRDB = ThirdParty(
                     urlString: "https://github.com/groue/GRDB.swift",
                     name: "GRDB",
-                    version: "6.29.3"
+                    version: "7.5.0"
                 )
                 let SnapKit = ThirdParty(
                     urlString: "https://github.com/SnapKit/SnapKit",
