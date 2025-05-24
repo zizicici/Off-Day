@@ -45,22 +45,6 @@ class BlockCell: BlockBaseCell {
         }
     }
     
-    var paperView: UIView = {
-        let view = UIView()
-        view.layer.cornerCurve = .continuous
-        view.layer.cornerRadius = 6.0
-        
-        return view
-    }()
-    
-    var highlightView: UIView = {
-        let view = UIView()
-        view.layer.cornerCurve = .continuous
-        view.layer.cornerRadius = 6.0
-        
-        return view
-    }()
-    
     var label: UILabel = {
         let label = UILabel()
         label.textColor = .label
@@ -74,7 +58,7 @@ class BlockCell: BlockBaseCell {
     
     var cornerMark: UIImageView = {
         let view = UIImageView(image: UIImage(named: "OffDayMark"))
-        view.layer.cornerRadius = 4.0
+        view.layer.cornerRadius = 6.0
         view.layer.cornerCurve = .continuous
         view.layer.maskedCorners = [.layerMaxXMinYCorner]
         view.layer.masksToBounds = true
@@ -82,62 +66,35 @@ class BlockCell: BlockBaseCell {
         return view
     }()
     
-    var defaultBackgroundColor: UIColor = AppColor.paper
-    var highlightColor: UIColor = .gray.withAlphaComponent(0.5)
+    var highlightColor: UIColor = .gray.withAlphaComponent(0.35)
     
     override func prepareForReuse() {
         super.prepareForReuse()
         
         isHover = false
         label.text = nil
-        label.backgroundColor = .clear
-        paperView.backgroundColor = defaultBackgroundColor
         cornerMark.isHidden = true
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        paperView.layer.shadowPath = UIBezierPath(roundedRect: CGRect(origin: CGPoint.init(x: 0, y: 0), size: CGSize(width: frame.width, height: frame.height)), cornerRadius: 6.0).cgPath
     }
     
     private func setupViewsIfNeeded() {
-        guard paperView.superview == nil else { return }
+        guard label.superview == nil else { return }
         
-//        contentView.backgroundColor = defaultBackgroundColor
-//        contentView.layer.cornerCurve = .continuous
-//        contentView.layer.cornerRadius = 3.0
-//        contentView.layer.masksToBounds = true
-        
-        contentView.addSubview(paperView)
-        paperView.snp.makeConstraints { make in
-            make.edges.equalTo(contentView)
-        }
-        
-        paperView.layer.shadowColor = UIColor.gray.cgColor
-        paperView.layer.shadowOpacity = 0.1
-        paperView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        paperView.layer.cornerCurve = .continuous
-        paperView.backgroundColor = defaultBackgroundColor
-        
-        paperView.addSubview(cornerMark)
+        contentView.addSubview(cornerMark)
         cornerMark.snp.makeConstraints { make in
-            make.right.top.equalTo(paperView)
+            make.right.top.equalTo(contentView)
             make.width.height.equalTo(15.0)
         }
         
-        paperView.addSubview(highlightView)
-        highlightView.snp.makeConstraints { make in
-            make.edges.equalTo(paperView)
-        }
-        
-        paperView.addSubview(label)
+        contentView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.edges.equalTo(paperView).inset(3)
+            make.edges.equalTo(contentView).inset(3)
         }
-        label.layer.cornerRadius = 4.0
-        label.clipsToBounds = true
         
-        paperView.bringSubviewToFront(cornerMark)
+        contentView.bringSubviewToFront(cornerMark)
         
         isAccessibilityElement = true
         accessibilityTraits = .button
@@ -148,7 +105,7 @@ class BlockCell: BlockBaseCell {
         setupViewsIfNeeded()
         
         if let item = state.blockItem {
-            paperView.backgroundColor = item.backgroundColor
+            var backgroundColor = item.backgroundColor
             if let customDayType = item.customDayType {
                 cornerMark.isHidden = false
                 switch customDayType {
@@ -161,19 +118,18 @@ class BlockCell: BlockBaseCell {
                 cornerMark.isHidden = true
             }
             if isHover || isHighlighted {
-                highlightView.backgroundColor = highlightColor
-            } else {
-                highlightView.backgroundColor = .clear
+                backgroundColor = highlightColor.overlay(on: backgroundColor)
             }
             
             label.textColor = item.foregroundColor
             label.text = item.day.dayString()
             if item.isToday {
-                label.backgroundColor = AppColor.today
                 accessibilityLabel = String(localized: "weekCalendar.today") + (item.day.completeFormatString() ?? "")
             } else {
                 accessibilityLabel = item.day.completeFormatString()
             }
+            
+            backgroundConfiguration = BlockCellBackgroundConfiguration.configuration(for: state, backgroundColor: backgroundColor, cornerRadius: 6.0, showStroke: item.isToday, strokeColor: AppColor.today, strokeWidth: 3.0, strokeOutset: 0.0)
             
             let dayType: DayType = DayManager.isOffDay(baseCalendarDayType: item.baseCalendarDayType, publicDayType: item.publicDayType, customDayType: item.customDayType) ? .offDay : .workDay
             accessibilityValue = String.assembleDetail(for: dayType, publicDayName: item.publicDayName, baseCalendarDayType: item.baseCalendarDayType, publicDayType: item.publicDayType, customDayType: item.customDayType)
@@ -189,8 +145,27 @@ class BlockCell: BlockBaseCell {
             setNeedsUpdateConfiguration()
         }
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
+}
+
+struct BlockCellBackgroundConfiguration {
+    static func configuration(for state: UICellConfigurationState, backgroundColor: UIColor = .clear, cornerRadius: CGFloat = 6.0, showStroke: Bool, strokeColor: UIColor, strokeWidth: CGFloat = 1.0, strokeOutset: CGFloat = -1.0) -> UIBackgroundConfiguration {
+        var background = UIBackgroundConfiguration.clear()
+        background.backgroundColor = backgroundColor
+        background.cornerRadius = cornerRadius
+        background.strokeWidth = strokeWidth
+        background.strokeOutset = strokeOutset
+        if showStroke {
+            background.strokeColor = strokeColor
+        } else {
+            background.strokeColor = .clear
+        }
+        if #available(iOS 18.0, *) {
+            background.shadowProperties.color = .systemGray
+            background.shadowProperties.opacity = 0.1
+            background.shadowProperties.radius = 6.0
+            background.shadowProperties.offset = CGSize(width: 0.0, height: 2.0)
+        }
+
+        return background
     }
 }

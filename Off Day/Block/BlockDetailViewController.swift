@@ -103,7 +103,7 @@ class BlockDetailViewController: UIViewController {
 
     private var commentLabel: UILabel = {
         var label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: .footnote)
+        label.font = UIFont.preferredFont(forTextStyle: .callout)
         label.textColor = AppColor.text.withAlphaComponent(0.8)
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.numberOfLines = 1
@@ -127,7 +127,7 @@ class BlockDetailViewController: UIViewController {
         view.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view).inset(12.0)
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(12.0)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(14.0)
         }
         dateLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         dateLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
@@ -135,7 +135,7 @@ class BlockDetailViewController: UIViewController {
         view.insertSubview(headView, belowSubview: dateLabel)
         headView.snp.makeConstraints { make in
             make.leading.trailing.top.equalTo(view)
-            make.bottom.equalTo(dateLabel).offset(12.0)
+            make.bottom.equalTo(dateLabel).offset(14.0)
         }
         headView.backgroundColor = blockItem.backgroundColor
         
@@ -154,6 +154,7 @@ class BlockDetailViewController: UIViewController {
         view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.top.equalTo(customLabel.snp.bottom).offset(8.0)
+            make.height.greaterThanOrEqualTo(44.0)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(12.0)
         }
         
@@ -164,11 +165,11 @@ class BlockDetailViewController: UIViewController {
         
         view.addSubview(commentButton)
         commentButton.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom).offset(12.0)
+            make.top.equalTo(stackView.snp.bottom).offset(16.0)
             make.width.equalTo(36.0)
             make.height.lessThanOrEqualTo(36.0).priority(.low)
             make.trailing.equalTo(view).inset(6.0)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(8.0)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(12.0)
         }
         
         view.addSubview(commentLabel)

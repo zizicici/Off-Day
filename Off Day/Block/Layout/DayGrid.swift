@@ -11,7 +11,11 @@ struct DayGrid {
     static let countInRow: Int = 7
     
     static func itemWidth(in containerWidth: CGFloat) -> CGFloat {
-        return 40.0
+        if containerWidth <= 320 {
+            return 40.0
+        } else {
+            return 44.0
+        }
     }
     static let interSpacing: CGFloat = 4.0
 }

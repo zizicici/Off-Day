@@ -144,3 +144,38 @@ extension UIColor {
         return distance <= threshold
     }
 }
+
+extension UIColor {
+    /// 将当前颜色叠加到背景色上，模拟图层叠加效果
+    /// - Parameter background: 背景颜色
+    /// - Returns: 叠加后的新颜色
+    func overlay(on background: UIColor) -> UIColor {
+        // 确保两种颜色都在同一颜色空间（这里使用sRGB）
+        let foreground = self.resolvedColor(with: .current)
+        let background = background.resolvedColor(with: .current)
+        
+        var fgR: CGFloat = 0, fgG: CGFloat = 0, fgB: CGFloat = 0, fgA: CGFloat = 0
+        var bgR: CGFloat = 0, bgG: CGFloat = 0, bgB: CGFloat = 0, bgA: CGFloat = 0
+        
+        // 获取前景色和背景色的RGBA分量
+        foreground.getRed(&fgR, green: &fgG, blue: &fgB, alpha: &fgA)
+        background.getRed(&bgR, green: &bgG, blue: &bgB, alpha: &bgA)
+        
+        // 计算叠加后的Alpha值
+        let finalAlpha = 1 - (1 - fgA) * (1 - bgA)
+        
+        // 防止除以0
+        guard finalAlpha > 0 else { return .clear }
+        
+        // 计算叠加后的RGB分量
+        let computeComponent = { (fgC: CGFloat, fgA: CGFloat, bgC: CGFloat, bgA: CGFloat) -> CGFloat in
+            return (fgC * fgA + bgC * bgA * (1 - fgA)) / finalAlpha
+        }
+        
+        let finalRed = computeComponent(fgR, fgA, bgR, bgA)
+        let finalGreen = computeComponent(fgG, fgA, bgG, bgA)
+        let finalBlue = computeComponent(fgB, fgA, bgB, bgA)
+        
+        return UIColor(red: finalRed, green: finalGreen, blue: finalBlue, alpha: finalAlpha)
+    }
+}
