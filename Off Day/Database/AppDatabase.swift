@@ -78,6 +78,16 @@ final class AppDatabase {
         migrator.registerMigration("update_custom_day_index") { db in
             try db.create(indexOn: "custom_day", columns: ["day_index"], options: .ifNotExists)
         }
+        migrator.registerMigration("add_comment_for_day") { db in
+            try db.create(table: "custom_comment") { table in
+                table.autoIncrementedPrimaryKey("id")
+                
+                table.column("creation_time", .integer).notNull()
+                table.column("modification_time", .integer).notNull()
+                table.column("day_index", .integer).notNull()
+                table.column("content", .text).notNull()
+            }
+        }
         
         return migrator
     }
@@ -180,6 +190,61 @@ extension AppDatabase {
                     var saveCustomDay = CustomDay(dayIndex: Int64(index), dayType: dayType)
                     try saveCustomDay.save(db)
                 }
+            }
+        }
+        catch {
+            print(error)
+            return false
+        }
+        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        return true
+    }
+}
+
+extension AppDatabase {
+    func add(customComment: CustomComment) -> Bool {
+        guard customComment.id == nil else {
+            return false
+        }
+        do {
+            try dbWriter?.write{ db in
+                var saveCustomComment = customComment
+                try saveCustomComment.save(db)
+            }
+        }
+        catch {
+            print(error)
+            return false
+        }
+        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        return true
+    }
+    
+    func update(customComment: CustomComment) -> Bool {
+        guard customComment.id != nil else {
+            return false
+        }
+        do {
+            _ = try dbWriter?.write{ db in
+                var saveCustomComment = customComment
+                try saveCustomComment.updateWithTimestamp(db)
+            }
+        }
+        catch {
+            print(error)
+            return false
+        }
+        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        return true
+    }
+    
+    func delete(customComment: CustomComment) -> Bool {
+        guard let customCommentId = customComment.id else {
+            return false
+        }
+        do {
+            _ = try dbWriter?.write{ db in
+                try CustomComment.deleteAll(db, ids: [customCommentId])
             }
         }
         catch {

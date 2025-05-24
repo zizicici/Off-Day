@@ -9,7 +9,7 @@ import UIKit
 import ZCCalendar
 
 struct LayoutGenerater {
-    static func dayLayout(for snapshot: inout NSDiffableDataSourceSnapshot<Section, Item>, year: Int, customDaysDict: [Int : CustomDay]) {
+    static func dayLayout(for snapshot: inout NSDiffableDataSourceSnapshot<Section, Item>, year: Int, customDayInfoDict: [Int : CustomDayInfo]) {
         let firstDayOfWeek: WeekdayOrder = WeekdayOrder(rawValue: WeekStartType.current.rawValue) ?? WeekdayOrder.firstDayOfWeek
         
         for month in Month.allCases {
@@ -35,12 +35,12 @@ struct LayoutGenerater {
                     return Item.invisible(uuid)
                 }))
             }
-            snapshot.appendItems(Array(1...ZCCalendar.manager.dayCount(at: month, year: year)).map({ day in
+            let items: [Item] = Array(1...ZCCalendar.manager.dayCount(at: month, year: year)).map({ day in
                 let gregorianDay = GregorianDay(year: year, month: month, day: day)
                 let julianDay = gregorianDay.julianDay
                 let publicDay = PublicPlanManager.shared.publicDay(at: julianDay)
-                let customDay = customDaysDict[julianDay]
-                
+                let customDayInfo = customDayInfoDict[julianDay] ?? CustomDayInfo(dayIndex: julianDay)
+
                 let backgroundColor: UIColor
                 let foregroundColor: UIColor
                 
@@ -69,8 +69,9 @@ struct LayoutGenerater {
                     }
                 }
                 
-                return Item.block(BlockItem(index: julianDay, publicDayName: publicDay?.name, baseCalendarDayType: BaseCalendarManager.shared.isOff(day: gregorianDay) ? .offDay : .workDay, publicDayType: publicDay?.type, customDayType: customDay?.dayType, backgroundColor: backgroundColor, foregroundColor: foregroundColor, isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay)))
-            }))
+                return Item.block(BlockItem(index: julianDay, publicDayName: publicDay?.name, baseCalendarDayType: BaseCalendarManager.shared.isOff(day: gregorianDay) ? .offDay : .workDay, publicDayType: publicDay?.type, customDayInfo: customDayInfo, backgroundColor: backgroundColor, foregroundColor: foregroundColor, isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay)))
+            })
+            snapshot.appendItems(items)
         }
     }
 }

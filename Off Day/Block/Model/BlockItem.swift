@@ -14,7 +14,7 @@ struct BlockItem: Hashable {
     var publicDayName: String?
     var baseCalendarDayType: DayType
     var publicDayType: DayType?
-    var customDayType: DayType?
+    var customDayInfo: CustomDayInfo
     var backgroundColor: UIColor
     var foregroundColor: UIColor
     var isToday: Bool
@@ -33,5 +33,13 @@ extension BlockItem {
             suffix = "\n\(name)"
         }
         return (day.completeFormatString() ?? "") + suffix
+    }
+}
+
+extension BlockItem {
+    var customDayType: DayType? {
+        get {
+            return customDayInfo.customDay?.dayType
+        }
     }
 }

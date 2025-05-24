@@ -84,6 +84,33 @@ class BlockDetailViewController: UIViewController {
         return button
     }()
     
+    private var commentButton: UIButton = {
+        var configuration = UIButton.Configuration.plain()
+        configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.preferredFont(forTextStyle: .footnote)
+
+            return outgoing
+        })
+        configuration.image = UIImage(systemName: "plus.bubble", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14.0, weight: .medium))
+        
+        let button = UIButton(configuration: configuration)
+        button.tintColor = AppColor.text.withAlphaComponent(0.8)
+        button.accessibilityHint = String(localized: "detail.comment.hint")
+        
+        return button
+    }()
+
+    private var commentLabel: UILabel = {
+        var label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .footnote)
+        label.textColor = AppColor.text.withAlphaComponent(0.8)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        label.numberOfLines = 1
+        
+        return label
+    }()
+    
     convenience init(blockItem: BlockItem) {
         self.init(nibName: nil, bundle: nil)
         self.blockItem = blockItem
@@ -114,7 +141,7 @@ class BlockDetailViewController: UIViewController {
         
         view.addSubview(customLabel)
         customLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view).inset(14.0)
+            make.leading.trailing.equalTo(view).inset(15.0)
             make.top.equalTo(headView.snp.bottom).offset(12.0)
         }
         customLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
@@ -126,14 +153,31 @@ class BlockDetailViewController: UIViewController {
         
         view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(12.0)
             make.top.equalTo(customLabel.snp.bottom).offset(8.0)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(12.0)
         }
         
         stackView.addArrangedSubview(offDayButton)
         stackView.addArrangedSubview(workDayButton)
         stackView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         stackView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        
+        view.addSubview(commentButton)
+        commentButton.snp.makeConstraints { make in
+            make.top.equalTo(stackView.snp.bottom).offset(12.0)
+            make.width.equalTo(36.0)
+            make.height.lessThanOrEqualTo(36.0).priority(.low)
+            make.trailing.equalTo(view).inset(6.0)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(8.0)
+        }
+        
+        view.addSubview(commentLabel)
+        commentLabel.snp.makeConstraints { make in
+            make.top.equalTo(stackView.snp.bottom).offset(12.0)
+            make.leading.equalTo(stackView).inset(3.0)
+            make.trailing.equalTo(commentButton.snp.leading).offset(-6.0)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(8.0)
+        }
         
         dateLabel.text = blockItem.calendarString
         
@@ -177,16 +221,34 @@ class BlockDetailViewController: UIViewController {
             button.isSelected = isSelected
         }
         
-        updateButtons()
+        commentButton.configurationUpdateHandler = { [weak self] button in
+            guard let self = self else { return }
+            var config = button.configuration
+            
+            if self.blockItem.customDayInfo.customComment == nil {
+                config?.image = UIImage(systemName: "plus.bubble", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14.0, weight: .medium))
+                button.accessibilityLabel = String(localized: "comment.add")
+            } else {
+                config?.image = UIImage(systemName: "bubble.and.pencil", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14.0, weight: .medium))
+                button.accessibilityLabel = String(localized: "comment.edit")
+            }
+            
+            button.configuration = config
+        }
+        
+        updateUI()
         
         workDayButton.addTarget(self, action: #selector(workDayButtonAction), for: .touchUpInside)
         offDayButton.addTarget(self, action: #selector(offDayButtonAction), for: .touchUpInside)
+        commentButton.addTarget(self, action: #selector(commentButtonAction), for: .touchUpInside)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .DatabaseUpdated, object: nil)
     }
     
     var customDayType: DayType? {
-        return blockItem.customDayType
+        get {
+            return blockItem.customDayInfo.customDay?.dayType
+        }
     }
     
     func updateDateLabelColor() {
@@ -236,16 +298,37 @@ class BlockDetailViewController: UIViewController {
     
     @objc
     func reloadData() {
-        blockItem.customDayType = CustomDayManager.shared.fetchCustomDay(by: blockItem.day.julianDay)?.dayType
+        let dayIndex = blockItem.day.julianDay
+        blockItem.customDayInfo = CustomDayManager.shared.fetchCustomDayInfo(by: dayIndex)
+        updateUI()
+    }
+    
+    func updateUI() {
         updateButtons()
+        commentLabel.text = blockItem.customDayInfo.customComment?.content
+        if let commentContent = commentLabel.text, commentContent.count > 0 {
+            commentLabel.accessibilityLabel = String(format: String(localized: "comment.%@"), commentContent)
+        } else {
+            commentLabel.accessibilityLabel = ""
+        }
     }
     
     func updateButtons() {
         offDayButton.setNeedsUpdateConfiguration()
         workDayButton.setNeedsUpdateConfiguration()
+        commentButton.setNeedsUpdateConfiguration()
     }
     
     func commit(dayType: DayType?) {
         CustomDayManager.shared.update(dayType: dayType, to: blockItem.day.julianDay)
+    }
+}
+
+extension BlockDetailViewController {
+    @objc
+    func commentButtonAction() {
+        let editorViewController = DayEditorViewController(comment: blockItem.customDayInfo.customComment ?? CustomComment(dayIndex: Int64(blockItem.day.julianDay), content: ""))
+        let nav = NavigationController(rootViewController: editorViewController)
+        present(nav, animated: true)
     }
 }

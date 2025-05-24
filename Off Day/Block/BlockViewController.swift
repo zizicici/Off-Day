@@ -27,17 +27,17 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     
     internal var dataSource: UICollectionViewDiffableDataSource<Section, Item>! = nil
     
-    private var customDays: [CustomDay] = [] {
+    private var customDayInfos: [CustomDayInfo] = [] {
         didSet {
-            customDaysDict = [:]
-            for customDay in customDays {
-                customDaysDict[Int(customDay.dayIndex)] = customDay
+            customDayInfoDict = [:]
+            for customDayInfo in customDayInfos {
+                customDayInfoDict[Int(customDayInfo.dayIndex)] = customDayInfo
             }
             applyData()
         }
     }
     
-    private var customDaysDict: [Int : CustomDay] = [:]
+    private var customDayInfoDict: [Int : CustomDayInfo] = [:]
     
     // Handler
     
@@ -217,9 +217,9 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         weekdayOrderView.startWeekdayOrder = startWeekdayOrder
         let leading = displayHandler.getLeading()
         let trailing = displayHandler.getTrailing()
-        CustomDayManager.shared.fetchAllBetween(start: leading, end: trailing) { [weak self] customDays in
+        CustomDayManager.shared.fetchAllBetween(start: leading, end: trailing) { [weak self] customDayInfos in
             guard let self = self else { return }
-            self.customDays = customDays
+            self.customDayInfos = customDayInfos
         }
         self.updateNavigationTitleView()
         
@@ -229,7 +229,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     }
     
     private func applyData() {
-        if let snapshot = displayHandler.getSnapshot(customDaysDict: customDaysDict) {
+        if let snapshot = displayHandler.getSnapshot(customDayInfoDict: customDayInfoDict) {
             dataSource.apply(snapshot, animatingDifferences: true) { [weak self] in
                 guard let self = self, !self.didScrollToday else { return }
                 self.didScrollToday = true

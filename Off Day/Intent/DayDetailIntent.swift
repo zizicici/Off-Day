@@ -44,8 +44,10 @@ struct DayDetailEntity: Identifiable, Hashable, Equatable, AppEntity {
     @Property(title: "intent.dayDetail.publicDay")
     var publicDayName: String?
     
+    @Property(title: "intent.dayDetail.userComment")
+    var userComment: String?
     
-    init(id: Int, date: Date, finalOffDay: Bool, userOffDay: Bool? = nil, publicOffDay: Bool? = nil, baseOffDay: Bool, publicDayName: String?) {
+    init(id: Int, date: Date, finalOffDay: Bool, userOffDay: Bool? = nil, publicOffDay: Bool? = nil, baseOffDay: Bool, publicDayName: String?, userComment: String?) {
         self.id = id
         self.date = date
         self.finalOffDay = finalOffDay
@@ -53,6 +55,7 @@ struct DayDetailEntity: Identifiable, Hashable, Equatable, AppEntity {
         self.publicOffDay = publicOffDay
         self.baseOffDay = baseOffDay
         self.publicDayName = publicDayName
+        self.userComment = userComment
     }
     
     static func == (lhs: DayDetailEntity, rhs: DayDetailEntity) -> Bool {

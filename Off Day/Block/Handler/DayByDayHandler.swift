@@ -51,10 +51,10 @@ class DayDisplayHandler: DisplayHandler {
         selectedYear = year
     }
     
-    func getSnapshot(customDaysDict: [Int : CustomDay]) -> NSDiffableDataSourceSnapshot<Section, Item>? {
+    func getSnapshot(customDayInfoDict: [Int : CustomDayInfo]) -> NSDiffableDataSourceSnapshot<Section, Item>? {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         
-        LayoutGenerater.dayLayout(for: &snapshot, year: selectedYear, customDaysDict: customDaysDict)
+        LayoutGenerater.dayLayout(for: &snapshot, year: selectedYear, customDayInfoDict: customDayInfoDict)
         
         return snapshot
     }

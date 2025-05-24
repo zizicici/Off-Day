@@ -81,13 +81,14 @@ struct DayManager {
             publicOffValue = nil
         }
         let customOffValue: Bool?
-        if let customDayType = CustomDayManager.shared.fetchCustomDay(by: day.julianDay)?.dayType {
+        let customDayInfo = CustomDayManager.shared.fetchCustomDayInfo(by: day.julianDay)
+        if let customDayType = customDayInfo.customDay?.dayType {
             customOffValue = customDayType == .offDay
         } else {
             customOffValue = nil
         }
         if let date = day.generateDate(secondsFromGMT: Calendar.current.timeZone.secondsFromGMT()) {
-            let detail = DayDetailEntity(id: day.julianDay, date: date, finalOffDay: check(day, is: .offDay), userOffDay: customOffValue, publicOffDay: publicOffValue, baseOffDay: baseOffValue, publicDayName: publicDay?.name)
+            let detail = DayDetailEntity(id: day.julianDay, date: date, finalOffDay: check(day, is: .offDay), userOffDay: customOffValue, publicOffDay: publicOffValue, baseOffDay: baseOffValue, publicDayName: publicDay?.name, userComment: customDayInfo.customComment?.content)
             return detail
         } else {
             return nil

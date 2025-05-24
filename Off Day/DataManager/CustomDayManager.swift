@@ -8,6 +8,12 @@
 import Foundation
 import GRDB
 
+struct CustomDayInfo: Equatable, Hashable {
+    var dayIndex: Int
+    var customDay: CustomDay?
+    var customComment: CustomComment?
+}
+
 struct CustomDayManager {
     static let shared: CustomDayManager = CustomDayManager()
     
@@ -26,21 +32,62 @@ struct CustomDayManager {
         }
     }
     
-    func fetchAllBetween(start: Int, end: Int, completion: (([CustomDay]) -> ())?) {
+    func fetchAllBetween(start: Int, end: Int, completion: (([CustomDayInfo]) -> ())?) {
         AppDatabase.shared.reader?.asyncRead{ dbResult in
             do {
                 let db = try dbResult.get()
-                let dayIndex = CustomDay.Columns.dayIndex
-                let request = CustomDay.filter(dayIndex >= start).filter(dayIndex <= end).order(dayIndex.asc)
-                let resultDays = try request.fetchAll(db)
+                
+                let dayIndexInDay = CustomDay.Columns.dayIndex
+                let dayRequest = CustomDay.filter(dayIndexInDay >= start).filter(dayIndexInDay <= end).order(dayIndexInDay.asc)
+                let resultDays = try dayRequest.fetchAll(db)
+                
+                let dayIndexInComment = CustomComment.Columns.dayIndex
+                let commentRequest = CustomComment.filter(dayIndexInComment >= start).filter(dayIndexInComment <= end).order(dayIndexInComment.asc)
+                let resultComments = try commentRequest.fetchAll(db)
+                
+                let dayDict = Dictionary(grouping: resultDays, by: { $0.dayIndex })
+                let commentDict = Dictionary(grouping: resultComments, by: { $0.dayIndex })
+                
+                let result: [CustomDayInfo] = (start...end).compactMap { dayIndex in
+                    let dayKey = dayIndex
+                    
+                    let day = dayDict[Int64(dayKey)]?.first
+                    let comment = commentDict[Int64(dayKey)]?.first
+                    
+                    if day == nil && comment == nil {
+                        return nil
+                    } else {
+                        return CustomDayInfo(dayIndex: dayKey, customDay: day, customComment: comment)
+                    }
+                }
+                
                 DispatchQueue.main.async {
-                    completion?(resultDays)
+                    completion?(result)
                 }
             }
             catch {
                 print(error)
             }
         }
+    }
+    
+    func fetchCustomDayInfo(by dayIndex: Int) -> CustomDayInfo {
+        var result: CustomDayInfo = CustomDayInfo(dayIndex: dayIndex)
+        do {
+            try AppDatabase.shared.reader?.read{ db in
+                let dayIndexColumn = CustomDay.Columns.dayIndex
+                let customDay = try CustomDay.filter(dayIndexColumn == dayIndex).fetchOne(db)
+                result.customDay = customDay
+                
+                let commentIndexColumn = CustomComment.Columns.dayIndex
+                let customComment = try CustomComment.filter(commentIndexColumn == dayIndex).fetchOne(db)
+                result.customComment = customComment
+            }
+        }
+        catch {
+            print(error)
+        }
+        return result
     }
     
     func fetchCustomDay(by dayIndex: Int) -> CustomDay? {
@@ -100,6 +147,43 @@ struct CustomDayManager {
     
     func delete(from startJulianDay: Int, to endJulianDay: Int) {
         _ = AppDatabase.shared.batchDeleteCustomDay(from: startJulianDay, to: endJulianDay)
+    }
+}
+
+extension CustomDayManager {
+    func fetchCustomComment(by dayIndex: Int) -> CustomComment? {
+        var result: CustomComment?
+        do {
+            try AppDatabase.shared.reader?.read{ db in
+                let commentIndexColumn = CustomComment.Columns.dayIndex
+                result = try CustomComment.filter(commentIndexColumn == Int64(dayIndex)).fetchOne(db)
+            }
+        }
+        catch {
+            print(error)
+        }
+        return result
+    }
+    
+    func add(customComment: CustomComment) -> Bool {
+        guard customComment.id == nil else {
+            return false
+        }
+        return AppDatabase.shared.add(customComment: customComment)
+    }
+    
+    func update(customComment: CustomComment) -> Bool {
+        guard customComment.id != nil else {
+            return false
+        }
+        return AppDatabase.shared.update(customComment: customComment)
+    }
+    
+    func delete(customComment: CustomComment) -> Bool {
+        guard customComment.id != nil else {
+            return false
+        }
+        return AppDatabase.shared.delete(customComment: customComment)
     }
 }
 
