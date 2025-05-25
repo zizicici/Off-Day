@@ -73,7 +73,7 @@ class SpecificationsViewController: UIViewController {
                 case .publisher:
                     return "ZIZICICI LIMITED"
                 case .date:
-                    return "2025/05/23"
+                    return "2025/05/25"
                 case .license:
                     return "闽ICP备2023015823号-8A"
                 }
@@ -101,7 +101,12 @@ class SpecificationsViewController: UIViewController {
                     name: "Toast",
                     version: "5.1.1"
                 )
-                return [SnapKit, GRDB, Toast]
+                let MarqueeLabel = ThirdParty(
+                    urlString: "https://github.com/cbpowell/MarqueeLabel",
+                    name: "MarqueeLabel",
+                    version: "4.5.0"
+                )
+                return [SnapKit, GRDB, Toast, MarqueeLabel]
             }()
         }
         
