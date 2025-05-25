@@ -58,7 +58,7 @@ class BlockCell: BlockBaseCell {
     }()
     
     var publicDayLabel: MarqueeLabel = {
-        let label = MarqueeLabel(frame: .zero, duration: 2.0, fadeLength: 2.0)
+        let label = MarqueeLabel(frame: .zero, duration: 4.0, fadeLength: 2.0)
         label.font = UIFont.systemFont(ofSize: 10, weight: .medium)
         label.trailingBuffer = 10.0
         label.textAlignment = .center
