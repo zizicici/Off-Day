@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import ZCCalendar
+import MarqueeLabel
 
 fileprivate extension UIConfigurationStateCustomKey {
     static let blockItem = UIConfigurationStateCustomKey("com.zizicici.offday.cell.block.item")
@@ -45,13 +46,22 @@ class BlockCell: BlockBaseCell {
         }
     }
     
-    var label: UILabel = {
+    var dateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
+        
+        return label
+    }()
+    
+    var publicDayLabel: MarqueeLabel = {
+        let label = MarqueeLabel(frame: .zero, duration: 2.0, fadeLength: 2.0)
+        label.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        label.trailingBuffer = 10.0
+        label.textAlignment = .center
         
         return label
     }()
@@ -72,8 +82,9 @@ class BlockCell: BlockBaseCell {
         super.prepareForReuse()
         
         isHover = false
-        label.text = nil
+        dateLabel.text = nil
         cornerMark.isHidden = true
+        publicDayLabel.removeFromSuperview()
     }
     
     override func layoutSubviews() {
@@ -81,20 +92,15 @@ class BlockCell: BlockBaseCell {
     }
     
     private func setupViewsIfNeeded() {
-        guard label.superview == nil else { return }
+        guard dateLabel.superview == nil else { return }
         
+        contentView.addSubview(dateLabel)
+
         contentView.addSubview(cornerMark)
         cornerMark.snp.makeConstraints { make in
             make.right.top.equalTo(contentView)
             make.width.height.equalTo(15.0)
         }
-        
-        contentView.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.edges.equalTo(contentView).inset(3)
-        }
-        
-        contentView.bringSubviewToFront(cornerMark)
         
         isAccessibilityElement = true
         accessibilityTraits = .button
@@ -105,6 +111,24 @@ class BlockCell: BlockBaseCell {
         setupViewsIfNeeded()
         
         if let item = state.blockItem {
+            if let publicDayName = item.publicDayName {
+                contentView.addSubview(publicDayLabel)
+                publicDayLabel.snp.makeConstraints { make in
+                    make.leading.trailing.bottom.equalTo(contentView).inset(3)
+                    make.top.equalTo(contentView.snp.centerY).offset(5)
+                }
+                publicDayLabel.text = publicDayName
+                publicDayLabel.textColor = item.foregroundColor
+                dateLabel.snp.remakeConstraints { make in
+                    make.leading.trailing.top.equalTo(contentView).inset(3)
+                    make.bottom.equalTo(publicDayLabel.snp.top)
+                }
+            } else {
+                dateLabel.snp.remakeConstraints { make in
+                    make.edges.equalTo(contentView).inset(3)
+                }
+            }
+            
             var backgroundColor = item.backgroundColor
             if let customDayType = item.customDayType {
                 cornerMark.isHidden = false
@@ -121,8 +145,8 @@ class BlockCell: BlockBaseCell {
                 backgroundColor = highlightColor.overlay(on: backgroundColor)
             }
             
-            label.textColor = item.foregroundColor
-            label.text = item.day.dayString()
+            dateLabel.textColor = item.foregroundColor
+            dateLabel.text = item.day.dayString()
             if item.isToday {
                 accessibilityLabel = String(localized: "weekCalendar.today") + (item.day.completeFormatString() ?? "")
             } else {

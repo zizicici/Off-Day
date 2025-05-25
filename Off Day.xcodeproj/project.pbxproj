@@ -12,6 +12,7 @@
 		14B239BD2DBF25FE0007152C /* DayTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B239BC2DBF25FE0007152C /* DayTypeCell.swift */; };
 		14B239BF2DBF57480007152C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B239BE2DBF57480007152C /* String+Extension.swift */; };
 		14B36F7F2DE1C42D00E96C56 /* DayCommentIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B36F7E2DE1C42D00E96C56 /* DayCommentIntent.swift */; };
+		14B36F822DE2187600E96C56 /* MarqueeLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 14B36F812DE2187600E96C56 /* MarqueeLabel */; };
 		14C7BD1D2DB9EA4B00916361 /* BatchEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C7BD1C2DB9EA4B00916361 /* BatchEditorViewController.swift */; };
 		14CFA1272BEC92A90004D15E /* CheckDayClashIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */; };
 		14D3625B2DE0A17B00C0BAFE /* CustomComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D3625A2DE0A17B00C0BAFE /* CustomComment.swift */; };
@@ -212,6 +213,7 @@
 			files = (
 				14EF2B742BFB44FA00F8C684 /* AppInfo in Frameworks */,
 				14DD51092BE20D8D004329E2 /* Toast in Frameworks */,
+				14B36F822DE2187600E96C56 /* MarqueeLabel in Frameworks */,
 				14DD50C72BE1F78F004329E2 /* SnapKit in Frameworks */,
 				14DD510C2BE20F3A004329E2 /* GRDB in Frameworks */,
 				1498CF1B2C402CD2005562AA /* ZCCalendar in Frameworks */,
@@ -561,6 +563,7 @@
 				14DD510B2BE20F3A004329E2 /* GRDB */,
 				14EF2B732BFB44FA00F8C684 /* AppInfo */,
 				1498CF1A2C402CD2005562AA /* ZCCalendar */,
+				14B36F812DE2187600E96C56 /* MarqueeLabel */,
 			);
 			productName = "Off Day";
 			productReference = 14DD50AE2BE1F5C4004329E2 /* Off Day.app */;
@@ -599,6 +602,7 @@
 				14DD510A2BE20F3A004329E2 /* XCRemoteSwiftPackageReference "GRDB" */,
 				14EF2B722BFB44FA00F8C684 /* XCRemoteSwiftPackageReference "AppInfo" */,
 				1498CF192C402CD2005562AA /* XCRemoteSwiftPackageReference "ZCCalendar" */,
+				14B36F802DE2187600E96C56 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
 			);
 			productRefGroup = 14DD50AF2BE1F5C4004329E2 /* Products */;
 			projectDirPath = "";
@@ -944,6 +948,14 @@
 				minimumVersion = 0.1.3;
 			};
 		};
+		14B36F802DE2187600E96C56 /* XCRemoteSwiftPackageReference "MarqueeLabel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cbpowell/MarqueeLabel";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.0;
+			};
+		};
 		14DD50C52BE1F78F004329E2 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -983,6 +995,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1498CF192C402CD2005562AA /* XCRemoteSwiftPackageReference "ZCCalendar" */;
 			productName = ZCCalendar;
+		};
+		14B36F812DE2187600E96C56 /* MarqueeLabel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 14B36F802DE2187600E96C56 /* XCRemoteSwiftPackageReference "MarqueeLabel" */;
+			productName = MarqueeLabel;
 		};
 		14DD50C62BE1F78F004329E2 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

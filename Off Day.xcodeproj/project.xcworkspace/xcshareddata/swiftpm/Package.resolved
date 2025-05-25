@@ -1,5 +1,5 @@
 {
-  "originHash" : "1446d68c6d91cc650a9e74835e63d52a1ea3cebe782d3bbe0487c85f7923504b",
+  "originHash" : "5895abb5ba6bfc14777fc358875328f8812d9c8c5757e0911f4e05b66ff32ab5",
   "pins" : [
     {
       "identity" : "appinfo",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "a5a1be26b4513dc7ec360eb56bc08a345bac6649",
         "version" : "7.5.0"
+      }
+    },
+    {
+      "identity" : "marqueelabel",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/cbpowell/MarqueeLabel",
+      "state" : {
+        "revision" : "877e810534cda9afabb8143ae319b7c3341b121b",
+        "version" : "4.5.0"
       }
     },
     {
