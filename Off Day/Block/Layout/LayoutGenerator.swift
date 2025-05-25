@@ -69,15 +69,18 @@ struct LayoutGenerater {
                     }
                 }
                 
-                var alternativeCalendarName: String? = nil
+                var alternativeCalendarDayName: String? = nil
+                var alternativeCalendarA11yName: String? = nil
                 switch AlternativeCalendarType.getValue() {
                 case .off:
-                    alternativeCalendarName = nil
+                    break
                 case .chineseCalendar:
-                    alternativeCalendarName = ChineseCalendarManager.shared.findChineseDayInfo(gregorianDay, variant: .chinese)?.shortDisplayString()
+                    let chineseDay = ChineseCalendarManager.shared.findChineseDayInfo(gregorianDay, variant: .chinese)
+                    alternativeCalendarDayName = chineseDay?.shortDisplayString()
+                    alternativeCalendarA11yName = chineseDay?.pronounceString()
                 }
                 
-                return Item.block(BlockItem(index: julianDay, publicDayName: publicDay?.name, baseCalendarDayType: BaseCalendarManager.shared.isOff(day: gregorianDay) ? .offDay : .workDay, publicDayType: publicDay?.type, customDayInfo: customDayInfo, backgroundColor: backgroundColor, foregroundColor: foregroundColor, isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay), alternativeCalendarName: alternativeCalendarName))
+                return Item.block(BlockItem(index: julianDay, publicDayName: publicDay?.name, baseCalendarDayType: BaseCalendarManager.shared.isOff(day: gregorianDay) ? .offDay : .workDay, publicDayType: publicDay?.type, customDayInfo: customDayInfo, backgroundColor: backgroundColor, foregroundColor: foregroundColor, isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay), alternativeCalendarDayName: alternativeCalendarDayName, alternativeCalendarA11yName: alternativeCalendarA11yName))
             })
             snapshot.appendItems(items)
         }

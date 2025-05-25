@@ -139,8 +139,20 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         case .invisible, .month:
             break
         case .block(let blockItem):
-            let style = ToastStyle.getStyle(messageColor: blockItem.foregroundColor, backgroundColor: blockItem.backgroundColor)
-            view.makeToast(blockItem.calendarString, position: .top, style: style)
+            var displayString = ""
+            if let publicDayName = blockItem.publicDayName {
+                displayString = publicDayName
+            }
+            if let comment = blockItem.customDayInfo.customComment {
+                if displayString.count > 0 {
+                    displayString += "\n"                    
+                }
+                displayString += String(format: String(localized: "comment.%@"), comment.content)
+            }
+            if displayString.count > 0 {
+                let style = ToastStyle.getStyle(messageColor: blockItem.foregroundColor, backgroundColor: blockItem.backgroundColor)
+                view.makeToast(displayString, position: .top, style: style)
+            }
         }
     }
     

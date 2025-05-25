@@ -1039,6 +1039,34 @@
         }
       }
     },
+    "comment.empty" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Comment"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无备注"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無備註"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無備註"
+          }
+        }
+      }
+    },
     "controller.baseCalendar.title" : {
       "localizations" : {
         "en" : {
@@ -1375,30 +1403,30 @@
         }
       }
     },
-    "dayDetail.%@%@%@%@%@" : {
+    "dayDetail.%@%@%@%@%@%@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%2$@This day is %1$@, Base Calendar day type: %3$@, Public Holiday day type: %4$@, Custom day type: %5$@"
+            "value" : "%2$@This day is %1$@, Base Calendar day type: %3$@, Public Holiday day type: %4$@, Custom day type: %5$@, %6$@"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%2$@这一天是：%1$@，基础日历信息：%3$@，公共假期信息：%4$@，用户自定义信息：%5$@"
+            "value" : "%2$@这一天是：%1$@，基础日历信息：%3$@，公共假期信息：%4$@，用户自定义信息：%5$@，%6$@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%2$@這一天是：%1$@，基礎日曆信息：%3$@，公共假期信息：%4$@，用戶自定義信息：%5$@"
+            "value" : "%2$@這一天是：%1$@，基礎日曆信息：%3$@，公共假期信息：%4$@，用戶自定義信息：%5$@，%6$@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%2$@這一天是：%1$@，基礎日曆信息：%3$@，公共假期信息：%4$@，用戶自定義信息：%5$@"
+            "value" : "%2$@這一天是：%1$@，基礎日曆信息：%3$@，公共假期信息：%4$@，用戶自定義信息：%5$@，%6$@"
           }
         }
       }

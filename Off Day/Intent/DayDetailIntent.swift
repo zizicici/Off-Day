@@ -19,7 +19,8 @@ struct DayDetailEntity: Identifiable, Hashable, Equatable, AppEntity {
             publicDayName: publicDayName,
             baseCalendarDayType: baseOffDay ? .offDay : .workDay,
             publicDayType: publicOffDay == nil ? .none : publicOffDay! == true ? .offDay : .workDay,
-            customDayType: userOffDay == nil ? .none : userOffDay! == true ? .offDay : .workDay
+            customDayType: userOffDay == nil ? .none : userOffDay! == true ? .offDay : .workDay,
+            customComment: userComment
         )
         return DisplayRepresentation(title: "\(day.formatString() ?? "")", subtitle: "\(subtitle)")
     }

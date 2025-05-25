@@ -140,17 +140,20 @@ class BlockCell: BlockBaseCell {
                 backgroundColor = highlightColor.overlay(on: backgroundColor)
             }
             
-            dateView.update(with: item.day.dayString(), alternativeCalendar: item.alternativeCalendarName, foregroundColor: item.foregroundColor)
+            dateView.update(with: item.day.dayString(), alternativeCalendar: item.alternativeCalendarDayName, foregroundColor: item.foregroundColor)
             if item.isToday {
                 accessibilityLabel = String(localized: "weekCalendar.today") + (item.day.completeFormatString() ?? "")
             } else {
                 accessibilityLabel = item.day.completeFormatString()
             }
+            if let alternativeCalendarA11yName = item.alternativeCalendarA11yName {
+                accessibilityLabel = (accessibilityLabel ?? "") + "," + alternativeCalendarA11yName
+            }
             
             backgroundConfiguration = BlockCellBackgroundConfiguration.configuration(for: state, backgroundColor: backgroundColor, cornerRadius: 6.0, showStroke: item.isToday, strokeColor: AppColor.today, strokeWidth: 3.0, strokeOutset: 0.0)
             
             let dayType: DayType = DayManager.isOffDay(baseCalendarDayType: item.baseCalendarDayType, publicDayType: item.publicDayType, customDayType: item.customDayType) ? .offDay : .workDay
-            accessibilityValue = String.assembleDetail(for: dayType, publicDayName: item.publicDayName, baseCalendarDayType: item.baseCalendarDayType, publicDayType: item.publicDayType, customDayType: item.customDayType)
+            accessibilityValue = String.assembleDetail(for: dayType, publicDayName: item.publicDayName, baseCalendarDayType: item.baseCalendarDayType, publicDayType: item.publicDayType, customDayType: item.customDayType, customComment: item.customDayInfo.customComment?.content)
         }
     }
     
