@@ -46,20 +46,15 @@ class BlockCell: BlockBaseCell {
         }
     }
     
-    var dateLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .label
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
+    var dateView: DateView = {
+        let label = DateView()
         
         return label
     }()
     
     var publicDayLabel: MarqueeLabel = {
         let label = MarqueeLabel(frame: .zero, duration: 4.0, fadeLength: 2.0)
-        label.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
         label.trailingBuffer = 10.0
         label.textAlignment = .center
         
@@ -82,7 +77,7 @@ class BlockCell: BlockBaseCell {
         super.prepareForReuse()
         
         isHover = false
-        dateLabel.text = nil
+        dateView.prepareForReuse()
         cornerMark.isHidden = true
         publicDayLabel.removeFromSuperview()
     }
@@ -92,9 +87,9 @@ class BlockCell: BlockBaseCell {
     }
     
     private func setupViewsIfNeeded() {
-        guard dateLabel.superview == nil else { return }
+        guard dateView.superview == nil else { return }
         
-        contentView.addSubview(dateLabel)
+        contentView.addSubview(dateView)
 
         contentView.addSubview(cornerMark)
         cornerMark.snp.makeConstraints { make in
@@ -114,18 +109,18 @@ class BlockCell: BlockBaseCell {
             if let publicDayName = item.publicDayName {
                 contentView.addSubview(publicDayLabel)
                 publicDayLabel.snp.makeConstraints { make in
-                    make.leading.trailing.bottom.equalTo(contentView).inset(3)
-                    make.top.equalTo(contentView.snp.centerY).offset(5)
+                    make.leading.trailing.bottom.equalTo(contentView).inset(3.0)
+                    make.height.equalTo(16.0)
                 }
                 publicDayLabel.text = publicDayName
                 publicDayLabel.textColor = item.foregroundColor
-                dateLabel.snp.remakeConstraints { make in
-                    make.leading.trailing.top.equalTo(contentView).inset(3)
+                dateView.snp.remakeConstraints { make in
+                    make.leading.trailing.top.equalTo(contentView).inset(3.0)
                     make.bottom.equalTo(publicDayLabel.snp.top)
                 }
             } else {
-                dateLabel.snp.remakeConstraints { make in
-                    make.edges.equalTo(contentView).inset(3)
+                dateView.snp.remakeConstraints { make in
+                    make.edges.equalTo(contentView).inset(3.0)
                 }
             }
             
@@ -145,8 +140,7 @@ class BlockCell: BlockBaseCell {
                 backgroundColor = highlightColor.overlay(on: backgroundColor)
             }
             
-            dateLabel.textColor = item.foregroundColor
-            dateLabel.text = item.day.dayString()
+            dateView.update(with: item.day.dayString(), alternativeCalendar: item.alternativeCalendarName, foregroundColor: item.foregroundColor)
             if item.isToday {
                 accessibilityLabel = String(localized: "weekCalendar.today") + (item.day.completeFormatString() ?? "")
             } else {

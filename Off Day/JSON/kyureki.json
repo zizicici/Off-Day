@@ -1,0 +1,602 @@
+{
+    "name": "Japanese Kyuriki Info",
+    "reference": "ISBN: 9784816916304",
+    "start": "2001-01-24",
+    "end": "2100-02-08",
+    "years": [
+        {
+            "sexagenaryCycleInfo": 17,
+            "leapMonth": 3,
+            "sizeInfo": "1110010010101",
+            "start": "2001-01-24"
+        },
+        {
+            "sexagenaryCycleInfo": 18,
+            "leapMonth": -1,
+            "sizeInfo": "110101001010",
+            "start": "2002-02-12"
+        },
+        {
+            "sexagenaryCycleInfo": 19,
+            "leapMonth": -1,
+            "sizeInfo": "110110100101",
+            "start": "2003-02-01"
+        },
+        {
+            "sexagenaryCycleInfo": 20,
+            "leapMonth": 1,
+            "sizeInfo": "0101101010101",
+            "start": "2004-01-22"
+        },
+        {
+            "sexagenaryCycleInfo": 21,
+            "leapMonth": -1,
+            "sizeInfo": "010101101100",
+            "start": "2005-02-09"
+        },
+        {
+            "sexagenaryCycleInfo": 22,
+            "leapMonth": 6,
+            "sizeInfo": "1010101011011",
+            "start": "2006-01-29"
+        },
+        {
+            "sexagenaryCycleInfo": 23,
+            "leapMonth": -1,
+            "sizeInfo": "001001011101",
+            "start": "2007-02-18"
+        },
+        {
+            "sexagenaryCycleInfo": 24,
+            "leapMonth": -1,
+            "sizeInfo": "100100101101",
+            "start": "2008-02-07"
+        },
+        {
+            "sexagenaryCycleInfo": 25,
+            "leapMonth": 4,
+            "sizeInfo": "1100100101011",
+            "start": "2009-01-26"
+        },
+        {
+            "sexagenaryCycleInfo": 26,
+            "leapMonth": -1,
+            "sizeInfo": "101010010101",
+            "start": "2010-02-14"
+        },
+        {
+            "sexagenaryCycleInfo": 27,
+            "leapMonth": -1,
+            "sizeInfo": "101101001010",
+            "start": "2011-02-03"
+        },
+        {
+            "sexagenaryCycleInfo": 28,
+            "leapMonth": 3,
+            "sizeInfo": "1011101001010",
+            "start": "2012-01-23"
+        },
+        {
+            "sexagenaryCycleInfo": 29,
+            "leapMonth": -1,
+            "sizeInfo": "101101010101",
+            "start": "2013-02-10"
+        },
+        {
+            "sexagenaryCycleInfo": 30,
+            "leapMonth": 8,
+            "sizeInfo": "0101010110101",
+            "start": "2014-01-31"
+        },
+        {
+            "sexagenaryCycleInfo": 31,
+            "leapMonth": -1,
+            "sizeInfo": "010010111010",
+            "start": "2015-02-19"
+        },
+        {
+            "sexagenaryCycleInfo": 32,
+            "leapMonth": -1,
+            "sizeInfo": "101001011011",
+            "start": "2016-02-08"
+        },
+        {
+            "sexagenaryCycleInfo": 33,
+            "leapMonth": 5,
+            "sizeInfo": "0101001010111",
+            "start": "2017-01-28"
+        },
+        {
+            "sexagenaryCycleInfo": 34,
+            "leapMonth": -1,
+            "sizeInfo": "010100101011",
+            "start": "2018-02-16"
+        },
+        {
+            "sexagenaryCycleInfo": 35,
+            "leapMonth": -1,
+            "sizeInfo": "101010010101",
+            "start": "2019-02-05"
+        },
+        {
+            "sexagenaryCycleInfo": 36,
+            "leapMonth": 3,
+            "sizeInfo": "1011010010101",
+            "start": "2020-01-25"
+        },
+        {
+            "sexagenaryCycleInfo": 37,
+            "leapMonth": -1,
+            "sizeInfo": "011010101010",
+            "start": "2021-02-12"
+        },
+        {
+            "sexagenaryCycleInfo": 38,
+            "leapMonth": -1,
+            "sizeInfo": "101011010101",
+            "start": "2022-02-01"
+        },
+        {
+            "sexagenaryCycleInfo": 39,
+            "leapMonth": 1,
+            "sizeInfo": "0101010110101",
+            "start": "2023-01-22"
+        },
+        {
+            "sexagenaryCycleInfo": 40,
+            "leapMonth": -1,
+            "sizeInfo": "010010110110",
+            "start": "2024-02-10"
+        },
+        {
+            "sexagenaryCycleInfo": 41,
+            "leapMonth": 5,
+            "sizeInfo": "1010010101110",
+            "start": "2025-01-29"
+        },
+        {
+            "sexagenaryCycleInfo": 42,
+            "leapMonth": -1,
+            "sizeInfo": "101001010111",
+            "start": "2026-02-17"
+        },
+        {
+            "sexagenaryCycleInfo": 43,
+            "leapMonth": -1,
+            "sizeInfo": "010100100111",
+            "start": "2027-02-07"
+        },
+        {
+            "sexagenaryCycleInfo": 44,
+            "leapMonth": 4,
+            "sizeInfo": "0110100100110",
+            "start": "2028-01-27"
+        },
+        {
+            "sexagenaryCycleInfo": 45,
+            "leapMonth": -1,
+            "sizeInfo": "110110010011",
+            "start": "2029-02-13"
+        },
+        {
+            "sexagenaryCycleInfo": 46,
+            "leapMonth": -1,
+            "sizeInfo": "010110101010",
+            "start": "2030-02-03"
+        },
+        {
+            "sexagenaryCycleInfo": 47,
+            "leapMonth": 2,
+            "sizeInfo": "1010101101010",
+            "start": "2031-01-23"
+        },
+        {
+            "sexagenaryCycleInfo": 48,
+            "leapMonth": -1,
+            "sizeInfo": "100101101101",
+            "start": "2032-02-11"
+        },
+        {
+            "sexagenaryCycleInfo": 49,
+            "leapMonth": 10,
+            "sizeInfo": "0100101011101",
+            "start": "2033-01-31"
+        },
+        {
+            "sexagenaryCycleInfo": 50,
+            "leapMonth": -1,
+            "sizeInfo": "010010101110",
+            "start": "2034-02-19"
+        },
+        {
+            "sexagenaryCycleInfo": 51,
+            "leapMonth": -1,
+            "sizeInfo": "101001001101",
+            "start": "2035-02-08"
+        },
+        {
+            "sexagenaryCycleInfo": 52,
+            "leapMonth": 5,
+            "sizeInfo": "1101001001101",
+            "start": "2036-01-28"
+        },
+        {
+            "sexagenaryCycleInfo": 53,
+            "leapMonth": -1,
+            "sizeInfo": "110100100101",
+            "start": "2037-02-15"
+        },
+        {
+            "sexagenaryCycleInfo": 54,
+            "leapMonth": -1,
+            "sizeInfo": "110101010010",
+            "start": "2038-02-04"
+        },
+        {
+            "sexagenaryCycleInfo": 55,
+            "leapMonth": 4,
+            "sizeInfo": "1101101010100",
+            "start": "2039-01-24"
+        },
+        {
+            "sexagenaryCycleInfo": 56,
+            "leapMonth": -1,
+            "sizeInfo": "101101101010",
+            "start": "2040-02-12"
+        },
+        {
+            "sexagenaryCycleInfo": 57,
+            "leapMonth": -1,
+            "sizeInfo": "100101101101",
+            "start": "2041-02-01"
+        },
+        {
+            "sexagenaryCycleInfo": 58,
+            "leapMonth": 1,
+            "sizeInfo": "0100101011011",
+            "start": "2042-01-22"
+        },
+        {
+            "sexagenaryCycleInfo": 59,
+            "leapMonth": -1,
+            "sizeInfo": "010010011011",
+            "start": "2043-02-10"
+        },
+        {
+            "sexagenaryCycleInfo": 0,
+            "leapMonth": 6,
+            "sizeInfo": "1010010010111",
+            "start": "2044-01-30"
+        },
+        {
+            "sexagenaryCycleInfo": 1,
+            "leapMonth": -1,
+            "sizeInfo": "101001001011",
+            "start": "2045-02-17"
+        },
+        {
+            "sexagenaryCycleInfo": 2,
+            "leapMonth": -1,
+            "sizeInfo": "101100100101",
+            "start": "2046-02-06"
+        },
+        {
+            "sexagenaryCycleInfo": 3,
+            "leapMonth": 4,
+            "sizeInfo": "1011010100101",
+            "start": "2047-01-26"
+        },
+        {
+            "sexagenaryCycleInfo": 4,
+            "leapMonth": -1,
+            "sizeInfo": "011011010100",
+            "start": "2048-02-14"
+        },
+        {
+            "sexagenaryCycleInfo": 5,
+            "leapMonth": -1,
+            "sizeInfo": "101011011010",
+            "start": "2049-02-02"
+        },
+        {
+            "sexagenaryCycleInfo": 6,
+            "leapMonth": 2,
+            "sizeInfo": "1001010110110",
+            "start": "2050-01-23"
+        },
+        {
+            "sexagenaryCycleInfo": 7,
+            "leapMonth": -1,
+            "sizeInfo": "100101010111",
+            "start": "2051-02-11"
+        },
+        {
+            "sexagenaryCycleInfo": 8,
+            "leapMonth": 7,
+            "sizeInfo": "0100100110111",
+            "start": "2052-02-01"
+        },
+        {
+            "sexagenaryCycleInfo": 9,
+            "leapMonth": -1,
+            "sizeInfo": "010010010111",
+            "start": "2053-02-19"
+        },
+        {
+            "sexagenaryCycleInfo": 10,
+            "leapMonth": -1,
+            "sizeInfo": "011001001011",
+            "start": "2054-02-08"
+        },
+        {
+            "sexagenaryCycleInfo": 11,
+            "leapMonth": 5,
+            "sizeInfo": "0110101001010",
+            "start": "2055-01-28"
+        },
+        {
+            "sexagenaryCycleInfo": 12,
+            "leapMonth": -1,
+            "sizeInfo": "111010100101",
+            "start": "2056-02-15"
+        },
+        {
+            "sexagenaryCycleInfo": 13,
+            "leapMonth": -1,
+            "sizeInfo": "011010110010",
+            "start": "2057-02-04"
+        },
+        {
+            "sexagenaryCycleInfo": 14,
+            "leapMonth": 3,
+            "sizeInfo": "1010110101100",
+            "start": "2058-01-24"
+        },
+        {
+            "sexagenaryCycleInfo": 15,
+            "leapMonth": -1,
+            "sizeInfo": "101010110110",
+            "start": "2059-02-12"
+        },
+        {
+            "sexagenaryCycleInfo": 16,
+            "leapMonth": -1,
+            "sizeInfo": "100100110111",
+            "start": "2060-02-02"
+        },
+        {
+            "sexagenaryCycleInfo": 17,
+            "leapMonth": 2,
+            "sizeInfo": "0100100101110",
+            "start": "2061-01-22"
+        },
+        {
+            "sexagenaryCycleInfo": 18,
+            "leapMonth": -1,
+            "sizeInfo": "110010010110",
+            "start": "2062-02-09"
+        },
+        {
+            "sexagenaryCycleInfo": 19,
+            "leapMonth": 6,
+            "sizeInfo": "1101010010101",
+            "start": "2063-01-29"
+        },
+        {
+            "sexagenaryCycleInfo": 20,
+            "leapMonth": -1,
+            "sizeInfo": "110101001010",
+            "start": "2064-02-17"
+        },
+        {
+            "sexagenaryCycleInfo": 21,
+            "leapMonth": -1,
+            "sizeInfo": "110110100101",
+            "start": "2065-02-05"
+        },
+        {
+            "sexagenaryCycleInfo": 22,
+            "leapMonth": 4,
+            "sizeInfo": "0101101010101",
+            "start": "2066-01-26"
+        },
+        {
+            "sexagenaryCycleInfo": 23,
+            "leapMonth": -1,
+            "sizeInfo": "010101101010",
+            "start": "2067-02-14"
+        },
+        {
+            "sexagenaryCycleInfo": 24,
+            "leapMonth": -1,
+            "sizeInfo": "101010101101",
+            "start": "2068-02-03"
+        },
+        {
+            "sexagenaryCycleInfo": 25,
+            "leapMonth": 3,
+            "sizeInfo": "1001001011101",
+            "start": "2069-01-23"
+        },
+        {
+            "sexagenaryCycleInfo": 26,
+            "leapMonth": -1,
+            "sizeInfo": "100100101101",
+            "start": "2070-02-11"
+        },
+        {
+            "sexagenaryCycleInfo": 27,
+            "leapMonth": 7,
+            "sizeInfo": "1100100101011",
+            "start": "2071-01-31"
+        },
+        {
+            "sexagenaryCycleInfo": 28,
+            "leapMonth": -1,
+            "sizeInfo": "101010010101",
+            "start": "2072-02-19"
+        },
+        {
+            "sexagenaryCycleInfo": 29,
+            "leapMonth": -1,
+            "sizeInfo": "101101001010",
+            "start": "2073-02-07"
+        },
+        {
+            "sexagenaryCycleInfo": 30,
+            "leapMonth": 5,
+            "sizeInfo": "1011010101010",
+            "start": "2074-01-27"
+        },
+        {
+            "sexagenaryCycleInfo": 31,
+            "leapMonth": -1,
+            "sizeInfo": "101011010101",
+            "start": "2075-02-15"
+        },
+        {
+            "sexagenaryCycleInfo": 32,
+            "leapMonth": -1,
+            "sizeInfo": "010101011010",
+            "start": "2076-02-05"
+        },
+        {
+            "sexagenaryCycleInfo": 33,
+            "leapMonth": 3,
+            "sizeInfo": "1010010111010",
+            "start": "2077-01-24"
+        },
+        {
+            "sexagenaryCycleInfo": 34,
+            "leapMonth": -1,
+            "sizeInfo": "101001011011",
+            "start": "2078-02-12"
+        },
+        {
+            "sexagenaryCycleInfo": 35,
+            "leapMonth": -1,
+            "sizeInfo": "010100101011",
+            "start": "2079-02-02"
+        },
+        {
+            "sexagenaryCycleInfo": 36,
+            "leapMonth": 2,
+            "sizeInfo": "1010100101011",
+            "start": "2080-01-22"
+        },
+        {
+            "sexagenaryCycleInfo": 37,
+            "leapMonth": -1,
+            "sizeInfo": "101010010011",
+            "start": "2081-02-09"
+        },
+        {
+            "sexagenaryCycleInfo": 38,
+            "leapMonth": 6,
+            "sizeInfo": "0111010010101",
+            "start": "2082-01-29"
+        },
+        {
+            "sexagenaryCycleInfo": 39,
+            "leapMonth": -1,
+            "sizeInfo": "011010101010",
+            "start": "2083-02-17"
+        },
+        {
+            "sexagenaryCycleInfo": 40,
+            "leapMonth": -1,
+            "sizeInfo": "101011010101",
+            "start": "2084-02-06"
+        },
+        {
+            "sexagenaryCycleInfo": 41,
+            "leapMonth": 4,
+            "sizeInfo": "0100110110101",
+            "start": "2085-01-26"
+        },
+        {
+            "sexagenaryCycleInfo": 42,
+            "leapMonth": -1,
+            "sizeInfo": "010010110110",
+            "start": "2086-02-14"
+        },
+        {
+            "sexagenaryCycleInfo": 43,
+            "leapMonth": -1,
+            "sizeInfo": "101001010111",
+            "start": "2087-02-03"
+        },
+        {
+            "sexagenaryCycleInfo": 44,
+            "leapMonth": 3,
+            "sizeInfo": "0101001001111",
+            "start": "2088-1-24"
+        },
+        {
+            "sexagenaryCycleInfo": 45,
+            "leapMonth": -1,
+            "sizeInfo": "010100100110",
+            "start": "2089-02-11"
+        },
+        {
+            "sexagenaryCycleInfo": 46,
+            "leapMonth": 7,
+            "sizeInfo": "1110100100110",
+            "start": "2090-01-30"
+        },
+        {
+            "sexagenaryCycleInfo": 47,
+            "leapMonth": -1,
+            "sizeInfo": "110101010011",
+            "start": "2091-02-18"
+        },
+        {
+            "sexagenaryCycleInfo": 48,
+            "leapMonth": -1,
+            "sizeInfo": "010110101010",
+            "start": "2092-02-08"
+        },
+        {
+            "sexagenaryCycleInfo": 49,
+            "leapMonth": 5,
+            "sizeInfo": "1010101101010",
+            "start": "2093-01-27"
+        },
+        {
+            "sexagenaryCycleInfo": 50,
+            "leapMonth": -1,
+            "sizeInfo": "100101101101",
+            "start": "2094-02-15"
+        },
+        {
+            "sexagenaryCycleInfo": 51,
+            "leapMonth": -1,
+            "sizeInfo": "010010101110",
+            "start": "2095-02-05"
+        },
+        {
+            "sexagenaryCycleInfo": 52,
+            "leapMonth": 3,
+            "sizeInfo": "1010010101110",
+            "start": "2096-01-25"
+        },
+        {
+            "sexagenaryCycleInfo": 53,
+            "leapMonth": -1,
+            "sizeInfo": "101001001101",
+            "start": "2097-02-12"
+        },
+        {
+            "sexagenaryCycleInfo": 54,
+            "leapMonth": -1,
+            "sizeInfo": "110100100110",
+            "start": "2098-02-01"
+        },
+        {
+            "sexagenaryCycleInfo": 55,
+            "leapMonth": 2,
+            "sizeInfo": "1110100100101",
+            "start": "2099-01-21"
+        }
+    ]
+}

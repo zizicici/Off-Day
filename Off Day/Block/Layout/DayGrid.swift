@@ -17,5 +17,15 @@ struct DayGrid {
             return 44.0
         }
     }
+    
+    static func itemHeight(in containerWidth: CGFloat) -> CGFloat {
+        switch AlternativeCalendarType.getValue() {
+        case .off:
+            return itemWidth(in: containerWidth)
+        case .chineseCalendar:
+            return itemWidth(in: containerWidth) + 8.0
+        }
+    }
+    
     static let interSpacing: CGFloat = 4.0
 }

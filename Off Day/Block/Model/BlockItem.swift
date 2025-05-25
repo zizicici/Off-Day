@@ -18,6 +18,7 @@ struct BlockItem: Hashable {
     var backgroundColor: UIColor
     var foregroundColor: UIColor
     var isToday: Bool
+    var alternativeCalendarName: String?
 }
 
 extension BlockItem {

@@ -48,6 +48,7 @@ class MoreViewController: UIViewController {
         enum GeneralItem: Hashable {
             case language
             case tutorial(TutorialEntranceType)
+            case alternative(AlternativeCalendarType)
             
             var title: String {
                 switch self {
@@ -55,6 +56,8 @@ class MoreViewController: UIViewController {
                     return String(localized: "more.item.settings.language")
                 case .tutorial:
                     return TutorialEntranceType.getTitle()
+                case .alternative:
+                    return AlternativeCalendarType.getTitle()
                 }
             }
             
@@ -63,6 +66,8 @@ class MoreViewController: UIViewController {
                 case .language:
                     return String(localized: "more.item.settings.language.value")
                 case .tutorial(let type):
+                    return type.getName()
+                case .alternative(let type):
                     return type.getName()
                 }
             }
@@ -312,7 +317,7 @@ class MoreViewController: UIViewController {
     func reloadData() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.general])
-        snapshot.appendItems([.settings(.language), .settings(.tutorial(TutorialEntranceType.getValue()))], toSection: .general)
+        snapshot.appendItems([.settings(.language), .settings(.tutorial(TutorialEntranceType.getValue())), .settings(.alternative(AlternativeCalendarType.getValue()))], toSection: .general)
         
         snapshot.appendSections([.dataSource])
         snapshot.appendItems([.dataSource(.publicPlan(PublicPlanManager.shared.dataSource?.plan)), .dataSource(.baseCalendar(BaseCalendarManager.shared.config.type))], toSection: .dataSource)
@@ -347,6 +352,8 @@ extension MoreViewController: UITableViewDelegate {
                     jumpToSettings()
                 case .tutorial:
                     enterSettings(TutorialEntranceType.self)
+                case .alternative:
+                    enterSettings(AlternativeCalendarType.self)
                 }
             case .dataSource(let item):
                 switch item {

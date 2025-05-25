@@ -69,7 +69,15 @@ struct LayoutGenerater {
                     }
                 }
                 
-                return Item.block(BlockItem(index: julianDay, publicDayName: publicDay?.name, baseCalendarDayType: BaseCalendarManager.shared.isOff(day: gregorianDay) ? .offDay : .workDay, publicDayType: publicDay?.type, customDayInfo: customDayInfo, backgroundColor: backgroundColor, foregroundColor: foregroundColor, isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay)))
+                var alternativeCalendarName: String? = nil
+                switch AlternativeCalendarType.getValue() {
+                case .off:
+                    alternativeCalendarName = nil
+                case .chineseCalendar:
+                    alternativeCalendarName = ChineseCalendarManager.shared.findChineseDayInfo(gregorianDay, variant: .chinese)?.shortDisplayString()
+                }
+                
+                return Item.block(BlockItem(index: julianDay, publicDayName: publicDay?.name, baseCalendarDayType: BaseCalendarManager.shared.isOff(day: gregorianDay) ? .offDay : .workDay, publicDayType: publicDay?.type, customDayInfo: customDayInfo, backgroundColor: backgroundColor, foregroundColor: foregroundColor, isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay), alternativeCalendarName: alternativeCalendarName))
             })
             snapshot.appendItems(items)
         }

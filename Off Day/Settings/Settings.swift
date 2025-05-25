@@ -17,6 +17,7 @@ extension UserDefaults {
         case WeekEndOffDayType = "com.zizicici.common.settings.WeekEndOffDayType"
         case TutorialEntranceType = "com.zizicici.common.settings.TutorialEntranceType"
         case HolidayWorkColorType = "com.zizicici.offday.settings.HolidayWorkColorType"
+        case AlternativeCalendarType = "com.zizicici.common.settings.AlternativeCalendarType"
     }
 }
 
@@ -258,5 +259,40 @@ extension TutorialEntranceType: UserDefaultSettable {
     static func getTitle() -> String {
         return String(localized: "settings.tutorialEntranceType.title")
     }
+}
+
+enum AlternativeCalendarType: Int, CaseIterable, Codable {
+    case off = 0
+    case chineseCalendar
+}
+
+extension AlternativeCalendarType: UserDefaultSettable {
+    static func getKey() -> UserDefaults.Settings {
+        return .AlternativeCalendarType
+    }
     
+    static var defaultOption: AlternativeCalendarType {
+        if Language.type() == .zh {
+            return .chineseCalendar
+        } else {
+            return .off
+        }
+    }
+    
+    func getName() -> String {
+        switch self {
+        case .off:
+            return String(localized: "settings.alternativeCalendarType.off")
+        case .chineseCalendar:
+            return String(localized: "settings.alternativeCalendarType.chineseCalendar")
+        }
+    }
+    
+    static func getTitle() -> String {
+        return String(localized: "settings.alternativeCalendarType.title")
+    }
+    
+    static func getFooter() -> String? {
+        return String(localized: "settings.alternativeCalendarType.footer")
+    }
 }
