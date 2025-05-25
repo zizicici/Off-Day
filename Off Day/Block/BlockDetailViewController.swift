@@ -48,7 +48,7 @@ class BlockDetailViewController: UIViewController {
         var configuration = UIButton.Configuration.tinted()
         configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
             var outgoing = incoming
-            outgoing.font = UIFont.preferredFont(forTextStyle: .body)
+            outgoing.font = UIFont.preferredSystemFont(for: .body, weight: .medium)
 
             return outgoing
         })
@@ -56,7 +56,9 @@ class BlockDetailViewController: UIViewController {
         configuration.imagePadding = 4.0
         configuration.contentInsets.leading = 0
         configuration.contentInsets.trailing = 0
-        
+        configuration.contentInsets.top = 12.0
+        configuration.contentInsets.bottom = 12.0
+
         let button = UIButton(configuration: configuration)
         button.tintColor = AppColor.workDay
         button.accessibilityHint = String(localized: "detail.day.work.hint")
@@ -68,7 +70,7 @@ class BlockDetailViewController: UIViewController {
         var configuration = UIButton.Configuration.tinted()
         configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
             var outgoing = incoming
-            outgoing.font = UIFont.preferredFont(forTextStyle: .body)
+            outgoing.font = UIFont.preferredSystemFont(for: .body, weight: .medium)
 
             return outgoing
         })
@@ -76,6 +78,8 @@ class BlockDetailViewController: UIViewController {
         configuration.imagePadding = 4.0
         configuration.contentInsets.leading = 0
         configuration.contentInsets.trailing = 0
+        configuration.contentInsets.top = 12.0
+        configuration.contentInsets.bottom = 12.0
         
         let button = UIButton(configuration: configuration)
         button.tintColor = AppColor.offDay
@@ -92,7 +96,7 @@ class BlockDetailViewController: UIViewController {
 
             return outgoing
         })
-        configuration.image = UIImage(systemName: "plus.bubble", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14.0, weight: .medium))
+        configuration.image = UIImage(systemName: "plus.bubble", withConfiguration: UIImage.SymbolConfiguration(pointSize: 16.0, weight: .medium))
         
         let button = UIButton(configuration: configuration)
         button.tintColor = AppColor.text.withAlphaComponent(0.8)
@@ -119,6 +123,14 @@ class BlockDetailViewController: UIViewController {
         })
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        view.subviews.forEach { subview in
+            subview.removeFromSuperview()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -141,7 +153,7 @@ class BlockDetailViewController: UIViewController {
         
         view.addSubview(customLabel)
         customLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view).inset(15.0)
+            make.leading.trailing.equalTo(view).inset(18.0)
             make.top.equalTo(headView.snp.bottom).offset(12.0)
         }
         customLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
@@ -149,12 +161,11 @@ class BlockDetailViewController: UIViewController {
         
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 10.0
+        stackView.spacing = 12.0
         
         view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.top.equalTo(customLabel.snp.bottom).offset(8.0)
-            make.height.greaterThanOrEqualTo(44.0)
+            make.top.equalTo(customLabel.snp.bottom).offset(12.0)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(12.0)
         }
         
@@ -163,21 +174,31 @@ class BlockDetailViewController: UIViewController {
         stackView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         stackView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         
+        let separator = UIView()
+        separator.backgroundColor = UIColor.separator
+        view.addSubview(separator)
+        separator.snp.makeConstraints { make in
+            make.top.equalTo(stackView.snp.bottom).offset(12.0)
+            make.centerX.equalTo(stackView)
+            make.height.equalTo(0.5)
+            make.width.equalTo(200)
+        }
+        
         view.addSubview(commentButton)
         commentButton.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom).offset(16.0)
-            make.width.equalTo(36.0)
-            make.height.lessThanOrEqualTo(36.0).priority(.low)
+            make.top.equalTo(stackView.snp.bottom).offset(20.0)
+            make.width.equalTo(44.0)
+            make.height.equalTo(44.0)
             make.trailing.equalTo(view).inset(6.0)
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(12.0)
         }
         
         view.addSubview(commentLabel)
         commentLabel.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom).offset(12.0)
-            make.leading.equalTo(stackView).inset(3.0)
+            make.top.equalTo(stackView.snp.bottom).offset(20.0)
+            make.leading.equalTo(stackView).inset(6.0)
             make.trailing.equalTo(commentButton.snp.leading).offset(-6.0)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(8.0)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(12.0)
         }
         
         dateLabel.text = blockItem.calendarString
@@ -194,7 +215,7 @@ class BlockDetailViewController: UIViewController {
                 config?.image = nil
             case .workDay:
                 isSelected = true
-                config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(textStyle: .footnote))
+                config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(textStyle: .callout))
             case nil:
                 config?.image = nil
             }
@@ -211,7 +232,7 @@ class BlockDetailViewController: UIViewController {
             switch self.customDayType {
             case .offDay:
                 isSelected = true
-                config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(textStyle: .footnote))
+                config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(textStyle: .callout))
             case .workDay:
                 config?.image = nil
             case nil:
@@ -230,7 +251,11 @@ class BlockDetailViewController: UIViewController {
                 config?.image = UIImage(systemName: "plus.bubble", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14.0, weight: .medium))
                 button.accessibilityLabel = String(localized: "comment.add")
             } else {
-                config?.image = UIImage(systemName: "bubble.and.pencil", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14.0, weight: .medium))
+                if #available(iOS 18.0, *) {
+                    config?.image = UIImage(systemName: "bubble.and.pencil", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14.0, weight: .medium))
+                } else {
+                    config?.image = UIImage(systemName: "text.bubble", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14.0, weight: .medium))
+                }
                 button.accessibilityLabel = String(localized: "comment.edit")
             }
             
