@@ -16,7 +16,7 @@ struct DateCellItem: Hashable {
 }
 
 extension UIConfigurationStateCustomKey {
-    static let dateItem = UIConfigurationStateCustomKey("com.zizicici.offday.cell.date.item")
+    static let dateItem = UIConfigurationStateCustomKey("com.zizicici.zzz.cell.date.item")
 }
 
 extension UICellConfigurationState {

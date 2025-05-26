@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 fileprivate extension UIConfigurationStateCustomKey {
-    static let dayTypeItem = UIConfigurationStateCustomKey("com.zizicici.offday.cell.dayType.item")
+    static let dayTypeItem = UIConfigurationStateCustomKey("com.zizicici.zzz.cell.dayType.item")
 }
 
 private extension UICellConfigurationState {

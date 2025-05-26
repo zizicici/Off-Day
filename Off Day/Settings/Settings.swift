@@ -16,7 +16,7 @@ extension UserDefaults {
         case WeekEndColorType = "com.zizicici.common.settings.WeekEndColorType"
         case WeekEndOffDayType = "com.zizicici.common.settings.WeekEndOffDayType"
         case TutorialEntranceType = "com.zizicici.common.settings.TutorialEntranceType"
-        case HolidayWorkColorType = "com.zizicici.offday.settings.HolidayWorkColorType"
+        case HolidayWorkColorType = "com.zizicici.common.settings.HolidayWorkColorType"
         case AlternativeCalendarType = "com.zizicici.common.settings.AlternativeCalendarType"
     }
 }

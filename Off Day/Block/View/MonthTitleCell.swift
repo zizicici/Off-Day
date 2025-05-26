@@ -14,7 +14,7 @@ struct MonthItem: Hashable {
 }
 
 fileprivate extension UIConfigurationStateCustomKey {
-    static let monthItem = UIConfigurationStateCustomKey("com.zizicici.offday.cell.month.item")
+    static let monthItem = UIConfigurationStateCustomKey("com.zizicici.zzz.cell.month.item")
 }
 
 private extension UICellConfigurationState {
