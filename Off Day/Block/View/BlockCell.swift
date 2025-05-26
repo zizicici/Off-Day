@@ -11,7 +11,7 @@ import ZCCalendar
 import MarqueeLabel
 
 fileprivate extension UIConfigurationStateCustomKey {
-    static let blockItem = UIConfigurationStateCustomKey("com.zizicici.offday.cell.block.item")
+    static let blockItem = UIConfigurationStateCustomKey("com.zizicici.zzz.cell.block.item")
 }
 
 private extension UICellConfigurationState {
