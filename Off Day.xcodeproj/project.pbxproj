@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		141248232DE436D900DF3F9F /* SubscribeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141248222DE436D900DF3F9F /* SubscribeManager.swift */; };
+		141248262DE441EC00DF3F9F /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141248252DE441EC00DF3F9F /* OptionCell.swift */; };
 		1498CF0F2C3F72F8005562AA /* UpdateDayMarkIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */; };
 		1498CF1B2C402CD2005562AA /* ZCCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1498CF1A2C402CD2005562AA /* ZCCalendar */; };
 		14B239BD2DBF25FE0007152C /* DayTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B239BC2DBF25FE0007152C /* DayTypeCell.swift */; };
@@ -121,6 +122,7 @@
 /* Begin PBXFileReference section */
 		141248212DE435EB00DF3F9F /* Off Day.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Off Day.entitlements"; sourceTree = "<group>"; };
 		141248222DE436D900DF3F9F /* SubscribeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeManager.swift; sourceTree = "<group>"; };
+		141248252DE441EC00DF3F9F /* OptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCell.swift; sourceTree = "<group>"; };
 		141F38D92C9974D600347225 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		141F38DA2C9974D600347225 /* README_CN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README_CN.md; sourceTree = "<group>"; };
 		1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDayMarkIntent.swift; sourceTree = "<group>"; };
@@ -593,6 +595,7 @@
 				14ED08A52BEE117500100E2D /* TextInputCell.swift */,
 				14ED08AD2BEE511000100E2D /* PublicPlanCell.swift */,
 				14F2FA742BF093CF00BBE7FB /* DatePickerCell.swift */,
+				141248252DE441EC00DF3F9F /* OptionCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -767,6 +770,7 @@
 				14D6F9242BEB31E6008712E1 /* StandardConfigCell.swift in Sources */,
 				14DD50F22BE20BC1004329E2 /* DisplayHandler.swift in Sources */,
 				14F2FA732BF05CB700BBE7FB /* JSONPublicPlan.swift in Sources */,
+				141248262DE441EC00DF3F9F /* OptionCell.swift in Sources */,
 				14DD51222BE21050004329E2 /* Persistence.swift in Sources */,
 				14B36F7F2DE1C42D00E96C56 /* DayCommentIntent.swift in Sources */,
 				14EC7FDA2BEF0FA3003BB07E /* AppPublicPlan.swift in Sources */,

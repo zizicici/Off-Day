@@ -16,17 +16,58 @@ class PublicPlanViewController: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
     
     private var selectedItem: Item?
-        
-    enum Section: Hashable {
-        case top
+    
+    private var publicPlanType: PublicPlanType? {
+        didSet {
+            reloadData()
+        }
+    }
+    
+    // Picker: Remote
+    //
+    // Remote URL lists (Swipe To Share, Tap Edit, (update), (i))
+    // Add URL
+    //
+    // Network Permission
+    //
+    // Notification Permission
+    
+    enum InnerRegion: Hashable, CaseIterable {
         case cn
         case hk
         case mo
         case sg
-        case jp
-        case us
         case th
         case kr
+        case jp
+        case us
+        
+        var files: [AppPublicPlan.File] {
+            switch self {
+            case .cn:
+                return [.cn, .cn_xj, .cn_xz, .cn_gx, .cn_nx]
+            case .hk:
+                return [.hk]
+            case .mo:
+                return [.mo_public, .mo_force, .mo_cs]
+            case .sg:
+                return [.sg]
+            case .th:
+                return [.th]
+            case .kr:
+                return [.kr]
+            case .jp:
+                return [.jp]
+            case .us:
+                return [.us]
+            }
+        }
+    }
+    
+    enum Section: Hashable {
+        case picker
+        case manual
+        case inner(InnerRegion)
         
         var header: String? {
             return nil
@@ -38,7 +79,7 @@ class PublicPlanViewController: UIViewController {
     }
     
     enum Item: Hashable {
-        case empty
+        case picker(PublicPlanType?)
         case create
         case importPlan
         case appPlan(AppPublicPlan)
@@ -46,12 +87,12 @@ class PublicPlanViewController: UIViewController {
         
         var title: String {
             switch self {
-            case .empty:
-                return String(localized: "publicDay.item.special.empty")
+            case .picker:
+                return String(localized: "publicPlan.type.title")
             case .create:
-                return String(localized: "publicDay.item.special.create")
+                return String(localized: "publicPlan.item.special.create")
             case .importPlan:
-                return String(localized: "publicDay.item.special.import")
+                return String(localized: "publicPlan.item.special.import")
             case .appPlan(let plan):
                 return plan.title
             case .customPlan(let plan):
@@ -61,7 +102,7 @@ class PublicPlanViewController: UIViewController {
         
         var subtitle: String? {
             switch self {
-            case .empty:
+            case .picker:
                 return nil
             case .create:
                 return nil
@@ -73,6 +114,15 @@ class PublicPlanViewController: UIViewController {
                 return "\(plan.start.formatString() ?? "") - \(plan.end.formatString() ?? "")"
             }
         }
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        self.publicPlanType = currentPublicPlanType()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -109,6 +159,12 @@ class PublicPlanViewController: UIViewController {
                 guard let self = self else { return sectionSeparatorConfiguration }
                 guard let item = self.dataSource.itemIdentifier(for: indexPath) else { return sectionSeparatorConfiguration }
                 if let createIndex = self.dataSource.indexPath(for: .create) {
+                    if indexPath == createIndex, createIndex.row == 0 {
+                        var configuration = sectionSeparatorConfiguration
+                        configuration.topSeparatorVisibility = .hidden
+                        configuration.bottomSeparatorVisibility = .hidden
+                        return configuration
+                    }
                     if (indexPath.section == createIndex.section) && (indexPath.row + 1 == createIndex.row) {
                         var configuration = sectionSeparatorConfiguration
                         configuration.bottomSeparatorVisibility = .hidden
@@ -116,7 +172,7 @@ class PublicPlanViewController: UIViewController {
                     }
                 }
                 switch item {
-                case .empty, .appPlan,.customPlan:
+                case .picker, .appPlan,.customPlan:
                     return sectionSeparatorConfiguration
                 case .create, .importPlan:
                     var configuration = sectionSeparatorConfiguration
@@ -143,13 +199,14 @@ class PublicPlanViewController: UIViewController {
     }
     
     func configureDataSource() {
+        let optionCellRegistration = createOptionCellRegistration()
         let listCellRegistration = createListCellRegistration()
         let normalCellRegistration = createNormalCellRegistration()
         
         dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             switch itemIdentifier {
-            case .empty:
-                return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
+            case .picker:
+                return collectionView.dequeueConfiguredReusableCell(using: optionCellRegistration, for: indexPath, item: itemIdentifier)
             case .create, .importPlan:
                 return collectionView.dequeueConfiguredReusableCell(using: normalCellRegistration, for: indexPath, item: itemIdentifier)
             case .appPlan:
@@ -160,18 +217,36 @@ class PublicPlanViewController: UIViewController {
         })
     }
     
+    func createOptionCellRegistration() -> UICollectionView.CellRegistration<OptionCell<PublicPlanType>, Item> {
+        return UICollectionView.CellRegistration<OptionCell<PublicPlanType>, Item> { [weak self] (cell, indexPath, item) in
+            guard let self = self else { return }
+            switch item {
+            case .picker(let templateOption):
+                cell.update(with: templateOption)
+                let noneAction = UIAction(title: PublicPlanType.noneTitle, state: templateOption == nil ? .on : .off) { [weak self] _ in
+                    self?.publicPlanType = nil
+                }
+                let actions = [PublicPlanType.local, PublicPlanType.remote].map { target in
+                    let action = UIAction(title: target.title, subtitle: target.subtitle, state: templateOption == target ? .on : .off) { [weak self] _ in
+                        self?.publicPlanType = target
+                    }
+                    return action
+                }
+                let divider = UIMenu(title: "", options: . displayInline, children: actions)
+                let menu = UIMenu(children: [noneAction, divider])
+                cell.tapButton.menu = menu
+            default:
+                return
+            }
+        }
+    }
+    
     func createListCellRegistration() -> UICollectionView.CellRegistration<PublicPlanCell, Item> {
         return UICollectionView.CellRegistration<PublicPlanCell, Item> { [weak self] (cell, indexPath, item) in
             guard let self = self else { return }
             switch item {
-            case .empty:
-                var content = UIListContentConfiguration.valueCell()
-                content.text = item.title
-                var layoutMargins = content.directionalLayoutMargins
-                layoutMargins.leading = 10.0
-                content.directionalLayoutMargins = layoutMargins
-                cell.contentConfiguration = content
-                cell.detail = nil
+            case .picker:
+                return
             case .create, .importPlan:
                 return
             case .appPlan, .customPlan:
@@ -203,7 +278,7 @@ class PublicPlanViewController: UIViewController {
     
     func trailingSwipeActionConfigurationForListCellItem(_ item: Item) -> UISwipeActionsConfiguration? {
         switch item {
-        case .empty:
+        case .picker:
             return nil
         case .create:
             return nil
@@ -237,7 +312,7 @@ class PublicPlanViewController: UIViewController {
     
     func goToDetail(for item: Item) {
         switch item {
-        case .empty:
+        case .picker:
             break
         case .create, .importPlan:
             break
@@ -261,43 +336,46 @@ class PublicPlanViewController: UIViewController {
         navigationController?.present(nav, animated: true)
     }
     
+    func currentPublicPlanType() -> PublicPlanType? {
+        switch PublicPlanManager.shared.dataSource?.plan {
+        case .none:
+            return nil
+        case .app:
+            return .local
+        case .custom:
+            return .local
+        }
+    }
+    
     @objc
     func reloadData() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        snapshot.appendSections([.top])
-        var topItems: [Item] = [.empty]
-        if let customPlans = try? PublicPlanManager.shared.fetchAllPublicPlan() {
-            for customPlan in customPlans {
-                topItems.append(.customPlan(customPlan))
+        
+        snapshot.appendSections([.picker])
+        snapshot.appendItems([.picker(publicPlanType)], toSection: .picker)
+        
+        switch publicPlanType {
+        case .local:
+            snapshot.appendSections([.manual])
+            var topItems: [Item] = []
+            if let customPlans = try? PublicPlanManager.shared.fetchAllPublicPlan() {
+                for customPlan in customPlans {
+                    topItems.append(.customPlan(customPlan))
+                }
             }
+            topItems.append(.create)
+            topItems.append(.importPlan)
+            snapshot.appendItems(topItems, toSection: .manual)
+            
+            for innerRegion in InnerRegion.allCases {
+                snapshot.appendSections([.inner(innerRegion)])
+                snapshot.appendItems(innerRegion.files.map { .appPlan(AppPublicPlan(file: $0)) }, toSection: .inner(innerRegion))
+            }
+        case .remote:
+            break
+        case nil:
+            break
         }
-        topItems.append(.create)
-        topItems.append(.importPlan)
-        snapshot.appendItems(topItems, toSection: .top)
-        
-        snapshot.appendSections([.cn])
-        snapshot.appendItems([.appPlan(AppPublicPlan(file: .cn)), .appPlan(AppPublicPlan(file: .cn_xj)), .appPlan(AppPublicPlan(file: .cn_xz)), .appPlan(AppPublicPlan(file: .cn_gx)), .appPlan(AppPublicPlan(file: .cn_nx))], toSection: .cn)
-        
-        snapshot.appendSections([.hk])
-        snapshot.appendItems([.appPlan(AppPublicPlan(file: .hk))], toSection: .hk)
-        
-        snapshot.appendSections([.mo])
-        snapshot.appendItems([.appPlan(AppPublicPlan(file: .mo_public)), .appPlan(AppPublicPlan(file: .mo_force)), .appPlan(AppPublicPlan(file: .mo_cs))], toSection: .mo)
-        
-        snapshot.appendSections([.sg])
-        snapshot.appendItems([.appPlan(AppPublicPlan(file: .sg))], toSection: .sg)
-        
-        snapshot.appendSections([.th])
-        snapshot.appendItems([.appPlan(AppPublicPlan(file: .th))], toSection: .th)
-        
-        snapshot.appendSections([.kr])
-        snapshot.appendItems([.appPlan(AppPublicPlan(file: .kr))], toSection: .kr)
-        
-        snapshot.appendSections([.jp])
-        snapshot.appendItems([.appPlan(AppPublicPlan(file: .jp))], toSection: .jp)
-        
-        snapshot.appendSections([.us])
-        snapshot.appendItems([.appPlan(AppPublicPlan(file: .us))], toSection: .us)
         
         dataSource.apply(snapshot, animatingDifferences: false) { [weak self] in
             self?.updateSelection()
@@ -330,12 +408,6 @@ class PublicPlanViewController: UIViewController {
                 }
             }
         }
-        if selectedItem == nil {
-            if let index = dataSource.indexPath(for: .empty) {
-                selectedItem = .empty
-                collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
-            }
-        }
     }
     
     @objc
@@ -345,18 +417,22 @@ class PublicPlanViewController: UIViewController {
     
     @objc
     func confirmAction() {
-        guard let selectedItem = selectedItem else {
-            return
-        }
-        switch selectedItem {
-        case .empty:
+        switch publicPlanType {
+        case .local:
+            if let selectedItem = selectedItem {
+                switch selectedItem {
+                case .picker, .create, .importPlan:
+                    break
+                case .appPlan(let plan):
+                    PublicPlanManager.shared.select(plan: .app(plan))
+                case .customPlan(let plan):
+                    PublicPlanManager.shared.select(plan: .custom(plan))
+                }
+            }
+        case .remote:
+            break
+        case nil:
             PublicPlanManager.shared.select(plan: nil)
-        case .create, .importPlan:
-            return
-        case .appPlan(let plan):
-            PublicPlanManager.shared.select(plan: .app(plan))
-        case .customPlan(let plan):
-            PublicPlanManager.shared.select(plan: .custom(plan))
         }
         dismiss(animated: true)
     }
@@ -426,8 +502,8 @@ extension PublicPlanViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         if let item = dataSource.itemIdentifier(for: indexPath) {
             switch item {
-            case .empty:
-                return true
+            case .picker:
+                return false
             case .create:
                 createTemplate()
                 return false
