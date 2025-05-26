@@ -33,7 +33,7 @@ Off Day is a holiday alarm clock app on iOS. Users can easily and elegantly mark
 - [x] Custom Public Holiday Template (Edit/Import/Export)
 - [x] Basic Calendar (Supports Days Circle/Weeks Circle/Standard Calendar)
 - [x] User Annotation (Users Can Overwrite Off/Work Day Status)
-- [ ] User Stickers (For Annotating More Information for Users)
+- [ ] Subscriptionable Remote Public Holiday Template
 
 # Determination
 
