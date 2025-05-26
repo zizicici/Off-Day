@@ -20,6 +20,7 @@ class MoreViewController: UIViewController {
     enum Section: Hashable {
         case general
         case dataSource
+        case contact
         case help
         case appjun
         case about
@@ -30,6 +31,8 @@ class MoreViewController: UIViewController {
                 return String(localized: "more.section.general")
             case .dataSource:
                 return String(localized: "more.section.dataSource")
+            case .contact:
+                return String(localized: "more.section.contact")
             case .help:
                 return String(localized: "more.section.help")
             case .appjun:
@@ -105,13 +108,56 @@ class MoreViewController: UIViewController {
             }
         }
         
+        enum ContactItem: Hashable, CaseIterable {
+            case email
+            case xiaohongshu
+            case reddit
+            case bilibili
+
+            var title: String {
+                switch self {
+                case .email:
+                    return String(localized: "more.item.contact.email")
+                case .xiaohongshu:
+                    return String(localized: "more.item.contact.xiaohongshu")
+                case .reddit:
+                    return String(localized: "more.item.contact.reddit")
+                case .bilibili:
+                    return String(localized: "more.item.contact.bilibili")
+                }
+            }
+            
+            var value: String? {
+                switch self {
+                case .email:
+                    return MoreViewController.supportEmail
+                case .reddit:
+                    return "r/appjun"
+                case .bilibili, .xiaohongshu:
+                    return "@App君"
+                }
+            }
+            
+            var image: UIImage? {
+                switch self {
+                case .email:
+                    return UIImage(systemName: "envelope")
+                case .xiaohongshu:
+                    return UIImage(systemName: "book.closed")
+                case .reddit:
+                    return UIImage(systemName: "bubble.left.and.exclamationmark.bubble.right")
+                case .bilibili:
+                    return UIImage(systemName: "play.tv")
+                }
+            }
+        }
+        
         enum AboutItem {
             case specifications
             case share
             case review
             case eula
             case privacyPolicy
-            case email
             
             var title: String {
                 switch self {
@@ -125,34 +171,21 @@ class MoreViewController: UIViewController {
                     return String(localized: "more.item.about.eula")
                 case .privacyPolicy:
                     return String(localized: "more.item.about.privacyPolicy")
-                case .email:
-                    return String(localized: "more.item.about.email")
                 }
             }
             
             var value: String? {
-                switch self {
-                case .email:
-                    return MoreViewController.supportEmail
-                default:
-                    return nil
-                }
+                return nil
             }
         }
         
         enum AppJunItem: Hashable {
             case otherApps(AppInfo.App)
-            case bilibili
-            case xiaohongshu
             
             var title: String {
                 switch self {
                 case .otherApps:
                     return ""
-                case .bilibili:
-                    return String(localized: "more.item.appjun.bilibili")
-                case .xiaohongshu:
-                    return String(localized: "more.item.appjun.xiaohongshu")
                 }
             }
             
@@ -160,8 +193,6 @@ class MoreViewController: UIViewController {
                 switch self {
                 case .otherApps:
                     return nil
-                case .bilibili, .xiaohongshu:
-                    return "@App君"
                 }
             }
         }
@@ -169,6 +200,7 @@ class MoreViewController: UIViewController {
         case settings(GeneralItem)
         case dataSource(DataSourceItem)
         case help
+        case contact(ContactItem)
         case appjun(AppJunItem)
         case about(AboutItem)
         
@@ -180,6 +212,8 @@ class MoreViewController: UIViewController {
                 return item.title
             case .help:
                 return String(localized: "more.item.help")
+            case .contact(let item):
+                return item.title
             case .appjun(let item):
                 return item.title
             case .about(let item):
@@ -280,6 +314,15 @@ class MoreViewController: UIViewController {
                 content.textProperties.color = .label
                 cell.contentConfiguration = content
                 return cell
+            case .contact(let item):
+                let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+                cell.accessoryType = .disclosureIndicator
+                var content = UIListContentConfiguration.valueCell()
+                content.text = identifier.title
+                content.textProperties.color = .label
+                content.secondaryText = item.value
+                cell.contentConfiguration = content
+                return cell
             case .appjun(let item):
                 switch item {
                 case .otherApps(let app):
@@ -289,17 +332,7 @@ class MoreViewController: UIViewController {
                     }
                     cell.accessoryType = .disclosureIndicator
                     return cell
-                default:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-                    cell.accessoryType = .disclosureIndicator
-                    var content = UIListContentConfiguration.valueCell()
-                    content.text = identifier.title
-                    content.textProperties.color = .label
-                    content.secondaryText = item.value
-                    cell.contentConfiguration = content
-                    return cell
                 }
-
             case .about(let item):
                 let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
                 cell.accessoryType = .disclosureIndicator
@@ -325,17 +358,19 @@ class MoreViewController: UIViewController {
         snapshot.appendSections([.help])
         snapshot.appendItems([.help], toSection: .help)
         
+        snapshot.appendSections([.contact])
+        snapshot.appendItems([.contact(.email), .contact(.xiaohongshu), .contact(.reddit), .contact(.bilibili)], toSection: .contact)
+        
         snapshot.appendSections([.appjun])
         var appItems: [Item] = [.appjun(.otherApps(.lemon)), .appjun(.otherApps(.moontake)), .appjun(.otherApps(.coconut)), .appjun(.otherApps(.pigeon))]
         if Language.type() == .zh {
             appItems.append(.appjun(.otherApps(.festivals)))
         }
         appItems.append(.appjun(.otherApps(.one)))
-        appItems.append(contentsOf: [.appjun(.bilibili), .appjun(.xiaohongshu)])
         snapshot.appendItems(appItems, toSection: .appjun)
         
         snapshot.appendSections([.about])
-        snapshot.appendItems([.about(.specifications), .about(.eula), .about(.share), .about(.review), .about(.privacyPolicy), .about(.email)], toSection: .about)
+        snapshot.appendItems([.about(.specifications), .about(.eula), .about(.share), .about(.review), .about(.privacyPolicy)], toSection: .about)
 
         dataSource.apply(snapshot, animatingDifferences: false)
     }
@@ -364,14 +399,12 @@ extension MoreViewController: UITableViewDelegate {
                 }
             case .help:
                 enterHelpCenter()
+            case .contact(let item):
+                handle(contactItem: item)
             case .appjun(let item):
                 switch item {
                 case .otherApps(let app):
                     openStorePage(for: app)
-                case .bilibili:
-                    openBilibiliWebpage()
-                case .xiaohongshu:
-                    openXiaohongshuWebpage()
                 }
             case .about(let item):
                 switch item {
@@ -385,8 +418,6 @@ extension MoreViewController: UITableViewDelegate {
                     openEULA()
                 case .privacyPolicy:
                     openPrivacyPolicy()
-                case .email:
-                    sendEmailToCustomerSupport()
                 }
             }
         }
@@ -437,21 +468,6 @@ extension MoreViewController {
         navigationController?.pushViewController(specificationViewController, animated: true)
     }
     
-    func sendEmailToCustomerSupport() {
-        let recipient = MoreViewController.supportEmail
-        
-        guard let emailUrlString = "mailto:\(recipient)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-              let emailUrl = URL(string: emailUrlString) else {
-            return
-        }
-        
-        if UIApplication.shared.canOpenURL(emailUrl) {
-            UIApplication.shared.open(emailUrl, options: [:], completionHandler: nil)
-        } else {
-            // 打开邮件应用失败，进行适当的处理或提醒用户
-        }
-    }
-    
     func openEULA() {
         if let url = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/") {
             openSF(with: url)
@@ -460,18 +476,6 @@ extension MoreViewController {
     
     func openPrivacyPolicy() {
         if let url = URL(string: "https://zizicici.medium.com/privacy-policy-for-off-day-app-6f7f26f68c7c") {
-            openSF(with: url)
-        }
-    }
-    
-    func openBilibiliWebpage() {
-        if let url = URL(string: "https://space.bilibili.com/4969209") {
-            openSF(with: url)
-        }
-    }
-    
-    func openXiaohongshuWebpage() {
-        if let url = URL(string: "https://www.xiaohongshu.com/user/profile/63f05fc5000000001001e524") {
             openSF(with: url)
         }
     }
@@ -590,6 +594,55 @@ struct Language {
             return .ja
         default:
             return .en
+        }
+    }
+}
+
+extension UIViewController {
+    func handle(contactItem: MoreViewController.Item.ContactItem) {
+        switch contactItem {
+        case .email:
+            sendEmailToCustomerSupport()
+        case .xiaohongshu:
+            openXiaohongshuWebpage()
+        case .reddit:
+            openRedditWebpage()
+        case .bilibili:
+            openBilibiliWebpage()
+        }
+    }
+    
+    func sendEmailToCustomerSupport() {
+        let recipient = MoreViewController.supportEmail
+        
+        guard let emailUrlString = "mailto:\(recipient)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let emailUrl = URL(string: emailUrlString) else {
+            return
+        }
+        
+        if UIApplication.shared.canOpenURL(emailUrl) {
+            UIApplication.shared.open(emailUrl, options: [:], completionHandler: nil)
+        } else {
+            // 打开邮件应用失败，进行适当的处理或提醒用户
+        }
+    }
+    
+    
+    func openBilibiliWebpage() {
+        if let url = URL(string: "https://space.bilibili.com/4969209") {
+            openSF(with: url)
+        }
+    }
+    
+    func openXiaohongshuWebpage() {
+        if let url = URL(string: "https://www.xiaohongshu.com/user/profile/63f05fc5000000001001e524") {
+            openSF(with: url)
+        }
+    }
+    
+    func openRedditWebpage() {
+        if let url = URL(string: "https://www.reddit.com/r/appjun/") {
+            openSF(with: url)
         }
     }
 }

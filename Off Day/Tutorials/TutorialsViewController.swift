@@ -161,8 +161,16 @@ class TutorialsViewController: UIViewController {
         view.backgroundColor = AppColor.background
         updateNavigationBarStyle()
         
-        let helpButton = UIBarButtonItem(image: UIImage(systemName: "questionmark.circle"), style: .plain, target: self, action: #selector(enterHelpCenter))
-        helpButton.accessibilityLabel = String(localized: "more.item.help")
+        let helpButton = UIBarButtonItem(title: String(localized: "more.section.help"), style: .plain, target: self, action: nil)
+        let helpAction = UIAction(title: String(localized: "more.item.help"), subtitle: String(localized: "more.section.help.hint"), image: UIImage(systemName: "questionmark.circle")) { [weak self] _ in
+            self?.enterHelpCenter()
+        }
+        let contactDivider = UIMenu(title: String(localized: "more.section.contact"), subtitle: String(localized: "more.section.contact.hint"), children: MoreViewController.Item.ContactItem.allCases.map({ item in
+            return UIAction(title: item.title, subtitle: item.value, image: item.image) { [weak self] _ in
+                self?.handle(contactItem: item)
+            }
+        }))
+        helpButton.menu = UIMenu(title: "", children: [helpAction, contactDivider])
         navigationItem.rightBarButtonItem = helpButton
         
         view.addSubview(stackView)
