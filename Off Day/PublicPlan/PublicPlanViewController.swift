@@ -64,10 +64,24 @@ class PublicPlanViewController: UIViewController {
         }
     }
     
+    enum LocalAction: Hashable, CaseIterable {
+        case create
+        case importPlan
+        
+        var title: String {
+            switch self {
+            case .create:
+                return String(localized: "publicPlan.item.special.create")
+            case .importPlan:
+                return String(localized: "publicPlan.item.special.import")
+            }
+        }
+    }
+    
     enum Section: Hashable {
         case picker
-        case manual
-        case inner(InnerRegion)
+        case customLocal
+        case buildIn(InnerRegion)
         
         var header: String? {
             return nil
@@ -80,8 +94,7 @@ class PublicPlanViewController: UIViewController {
     
     enum Item: Hashable {
         case picker(PublicPlanType?)
-        case create
-        case importPlan
+        case localAction(LocalAction)
         case appPlan(AppPublicPlan)
         case customPlan(CustomPublicPlan)
         
@@ -89,10 +102,8 @@ class PublicPlanViewController: UIViewController {
             switch self {
             case .picker:
                 return String(localized: "publicPlan.type.title")
-            case .create:
-                return String(localized: "publicPlan.item.special.create")
-            case .importPlan:
-                return String(localized: "publicPlan.item.special.import")
+            case .localAction(let action):
+                return action.title
             case .appPlan(let plan):
                 return plan.title
             case .customPlan(let plan):
@@ -104,9 +115,7 @@ class PublicPlanViewController: UIViewController {
             switch self {
             case .picker:
                 return nil
-            case .create:
-                return nil
-            case .importPlan:
+            case .localAction:
                 return nil
             case .appPlan(let plan):
                 return plan.subtitle
@@ -158,7 +167,7 @@ class PublicPlanViewController: UIViewController {
             configuration.itemSeparatorHandler = { [weak self] (indexPath, sectionSeparatorConfiguration) in
                 guard let self = self else { return sectionSeparatorConfiguration }
                 guard let item = self.dataSource.itemIdentifier(for: indexPath) else { return sectionSeparatorConfiguration }
-                if let createIndex = self.dataSource.indexPath(for: .create) {
+                if let createIndex = self.dataSource.indexPath(for: .localAction(.create)) {
                     if indexPath == createIndex, createIndex.row == 0 {
                         var configuration = sectionSeparatorConfiguration
                         configuration.topSeparatorVisibility = .hidden
@@ -174,7 +183,7 @@ class PublicPlanViewController: UIViewController {
                 switch item {
                 case .picker, .appPlan,.customPlan:
                     return sectionSeparatorConfiguration
-                case .create, .importPlan:
+                case .localAction:
                     var configuration = sectionSeparatorConfiguration
                     configuration.topSeparatorVisibility = .visible
                     configuration.topSeparatorInsets = .zero
@@ -207,7 +216,7 @@ class PublicPlanViewController: UIViewController {
             switch itemIdentifier {
             case .picker:
                 return collectionView.dequeueConfiguredReusableCell(using: optionCellRegistration, for: indexPath, item: itemIdentifier)
-            case .create, .importPlan:
+            case .localAction:
                 return collectionView.dequeueConfiguredReusableCell(using: normalCellRegistration, for: indexPath, item: itemIdentifier)
             case .appPlan:
                 return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
@@ -247,7 +256,7 @@ class PublicPlanViewController: UIViewController {
             switch item {
             case .picker:
                 return
-            case .create, .importPlan:
+            case .localAction:
                 return
             case .appPlan, .customPlan:
                 var content = UIListContentConfiguration.subtitleCell()
@@ -280,9 +289,7 @@ class PublicPlanViewController: UIViewController {
         switch item {
         case .picker:
             return nil
-        case .create:
-            return nil
-        case .importPlan:
+        case .localAction:
             return nil
         case .appPlan:
             return nil
@@ -314,7 +321,7 @@ class PublicPlanViewController: UIViewController {
         switch item {
         case .picker:
             break
-        case .create, .importPlan:
+        case .localAction:
             break
         case .appPlan(let plan):
             if let detailViewController = PublicPlanDetailViewController(appPlan: plan) {
@@ -356,20 +363,20 @@ class PublicPlanViewController: UIViewController {
         
         switch publicPlanType {
         case .local:
-            snapshot.appendSections([.manual])
-            var topItems: [Item] = []
+            snapshot.appendSections([.customLocal])
+            var customLocalItems: [Item] = []
             if let customPlans = try? PublicPlanManager.shared.fetchAllPublicPlan() {
                 for customPlan in customPlans {
-                    topItems.append(.customPlan(customPlan))
+                    customLocalItems.append(.customPlan(customPlan))
                 }
             }
-            topItems.append(.create)
-            topItems.append(.importPlan)
-            snapshot.appendItems(topItems, toSection: .manual)
+            customLocalItems.append(.localAction(.create))
+            customLocalItems.append(.localAction(.importPlan))
+            snapshot.appendItems(customLocalItems, toSection: .customLocal)
             
             for innerRegion in InnerRegion.allCases {
-                snapshot.appendSections([.inner(innerRegion)])
-                snapshot.appendItems(innerRegion.files.map { .appPlan(AppPublicPlan(file: $0)) }, toSection: .inner(innerRegion))
+                snapshot.appendSections([.buildIn(innerRegion)])
+                snapshot.appendItems(innerRegion.files.map { .appPlan(AppPublicPlan(file: $0)) }, toSection: .buildIn(innerRegion))
             }
         case .remote:
             break
@@ -421,7 +428,7 @@ class PublicPlanViewController: UIViewController {
         case .local:
             if let selectedItem = selectedItem {
                 switch selectedItem {
-                case .picker, .create, .importPlan:
+                case .picker, .localAction:
                     break
                 case .appPlan(let plan):
                     PublicPlanManager.shared.select(plan: .app(plan))
@@ -504,10 +511,10 @@ extension PublicPlanViewController: UICollectionViewDelegate {
             switch item {
             case .picker:
                 return false
-            case .create:
+            case .localAction(.create):
                 createTemplate()
                 return false
-            case .importPlan:
+            case .localAction(.importPlan):
                 importPlanAction()
                 return false
             case .appPlan:
