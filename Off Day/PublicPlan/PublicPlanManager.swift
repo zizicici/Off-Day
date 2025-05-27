@@ -108,7 +108,7 @@ final class PublicPlanManager {
 
 extension PublicPlanManager {
     public func create(_ planInfo: PublicPlanInfo) -> Bool {
-        if let plan = AppDatabase.shared.add(publicPlan: CustomPublicPlan(name: planInfo.name, start: planInfo.start, end: planInfo.end)), let planId = plan.id {
+        if let plan = AppDatabase.shared.add(publicPlan: CustomPublicPlan(name: planInfo.name, start: planInfo.start, end: planInfo.end, source: planInfo.plan.source, url: planInfo.plan.url ?? "")), let planId = plan.id {
             for day in planInfo.days.values.sorted(by: { $0.date.julianDay < $1.date.julianDay }) {
                 if var saveDay = day as? CustomPublicDay {
                     saveDay.planId = planId
@@ -193,9 +193,9 @@ extension PublicPlanManager {
 }
 
 extension PublicPlanManager {
-    func importPlan(from url: URL) -> Bool {
-        if let jsonPlan = try? JSONPublicPlan(from: url) {
-            let newCustomPlan = CustomPublicPlan.Detail(plan: CustomPublicPlan(name: jsonPlan.name, start: jsonPlan.start, end: jsonPlan.end), days: jsonPlan.days.map({ CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }))
+    func importPlan(fileURL: URL) -> Bool {
+        if let jsonPlan = try? JSONPublicPlan(from: fileURL) {
+            let newCustomPlan = CustomPublicPlan.Detail(plan: CustomPublicPlan(name: jsonPlan.name, start: jsonPlan.start, end: jsonPlan.end, source: .file, url: fileURL.absoluteString), days: jsonPlan.days.map({ CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }))
             let planInfo = PublicPlanInfo(detail: newCustomPlan)
             return create(planInfo)
         } else {

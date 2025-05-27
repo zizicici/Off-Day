@@ -12,6 +12,24 @@ struct PublicPlanInfo {
     enum Plan: Equatable, Hashable {
         case app(AppPublicPlan)
         case custom(CustomPublicPlan)
+        
+        var source: PublicPlanSource {
+            switch self {
+            case .app:
+                return .app
+            case .custom(let customPublicPlan):
+                return customPublicPlan.source
+            }
+        }
+        
+        var url: String? {
+            switch self {
+            case .app:
+                return nil
+            case .custom(let customPublicPlan):
+                return customPublicPlan.url
+            }
+        }
     }
     
     var plan: Plan!
@@ -118,7 +136,7 @@ struct PublicPlanInfo {
     }
     
     func getDuplicateCustomPlan() -> PublicPlanInfo {
-        let newPlan = Plan.custom(CustomPublicPlan(name: self.name, start: self.start, end: self.end))
+        let newPlan = Plan.custom(CustomPublicPlan(name: self.name, start: self.start, end: self.end, source: .manual, url: ""))
         
         return PublicPlanInfo(plan: newPlan, days: days.mapValues({ CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }))
     }

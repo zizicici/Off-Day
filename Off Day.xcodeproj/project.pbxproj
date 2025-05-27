@@ -107,6 +107,7 @@
 		14ED08AE2BEE511000100E2D /* PublicPlanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED08AD2BEE511000100E2D /* PublicPlanCell.swift */; };
 		14ED08B02BEE55DB00100E2D /* CustomPublicPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED08AF2BEE55DB00100E2D /* CustomPublicPlan.swift */; };
 		14ED08B22BEE570D00100E2D /* DayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED08B12BEE570D00100E2D /* DayType.swift */; };
+		14ED36F42DE5717600491D84 /* CustomSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED36F32DE5717600491D84 /* CustomSubscription.swift */; };
 		14EF2B742BFB44FA00F8C684 /* AppInfo in Frameworks */ = {isa = PBXBuildFile; productRef = 14EF2B732BFB44FA00F8C684 /* AppInfo */; };
 		14F2FA732BF05CB700BBE7FB /* JSONPublicPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2FA722BF05CB700BBE7FB /* JSONPublicPlan.swift */; };
 		14F2FA752BF093CF00BBE7FB /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2FA742BF093CF00BBE7FB /* DatePickerCell.swift */; };
@@ -220,6 +221,7 @@
 		14ED08AD2BEE511000100E2D /* PublicPlanCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPlanCell.swift; sourceTree = "<group>"; };
 		14ED08AF2BEE55DB00100E2D /* CustomPublicPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPublicPlan.swift; sourceTree = "<group>"; };
 		14ED08B12BEE570D00100E2D /* DayType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayType.swift; sourceTree = "<group>"; };
+		14ED36F32DE5717600491D84 /* CustomSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSubscription.swift; sourceTree = "<group>"; };
 		14F2FA722BF05CB700BBE7FB /* JSONPublicPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPublicPlan.swift; sourceTree = "<group>"; };
 		14F2FA742BF093CF00BBE7FB /* DatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
 		14F2FA762BF102C600BBE7FB /* DayDetailIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDetailIntent.swift; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 				14ED08B12BEE570D00100E2D /* DayType.swift */,
 				14DD51472BE24EA9004329E2 /* CustomPublicDay.swift */,
 				14ED08AF2BEE55DB00100E2D /* CustomPublicPlan.swift */,
+				14ED36F32DE5717600491D84 /* CustomSubscription.swift */,
 				14D6F92D2BEBDDF4008712E1 /* BaseCalendarConfig.swift */,
 				14DD51132BE21050004329E2 /* CustomDay.swift */,
 				14D3625A2DE0A17B00C0BAFE /* CustomComment.swift */,
@@ -760,6 +763,7 @@
 				14B9E66E2DE34FEA00E4B391 /* ChineseMonth.swift in Sources */,
 				14B9E66F2DE34FEA00E4B391 /* ChineseYear.swift in Sources */,
 				14B9E6702DE34FEA00E4B391 /* YearRange.swift in Sources */,
+				14ED36F42DE5717600491D84 /* CustomSubscription.swift in Sources */,
 				14B9E6712DE34FEA00E4B391 /* ChineseCalendarManager.swift in Sources */,
 				14B9E6722DE34FEA00E4B391 /* ChineseDay.swift in Sources */,
 				14F8D7D22C5C8471000B48A3 /* UIFont+Extension.swift in Sources */,

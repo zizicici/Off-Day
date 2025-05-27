@@ -88,6 +88,44 @@ final class AppDatabase {
                 table.column("content", .text).notNull()
             }
         }
+        migrator.registerMigration("add_custom_subscription") { db in
+            try db.create(table: "custom_subscription") { table in
+                table.autoIncrementedPrimaryKey("id")
+                
+                table.column("creation_time", .integer).notNull()
+                table.column("modification_time", .integer).notNull()
+                table.column("url", .text).notNull()
+            }
+            
+            try db.create(table: "custom_subscription_fetch_result") { table in
+                table.autoIncrementedPrimaryKey("id")
+
+                table.column("creation_time", .integer).notNull()
+                table.column("modification_time", .integer).notNull()
+                
+                table.column("is_success", .boolean).notNull()
+                
+                table.column("error_code", .text)
+                table.column("error_message", .text)
+                
+                table.column("start", .integer)
+                table.column("end", .integer)
+                
+                table.column("sum", .integer)
+                table.column("add_count", .integer)
+                table.column("delete_count", .integer)
+                table.column("update_count", .integer)
+                
+                table.column("subscription_id", .integer).notNull()
+                    .indexed()
+                    .references("custom_subscription", onDelete: .cascade)
+            }
+            
+            try db.alter(table: "custom_public_plan") { table in
+                table.add(column: "source", .integer).notNull().defaults(to: 1)
+                table.add(column: "url", .text).notNull().defaults(to: "")
+            }
+        }
         
         return migrator
     }

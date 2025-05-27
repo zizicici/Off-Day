@@ -447,7 +447,7 @@ class PublicPlanViewController: UIViewController {
     func createTemplate() {
         let firstDay = GregorianDay(year: ZCCalendar.manager.today.year, month: .jan, day: 1)
         let lastDay = GregorianDay(year: ZCCalendar.manager.today.year, month: .dec, day: 31)
-        let publicPlanInfo = PublicPlanInfo(plan: .custom(CustomPublicPlan(name: String(localized: "publicDetail.title.new"), start: firstDay, end: lastDay)), days: [firstDay.julianDay : CustomPublicDay(name: String(localized: "publicDetail.newYear.name"), date: firstDay, type: .offDay)])
+        let publicPlanInfo = PublicPlanInfo(plan: .custom(CustomPublicPlan(name: String(localized: "publicDetail.title.new"), start: firstDay, end: lastDay, source: .manual, url: "")), days: [firstDay.julianDay : CustomPublicDay(name: String(localized: "publicDetail.newYear.name"), date: firstDay, type: .offDay)])
         createCustomTemplate(prefill: publicPlanInfo)
     }
     
@@ -460,7 +460,7 @@ class PublicPlanViewController: UIViewController {
     }
     
     func importPlan(from url: URL) {
-        let result = PublicPlanManager.shared.importPlan(from: url)
+        let result = PublicPlanManager.shared.importPlan(fileURL: url)
         let style = ToastStyle.getStyle(messageColor: .white, backgroundColor: AppColor.offDay)
         view.makeToast(
             result ? String(localized: "publicDetail.import.success") : String(localized: "publicDetail.import.failure"), position: .center, style: style)
