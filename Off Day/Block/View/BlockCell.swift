@@ -71,6 +71,14 @@ class BlockCell: BlockBaseCell {
         return view
     }()
     
+    var commentMark: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 2.0
+        view.layer.cornerCurve = .continuous
+        
+        return view
+    }()
+    
     var highlightColor: UIColor = .gray.withAlphaComponent(0.35)
     
     override func prepareForReuse() {
@@ -93,8 +101,14 @@ class BlockCell: BlockBaseCell {
 
         contentView.addSubview(cornerMark)
         cornerMark.snp.makeConstraints { make in
-            make.right.top.equalTo(contentView)
+            make.trailing.top.equalTo(contentView)
             make.width.height.equalTo(15.0)
+        }
+        
+        contentView.addSubview(commentMark)
+        commentMark.snp.makeConstraints { make in
+            make.top.leading.equalTo(contentView).inset(5.0)
+            make.width.height.equalTo(5.0)
         }
         
         isAccessibilityElement = true
@@ -141,6 +155,8 @@ class BlockCell: BlockBaseCell {
             }
             
             dateView.update(with: item.day.dayString(), alternativeCalendar: item.alternativeCalendarDayName, foregroundColor: item.foregroundColor)
+            commentMark.isHidden = item.customDayInfo.customComment == nil
+            commentMark.backgroundColor = item.foregroundColor.withAlphaComponent(0.5)
             if item.isToday {
                 accessibilityLabel = String(localized: "weekCalendar.today") + (item.day.completeFormatString() ?? "")
             } else {
