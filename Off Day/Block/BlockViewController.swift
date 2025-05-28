@@ -147,7 +147,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
                 if displayString.count > 0 {
                     displayString += "\n"                    
                 }
-                displayString += String(format: String(localized: "comment.%@"), comment.content)
+                displayString += comment.content
             }
             if displayString.count > 0 {
                 let style = ToastStyle.getStyle(messageColor: blockItem.foregroundColor, backgroundColor: blockItem.backgroundColor)
