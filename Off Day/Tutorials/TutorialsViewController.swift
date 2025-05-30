@@ -17,6 +17,13 @@ struct HelpURL {
 }
 
 class TutorialsViewController: UIViewController {
+    private var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = true
+        scrollView.alwaysBounceVertical = true
+        return scrollView
+    }()
+    
     private var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -78,9 +85,32 @@ class TutorialsViewController: UIViewController {
         return button
     }()
     
-    private var addShortcutsButton: UIButton = {
+    private var notificationButton: UIButton = {
         var configuration = UIButton.Configuration.borderedTinted()
         configuration.image = UIImage(systemName: "2.circle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18.0))
+        configuration.title = String(localized: "tutorials.notification.title")
+        configuration.subtitle = String(localized: "tutorials.notification.subtitle")
+        configuration.imagePadding = 8.0
+        configuration.titlePadding = 4.0
+        configuration.cornerStyle = .large
+        configuration.buttonSize = .large
+        
+        configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.preferredFont(forTextStyle: .headline)
+
+            return outgoing
+        })
+        
+        let button = UIButton(configuration: configuration)
+        button.tintColor = AppColor.offDay
+        
+        return button
+    }()
+    
+    private var addShortcutsButton: UIButton = {
+        var configuration = UIButton.Configuration.borderedTinted()
+        configuration.image = UIImage(systemName: "3.circle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18.0))
         configuration.title = String(localized: "tutorials.shortcuts.title")
         configuration.subtitle = String(localized: "tutorials.shortcuts.subtitle")
         configuration.imagePadding = 8.0
@@ -104,7 +134,7 @@ class TutorialsViewController: UIViewController {
     
     private var automationButton: UIButton = {
         var configuration = UIButton.Configuration.borderedTinted()
-        configuration.image = UIImage(systemName: "3.circle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18.0))
+        configuration.image = UIImage(systemName: "4.circle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18.0))
         configuration.title = String(localized: "tutorials.automation.title")
         configuration.subtitle = String(localized: "tutorials.automation.subtitle")
         configuration.imagePadding = 8.0
@@ -173,30 +203,38 @@ class TutorialsViewController: UIViewController {
         helpButton.menu = UIMenu(title: "", children: [helpAction, contactDivider])
         navigationItem.rightBarButtonItem = helpButton
         
-        view.addSubview(stackView)
+        view.addSubview(scrollView)
+        
+        scrollView.addSubview(topLabel)
+        topLabel.snp.makeConstraints { make in
+            make.top.equalTo(scrollView).offset(70)
+            make.leading.trailing.equalTo(view).inset(32)
+        }
+        
+        scrollView.addSubview(secondLabel)
+        secondLabel.snp.makeConstraints { make in
+            make.top.equalTo(topLabel.snp.bottom).offset(10)
+            make.leading.trailing.equalTo(view).inset(32)
+        }
+        
+        scrollView.addSubview(stackView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
         stackView.snp.makeConstraints { make in
-            make.centerX.equalTo(view)
-            make.centerY.equalTo(view).offset(50)
-            make.height.width.greaterThanOrEqualTo(0)
+            make.top.equalTo(secondLabel.snp.bottom).offset(50)
+            make.bottom.equalTo(scrollView).inset(50)
             make.width.lessThanOrEqualTo(view).offset(-80)
+            make.centerX.equalTo(view)
         }
         
         stackView.addArrangedSubview(publicPlanButton)
+        stackView.addArrangedSubview(notificationButton)
         stackView.addArrangedSubview(addShortcutsButton)
         stackView.setCustomSpacing(4, after: addShortcutsButton)
         stackView.addArrangedSubview(tutorialsButton)
         stackView.addArrangedSubview(automationButton)
-        
-        view.addSubview(secondLabel)
-        secondLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(stackView.snp.top).offset(-60)
-            make.leading.trailing.equalTo(view).inset(32)
-        }
-        view.addSubview(topLabel)
-        topLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(secondLabel.snp.top).offset(-10)
-            make.leading.trailing.equalTo(view).inset(32)
-        }
         
         let normalAction = UIAction(title: String(localized: "tutorials.normal.title"), image: UIImage(systemName: "alarm")) { [weak self] _ in
             guard let self = self else { return }
@@ -217,6 +255,7 @@ class TutorialsViewController: UIViewController {
         }
 
         publicPlanButton.addTarget(self, action: #selector(showPublicPlanPicker), for: .touchUpInside)
+        notificationButton.addTarget(self, action: #selector(requestNotificationPermission), for: .touchUpInside)
         tutorialsButton.addTarget(self, action: #selector(openShortcutsHelp), for: .touchUpInside)
         automationButton.addTarget(self, action: #selector(openAutomationHelp), for: .touchUpInside)
         
@@ -266,6 +305,11 @@ class TutorialsViewController: UIViewController {
         if let url = HelpURL.automationHelpURL {
             openSF(with: url)
         }
+    }
+    
+    @objc
+    func requestNotificationPermission() {
+        NotificationManager.shared.requestPermission()
     }
     
     @objc

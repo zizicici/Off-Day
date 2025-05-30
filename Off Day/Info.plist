@@ -23,5 +23,7 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>$(NSUserNotificationsUsageDescription)</string>
 </dict>
 </plist>

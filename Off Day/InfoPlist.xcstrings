@@ -59,6 +59,35 @@
           }
         }
       }
+    },
+    "NSUserNotificationsUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications are used to alert you about upcoming off-day or workday."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知用于提醒接下来的休息日/工作日信息。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知用於提醒接下來的休息日/工作日信息。"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知用於提醒接下來的休息日/工作日信息。"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

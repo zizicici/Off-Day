@@ -13,6 +13,7 @@
 		14B239BF2DBF57480007152C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B239BE2DBF57480007152C /* String+Extension.swift */; };
 		14B36F7F2DE1C42D00E96C56 /* DayCommentIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B36F7E2DE1C42D00E96C56 /* DayCommentIntent.swift */; };
 		14B36F822DE2187600E96C56 /* MarqueeLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 14B36F812DE2187600E96C56 /* MarqueeLabel */; };
+		14B4339C2DE9F2B4001F7D12 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B4339B2DE9F2B4001F7D12 /* NotificationManager.swift */; };
 		14B9E66C2DE34FEA00E4B391 /* ChineseCalendarDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B9E6692DE34FEA00E4B391 /* ChineseCalendarDataSource.swift */; };
 		14B9E66D2DE34FEA00E4B391 /* ChineseDayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B9E6682DE34FEA00E4B391 /* ChineseDayInfo.swift */; };
 		14B9E66E2DE34FEA00E4B391 /* ChineseMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B9E6662DE34FEA00E4B391 /* ChineseMonth.swift */; };
@@ -124,6 +125,7 @@
 		14B239BC2DBF25FE0007152C /* DayTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTypeCell.swift; sourceTree = "<group>"; };
 		14B239BE2DBF57480007152C /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		14B36F7E2DE1C42D00E96C56 /* DayCommentIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCommentIntent.swift; sourceTree = "<group>"; };
+		14B4339B2DE9F2B4001F7D12 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		14B9E6622DE34FEA00E4B391 /* ChineseCalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseCalendarManager.swift; sourceTree = "<group>"; };
 		14B9E6632DE34FEA00E4B391 /* YearRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearRange.swift; sourceTree = "<group>"; };
 		14B9E6652DE34FEA00E4B391 /* ChineseDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseDay.swift; sourceTree = "<group>"; };
@@ -243,6 +245,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		14B4339D2DE9F2BD001F7D12 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				14B4339B2DE9F2B4001F7D12 /* NotificationManager.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
 		14B9E6642DE34FEA00E4B391 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -352,6 +362,7 @@
 				14DD51442BE24648004329E2 /* Tutorials */,
 				14D6F9212BEB31B5008712E1 /* BaseCalendar */,
 				14B9E66B2DE34FEA00E4B391 /* ChineseCalendar */,
+				14B4339D2DE9F2BD001F7D12 /* Notification */,
 				14DD51412BE245E8004329E2 /* More */,
 				14DD51192BE21050004329E2 /* Database */,
 				14DD51262BE213AD004329E2 /* DataManager */,
@@ -710,6 +721,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14B4339C2DE9F2B4001F7D12 /* NotificationManager.swift in Sources */,
 				14DD512D2BE21AB8004329E2 /* UIViewController+Extension.swift in Sources */,
 				14B239BD2DBF25FE0007152C /* DayTypeCell.swift in Sources */,
 				14DD51282BE213AD004329E2 /* CustomDayManager.swift in Sources */,
