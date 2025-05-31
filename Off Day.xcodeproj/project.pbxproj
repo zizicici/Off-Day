@@ -25,6 +25,7 @@
 		14B9E67A2DE350D200E4B391 /* HKO1901_2099.json in Resources */ = {isa = PBXBuildFile; fileRef = 14B9E6742DE350D200E4B391 /* HKO1901_2099.json */; };
 		14B9E67D2DE356C000E4B391 /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B9E67C2DE356C000E4B391 /* DateView.swift */; };
 		14C7BD1D2DB9EA4B00916361 /* BatchEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C7BD1C2DB9EA4B00916361 /* BatchEditorViewController.swift */; };
+		14CC29002DEB4F8C002CFF2F /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CC28FF2DEB4F8C002CFF2F /* NotificationViewController.swift */; };
 		14CFA1272BEC92A90004D15E /* CheckDayClashIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */; };
 		14D3625B2DE0A17B00C0BAFE /* CustomComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D3625A2DE0A17B00C0BAFE /* CustomComment.swift */; };
 		14D3625D2DE0A3DD00C0BAFE /* DayEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D3625C2DE0A3DD00C0BAFE /* DayEditorViewController.swift */; };
@@ -137,6 +138,7 @@
 		14B9E6742DE350D200E4B391 /* HKO1901_2099.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = HKO1901_2099.json; sourceTree = "<group>"; };
 		14B9E67C2DE356C000E4B391 /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
 		14C7BD1C2DB9EA4B00916361 /* BatchEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchEditorViewController.swift; sourceTree = "<group>"; };
+		14CC28FF2DEB4F8C002CFF2F /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		14CFA1262BEC92A90004D15E /* CheckDayClashIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDayClashIntent.swift; sourceTree = "<group>"; };
 		14D3625A2DE0A17B00C0BAFE /* CustomComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomComment.swift; sourceTree = "<group>"; };
 		14D3625C2DE0A3DD00C0BAFE /* DayEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayEditorViewController.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				14B4339B2DE9F2B4001F7D12 /* NotificationManager.swift */,
+				14CC28FF2DEB4F8C002CFF2F /* NotificationViewController.swift */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -759,6 +762,7 @@
 				14B9E6712DE34FEA00E4B391 /* ChineseCalendarManager.swift in Sources */,
 				14B9E6722DE34FEA00E4B391 /* ChineseDay.swift in Sources */,
 				14F8D7D22C5C8471000B48A3 /* UIFont+Extension.swift in Sources */,
+				14CC29002DEB4F8C002CFF2F /* NotificationViewController.swift in Sources */,
 				14EC7FDC2BEF3CEE003BB07E /* PublicDay.swift in Sources */,
 				14DD51482BE24EA9004329E2 /* CustomPublicDay.swift in Sources */,
 				14DD50F82BE20BC1004329E2 /* BlockCell.swift in Sources */,

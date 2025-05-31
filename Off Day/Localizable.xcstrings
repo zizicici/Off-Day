@@ -3680,6 +3680,34 @@
         }
       }
     },
+    "more.item.notification" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage Notifications"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "管理通知"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "管理通知"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "管理通知"
+          }
+        }
+      }
+    },
     "more.item.settings.baseCalendar" : {
       "localizations" : {
         "en" : {
@@ -4040,6 +4068,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "更多細節"
+          }
+        }
+      }
+    },
+    "more.section.notification" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知"
           }
         }
       }
@@ -6997,7 +7053,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enable Public Holiday Alerts"
+            "value" : "Enable Public Holiday Notifications"
           }
         },
         "zh-Hans" : {

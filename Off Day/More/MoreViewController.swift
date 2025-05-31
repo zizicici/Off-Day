@@ -20,6 +20,7 @@ class MoreViewController: UIViewController {
     enum Section: Hashable {
         case general
         case dataSource
+        case notification
         case contact
         case help
         case appjun
@@ -31,6 +32,8 @@ class MoreViewController: UIViewController {
                 return String(localized: "more.section.general")
             case .dataSource:
                 return String(localized: "more.section.dataSource")
+            case .notification:
+                return String(localized: "more.section.notification")
             case .contact:
                 return String(localized: "more.section.contact")
             case .help:
@@ -199,6 +202,7 @@ class MoreViewController: UIViewController {
         
         case settings(GeneralItem)
         case dataSource(DataSourceItem)
+        case notification
         case help
         case contact(ContactItem)
         case appjun(AppJunItem)
@@ -210,6 +214,8 @@ class MoreViewController: UIViewController {
                 return item.title
             case .dataSource(let item):
                 return item.title
+            case .notification:
+                return String(localized: "more.item.notification")
             case .help:
                 return String(localized: "more.item.help")
             case .contact(let item):
@@ -306,6 +312,14 @@ class MoreViewController: UIViewController {
                 content.secondaryText = item.value
                 cell.contentConfiguration = content
                 return cell
+            case .notification:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+                cell.accessoryType = .disclosureIndicator
+                var content = UIListContentConfiguration.valueCell()
+                content.text = identifier.title
+                content.textProperties.color = .label
+                cell.contentConfiguration = content
+                return cell
             case .help:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
                 cell.accessoryType = .disclosureIndicator
@@ -355,6 +369,9 @@ class MoreViewController: UIViewController {
         snapshot.appendSections([.dataSource])
         snapshot.appendItems([.dataSource(.publicPlan(PublicPlanManager.shared.dataSource?.plan)), .dataSource(.baseCalendar(BaseCalendarManager.shared.config.type))], toSection: .dataSource)
         
+        snapshot.appendSections([.notification])
+        snapshot.appendItems([.notification], toSection: .notification)
+        
         snapshot.appendSections([.help])
         snapshot.appendItems([.help], toSection: .help)
         
@@ -397,6 +414,8 @@ extension MoreViewController: UITableViewDelegate {
                 case .baseCalendar:
                     showBaseCalendarEditor()
                 }
+            case .notification:
+                enterNotificationSettings()
             case .help:
                 enterHelpCenter()
             case .contact(let item):
@@ -453,6 +472,13 @@ extension MoreViewController {
         settingsOptionViewController.hidesBottomBarWhenPushed = true
         
         navigationController?.pushViewController(settingsOptionViewController, animated: true)
+    }
+    
+    func enterNotificationSettings() {
+        let notificationViewController = NotificationViewController()
+        notificationViewController.hidesBottomBarWhenPushed = true
+        
+        navigationController?.pushViewController(notificationViewController, animated: true)
     }
     
     func enterHelpCenter() {
