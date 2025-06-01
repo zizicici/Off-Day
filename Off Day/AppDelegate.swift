@@ -6,6 +6,14 @@
 //
 
 import UIKit
+import StoreKit
+import ZCCalendar
+
+extension UserDefaults {
+    enum Support: String {
+        case AppReviewRequestDate = "com.zizicici.common.support.AppReviewRequestDate"
+    }
+}
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,6 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = AppDatabase.shared
         
         PublicPlanManager.shared.load()
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5.0) {
+            self.requestAppReview()
+        }
         
         return true
     }
@@ -30,5 +42,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    }
+}
+
+extension AppDelegate {
+    func requestAppReview() {
+        do {
+            guard let creationDate = try AppDatabase.getDatabaseCreationDate() else { return }
+            guard let daysSinceCreation = Calendar.current.dateComponents([.day], from: creationDate, to: Date()).day else { return }
+            guard daysSinceCreation >= 10 else { return }
+            
+            let userDefaultsFlag: Bool
+            let userDefaultsKey = UserDefaults.Support.AppReviewRequestDate.rawValue
+            if let storedJDN = UserDefaults.standard.optionalInt(forKey: userDefaultsKey) {
+                let storedDay = GregorianDay(JDN: storedJDN)
+                userDefaultsFlag = (ZCCalendar.manager.today - storedDay) > 180
+            } else {
+                UserDefaults.standard.set(ZCCalendar.manager.today.julianDay, forKey: userDefaultsKey)
+                userDefaultsFlag = true
+            }
+            
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, userDefaultsFlag {
+                AppStore.requestReview(in: windowScene)
+            }
+        } catch {
+            print("\(error.localizedDescription)")
+        }
+    }
+}
+
+extension UserDefaults {
+    func optionalInt(forKey key: String) -> Int? {
+        return object(forKey: key) as? Int
     }
 }
