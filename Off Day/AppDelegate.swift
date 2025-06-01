@@ -55,14 +55,13 @@ extension AppDelegate {
             let userDefaultsFlag: Bool
             let userDefaultsKey = UserDefaults.Support.AppReviewRequestDate.rawValue
             if let storedJDN = UserDefaults.standard.optionalInt(forKey: userDefaultsKey) {
-                let storedDay = GregorianDay(JDN: storedJDN)
-                userDefaultsFlag = (ZCCalendar.manager.today - storedDay) > 180
+                userDefaultsFlag = (ZCCalendar.manager.today.julianDay - storedJDN) >= 180
             } else {
-                UserDefaults.standard.set(ZCCalendar.manager.today.julianDay, forKey: userDefaultsKey)
                 userDefaultsFlag = true
             }
             
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, userDefaultsFlag {
+                UserDefaults.standard.set(ZCCalendar.manager.today.julianDay, forKey: userDefaultsKey)
                 AppStore.requestReview(in: windowScene)
             }
         } catch {
