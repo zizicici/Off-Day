@@ -4223,19 +4223,19 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "将会在自定义休息日/工作日开始前一天通知用户（如果多日类型相同，只通知一次）"
+            "value" : "将会在自定义休息日/自定义工作日开始前一天通知用户（如果连续多日都是自定义休息日/自定义工作日，则只通知一次）"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "將會在自定義休息日/工作日開始前一天通知用戶（如果多日類型相同，只通知一次）"
+            "value" : "將會在自定義休息日/自定義工作日開始前一天通知用戶（如果連續多日都是自定義休息日/自定義工作日，則只通知一次）"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "將會在自定義休息日/工作日開始前一天通知用戶（如果多日類型相同，只通知一次）"
+            "value" : "將會在自定義休息日/自定義工作日開始前一天通知用戶（如果連續多日都是自定義休息日/自定義工作日，則只通知一次）"
           }
         }
       }
@@ -7417,25 +7417,25 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tap to Get Notifications before Public Holidays Begin/End"
+            "value" : "Tap to Get Notifications before Public Holidays Begin"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "点击开启公共假期开始结束的通知"
+            "value" : "点击启用通知"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "點擊開啓公共假期開始結束的通知"
+            "value" : "點擊啓用通知"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "點擊開啓公共假期開始結束的通知"
+            "value" : "點擊啓用通知"
           }
         }
       }
@@ -7451,19 +7451,19 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "开启公共假期提前通知"
+            "value" : "启用公共假期提前通知"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "開啓公共假期提前通知"
+            "value" : "啓用公共假期提前通知"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "開啓公共假期提前通知"
+            "value" : "啓用公共假期提前通知"
           }
         }
       }
