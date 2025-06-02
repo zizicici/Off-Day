@@ -54,7 +54,7 @@ extension AppDelegate {
             
             let userDefaultsFlag: Bool
             let userDefaultsKey = UserDefaults.Support.AppReviewRequestDate.rawValue
-            if let storedJDN = UserDefaults.standard.optionalInt(forKey: userDefaultsKey) {
+            if let storedJDN = UserDefaults.standard.getInt(forKey: userDefaultsKey) {
                 userDefaultsFlag = (ZCCalendar.manager.today.julianDay - storedJDN) >= 180
             } else {
                 userDefaultsFlag = true
@@ -67,11 +67,5 @@ extension AppDelegate {
         } catch {
             print("\(error.localizedDescription)")
         }
-    }
-}
-
-extension UserDefaults {
-    func optionalInt(forKey key: String) -> Int? {
-        return object(forKey: key) as? Int
     }
 }

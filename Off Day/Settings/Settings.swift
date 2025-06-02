@@ -89,11 +89,7 @@ extension UserDefaultSettable where Self: RawRepresentable, Self.RawValue == Int
 
 extension UserDefaults {
     func getInt(forKey key: String) -> Int? {
-        if value(forKey: key) == nil {
-            return nil
-        } else {
-            return integer(forKey: key)
-        }
+        return object(forKey: key) as? Int
     }
 }
 
