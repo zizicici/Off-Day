@@ -11,7 +11,8 @@ import ZCCalendar
 
 struct DateCellItem: Hashable {
     var title: String
-    var date: GregorianDay
+    var nanoSecondsFrom1970: Int64?
+    var date: GregorianDay?
 }
 
 extension UIConfigurationStateCustomKey {
@@ -54,11 +55,6 @@ class DateCell: DateBaseCell {
             return
         }
         
-        contentView.addSubview(listContentView)
-        listContentView.snp.makeConstraints { make in
-            make.leading.top.bottom.trailing.equalTo(contentView)
-        }
-        
         let datePicker = UIDatePicker(frame: CGRect.zero, primaryAction: UIAction(handler: { [weak self] _ in
             if let date = self?.datePicker?.date {
                 self?.selectDateAction?(date)
@@ -72,16 +68,21 @@ class DateCell: DateBaseCell {
             make.centerY.equalTo(contentView)
         }
         self.datePicker = datePicker
+        
+        contentView.addSubview(listContentView)
+        listContentView.snp.makeConstraints { make in
+            make.leading.top.bottom.equalTo(contentView)
+            make.trailing.equalTo(datePicker.snp.leading)
+        }
     }
     
     override func updateConfiguration(using state: UICellConfigurationState) {
         setupViewsIfNeeded()
         var content = defaultListContentConfiguration().updated(for: state)
-        if let dateItem = state.dateItem {
+        if let dateItem = state.dateItem, let day: GregorianDay = dateItem.date {
             content.text = dateItem.title
             listContentView.configuration = content
             
-            let day: GregorianDay = dateItem.date
             datePicker?.date = day.generateDate(secondsFromGMT: Calendar.current.timeZone.secondsFromGMT()) ?? Date()
             
             let text: String
@@ -95,3 +96,59 @@ class DateCell: DateBaseCell {
     }
 }
 
+class TimeCell: DateBaseCell {
+    private func defaultListContentConfiguration() -> UIListContentConfiguration { return .valueCell() }
+    private lazy var listContentView = UIListContentView(configuration: defaultListContentConfiguration())
+    
+    var selectDateAction: ((Int64) -> ())?
+    
+    var datePicker: UIDatePicker?
+    
+    func setupViewsIfNeeded() {
+        guard listContentView.superview == nil else {
+            return
+        }
+        
+        let datePicker = UIDatePicker(frame: CGRect.zero, primaryAction: UIAction(handler: { [weak self] _ in
+            if let date = self?.datePicker?.date {
+                self?.selectDateAction?(date.nanoSecondSince1970)
+            }
+        }))
+        datePicker.datePickerMode = .time
+        datePicker.tintColor = AppColor.offDay
+        contentView.addSubview(datePicker)
+        datePicker.snp.makeConstraints { make in
+            make.trailing.equalTo(contentView).inset(16)
+            make.centerY.equalTo(contentView)
+        }
+        self.datePicker = datePicker
+        
+        contentView.addSubview(listContentView)
+        listContentView.snp.makeConstraints { make in
+            make.leading.top.bottom.equalTo(contentView)
+            make.trailing.equalTo(datePicker.snp.leading)
+        }
+    }
+    
+    override func updateConfiguration(using state: UICellConfigurationState) {
+        setupViewsIfNeeded()
+        var content = defaultListContentConfiguration().updated(for: state)
+        if let dateItem = state.dateItem {
+            content.text = dateItem.title
+            listContentView.configuration = content
+            
+            if let nanoSecondsFrom1970 = dateItem.nanoSecondsFrom1970 {
+                datePicker?.date = Date(nanoSecondSince1970: nanoSecondsFrom1970)
+            } else {
+                datePicker?.date = Date(nanoSecondSince1970: 0)
+            }
+            
+            datePicker?.isHidden = false
+            let text: String = datePicker?.date.formatted(date: .omitted, time: .standard) ?? ""
+
+            accessibilityLabel = dateItem.title + ":" + text
+        }
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+    }
+}

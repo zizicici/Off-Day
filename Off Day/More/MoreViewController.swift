@@ -215,7 +215,7 @@ class MoreViewController: UIViewController {
             case .dataSource(let item):
                 return item.title
             case .notification:
-                return String(localized: "more.item.notification")
+                return String(localized: "notificationEditor.title")
             case .help:
                 return String(localized: "more.item.help")
             case .contact(let item):
