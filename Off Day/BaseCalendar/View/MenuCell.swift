@@ -14,7 +14,7 @@ struct MenuCellItem: Hashable {
 }
 
 fileprivate extension UIConfigurationStateCustomKey {
-    static let menuItem = UIConfigurationStateCustomKey("com.zizicici.offday.cell.menu.item")
+    static let menuItem = UIConfigurationStateCustomKey("com.zizicici.zzz.cell.menu.item")
 }
 
 private extension UICellConfigurationState {
