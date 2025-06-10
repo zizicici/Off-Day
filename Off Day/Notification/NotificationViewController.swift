@@ -123,6 +123,7 @@ class NotificationViewController: UIViewController {
         reloadData()
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: NSNotification.Name.SettingsUpdate, object: nil)
     }
     
     func configureHierarchy() {
@@ -241,6 +242,8 @@ class NotificationViewController: UIViewController {
     }
     
     func apply(with authStatus: UNAuthorizationStatus) {
+        let manager = NotificationManager.shared
+        
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         
         let allowAction: Bool
@@ -267,20 +270,24 @@ class NotificationViewController: UIViewController {
             fatalError()
         }
         
+        let templateExpiryIsEnabled = manager.isEnabled(for: .templateExpiry)
         snapshot.appendSections([.template])
-        snapshot.appendItems([.expireToggle(allowAction, true)], toSection: .template)
-        if allowAction {
+        snapshot.appendItems([.expireToggle(allowAction, templateExpiryIsEnabled)], toSection: .template)
+        if allowAction, templateExpiryIsEnabled {
             snapshot.appendItems([.expireFireTime(0)], toSection: .template)
         }
         
+        let publicHolidayStartIsEnabled = manager.isEnabled(for: .publicHoliday)
         snapshot.appendSections([.publicHoliday])
-        snapshot.appendItems([.publicHolidayToggle(allowAction, true)], toSection: .publicHoliday)
-        if allowAction {
+        snapshot.appendItems([.publicHolidayToggle(allowAction, publicHolidayStartIsEnabled)], toSection: .publicHoliday)
+        if allowAction, publicHolidayStartIsEnabled {
             snapshot.appendItems([.publicHolidayFireTime(0)], toSection: .publicHoliday)
         }
+        
+        let customDayStartIsEnabled = manager.isEnabled(for: .customDay)
         snapshot.appendSections([.customDay])
-        snapshot.appendItems([.customDayToggle(allowAction, true)], toSection: .customDay)
-        if allowAction {
+        snapshot.appendItems([.customDayToggle(allowAction, customDayStartIsEnabled)], toSection: .customDay)
+        if allowAction, customDayStartIsEnabled {
             snapshot.appendItems([.customDayFireTime(0)], toSection: .customDay)
         }
 
@@ -310,30 +317,18 @@ class NotificationViewController: UIViewController {
     }
     
     @objc
-    func publicHolidayToggle(_ publicHolidayToggle: UISwitch) {
-        if publicHolidayToggle.isOn {
-            
-        } else {
-            
-        }
+    func publicHolidayToggle(_ toggle: UISwitch) {
+        NotificationManager.shared.set(isEnabled: toggle.isOn, for: .publicHoliday)
     }
     
     @objc
-    func customDayToggle(_ customDayToggle: UISwitch) {
-        if customDayToggle.isOn {
-            
-        } else {
-            
-        }
+    func customDayToggle(_ toggle: UISwitch) {
+        NotificationManager.shared.set(isEnabled: toggle.isOn, for: .customDay)
     }
     
     @objc
-    func expiryToggle(_ expiryToggle: UISwitch) {
-        if expiryToggle.isOn {
-            
-        } else {
-            
-        }
+    func expiryToggle(_ toggle: UISwitch) {
+        NotificationManager.shared.set(isEnabled: toggle.isOn, for: .templateExpiry)
     }
 }
 
