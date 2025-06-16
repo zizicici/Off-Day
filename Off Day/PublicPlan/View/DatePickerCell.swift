@@ -62,11 +62,10 @@ class DatePickerCell: DatePickerBaseCell {
         setupViewsIfNeeded()
         
         var content = defaultListContentConfiguration().updated(for: state)
-        if let dateItem = state.dateItem {
+        if let dateItem = state.dateItem, let day: GregorianDay = dateItem.date {
             content.text = dateItem.title
             listContentView.configuration = content
             
-            let day: GregorianDay = dateItem.date
             datePicker?.date = day.generateDate(secondsFromGMT: Calendar.current.timeZone.secondsFromGMT()) ?? Date()
             
             let text: String
