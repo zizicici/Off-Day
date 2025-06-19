@@ -282,6 +282,7 @@
 			children = (
 				14B9E6642DE34FEA00E4B391 /* Manager */,
 				14B9E66A2DE34FEA00E4B391 /* Model */,
+				14B9E6772DE350D200E4B391 /* JSON */,
 			);
 			path = ChineseCalendar;
 			sourceTree = "<group>";
@@ -372,7 +373,6 @@
 				14F371232BE3CA7100254C39 /* Settings */,
 				14DD514B2BE27AA4004329E2 /* Intent */,
 				14DD512B2BE21AB8004329E2 /* Extension */,
-				14B9E6772DE350D200E4B391 /* JSON */,
 				14DD50BA2BE1F5C5004329E2 /* Assets.xcassets */,
 				14DD50BC2BE1F5C5004329E2 /* LaunchScreen.storyboard */,
 				14DD50BF2BE1F5C5004329E2 /* Info.plist */,
