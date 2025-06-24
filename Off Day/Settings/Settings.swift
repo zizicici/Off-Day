@@ -16,8 +16,12 @@ extension UserDefaults {
         case WeekEndColorType = "com.zizicici.common.settings.WeekEndColorType"
         case WeekEndOffDayType = "com.zizicici.common.settings.WeekEndOffDayType"
         case TutorialEntranceType = "com.zizicici.common.settings.TutorialEntranceType"
-        case HolidayWorkColorType = "com.zizicici.offday.settings.HolidayWorkColorType"
+        case HolidayWorkColorType = "com.zizicici.common.settings.HolidayWorkColorType"
         case AlternativeCalendarType = "com.zizicici.common.settings.AlternativeCalendarType"
+        // Notification
+        case NotificationTemplateExpiry = "com.zizicici.common.settings.NotificationTemplateExpiry"
+        case NotificationPublicHolidayStart = "com.zizicici.common.settings.NotificationPublicHolidayStart"
+        case NotificationCustomDayStart = "com.zizicici.common.settings.NotificationCustomDayStart"
     }
 }
 
@@ -89,11 +93,11 @@ extension UserDefaultSettable where Self: RawRepresentable, Self.RawValue == Int
 
 extension UserDefaults {
     func getInt(forKey key: String) -> Int? {
-        if value(forKey: key) == nil {
-            return nil
-        } else {
-            return integer(forKey: key)
-        }
+        return object(forKey: key) as? Int
+    }
+    
+    func getBool(forKey key: String) -> Bool? {
+        return object(forKey: key) as? Bool
     }
 }
 
