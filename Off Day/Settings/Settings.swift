@@ -10,6 +10,8 @@ import ZCCalendar
 
 extension UserDefaults {
     enum Settings: String {
+        case AutoBackup = "com.zizicici.tag.settings.AutoBackup"
+        case BackupFolder = "com.zizicici.tag.settings.BackupFolder"
         case AppPublicPlanType = "com.zizicici.common.settings.PublicPlanType"
         case CustomPublicPlanType = "com.zizicici.common.settings.CustomPublicPlanType"
         case WeekStartType = "com.zizicici.common.settings.WeekStartType"
@@ -98,6 +100,33 @@ extension UserDefaults {
     
     func getBool(forKey key: String) -> Bool? {
         return object(forKey: key) as? Bool
+    }
+    
+    func getString(forKey key: String) -> String? {
+        return object(forKey: key) as? String
+    }
+}
+
+enum AutoBackup: Int, CaseIterable, Codable {
+    case enable
+    case disable
+}
+
+extension AutoBackup: UserDefaultSettable {
+    static func getKey() -> UserDefaults.Settings {
+        return .AutoBackup
+    }
+    
+    static var defaultOption: AutoBackup {
+        return .disable
+    }
+    
+    func getName() -> String {
+        return ""
+    }
+    
+    static func getTitle() -> String {
+        return ""
     }
 }
 

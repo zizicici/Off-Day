@@ -21,6 +21,7 @@ class MoreViewController: UIViewController {
         case general
         case dataSource
         case notification
+        case backup
         case contact
         case help
         case appjun
@@ -34,6 +35,8 @@ class MoreViewController: UIViewController {
                 return String(localized: "more.section.dataSource")
             case .notification:
                 return String(localized: "more.section.notification")
+            case .backup:
+                return String(localized: "more.section.backup")
             case .contact:
                 return String(localized: "more.section.contact")
             case .help:
@@ -203,6 +206,7 @@ class MoreViewController: UIViewController {
         case settings(GeneralItem)
         case dataSource(DataSourceItem)
         case notification
+        case backup
         case help
         case contact(ContactItem)
         case appjun(AppJunItem)
@@ -216,6 +220,8 @@ class MoreViewController: UIViewController {
                 return item.title
             case .notification:
                 return String(localized: "notificationEditor.title")
+            case .backup:
+                return String(localized: "backup.title")
             case .help:
                 return String(localized: "more.item.help")
             case .contact(let item):
@@ -312,7 +318,7 @@ class MoreViewController: UIViewController {
                 content.secondaryText = item.value
                 cell.contentConfiguration = content
                 return cell
-            case .notification:
+            case .notification, .backup:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
                 cell.accessoryType = .disclosureIndicator
                 var content = UIListContentConfiguration.valueCell()
@@ -372,11 +378,14 @@ class MoreViewController: UIViewController {
         snapshot.appendSections([.notification])
         snapshot.appendItems([.notification], toSection: .notification)
         
+        snapshot.appendSections([.backup])
+        snapshot.appendItems([.backup], toSection: .backup)
+        
         snapshot.appendSections([.help])
         snapshot.appendItems([.help], toSection: .help)
         
         snapshot.appendSections([.contact])
-        snapshot.appendItems([.contact(.email), .contact(.xiaohongshu), .contact(.reddit), .contact(.bilibili)], toSection: .contact)
+        snapshot.appendItems([.contact(.email), .contact(.xiaohongshu), .contact(.bilibili), .contact(.reddit)], toSection: .contact)
         
         snapshot.appendSections([.appjun])
         var appItems: [Item] = [.appjun(.otherApps(.lemon)), .appjun(.otherApps(.moontake)), .appjun(.otherApps(.coconut)), .appjun(.otherApps(.pigeon))]
@@ -416,6 +425,8 @@ extension MoreViewController: UITableViewDelegate {
                 }
             case .notification:
                 enterNotificationSettings()
+            case .backup:
+                enterBackup()
             case .help:
                 enterHelpCenter()
             case .contact(let item):
@@ -476,6 +487,13 @@ extension MoreViewController {
     
     func enterNotificationSettings() {
         let notificationViewController = NotificationViewController()
+        notificationViewController.hidesBottomBarWhenPushed = true
+        
+        navigationController?.pushViewController(notificationViewController, animated: true)
+    }
+    
+    func enterBackup() {
+        let notificationViewController = BackupViewController()
         notificationViewController.hidesBottomBarWhenPushed = true
         
         navigationController?.pushViewController(notificationViewController, animated: true)

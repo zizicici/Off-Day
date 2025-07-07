@@ -117,6 +117,11 @@
 		14F8D7CE2C5C6776000B48A3 /* WeekdayOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F8D7CD2C5C6776000B48A3 /* WeekdayOrderView.swift */; };
 		14F8D7D22C5C8471000B48A3 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F8D7D12C5C8471000B48A3 /* UIFont+Extension.swift */; };
 		14F8D7D42C5C9194000B48A3 /* MonthTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F8D7D32C5C9194000B48A3 /* MonthTitleCell.swift */; };
+		14F92E2D2E1BB1D600712D87 /* BackupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F92E2B2E1BB1D600712D87 /* BackupViewController.swift */; };
+		14F92E2E2E1BB1D600712D87 /* BackupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F92E2A2E1BB1D600712D87 /* BackupManager.swift */; };
+		14F92E322E1BB2ED00712D87 /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = 14F92E312E1BB2ED00712D87 /* ZipArchive */; };
+		14F92E342E1BB37500712D87 /* SQLFileBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F92E332E1BB37500712D87 /* SQLFileBackup.swift */; };
+		14F92E362E1BB49D00712D87 /* ConsideringUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F92E352E1BB49D00712D87 /* ConsideringUser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -228,6 +233,11 @@
 		14F8D7CD2C5C6776000B48A3 /* WeekdayOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayOrderView.swift; sourceTree = "<group>"; };
 		14F8D7D12C5C8471000B48A3 /* UIFont+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		14F8D7D32C5C9194000B48A3 /* MonthTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthTitleCell.swift; sourceTree = "<group>"; };
+		14F92E2A2E1BB1D600712D87 /* BackupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupManager.swift; sourceTree = "<group>"; };
+		14F92E2B2E1BB1D600712D87 /* BackupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupViewController.swift; sourceTree = "<group>"; };
+		14F92E2F2E1BB21700712D87 /* Off Day.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Off Day.entitlements"; sourceTree = "<group>"; };
+		14F92E332E1BB37500712D87 /* SQLFileBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLFileBackup.swift; sourceTree = "<group>"; };
+		14F92E352E1BB49D00712D87 /* ConsideringUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsideringUser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +250,7 @@
 				14B36F822DE2187600E96C56 /* MarqueeLabel in Frameworks */,
 				14DD50C72BE1F78F004329E2 /* SnapKit in Frameworks */,
 				14DD510C2BE20F3A004329E2 /* GRDB in Frameworks */,
+				14F92E322E1BB2ED00712D87 /* ZipArchive in Frameworks */,
 				1498CF1B2C402CD2005562AA /* ZCCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,6 +367,7 @@
 		14DD50B02BE1F5C4004329E2 /* Off Day */ = {
 			isa = PBXGroup;
 			children = (
+				14F92E2F2E1BB21700712D87 /* Off Day.entitlements */,
 				14DD50B12BE1F5C4004329E2 /* AppDelegate.swift */,
 				14DD50B32BE1F5C4004329E2 /* SceneDelegate.swift */,
 				14EA29F12CA500850055A496 /* DayManager.swift */,
@@ -367,6 +379,7 @@
 				14D6F9212BEB31B5008712E1 /* BaseCalendar */,
 				14B9E66B2DE34FEA00E4B391 /* ChineseCalendar */,
 				14B4339D2DE9F2BD001F7D12 /* Notification */,
+				14F92E2C2E1BB1D600712D87 /* Backup */,
 				14DD51412BE245E8004329E2 /* More */,
 				14DD51192BE21050004329E2 /* Database */,
 				14DD51262BE213AD004329E2 /* DataManager */,
@@ -475,6 +488,7 @@
 			children = (
 				14DD51162BE21050004329E2 /* AppDatabase.swift */,
 				14DD51172BE21050004329E2 /* Persistence.swift */,
+				14F92E332E1BB37500712D87 /* SQLFileBackup.swift */,
 				14DD51182BE21050004329E2 /* TimestampedRecord.swift */,
 				14DD51152BE21050004329E2 /* Model */,
 				14DD510E2BE21050004329E2 /* Extension */,
@@ -494,6 +508,7 @@
 			isa = PBXGroup;
 			children = (
 				14ECFF042BE64983005D2D79 /* AppColor.swift */,
+				14F92E352E1BB49D00712D87 /* ConsideringUser.swift */,
 				14DD51292BE21AB8004329E2 /* UIColor+Extension.swift */,
 				14DD512A2BE21AB8004329E2 /* UIViewController+Extension.swift */,
 				14B239BE2DBF57480007152C /* String+Extension.swift */,
@@ -617,6 +632,15 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		14F92E2C2E1BB1D600712D87 /* Backup */ = {
+			isa = PBXGroup;
+			children = (
+				14F92E2A2E1BB1D600712D87 /* BackupManager.swift */,
+				14F92E2B2E1BB1D600712D87 /* BackupViewController.swift */,
+			);
+			path = Backup;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -640,6 +664,7 @@
 				14EF2B732BFB44FA00F8C684 /* AppInfo */,
 				1498CF1A2C402CD2005562AA /* ZCCalendar */,
 				14B36F812DE2187600E96C56 /* MarqueeLabel */,
+				14F92E312E1BB2ED00712D87 /* ZipArchive */,
 			);
 			productName = "Off Day";
 			productReference = 14DD50AE2BE1F5C4004329E2 /* Off Day.app */;
@@ -679,6 +704,7 @@
 				14EF2B722BFB44FA00F8C684 /* XCRemoteSwiftPackageReference "AppInfo" */,
 				1498CF192C402CD2005562AA /* XCRemoteSwiftPackageReference "ZCCalendar" */,
 				14B36F802DE2187600E96C56 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
+				14F92E302E1BB2ED00712D87 /* XCRemoteSwiftPackageReference "ZipArchive" */,
 			);
 			productRefGroup = 14DD50AF2BE1F5C4004329E2 /* Products */;
 			projectDirPath = "";
@@ -744,6 +770,7 @@
 				14D6F9282BEB6B5E008712E1 /* WeekCalendarCell.swift in Sources */,
 				14ED08AE2BEE511000100E2D /* PublicPlanCell.swift in Sources */,
 				14E6D9BA2BE495F000931F3D /* Toast+Stryle.swift in Sources */,
+				14F92E362E1BB49D00712D87 /* ConsideringUser.swift in Sources */,
 				14DD50F52BE20BC1004329E2 /* DayGrid.swift in Sources */,
 				14F371222BE3CA6500254C39 /* Settings.swift in Sources */,
 				14DD50EC2BE20BC1004329E2 /* BlockViewController+Enum.swift in Sources */,
@@ -755,6 +782,7 @@
 				14ED08A42BEE0E8F00100E2D /* CustomPublicDayDetailViewController.swift in Sources */,
 				14DD511F2BE21050004329E2 /* CustomDay.swift in Sources */,
 				14B9E66C2DE34FEA00E4B391 /* ChineseCalendarDataSource.swift in Sources */,
+				14F92E342E1BB37500712D87 /* SQLFileBackup.swift in Sources */,
 				14B9E66D2DE34FEA00E4B391 /* ChineseDayInfo.swift in Sources */,
 				14B9E66E2DE34FEA00E4B391 /* ChineseMonth.swift in Sources */,
 				14B9E66F2DE34FEA00E4B391 /* ChineseYear.swift in Sources */,
@@ -779,6 +807,8 @@
 				14DD50F12BE20BC1004329E2 /* DayByDayHandler.swift in Sources */,
 				14DD512C2BE21AB8004329E2 /* UIColor+Extension.swift in Sources */,
 				14EA29F22CA500850055A496 /* DayManager.swift in Sources */,
+				14F92E2D2E1BB1D600712D87 /* BackupViewController.swift in Sources */,
+				14F92E2E2E1BB1D600712D87 /* BackupManager.swift in Sources */,
 				14DD51402BE2459C004329E2 /* MoreViewController.swift in Sources */,
 				14ED08B02BEE55DB00100E2D /* CustomPublicPlan.swift in Sources */,
 				14DD51232BE21050004329E2 /* TimestampedRecord.swift in Sources */,
@@ -949,6 +979,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Off Day/Off Day.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KKQQQNKMM6;
@@ -979,6 +1010,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Off Day/Off Day.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KKQQQNKMM6;
@@ -1076,6 +1108,14 @@
 				minimumVersion = 1.1.0;
 			};
 		};
+		14F92E302E1BB2ED00712D87 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ZipArchive/ZipArchive.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1108,6 +1148,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 14EF2B722BFB44FA00F8C684 /* XCRemoteSwiftPackageReference "AppInfo" */;
 			productName = AppInfo;
+		};
+		14F92E312E1BB2ED00712D87 /* ZipArchive */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 14F92E302E1BB2ED00712D87 /* XCRemoteSwiftPackageReference "ZipArchive" */;
+			productName = ZipArchive;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
