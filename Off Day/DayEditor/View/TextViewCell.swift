@@ -53,6 +53,10 @@ class TextViewCell: UITableViewCell {
     override func resignFirstResponder() -> Bool {
         return textView.resignFirstResponder() && super.resignFirstResponder()
     }
+    
+    override func becomeFirstResponder() -> Bool {
+        return textView.becomeFirstResponder() && super.becomeFirstResponder()
+    }
 }
 
 extension TextViewCell: UITextViewDelegate {

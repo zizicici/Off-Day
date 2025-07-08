@@ -189,7 +189,7 @@ class BlockDetailViewController: UIViewController {
             make.top.equalTo(stackView.snp.bottom).offset(20.0)
             make.width.equalTo(44.0)
             make.height.equalTo(44.0)
-            make.trailing.equalTo(view).inset(6.0)
+            make.trailing.equalTo(view).inset(ConsideringUser.buttonShapesEnabled ? 12.0 : 6.0)
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(12.0)
         }
         

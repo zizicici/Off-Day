@@ -113,6 +113,12 @@ class DayEditorViewController: UIViewController {
         reloadData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        _ = commentCell?.becomeFirstResponder()
+    }
+    
     func configureHierarchy() {
         tableView = UIDraggableTableView(frame: .zero, style: .insetGrouped)
         tableView.backgroundColor = AppColor.background
@@ -186,15 +192,7 @@ class DayEditorViewController: UIViewController {
     
     @objc
     func dismissViewController() {
-        if commentCell?.isFirstResponder == true {
-            _ = commentCell?.resignFirstResponder()
-            navigationItem.rightBarButtonItem?.isEnabled = false
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.7) {
-                self.dismiss(animated: ConsideringUser.animated)
-            }
-        } else {
-            dismiss(animated: ConsideringUser.animated)
-        }
+        dismiss(animated: ConsideringUser.animated)
     }
     
     func updateSaveButtonStatus() {
