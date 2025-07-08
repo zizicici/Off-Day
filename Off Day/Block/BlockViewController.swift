@@ -285,7 +285,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
             }
         }
         if let item = item, let indexPath = dataSource.indexPath(for: item) {
-            collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+            collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: ConsideringUser.animated)
         }
     }
     
@@ -299,7 +299,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         let batchEditorAction = UIAction(title: String(localized: "controller.calendar.batchEditor"), image: UIImage(systemName: "pencil")) { [weak self] _ in
             let batchEditor = BatchEditorViewController()
             let nav = NavigationController(rootViewController: batchEditor)
-            self?.navigationController?.present(nav, animated: true)
+            self?.navigationController?.present(nav, animated: ConsideringUser.animated)
         }
         let editDivider = UIMenu(options: . displayInline, children: [batchEditorAction])
 
@@ -313,7 +313,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         let publicPlanViewController = PublicPlanViewController()
         let nav = NavigationController(rootViewController: publicPlanViewController)
         
-        navigationController?.present(nav, animated: true)
+        navigationController?.present(nav, animated: ConsideringUser.animated)
     }
     
     private func getPublicPlanName() -> String {

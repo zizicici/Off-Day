@@ -190,10 +190,10 @@ class DayEditorViewController: UIViewController {
             _ = commentCell?.resignFirstResponder()
             navigationItem.rightBarButtonItem?.isEnabled = false
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.7) {
-                self.dismiss(animated: true)
+                self.dismiss(animated: ConsideringUser.animated)
             }
         } else {
-            dismiss(animated: true)
+            dismiss(animated: ConsideringUser.animated)
         }
     }
     

@@ -271,7 +271,7 @@ class TutorialsViewController: UIViewController {
         let calendarSectionViewController = PublicPlanViewController()
         let nav = NavigationController(rootViewController: calendarSectionViewController)
         
-        navigationController?.present(nav, animated: true)
+        navigationController?.present(nav, animated: ConsideringUser.animated)
     }
     
     @objc

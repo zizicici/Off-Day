@@ -323,13 +323,13 @@ class BaseCalendarEditorViewController: UIViewController, UITableViewDelegate {
 extension BaseCalendarEditorViewController {
     @objc
     func cancelAction() {
-        dismiss(animated: true)
+        dismiss(animated: ConsideringUser.animated)
     }
     
     @objc
     func confirmAction() {
         BaseCalendarManager.shared.save(config: selectedConfig)
         
-        dismiss(animated: true)
+        dismiss(animated: ConsideringUser.animated)
     }
 }

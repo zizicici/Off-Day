@@ -468,35 +468,35 @@ extension MoreViewController {
         let publicPlanViewController = PublicPlanViewController()
         let nav = NavigationController(rootViewController: publicPlanViewController)
         
-        navigationController?.present(nav, animated: true)
+        navigationController?.present(nav, animated: ConsideringUser.animated)
     }
     
     func showBaseCalendarEditor() {
         let baseCalendarViewController = BaseCalendarEditorViewController()
         let nav = NavigationController(rootViewController: baseCalendarViewController)
         
-        navigationController?.present(nav, animated: true)
+        navigationController?.present(nav, animated: ConsideringUser.animated)
     }
     
     func enterSettings<T: SettingsOption>(_ type: T.Type) {
         let settingsOptionViewController = SettingOptionsViewController<T>()
         settingsOptionViewController.hidesBottomBarWhenPushed = true
         
-        navigationController?.pushViewController(settingsOptionViewController, animated: true)
+        navigationController?.pushViewController(settingsOptionViewController, animated: ConsideringUser.pushAnimated)
     }
     
     func enterNotificationSettings() {
         let notificationViewController = NotificationViewController()
         notificationViewController.hidesBottomBarWhenPushed = true
         
-        navigationController?.pushViewController(notificationViewController, animated: true)
+        navigationController?.pushViewController(notificationViewController, animated: ConsideringUser.pushAnimated)
     }
     
     func enterBackup() {
         let notificationViewController = BackupViewController()
         notificationViewController.hidesBottomBarWhenPushed = true
         
-        navigationController?.pushViewController(notificationViewController, animated: true)
+        navigationController?.pushViewController(notificationViewController, animated: ConsideringUser.pushAnimated)
     }
     
     func enterHelpCenter() {
@@ -509,7 +509,7 @@ extension MoreViewController {
         let specificationViewController = SpecificationsViewController()
         specificationViewController.hidesBottomBarWhenPushed = true
         
-        navigationController?.pushViewController(specificationViewController, animated: true)
+        navigationController?.pushViewController(specificationViewController, animated: ConsideringUser.pushAnimated)
     }
     
     func openEULA() {
@@ -539,7 +539,7 @@ extension MoreViewController {
         storeViewController.loadProduct(withParameters: parameters) { [weak self] (loaded, error) in
             if loaded {
                 // 成功加载，展示视图控制器
-                self?.present(storeViewController, animated: true, completion: nil)
+                self?.present(storeViewController, animated: ConsideringUser.animated, completion: nil)
             } else if let error = error {
                 // 加载失败，可以选择跳转到 App Store 应用作为后备方案
                 print("Error loading App Store: \(error.localizedDescription)")
@@ -572,7 +572,7 @@ extension MoreViewController {
         if let url = URL(string: "https://apps.apple.com/app/id6501973975") {
             let controller = UIActivityViewController(activityItems: [url], applicationActivities: nil)
             
-            present(controller, animated: true)
+            present(controller, animated: ConsideringUser.animated)
         }
     }
 }
@@ -586,18 +586,18 @@ extension MoreViewController {
         overlayVC.modalTransitionStyle = .crossDissolve
         
         // 显示覆盖全屏的遮罩层
-        navigationController?.present(overlayVC, animated: true, completion: nil)
+        navigationController?.present(overlayVC, animated: ConsideringUser.animated, completion: nil)
     }
 
     func hideOverlayViewController() {
         // 隐藏覆盖全屏的遮罩层
-        navigationController?.dismiss(animated: true, completion: nil)
+        navigationController?.dismiss(animated: ConsideringUser.animated, completion: nil)
     }
 }
 
 extension MoreViewController: SKStoreProductViewControllerDelegate {
     func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
-        viewController.dismiss(animated: true, completion: nil)
+        viewController.dismiss(animated: ConsideringUser.animated, completion: nil)
     }
 }
 

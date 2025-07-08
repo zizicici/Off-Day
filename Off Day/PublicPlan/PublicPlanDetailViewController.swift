@@ -317,13 +317,13 @@ class PublicPlanDetailViewController: UIViewController {
     
     @objc
     func dismissAction() {
-        dismiss(animated: true)
+        dismiss(animated: ConsideringUser.animated)
     }
     
     func duplicateTemplate() {
         if let nav = presentingViewController as? NavigationController, let root = nav.topViewController as? PublicPlanViewController {
             if let customTemplateInfo = publicPlanInfo?.getDuplicateCustomPlan() {
-                dismiss(animated: true) { [weak root] in
+                dismiss(animated: ConsideringUser.animated) { [weak root] in
                     root?.createCustomTemplate(prefill: customTemplateInfo)
                 }
             }
@@ -378,7 +378,7 @@ class PublicPlanDetailViewController: UIViewController {
         }
         let nav = NavigationController(rootViewController: detailViewController)
         
-        navigationController?.present(nav, animated: true)
+        navigationController?.present(nav, animated: ConsideringUser.animated)
     }
     
     func add(_ newDay: CustomPublicDay) -> Bool {
@@ -440,7 +440,7 @@ class PublicPlanDetailViewController: UIViewController {
 
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
+        present(alertController, animated: ConsideringUser.animated, completion: nil)
     }
     
     func showDeleteAlert() {
@@ -454,7 +454,7 @@ class PublicPlanDetailViewController: UIViewController {
 
         alertController.addAction(cancelAction)
         alertController.addAction(deleteAction)
-        present(alertController, animated: true, completion: nil)
+        present(alertController, animated: ConsideringUser.animated, completion: nil)
     }
     
     func showDateErrorAlert() {
@@ -464,12 +464,12 @@ class PublicPlanDetailViewController: UIViewController {
         }
 
         alertController.addAction(cancelAction)
-        present(alertController, animated: true, completion: nil)
+        present(alertController, animated: ConsideringUser.animated, completion: nil)
     }
     
     func deleteAction() {
         guard let publicPlanInfo = publicPlanInfo else { return }
-        dismiss(animated: true) {
+        dismiss(animated: ConsideringUser.animated) {
             _ = PublicPlanManager.shared.delete(publicPlanInfo)
         }
     }

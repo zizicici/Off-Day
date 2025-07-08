@@ -188,7 +188,7 @@ class CustomPublicDayDetailViewController: UIViewController {
     
     @objc
     func dismissAction() {
-        dismiss(animated: true)
+        dismiss(animated: ConsideringUser.animated)
     }
     
     @objc
@@ -213,7 +213,7 @@ class CustomPublicDayDetailViewController: UIViewController {
         }
 
         alertController.addAction(cancelAction)
-        present(alertController, animated: true, completion: nil)
+        present(alertController, animated: ConsideringUser.animated, completion: nil)
     }
     
     func showDeleteAlert() {
@@ -227,7 +227,7 @@ class CustomPublicDayDetailViewController: UIViewController {
 
         alertController.addAction(cancelAction)
         alertController.addAction(deleteAction)
-        present(alertController, animated: true, completion: nil)
+        present(alertController, animated: ConsideringUser.animated, completion: nil)
     }
     
     func updateSaveBarItem() {

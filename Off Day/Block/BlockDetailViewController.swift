@@ -355,6 +355,6 @@ extension BlockDetailViewController {
     func commentButtonAction() {
         let editorViewController = DayEditorViewController(comment: blockItem.customDayInfo.customComment ?? CustomComment(dayIndex: Int64(blockItem.day.julianDay), content: ""))
         let nav = NavigationController(rootViewController: editorViewController)
-        present(nav, animated: true)
+        present(nav, animated: ConsideringUser.animated)
     }
 }

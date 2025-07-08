@@ -134,12 +134,12 @@ class BatchEditorViewController: UIViewController {
         alertController.addAction(cancelAction)
         alertController.addAction(confirmAction)
         
-        present(alertController, animated: true, completion: nil)
+        present(alertController, animated: ConsideringUser.animated, completion: nil)
     }
     
     @objc
     func close() {
-        dismiss(animated: true)
+        dismiss(animated: ConsideringUser.animated)
     }
     
     func configureHierarchy() {

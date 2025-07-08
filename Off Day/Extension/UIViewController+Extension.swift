@@ -25,6 +25,6 @@ extension UIViewController {
 
     func openSF(with url: URL) {
         let safariViewController = SFSafariViewController(url: url)
-        navigationController?.present(safariViewController, animated: true)
+        navigationController?.present(safariViewController, animated: ConsideringUser.animated)
     }
 }

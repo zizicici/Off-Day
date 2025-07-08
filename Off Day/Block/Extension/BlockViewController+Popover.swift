@@ -17,7 +17,7 @@ extension BlockViewController {
         if let pres = nav.presentationController {
             pres.delegate = self
         }
-        present(nav, animated: true, completion: nil)
+        present(nav, animated: ConsideringUser.animated, completion: nil)
 
         if let popover = nav.popoverPresentationController {
             popover.sourceView = sourceView

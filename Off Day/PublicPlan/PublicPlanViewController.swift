@@ -244,12 +244,12 @@ class PublicPlanViewController: UIViewController {
         case .appPlan(let plan):
             if let detailViewController = PublicPlanDetailViewController(appPlan: plan) {
                 let nav = NavigationController(rootViewController: detailViewController)
-                navigationController?.present(nav, animated: true)
+                navigationController?.present(nav, animated: ConsideringUser.animated)
             }
         case .customPlan(let plan):
             if let detailViewController = PublicPlanDetailViewController(customPlan: plan, allowEditing: true) {
                 let nav = NavigationController(rootViewController: detailViewController)
-                navigationController?.present(nav, animated: true)
+                navigationController?.present(nav, animated: ConsideringUser.animated)
             }
         }
     }
@@ -258,7 +258,7 @@ class PublicPlanViewController: UIViewController {
         let editorViewController = PublicPlanDetailViewController(publicPlan: prefill, allowEditing: true)
         let nav = NavigationController(rootViewController: editorViewController)
         
-        navigationController?.present(nav, animated: true)
+        navigationController?.present(nav, animated: ConsideringUser.animated)
     }
     
     @objc
@@ -320,12 +320,12 @@ class PublicPlanViewController: UIViewController {
                 case .app(let plan):
                     if let index = dataSource.indexPath(for: .appPlan(plan)) {
                         selectedItem = .appPlan(plan)
-                        collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
+                        collectionView.selectItem(at: index, animated: ConsideringUser.animated, scrollPosition: .centeredHorizontally)
                     }
                 case .custom(let plan):
                     if let index = dataSource.indexPath(for: .customPlan(plan)) {
                         selectedItem = .customPlan(plan)
-                        collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
+                        collectionView.selectItem(at: index, animated: ConsideringUser.animated, scrollPosition: .centeredHorizontally)
                     }
                 }
             }
@@ -333,14 +333,14 @@ class PublicPlanViewController: UIViewController {
         if selectedItem == nil {
             if let index = dataSource.indexPath(for: .empty) {
                 selectedItem = .empty
-                collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
+                collectionView.selectItem(at: index, animated: ConsideringUser.animated, scrollPosition: .centeredHorizontally)
             }
         }
     }
     
     @objc
     func cancelAction() {
-        dismiss(animated: true)
+        dismiss(animated: ConsideringUser.animated)
     }
     
     @objc
@@ -358,7 +358,7 @@ class PublicPlanViewController: UIViewController {
         case .customPlan(let plan):
             PublicPlanManager.shared.select(plan: .custom(plan))
         }
-        dismiss(animated: true)
+        dismiss(animated: ConsideringUser.animated)
     }
     
     func createTemplate() {
@@ -373,7 +373,7 @@ class PublicPlanViewController: UIViewController {
         documentPickerViewController.allowsMultipleSelection = false
         documentPickerViewController.shouldShowFileExtensions = true
         documentPickerViewController.delegate = self
-        present(documentPickerViewController, animated: true)
+        present(documentPickerViewController, animated: ConsideringUser.animated)
     }
     
     func importPlan(from url: URL) {
@@ -402,7 +402,7 @@ class PublicPlanViewController: UIViewController {
             }
         }
         
-        present(controller, animated: true)
+        present(controller, animated: ConsideringUser.animated)
     }
     
     func showDateErrorAlert() {
@@ -412,7 +412,7 @@ class PublicPlanViewController: UIViewController {
         }
 
         alertController.addAction(cancelAction)
-        present(alertController, animated: true, completion: nil)
+        present(alertController, animated: ConsideringUser.animated, completion: nil)
     }
 }
 
