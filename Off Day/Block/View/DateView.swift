@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SnapKit
 
 class DateView: UIView {
     private var firstLabel: UILabel = {
@@ -16,7 +15,6 @@ class DateView: UIView {
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
-        
         return label
     }()
     
@@ -27,12 +25,18 @@ class DateView: UIView {
         label.font = UIFont.systemFont(ofSize: 9, weight: .regular)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
-        
         return label
     }()
     
+    private var hasAlternativeCalendar: Bool {
+        return !secondaryLabel.isHidden
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        addSubview(firstLabel)
+        addSubview(secondaryLabel)
     }
     
     required init?(coder: NSCoder) {
@@ -40,33 +44,40 @@ class DateView: UIView {
     }
     
     public func update(with date: String, alternativeCalendar: String?, foregroundColor: UIColor) {
-        guard firstLabel.superview == nil else { return }
         firstLabel.text = date
         firstLabel.textColor = foregroundColor
+        
         if let alternativeCalendar = alternativeCalendar {
-            addSubview(secondaryLabel)
-            secondaryLabel.snp.makeConstraints { make in
-                make.leading.trailing.bottom.equalTo(self)
-                make.height.equalTo(14)
-            }
+            secondaryLabel.isHidden = false
             secondaryLabel.text = alternativeCalendar
             secondaryLabel.textColor = foregroundColor
-            
-            addSubview(firstLabel)
-            firstLabel.snp.makeConstraints { make in
-                make.leading.trailing.top.equalTo(self)
-                make.bottom.equalTo(secondaryLabel.snp.top)
-            }
         } else {
-            addSubview(firstLabel)
-            firstLabel.snp.makeConstraints { make in
-                make.edges.equalTo(self)
-            }
+            secondaryLabel.isHidden = true
         }
+        
+        setNeedsLayout()
     }
     
-    public func prepareForReuse() {
-        firstLabel.removeFromSuperview()
-        secondaryLabel.removeFromSuperview()
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if hasAlternativeCalendar {
+            let secondaryHeight: CGFloat = 14
+            secondaryLabel.frame = CGRect(
+                x: 0,
+                y: bounds.height - secondaryHeight,
+                width: bounds.width,
+                height: secondaryHeight
+            )
+            
+            firstLabel.frame = CGRect(
+                x: 0,
+                y: 0,
+                width: bounds.width,
+                height: bounds.height - secondaryHeight
+            )
+        } else {
+            firstLabel.frame = bounds
+        }
     }
 }

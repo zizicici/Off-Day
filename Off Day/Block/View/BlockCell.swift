@@ -83,11 +83,6 @@ class BlockCell: BlockBaseCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
-        isHover = false
-        dateView.prepareForReuse()
-        cornerMark.isHidden = true
-        publicDayLabel.removeFromSuperview()
     }
     
     override func layoutSubviews() {
@@ -111,6 +106,8 @@ class BlockCell: BlockBaseCell {
             make.width.height.equalTo(5.0)
         }
         
+        contentView.addSubview(publicDayLabel)
+        
         isAccessibilityElement = true
         accessibilityTraits = .button
     }
@@ -121,18 +118,21 @@ class BlockCell: BlockBaseCell {
         
         if let item = state.blockItem {
             if let publicDayName = item.publicDayName {
-                contentView.addSubview(publicDayLabel)
-                publicDayLabel.snp.makeConstraints { make in
+                publicDayLabel.isHidden = false
+                publicDayLabel.snp.remakeConstraints { make in
                     make.leading.trailing.bottom.equalTo(contentView).inset(3.0)
                     make.height.equalTo(16.0)
                 }
                 publicDayLabel.text = publicDayName
                 publicDayLabel.textColor = item.foregroundColor
+                
                 dateView.snp.remakeConstraints { make in
                     make.leading.trailing.top.equalTo(contentView).inset(3.0)
                     make.bottom.equalTo(publicDayLabel.snp.top)
                 }
             } else {
+                publicDayLabel.isHidden = true
+                
                 dateView.snp.remakeConstraints { make in
                     make.edges.equalTo(contentView).inset(3.0)
                 }
