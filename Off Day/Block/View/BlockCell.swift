@@ -48,7 +48,6 @@ class BlockCell: BlockBaseCell {
     
     var dateView: DateView = {
         let label = DateView()
-        
         return label
     }()
     
@@ -57,7 +56,6 @@ class BlockCell: BlockBaseCell {
         label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
         label.trailingBuffer = 10.0
         label.textAlignment = .center
-        
         return label
     }()
     
@@ -67,7 +65,6 @@ class BlockCell: BlockBaseCell {
         view.layer.cornerCurve = .continuous
         view.layer.maskedCorners = [.layerMaxXMinYCorner]
         view.layer.masksToBounds = true
-        
         return view
     }()
     
@@ -75,41 +72,78 @@ class BlockCell: BlockBaseCell {
         let view = UIView()
         view.layer.cornerRadius = 2.0
         view.layer.cornerCurve = .continuous
-        
         return view
     }()
     
     var highlightColor: UIColor = .gray.withAlphaComponent(0.35)
     
+    // 存储布局相关状态
+    private var hasPublicDay: Bool = false
+    private var needsSetupViews: Bool = true
+    
     override func prepareForReuse() {
         super.prepareForReuse()
+        isHover = false
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        // 设置视图frame
+        let contentBounds = contentView.bounds
+        let inset: CGFloat = 3.0
+        
+        // Corner mark (固定大小15x15，右上角)
+        cornerMark.frame = CGRect(
+            x: contentBounds.width - 15.0,
+            y: 0,
+            width: 15.0,
+            height: 15.0
+        )
+        
+        // Comment mark (固定大小5x5，左上角内边距5)
+        commentMark.frame = CGRect(
+            x: 5.0,
+            y: 5.0,
+            width: 5.0,
+            height: 5.0
+        )
+        
+        if hasPublicDay {
+            // 有publicDayLabel时的布局
+            let publicDayHeight: CGFloat = 16.0
+            publicDayLabel.frame = CGRect(
+                x: inset,
+                y: contentBounds.height - publicDayHeight - inset,
+                width: contentBounds.width - 2 * inset,
+                height: publicDayHeight
+            )
+            
+            dateView.frame = CGRect(
+                x: inset,
+                y: inset,
+                width: contentBounds.width - 2 * inset,
+                height: contentBounds.height - publicDayHeight - 2 * inset
+            )
+        } else {
+            // 没有publicDayLabel时的布局
+            dateView.frame = contentBounds.insetBy(dx: inset, dy: inset)
+            publicDayLabel.frame = .zero
+        }
     }
     
     private func setupViewsIfNeeded() {
-        guard dateView.superview == nil else { return }
+        guard needsSetupViews else { return }
         
         contentView.addSubview(dateView)
-
         contentView.addSubview(cornerMark)
-        cornerMark.snp.makeConstraints { make in
-            make.trailing.top.equalTo(contentView)
-            make.width.height.equalTo(15.0)
-        }
-        
         contentView.addSubview(commentMark)
-        commentMark.snp.makeConstraints { make in
-            make.top.leading.equalTo(contentView).inset(5.0)
-            make.width.height.equalTo(5.0)
-        }
-        
         contentView.addSubview(publicDayLabel)
         
         isAccessibilityElement = true
         accessibilityTraits = .button
+        
+        needsSetupViews = false
     }
     
     override func updateConfiguration(using state: UICellConfigurationState) {
@@ -117,28 +151,18 @@ class BlockCell: BlockBaseCell {
         setupViewsIfNeeded()
         
         if let item = state.blockItem {
+            // 更新publicDayLabel状态
             if let publicDayName = item.publicDayName {
+                hasPublicDay = true
                 publicDayLabel.isHidden = false
-                publicDayLabel.snp.remakeConstraints { make in
-                    make.leading.trailing.bottom.equalTo(contentView).inset(3.0)
-                    make.height.equalTo(16.0)
-                }
                 publicDayLabel.text = publicDayName
                 publicDayLabel.textColor = item.foregroundColor
-                
-                dateView.snp.remakeConstraints { make in
-                    make.leading.trailing.top.equalTo(contentView).inset(3.0)
-                    make.bottom.equalTo(publicDayLabel.snp.top)
-                }
             } else {
+                hasPublicDay = false
                 publicDayLabel.isHidden = true
-                
-                dateView.snp.remakeConstraints { make in
-                    make.edges.equalTo(contentView).inset(3.0)
-                }
             }
             
-            var backgroundColor = item.backgroundColor
+            // 更新cornerMark
             if let customDayType = item.customDayType {
                 cornerMark.isHidden = false
                 switch customDayType {
@@ -150,27 +174,65 @@ class BlockCell: BlockBaseCell {
             } else {
                 cornerMark.isHidden = true
             }
+            
+            // 更新背景色
+            var backgroundColor = item.backgroundColor
             if isHover || isHighlighted {
                 backgroundColor = highlightColor.overlay(on: backgroundColor)
             }
             
-            dateView.update(with: item.day.dayString(), alternativeCalendar: item.alternativeCalendarDayName, foregroundColor: item.foregroundColor)
+            // 更新dateView
+            dateView.update(
+                with: item.day.dayString(),
+                alternativeCalendar: item.alternativeCalendarDayName,
+                foregroundColor: item.foregroundColor
+            )
+            
+            // 更新commentMark
             commentMark.isHidden = item.customDayInfo.customComment == nil
             commentMark.backgroundColor = item.foregroundColor.withAlphaComponent(0.5)
+            
+            // 更新accessibility
             if item.isToday {
                 accessibilityLabel = String(localized: "weekCalendar.today") + (item.day.completeFormatString() ?? "")
             } else {
                 accessibilityLabel = item.day.completeFormatString()
             }
+            
             if let alternativeCalendarA11yName = item.alternativeCalendarA11yName {
                 accessibilityLabel = (accessibilityLabel ?? "") + "," + alternativeCalendarA11yName
             }
             
-            backgroundConfiguration = BlockCellBackgroundConfiguration.configuration(for: state, backgroundColor: backgroundColor, cornerRadius: 6.0, showStroke: item.isToday, strokeColor: AppColor.today, strokeWidth: 3.0, strokeOutset: 0.0)
+            // 配置背景
+            backgroundConfiguration = BlockCellBackgroundConfiguration.configuration(
+                for: state,
+                backgroundColor: backgroundColor,
+                cornerRadius: 6.0,
+                showStroke: item.isToday,
+                strokeColor: AppColor.today,
+                strokeWidth: 3.0,
+                strokeOutset: 0.0
+            )
             
-            let dayType: DayType = DayManager.isOffDay(baseCalendarDayType: item.baseCalendarDayType, publicDayType: item.publicDayType, customDayType: item.customDayType) ? .offDay : .workDay
-            accessibilityValue = String.assembleDetail(for: dayType, publicDayName: item.publicDayName, baseCalendarDayType: item.baseCalendarDayType, publicDayType: item.publicDayType, customDayType: item.customDayType, customComment: item.customDayInfo.customComment?.content)
+            // 更新accessibilityValue
+            let dayType: DayType = DayManager.isOffDay(
+                baseCalendarDayType: item.baseCalendarDayType,
+                publicDayType: item.publicDayType,
+                customDayType: item.customDayType
+            ) ? .offDay : .workDay
+            
+            accessibilityValue = String.assembleDetail(
+                for: dayType,
+                publicDayName: item.publicDayName,
+                baseCalendarDayType: item.baseCalendarDayType,
+                publicDayType: item.publicDayType,
+                customDayType: item.customDayType,
+                customComment: item.customDayInfo.customComment?.content
+            )
         }
+        
+        // 标记需要重新布局
+        setNeedsLayout()
     }
     
     func update(isHover: Bool) {

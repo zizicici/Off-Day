@@ -1065,7 +1065,7 @@
 			repositoryURL = "https://github.com/zizicici/ZCCalendar";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.3;
+				minimumVersion = 0.1.4;
 			};
 		};
 		14B36F802DE2187600E96C56 /* XCRemoteSwiftPackageReference "MarqueeLabel" */ = {

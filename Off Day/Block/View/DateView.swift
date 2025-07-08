@@ -12,7 +12,7 @@ class DateView: UIView {
         let label = UILabel()
         label.textColor = .label
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
         return label
