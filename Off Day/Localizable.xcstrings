@@ -474,19 +474,19 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "数据库文件将会自动同步到iCloud里的休息日文件夹。每天最多备份一次。"
+            "value" : "数据库文件将会自动同步到iCloud里的'Off Day'文件夹。每天最多备份一次。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "數據庫文件將會自動同步到iCloud裏的休息日文件夾。每天最多備份一次。"
+            "value" : "數據庫文件將會自動同步到iCloud裏的'Off Day'文件夾。每天最多備份一次。"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "數據庫文件將會自動同步到iCloud裏的休息日文件夾。每天最多備份一次。"
+            "value" : "數據庫文件將會自動同步到iCloud裏的'Off Day'文件夾。每天最多備份一次。"
           }
         }
       }
