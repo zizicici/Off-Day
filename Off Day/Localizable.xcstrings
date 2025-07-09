@@ -464,30 +464,29 @@
       }
     },
     "backup.section.toggle.hint" : {
-      "comment" : "The database file will be automatically backed up to the 'Tag Day' folder in iCloud. Up to once per day.",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The database file will be automatically backed up to the 'Tag Day' folder in iCloud. Up to once per day."
+            "value" : "The database file will be automatically backed up to the ‘Off Day' folder in iCloud. Up to once per day."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "数据库文件将会自动同步到iCloud里的标签日文件夹。每天最多备份一次。"
+            "value" : "数据库文件将会自动同步到iCloud里的休息日文件夹。每天最多备份一次。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "數據庫文件將會自動同步到iCloud裏的標籤日文件夾。每天最多備份一次。"
+            "value" : "數據庫文件將會自動同步到iCloud裏的休息日文件夾。每天最多備份一次。"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "數據庫文件將會自動同步到iCloud裏的標籤日文件夾。每天最多備份一次。"
+            "value" : "數據庫文件將會自動同步到iCloud裏的休息日文件夾。每天最多備份一次。"
           }
         }
       }

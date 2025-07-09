@@ -36,7 +36,7 @@ class BackupViewController: UIViewController {
         func footerTitle() -> String? {
             switch self {
             case .autoBackup:
-                let footer = String(localized: "backup.section.toggle.hint", comment: "The database file will be automatically backed up to the 'Tag Day' folder in iCloud. Up to once per day.")
+                let footer = String(localized: "backup.section.toggle.hint")
                 
                 var addition: String = ""
                 
