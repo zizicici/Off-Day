@@ -116,7 +116,6 @@ class BackupViewController: UIViewController {
         super.viewDidLoad()
         
         self.title = String(localized: "backup.title")
-        navigationController?.navigationBar.tintColor = AppColor.offDay
         
         view.backgroundColor = AppColor.background
         
