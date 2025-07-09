@@ -468,7 +468,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The database file will be automatically backed up to the ‘Off Day' folder in iCloud. Up to once per day."
+            "value" : "The database file will be automatically backed up to the 'Off Day' folder in iCloud. Up to once per day."
           }
         },
         "zh-Hans" : {
