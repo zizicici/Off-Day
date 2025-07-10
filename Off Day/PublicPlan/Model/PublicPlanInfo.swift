@@ -14,10 +14,10 @@ struct PublicPlanInfo {
         case custom(CustomPublicPlan)
     }
     
-    var plan: Plan!
+    var plan: Plan
     var days: [Int: any PublicDay] // julian day as Key
     
-    init(plan: Plan!, days: [Int : any PublicDay]) {
+    init(plan: Plan, days: [Int : any PublicDay]) {
         self.plan = plan
         self.days = days
     }
@@ -49,8 +49,6 @@ struct PublicPlanInfo {
                 return appPublicPlan.title
             case .custom(let customPublicPlan):
                 return customPublicPlan.name
-            case .none:
-                return ""
             }
         }
         set {
@@ -61,8 +59,6 @@ struct PublicPlanInfo {
                 var plan = customPublicPlan
                 plan.name = newValue
                 self.plan = .custom(plan)
-            case .none:
-                break
             }
         }
     }
@@ -74,8 +70,6 @@ struct PublicPlanInfo {
                 return appPublicPlan.start
             case .custom(let customPublicPlan):
                 return customPublicPlan.start
-            case .none:
-                return ZCCalendar.manager.today
             }
         }
         set {
@@ -86,8 +80,6 @@ struct PublicPlanInfo {
                 var plan = customPublicPlan
                 plan.start = newValue
                 self.plan = .custom(plan)
-            case .none:
-                break
             }
         }
     }
@@ -99,8 +91,6 @@ struct PublicPlanInfo {
                 return appPublicPlan.end
             case .custom(let customPublicPlan):
                 return customPublicPlan.end
-            case .none:
-                return ZCCalendar.manager.today
             }
         }
         set {
@@ -111,8 +101,6 @@ struct PublicPlanInfo {
                 var plan = customPublicPlan
                 plan.end = newValue
                 self.plan = .custom(plan)
-            case .none:
-                break
             }
         }
     }

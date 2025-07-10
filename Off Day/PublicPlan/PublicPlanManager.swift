@@ -137,8 +137,6 @@ extension PublicPlanManager {
                 }
             }
             return true
-        case .none:
-            return false
         }
     }
     
@@ -148,8 +146,6 @@ extension PublicPlanManager {
             return false
         case .custom(let customPlan):
             _ = AppDatabase.shared.delete(publicPlan: customPlan)
-            return false
-        case .none:
             return false
         }
     }

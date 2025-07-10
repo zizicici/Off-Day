@@ -354,8 +354,6 @@ class PublicPlanDetailViewController: UIViewController {
                     dismissAction()
                 }
             }
-        case .none:
-            break
         }
     }
     
