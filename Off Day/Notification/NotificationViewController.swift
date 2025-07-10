@@ -123,7 +123,7 @@ class NotificationViewController: UIViewController {
         reloadData()
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: NSNotification.Name.SettingsUpdate, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: Notification.Name.SettingsUpdate, object: nil)
     }
     
     func configureHierarchy() {

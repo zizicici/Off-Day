@@ -35,7 +35,7 @@ struct NotificationManager {
         
         func setValue(_ value: Bool) {
             UserDefaults.standard.set(value, forKey: settingsKey.rawValue)
-            NotificationCenter.default.post(name: NSNotification.Name.SettingsUpdate, object: nil)
+            NotificationCenter.default.post(name: Notification.Name.SettingsUpdate, object: nil)
         }
     }
     

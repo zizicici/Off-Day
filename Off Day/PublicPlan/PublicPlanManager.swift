@@ -102,7 +102,7 @@ final class PublicPlanManager {
             UserDefaults.standard.removeObject(forKey: customPlanStoredKey)
         }
         load()
-        NotificationCenter.default.post(name: NSNotification.Name.SettingsUpdate, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.SettingsUpdate, object: nil)
     }
 }
 

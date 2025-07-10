@@ -122,7 +122,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
     
@@ -140,7 +140,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
     
@@ -157,7 +157,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
     
@@ -176,7 +176,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
     
@@ -196,7 +196,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
 }
@@ -216,7 +216,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
     
@@ -234,7 +234,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
     
@@ -251,7 +251,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
 }
@@ -271,7 +271,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
     
@@ -288,7 +288,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
 }
@@ -308,7 +308,7 @@ extension AppDatabase {
             print(error)
             return nil
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return savePublicPlan
     }
     
@@ -326,7 +326,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
     
@@ -343,7 +343,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
 }
@@ -363,7 +363,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
     
@@ -380,7 +380,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
     
@@ -398,7 +398,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
     
@@ -415,7 +415,7 @@ extension AppDatabase {
             print(error)
             return false
         }
-        NotificationCenter.default.post(name: NSNotification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
     }
 }

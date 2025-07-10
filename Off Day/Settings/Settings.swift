@@ -76,7 +76,7 @@ extension UserDefaultSettable where Self: RawRepresentable, Self.RawValue == Int
     
     static func setValue(_ value: Self) {
         UserDefaults.standard.set(value.rawValue, forKey: getKey().rawValue)
-        NotificationCenter.default.post(name: NSNotification.Name.SettingsUpdate, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.SettingsUpdate, object: nil)
     }
     
     static func getOptions<T: CaseIterable>() -> [T] {
