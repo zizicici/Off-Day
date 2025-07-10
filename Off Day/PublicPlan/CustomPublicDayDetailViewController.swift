@@ -86,18 +86,6 @@ class CustomPublicDayDetailViewController: UIViewController {
         print("CustomPublicDayDetailViewController is deinited")
     }
     
-    func createLayout() -> UICollectionViewLayout {
-        let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            var configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
-            configuration.separatorConfiguration = UIListSeparatorConfiguration(listAppearance: .insetGrouped)
-            configuration.backgroundColor = AppColor.background
-            let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
-            
-            return section
-        }
-        return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
-    }
-    
     func configureHierarchy() {
         tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.backgroundColor = AppColor.background
