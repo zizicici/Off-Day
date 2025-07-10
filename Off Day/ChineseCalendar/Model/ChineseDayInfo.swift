@@ -280,6 +280,86 @@ enum Rokuyo: Int {
     }
 }
 
+enum SolarTerm: Int, CaseIterable {
+    case startOfSpring = 0
+    case springShowers
+    case awakeningOfInsects
+    case springEquinox
+    case pureBrightness
+    case grainRain
+    case startOfSummer
+    case grainBuds
+    case grainInEar
+    case summerSolstice
+    case minorHeat
+    case majorHeat
+    case startOfAutumn
+    case endOfHeat
+    case whiteDew
+    case autumnEquinox
+    case coldDew
+    case frost
+    case startOfWinter
+    case minorSnow
+    case majorSnow
+    case winterSolstice
+    case minorCold
+    case majorCold
+    
+    var name: String {
+        switch self {
+        case .startOfSpring:
+            return String(localized: "solarTerm.0")
+        case .springShowers:
+            return String(localized: "solarTerm.1")
+        case .awakeningOfInsects:
+            return String(localized: "solarTerm.2")
+        case .springEquinox:
+            return String(localized: "solarTerm.3")
+        case .pureBrightness:
+            return String(localized: "solarTerm.4")
+        case .grainRain:
+            return String(localized: "solarTerm.5")
+        case .startOfSummer:
+            return String(localized: "solarTerm.6")
+        case .grainBuds:
+            return String(localized: "solarTerm.7")
+        case .grainInEar:
+            return String(localized: "solarTerm.8")
+        case .summerSolstice:
+            return String(localized: "solarTerm.9")
+        case .minorHeat:
+            return String(localized: "solarTerm.10")
+        case .majorHeat:
+            return String(localized: "solarTerm.11")
+        case .startOfAutumn:
+            return String(localized: "solarTerm.12")
+        case .endOfHeat:
+            return String(localized: "solarTerm.13")
+        case .whiteDew:
+            return String(localized: "solarTerm.14")
+        case .autumnEquinox:
+            return String(localized: "solarTerm.15")
+        case .coldDew:
+            return String(localized: "solarTerm.16")
+        case .frost:
+            return String(localized: "solarTerm.17")
+        case .startOfWinter:
+            return String(localized: "solarTerm.18")
+        case .minorSnow:
+            return String(localized: "solarTerm.19")
+        case .majorSnow:
+            return String(localized: "solarTerm.20")
+        case .winterSolstice:
+            return String(localized: "solarTerm.21")
+        case .minorCold:
+            return String(localized: "solarTerm.22")
+        case .majorCold:
+            return String(localized: "solarTerm.23")
+        }
+    }
+}
+
 struct ChineseDayInfo {
     let year: ChineseYear
     let month: RepeatableChineseMonth

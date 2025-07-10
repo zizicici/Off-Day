@@ -75,9 +75,14 @@ struct LayoutGenerater {
                 case .off:
                     break
                 case .chineseCalendar:
-                    let chineseDay = ChineseCalendarManager.shared.findChineseDayInfo(gregorianDay, variant: .chinese)
-                    alternativeCalendarDayName = chineseDay?.shortDisplayString()
-                    alternativeCalendarA11yName = chineseDay?.pronounceString()
+                    let chineseDayInfo = ChineseCalendarManager.shared.findChineseDayInfo(gregorianDay, variant: .chinese)
+                    if let solarTerm = ChineseCalendarManager.shared.getSolarTerm(for: gregorianDay) {
+                        alternativeCalendarDayName = solarTerm.name
+                        alternativeCalendarA11yName = (chineseDayInfo?.pronounceString() ?? "") + solarTerm.name
+                    } else {
+                        alternativeCalendarDayName = chineseDayInfo?.shortDisplayString()
+                        alternativeCalendarA11yName = chineseDayInfo?.pronounceString()
+                    }
                 }
                 
                 return Item.block(BlockItem(index: julianDay, publicDayName: publicDay?.name, baseCalendarDayType: BaseCalendarManager.shared.isOff(day: gregorianDay) ? .offDay : .workDay, publicDayType: publicDay?.type, customDayInfo: customDayInfo, backgroundColor: backgroundColor, foregroundColor: foregroundColor, isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay), alternativeCalendarDayName: alternativeCalendarDayName, alternativeCalendarA11yName: alternativeCalendarA11yName))
