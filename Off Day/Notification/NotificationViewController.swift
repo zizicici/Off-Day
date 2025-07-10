@@ -130,7 +130,7 @@ class NotificationViewController: UIViewController {
         tableView = UIDraggableTableView(frame: .zero, style: .insetGrouped)
         tableView.backgroundColor = AppColor.background
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: NSStringFromClass(UITableViewCell.self))
-        tableView.register(TimeCell.self, forCellReuseIdentifier: NSStringFromClass(TimeCell.self))
+        tableView.register(DateCell.self, forCellReuseIdentifier: NSStringFromClass(DateCell.self))
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 50.0
@@ -171,8 +171,8 @@ class NotificationViewController: UIViewController {
                 
                 return cell
             case .publicHolidayFireTime(let fireTime):
-                let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(TimeCell.self), for: indexPath)
-                if let cell = cell as? TimeCell {
+                let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(DateCell.self), for: indexPath)
+                if let cell = cell as? DateCell {
                     cell.update(with: DateCellItem(title: identifier.title ?? "", nanoSecondsFrom1970: fireTime))
                     cell.selectDateAction = { [weak self] nanoSeconds in
                         guard let self = self else { return }
@@ -195,8 +195,8 @@ class NotificationViewController: UIViewController {
                 
                 return cell
             case .customDayFireTime(let fireTime):
-                let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(TimeCell.self), for: indexPath)
-                if let cell = cell as? TimeCell {
+                let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(DateCell.self), for: indexPath)
+                if let cell = cell as? DateCell {
                     cell.update(with: DateCellItem(title: identifier.title ?? "", nanoSecondsFrom1970: fireTime))
                     cell.selectDateAction = { [weak self] nanoSeconds in
                         guard let self = self else { return }
@@ -219,8 +219,8 @@ class NotificationViewController: UIViewController {
                 
                 return cell
             case .expireFireTime(let fireTime):
-                let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(TimeCell.self), for: indexPath)
-                if let cell = cell as? TimeCell {
+                let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(DateCell.self), for: indexPath)
+                if let cell = cell as? DateCell {
                     cell.update(with: DateCellItem(title: identifier.title ?? "", nanoSecondsFrom1970: fireTime))
                     cell.selectDateAction = { [weak self] nanoSeconds in
                         guard let self = self else { return }

@@ -135,9 +135,10 @@ class CustomPublicDayDetailViewController: UIViewController {
             case .date(let day):
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(DateCell.self), for: indexPath)
                 if let cell = cell as? DateCell {
-                    cell.update(with: DateCellItem(title: String(localized: "publicDay.detail.date"), date: day))
-                    cell.selectDateAction = { [weak self] date in
+                    cell.update(with: DateCellItem(title: String(localized: "publicDay.detail.date"), day: day, mode: .date))
+                    cell.selectDateAction = { [weak self] nanoSeconds in
                         guard let self = self else { return }
+                        let date = Date(nanoSecondSince1970: nanoSeconds)
                         let day = GregorianDay(from: date)
                         self.day.date = day
                     }

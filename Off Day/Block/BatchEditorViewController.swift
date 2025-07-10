@@ -168,8 +168,9 @@ class BatchEditorViewController: UIViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(DateCell.self), for: indexPath)
                 if let cell = cell as? DateCell {
                     cell.update(with: dateItem)
-                    cell.selectDateAction = { [weak self] date in
+                    cell.selectDateAction = { [weak self] nanoSeconds in
                         guard let self = self else { return }
+                        let date = Date(nanoSecondSince1970: nanoSeconds)
                         let day = GregorianDay(from: date)
                         self.start = day
                         self.updateAddButtonStatus()
@@ -180,8 +181,9 @@ class BatchEditorViewController: UIViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(DateCell.self), for: indexPath)
                 if let cell = cell as? DateCell {
                     cell.update(with: dateItem)
-                    cell.selectDateAction = { [weak self] date in
+                    cell.selectDateAction = { [weak self] nanoSeconds in
                         guard let self = self else { return }
+                        let date = Date(nanoSecondSince1970: nanoSeconds)
                         let day = GregorianDay(from: date)
                         self.end = day
                         self.updateAddButtonStatus()
@@ -217,8 +219,8 @@ class BatchEditorViewController: UIViewController {
         snapshot.appendSections([.dayType])
         snapshot.appendItems([.dayType(dayType)], toSection: .dayType)
         snapshot.appendSections([.time])
-        snapshot.appendItems([.start(DateCellItem(title: String(localized: "batchEditor.cell.start"), date: start))], toSection: .time)
-        snapshot.appendItems([.end(DateCellItem(title: String(localized: "batchEditor.cell.end"), date: end))], toSection: .time)
+        snapshot.appendItems([.start(DateCellItem(title: String(localized: "batchEditor.cell.start"), day: start, mode: .date))], toSection: .time)
+        snapshot.appendItems([.end(DateCellItem(title: String(localized: "batchEditor.cell.end"), day: end, mode: .date))], toSection: .time)
 
         dataSource.apply(snapshot, animatingDifferences: false)
     }

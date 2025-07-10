@@ -230,14 +230,14 @@ class PublicPlanDetailViewController: UIViewController {
             guard let self = self else { return }
             switch item {
             case .start(let day):
-                cell.update(with: DateCellItem(title: String(localized: "publicDetail.start"), date: day))
+                cell.update(with: DateCellItem(title: String(localized: "publicDetail.start"), day: day))
                 cell.selectDateAction = { [weak self] date in
                     guard let self = self else { return }
                     let day = GregorianDay(from: date)
                     self.publicPlanInfo?.start = day
                 }
             case .end(let day):
-                cell.update(with: DateCellItem(title: String(localized: "publicDetail.end"), date: day))
+                cell.update(with: DateCellItem(title: String(localized: "publicDetail.end"), day: day))
                 cell.selectDateAction = { [weak self] date in
                     guard let self = self else { return }
                     let day = GregorianDay(from: date)

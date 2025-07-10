@@ -62,7 +62,7 @@ class DatePickerCell: DatePickerBaseCell {
         setupViewsIfNeeded()
         
         var content = defaultListContentConfiguration().updated(for: state)
-        if let dateItem = state.dateItem, let day: GregorianDay = dateItem.date {
+        if let dateItem = state.dateItem, let day: GregorianDay = dateItem.day {
             content.text = dateItem.title
             listContentView.configuration = content
             
@@ -72,7 +72,7 @@ class DatePickerCell: DatePickerBaseCell {
             datePicker?.isHidden = false
             text = day.formatString() ?? ""
 
-            accessibilityLabel = dateItem.title + ":" + text
+            accessibilityLabel = (dateItem.title ?? "") + ":" + text
         }
         isAccessibilityElement = true
         accessibilityTraits = .button
