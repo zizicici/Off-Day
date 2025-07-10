@@ -88,6 +88,18 @@ final class AppDatabase {
                 table.column("content", .text).notNull()
             }
         }
+        migrator.registerMigration("add_app_config") { db in
+            try db.create(table: "app_config") { table in
+                table.primaryKey("id", .integer, onConflict: .replace)
+                        .check { $0 == 1 }
+                table.column("notification_a_toggle", .boolean)
+                table.column("notification_a_time", .integer).notNull()
+                table.column("notification_b_toggle", .boolean)
+                table.column("notification_b_time", .integer).notNull()
+                table.column("notification_c_toggle", .boolean)
+                table.column("notification_c_time", .integer).notNull()
+            }
+        }
         
         return migrator
     }
@@ -409,6 +421,22 @@ extension AppDatabase {
         do {
             _ = try dbWriter?.write{ db in
                 try CustomPublicDay.deleteAll(db, ids: [publicPlanId])
+            }
+        }
+        catch {
+            print(error)
+            return false
+        }
+        NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
+        return true
+    }
+}
+
+extension AppDatabase {
+    func save(appConfig: AppConfiguration) -> Bool {
+        do {
+            _ = try dbWriter?.write{ db in
+                try appConfig.save(db)
             }
         }
         catch {

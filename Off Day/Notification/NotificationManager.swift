@@ -7,39 +7,25 @@
 
 import Foundation
 import UserNotifications
+import ZCCalendar
 
-struct NotificationManager {
-    enum NotificationType {
+class NotificationManager {
+    enum NotificationType: Hashable {
         case templateExpiry
         case publicHoliday
         case customDay
-        
-        var settingsKey: UserDefaults.Settings {
-            switch self {
-            case .templateExpiry:
-                return .NotificationTemplateExpiry
-            case .publicHoliday:
-                return .NotificationPublicHolidayStart
-            case .customDay:
-                return .NotificationCustomDayStart
-            }
-        }
-        
-        func getValue() -> Bool {
-            if let boolValue = UserDefaults.standard.getBool(forKey: settingsKey.rawValue) {
-                return boolValue
-            } else {
-                return false
-            }
-        }
-        
-        func setValue(_ value: Bool) {
-            UserDefaults.standard.set(value, forKey: settingsKey.rawValue)
-            NotificationCenter.default.post(name: Notification.Name.SettingsUpdate, object: nil)
-        }
+    }
+    
+    struct Item: Hashable {
+        var type: NotificationType
+        var day: Int
+        var notificationTime: Int64?
+        var notificationText: String?
     }
     
     static let shared = NotificationManager()
+    
+    private var items: [Item] = []
     
     func requestPermission() {
         let center = UNUserNotificationCenter.current()
@@ -52,11 +38,59 @@ struct NotificationManager {
         }
     }
     
-    func isEnabled(for notificationType: NotificationType) -> Bool {
-        return notificationType.getValue()
+    func updateNotifications() {
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        
+        items.removeAll()
+        
+        let appConfig = AppConfiguration.get()
+        
+        // Update Items and Sort by date
+        if appConfig.isTemplateNotificationEnabled {
+            if let expirationDate = PublicPlanManager.shared.getExpirationDate() {
+                for i in 1..<6 {
+                    // Need Check Day after fire date
+                    items.append(Item(type: .templateExpiry, day: expirationDate.julianDay - i))
+                }
+            }
+        }
+        
+        if appConfig.isPublicDayNotificationEnabled {
+            let publicDayInfos = PublicPlanManager.shared.getDaysAfter(day: ZCCalendar.manager.today)
+            for publicDayInfo in publicDayInfos {
+                // Need Check Day after fire date
+                items.append(Item(type: .publicHoliday, day: publicDayInfo.value.date.julianDay - 1))
+            }
+        }
+        
+        if appConfig.isCustomDayNotificationEnabled {
+            let customDays = CustomDayManager.shared.fetchAll(after: ZCCalendar.manager.today.julianDay)
+            var filterCustomDays: [CustomDay] = []
+            
+            for customDay in customDays {
+                guard let lastDay = customDays.last else {
+                    filterCustomDays.append(customDay)
+                    return
+                }
+                
+                if !(customDay.dayIndex == lastDay.dayIndex + 1 && customDay.dayType == lastDay.dayType) {
+                    filterCustomDays.append(customDay)
+                }
+            }
+            
+            for filterCustomDay in filterCustomDays {
+                // Need Check Day after fire date
+                items.append(Item(type: .publicHoliday, day: Int(filterCustomDay.dayIndex) - 1))
+            }
+        }
+        
+        // Register Notification by Item, limit 20 notifications
+        for i in 0..<min(items.count, 20) {
+            setupNotification(for: items[i])
+        }
     }
     
-    func set(isEnabled: Bool, for notificationType: NotificationType) {
-        notificationType.setValue(isEnabled)
+    func setupNotification(for config: Item) {
+        
     }
 }

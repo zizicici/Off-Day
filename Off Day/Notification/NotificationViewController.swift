@@ -123,7 +123,7 @@ class NotificationViewController: UIViewController {
         reloadData()
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: Notification.Name.SettingsUpdate, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: Notification.Name.DatabaseUpdated, object: nil)
     }
     
     func configureHierarchy() {
@@ -173,10 +173,11 @@ class NotificationViewController: UIViewController {
             case .publicHolidayFireTime(let fireTime):
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(DateCell.self), for: indexPath)
                 if let cell = cell as? DateCell {
-                    cell.update(with: DateCellItem(title: identifier.title ?? "", nanoSecondsFrom1970: fireTime))
-                    cell.selectDateAction = { [weak self] nanoSeconds in
-                        guard let self = self else { return }
-                        
+                    let timeZoneSeconds = Int64(Calendar.current.timeZone.secondsFromGMT() * 1000)
+                    cell.update(with: DateCellItem(title: identifier.title ?? "", nanoSecondsFrom1970: fireTime - timeZoneSeconds, mode: .time))
+                    cell.selectDateAction = { nanoSeconds in
+                        var appConfig = AppConfiguration.get()
+                        appConfig.publicDayNanoseconds = timeZoneSeconds + nanoSeconds
                     }
                 }
                 return cell
@@ -197,10 +198,11 @@ class NotificationViewController: UIViewController {
             case .customDayFireTime(let fireTime):
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(DateCell.self), for: indexPath)
                 if let cell = cell as? DateCell {
-                    cell.update(with: DateCellItem(title: identifier.title ?? "", nanoSecondsFrom1970: fireTime))
-                    cell.selectDateAction = { [weak self] nanoSeconds in
-                        guard let self = self else { return }
-                        
+                    let timeZoneSeconds = Int64(Calendar.current.timeZone.secondsFromGMT() * 1000)
+                    cell.update(with: DateCellItem(title: identifier.title ?? "", nanoSecondsFrom1970: fireTime - timeZoneSeconds, mode: .time))
+                    cell.selectDateAction = { nanoSeconds in
+                        var appConfig = AppConfiguration.get()
+                        appConfig.customDayNanoseconds = timeZoneSeconds + nanoSeconds
                     }
                 }
                 return cell
@@ -221,10 +223,11 @@ class NotificationViewController: UIViewController {
             case .expireFireTime(let fireTime):
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(DateCell.self), for: indexPath)
                 if let cell = cell as? DateCell {
-                    cell.update(with: DateCellItem(title: identifier.title ?? "", nanoSecondsFrom1970: fireTime))
-                    cell.selectDateAction = { [weak self] nanoSeconds in
-                        guard let self = self else { return }
-                        
+                    let timeZoneSeconds = Int64(Calendar.current.timeZone.secondsFromGMT() * 1000)
+                    cell.update(with: DateCellItem(title: identifier.title ?? "", nanoSecondsFrom1970: fireTime - timeZoneSeconds, mode: .time))
+                    cell.selectDateAction = { nanoSeconds in
+                        var appConfig = AppConfiguration.get()
+                        appConfig.templateNanoseconds = timeZoneSeconds + nanoSeconds
                     }
                 }
                 return cell
@@ -242,8 +245,6 @@ class NotificationViewController: UIViewController {
     }
     
     func apply(with authStatus: UNAuthorizationStatus) {
-        let manager = NotificationManager.shared
-        
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         
         let allowAction: Bool
@@ -270,25 +271,26 @@ class NotificationViewController: UIViewController {
             fatalError()
         }
         
-        let templateExpiryIsEnabled = manager.isEnabled(for: .templateExpiry)
+        let appConfig = AppConfiguration.get()
+        let templateExpiryIsEnabled = appConfig.isTemplateNotificationEnabled
         snapshot.appendSections([.template])
         snapshot.appendItems([.expireToggle(allowAction, templateExpiryIsEnabled)], toSection: .template)
         if allowAction, templateExpiryIsEnabled {
-            snapshot.appendItems([.expireFireTime(0)], toSection: .template)
+            snapshot.appendItems([.expireFireTime(appConfig.templateNanoseconds)], toSection: .template)
         }
         
-        let publicHolidayStartIsEnabled = manager.isEnabled(for: .publicHoliday)
+        let publicHolidayStartIsEnabled = appConfig.isPublicDayNotificationEnabled
         snapshot.appendSections([.publicHoliday])
         snapshot.appendItems([.publicHolidayToggle(allowAction, publicHolidayStartIsEnabled)], toSection: .publicHoliday)
         if allowAction, publicHolidayStartIsEnabled {
-            snapshot.appendItems([.publicHolidayFireTime(0)], toSection: .publicHoliday)
+            snapshot.appendItems([.publicHolidayFireTime(appConfig.publicDayNanoseconds)], toSection: .publicHoliday)
         }
         
-        let customDayStartIsEnabled = manager.isEnabled(for: .customDay)
+        let customDayStartIsEnabled = appConfig.isCustomDayNotificationEnabled
         snapshot.appendSections([.customDay])
         snapshot.appendItems([.customDayToggle(allowAction, customDayStartIsEnabled)], toSection: .customDay)
         if allowAction, customDayStartIsEnabled {
-            snapshot.appendItems([.customDayFireTime(0)], toSection: .customDay)
+            snapshot.appendItems([.customDayFireTime(appConfig.customDayNanoseconds)], toSection: .customDay)
         }
 
         dataSource.apply(snapshot, animatingDifferences: false)
@@ -318,17 +320,20 @@ class NotificationViewController: UIViewController {
     
     @objc
     func publicHolidayToggle(_ toggle: UISwitch) {
-        NotificationManager.shared.set(isEnabled: toggle.isOn, for: .publicHoliday)
+        var appConfig = AppConfiguration.get()
+        appConfig.isPublicDayNotificationEnabled = toggle.isOn
     }
     
     @objc
     func customDayToggle(_ toggle: UISwitch) {
-        NotificationManager.shared.set(isEnabled: toggle.isOn, for: .customDay)
+        var appConfig = AppConfiguration.get()
+        appConfig.isCustomDayNotificationEnabled = toggle.isOn
     }
     
     @objc
     func expiryToggle(_ toggle: UISwitch) {
-        NotificationManager.shared.set(isEnabled: toggle.isOn, for: .templateExpiry)
+        var appConfig = AppConfiguration.get()
+        appConfig.isTemplateNotificationEnabled = toggle.isOn
     }
 }
 

@@ -119,6 +119,21 @@ struct CustomDayManager {
         return result
     }
     
+    func fetchAll(after startDayIndex: Int) -> [CustomDay] {
+        var result: [CustomDay] = []
+        do {
+            try AppDatabase.shared.reader?.read{ db in
+                let dayIndexInDay = CustomDay.Columns.dayIndex
+                let dayRequest = CustomDay.filter(dayIndexInDay >= startDayIndex).order(dayIndexInDay.asc)
+                result = try dayRequest.fetchAll(db)
+            }
+        }
+        catch {
+            print(error)
+        }
+        return result
+    }
+    
     func add(customDay: CustomDay) {
         // Check is there a same CustomDay before save
         guard customDay.id == nil else {

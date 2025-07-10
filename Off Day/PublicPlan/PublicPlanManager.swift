@@ -32,7 +32,7 @@ final class PublicPlanManager {
             customPlanDetail = try? fetchCustomPublicPlan(with: Int64(customPlanId))
         }
         switch (appPlanDetail != nil, customPlanDetail != nil) {
-        case (true, false):
+        case (true, _):
             // Use AppPlan
             dataSource = PublicPlanInfo(detail: appPlanDetail!)
         case (false, true):
@@ -103,6 +103,33 @@ final class PublicPlanManager {
         }
         load()
         NotificationCenter.default.post(name: Notification.Name.SettingsUpdate, object: nil)
+    }
+    
+    public func getExpirationDate() -> GregorianDay? {
+        return dataSource?.end
+    }
+    
+    public func getDaysAfter(day: GregorianDay) -> [(key: Int, value: any PublicDay)] {
+        guard let days = dataSource?.days else { return [] }
+        let filteredAndSorted = days
+            .filter { $0.key > day.julianDay }
+            .sorted { $0.key < $1.key }
+        
+        guard !filteredAndSorted.isEmpty else { return [] }
+        
+        var result: [(key: Int, value: any PublicDay)] = []
+        var previousDayName: String? = nil
+        
+        for day in filteredAndSorted {
+            let currentDayName = day.value.name
+            
+            if currentDayName != previousDayName {
+                result.append(day)
+                previousDayName = currentDayName
+            }
+        }
+        
+        return result
     }
 }
 
