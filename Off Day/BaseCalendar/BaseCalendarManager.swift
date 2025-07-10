@@ -149,26 +149,12 @@ class BaseCalendarManager {
         }
     }
     
-    private(set) var config: Config
+    private(set) var config: Config!
 
     init() {
-        if let storedConfig = BaseCalendarConfigManager.fetch() {
-            config = Config.generate(by: storedConfig)
-        } else {
-            let standardOffday: String
-            switch WeekEndOffDayType.getValue() {
-            case .two:
-                standardOffday = "6/7"
-            case .one:
-                standardOffday = "7"
-            case .zero:
-                standardOffday = ""
-            }
-            let needSaveConfig = BaseCalendarConfig(type: .standard, standardOffday: standardOffday, weekOffset: 0, weekCount: .two, weekIndexs: "", dayStart: 0, dayWorkCount: 1, dayOffCount: 1)
-            BaseCalendarConfigManager.add(config: needSaveConfig)
-            
-            config = Config.generate(by: needSaveConfig)
-        }
+        self.reloadData()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .DatabaseUpdated, object: nil)
     }
     
     func save(config: Config) {
@@ -193,7 +179,7 @@ class BaseCalendarManager {
     }
     
     func isOff(day: GregorianDay) -> Bool {
-        switch config {
+        switch config! {
         case .standard(let config):
             return config.weekdayOrders.contains(day.weekdayOrder())
         case .weeksCircle(let config):
@@ -234,6 +220,27 @@ class BaseCalendarManager {
                 }
                 return nil
             }
+        }
+    }
+    
+    @objc
+    private func reloadData() {
+        if let storedConfig = BaseCalendarConfigManager.fetch() {
+            config = Config.generate(by: storedConfig)
+        } else {
+            let standardOffday: String
+            switch WeekEndOffDayType.getValue() {
+            case .two:
+                standardOffday = "6/7"
+            case .one:
+                standardOffday = "7"
+            case .zero:
+                standardOffday = ""
+            }
+            let needSaveConfig = BaseCalendarConfig(type: .standard, standardOffday: standardOffday, weekOffset: 0, weekCount: .two, weekIndexs: "", dayStart: 0, dayWorkCount: 1, dayOffCount: 1)
+            BaseCalendarConfigManager.add(config: needSaveConfig)
+            
+            config = Config.generate(by: needSaveConfig)
         }
     }
 }
