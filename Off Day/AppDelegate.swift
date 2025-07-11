@@ -29,6 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         BackupManager.shared.registerBGTasks()
         
+        NotificationManager.shared.registerBGTasks()
+        Task {
+            await NotificationManager.shared.updateNotifications()            
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(scheduleBGTasks), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(cancelBGTasks), name: UIApplication.didBecomeActiveNotification, object: nil)
         
@@ -52,11 +57,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     @objc
     func cancelBGTasks() {
         BackupManager.shared.cancelBGTasks()
+        NotificationManager.shared.cancelBGTasks()
     }
     
     @objc
     func scheduleBGTasks() {
         BackupManager.shared.scheduleBGTasks()
+        NotificationManager.shared.scheduleBGTasks()
     }
 }
 

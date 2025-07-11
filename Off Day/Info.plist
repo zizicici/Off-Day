@@ -5,6 +5,7 @@
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>com.zizicici.zzz.backup</string>
+		<string>com.zizicici.zzz.notification</string>
 	</array>
 	<key>NSUbiquitousContainers</key>
 	<dict>

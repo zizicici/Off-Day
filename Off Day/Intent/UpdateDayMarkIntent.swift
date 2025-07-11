@@ -54,6 +54,9 @@ struct UpdateDayMarkIntent: AppIntent {
                 CustomDayManager.shared.update(dayType: nil, to: target.julianDay)
             }
         }
+        
+        await NotificationManager.shared.updateNotifications()
+
         return .result(value: result)
     }
 

@@ -124,7 +124,7 @@ struct CustomDayManager {
         do {
             try AppDatabase.shared.reader?.read{ db in
                 let dayIndexInDay = CustomDay.Columns.dayIndex
-                let dayRequest = CustomDay.filter(dayIndexInDay >= startDayIndex).order(dayIndexInDay.asc)
+                let dayRequest = CustomDay.filter(dayIndexInDay > startDayIndex).order(dayIndexInDay.asc)
                 result = try dayRequest.fetchAll(db)
             }
         }
