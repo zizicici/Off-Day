@@ -49,12 +49,12 @@ class NotificationViewController: UIViewController {
     
     enum Item: Hashable {
         case permission(UNAuthorizationStatus)
+        case templateToggle(Bool, Bool)
+        case templateFireTime(Int64)
         case publicHolidayToggle(Bool, Bool)
         case publicHolidayFireTime(Int64)
         case customDayToggle(Bool, Bool)
         case customDayFireTime(Int64)
-        case expireToggle(Bool, Bool)
-        case expireFireTime(Int64)
         
         var title: String? {
             switch self {
@@ -73,6 +73,10 @@ class NotificationViewController: UIViewController {
                 @unknown default:
                     fatalError()
                 }
+            case .templateToggle:
+                return String(localized: "notificationEditor.template.toggle")
+            case .templateFireTime:
+                return String(localized: "notificationEditor.template.fireTime")
             case .publicHolidayToggle:
                 return String(localized: "notificationEditor.publicHoliday.toggle")
             case .publicHolidayFireTime:
@@ -81,10 +85,6 @@ class NotificationViewController: UIViewController {
                 return String(localized: "notificationEditor.customDay.toggle")
             case .customDayFireTime:
                 return String(localized: "notificationEditor.customDay.fireTime")
-            case .expireToggle:
-                return String(localized: "notificationEditor.expire.toggle")
-            case .expireFireTime:
-                return String(localized: "notificationEditor.expire.fireTime")
             }
         }
     }
@@ -206,7 +206,7 @@ class NotificationViewController: UIViewController {
                     }
                 }
                 return cell
-            case .expireToggle(let isEnabled, let isOn):
+            case .templateToggle(let isEnabled, let isOn):
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(UITableViewCell.self), for: indexPath)
                 let itemSwitch = UISwitch()
                 itemSwitch.isEnabled = isEnabled
@@ -220,7 +220,7 @@ class NotificationViewController: UIViewController {
                 cell.contentConfiguration = content
                 
                 return cell
-            case .expireFireTime(let fireTime):
+            case .templateFireTime(let fireTime):
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(DateCell.self), for: indexPath)
                 if let cell = cell as? DateCell {
                     let timeZoneSeconds = Int64(Calendar.current.timeZone.secondsFromGMT() * 1000)
@@ -272,11 +272,11 @@ class NotificationViewController: UIViewController {
         }
         
         let appConfig = AppConfiguration.get()
-        let templateExpiryIsEnabled = appConfig.isTemplateNotificationEnabled
+        let isTemplateNotificationEnabled = appConfig.isTemplateNotificationEnabled
         snapshot.appendSections([.template])
-        snapshot.appendItems([.expireToggle(allowAction, templateExpiryIsEnabled)], toSection: .template)
-        if allowAction, templateExpiryIsEnabled {
-            snapshot.appendItems([.expireFireTime(appConfig.templateNanoseconds)], toSection: .template)
+        snapshot.appendItems([.templateToggle(allowAction, isTemplateNotificationEnabled)], toSection: .template)
+        if allowAction, isTemplateNotificationEnabled {
+            snapshot.appendItems([.templateFireTime(appConfig.templateNanoseconds)], toSection: .template)
         }
         
         let publicHolidayStartIsEnabled = appConfig.isPublicDayNotificationEnabled
@@ -352,9 +352,9 @@ extension NotificationViewController: UITableViewDelegate {
                 break
             case .customDayFireTime:
                 break
-            case .expireToggle:
+            case .templateToggle:
                 break
-            case .expireFireTime:
+            case .templateFireTime:
                 break
             }
         }

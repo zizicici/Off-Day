@@ -13,7 +13,7 @@ import UIKit
 
 class NotificationManager {
     enum NotificationType: Hashable {
-        case templateExpiry
+        case template
         case publicHoliday
         case customDay
     }
@@ -81,7 +81,7 @@ class NotificationManager {
         // Update Items and Sort by date
         if appConfig.isTemplateNotificationEnabled {
             if let expirationDate = PublicPlanManager.shared.getExpirationDate(), expirationDate.julianDay >= todayIndex {
-                let notificationType = NotificationType.templateExpiry
+                let notificationType = NotificationType.template
                 for i in 0..<5 {
                     let notificationTitle = String(localized: "notification.type.template.title")
                     let notificationText = String(format: String(localized: "notification.type.template.text, %i"), i + 1)
