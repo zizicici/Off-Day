@@ -68,7 +68,7 @@ extension AppConfiguration {
     
     var isCustomDayNotificationEnabled: Bool {
         get {
-            notificationCToggle ?? false
+            notificationCToggle ?? true
         }
         set {
             notificationCToggle = newValue
