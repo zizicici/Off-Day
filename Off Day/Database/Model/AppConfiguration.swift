@@ -50,7 +50,7 @@ struct AppConfiguration: Codable {
 extension AppConfiguration {
     var isTemplateNotificationEnabled: Bool {
         get {
-            notificationAToggle ?? false
+            notificationAToggle ?? true
         }
         set {
             notificationAToggle = newValue
@@ -59,7 +59,7 @@ extension AppConfiguration {
     
     var isPublicDayNotificationEnabled: Bool {
         get {
-            notificationBToggle ?? false
+            notificationBToggle ?? true
         }
         set {
             notificationBToggle = newValue
