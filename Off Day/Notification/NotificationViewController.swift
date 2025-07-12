@@ -309,15 +309,6 @@ class NotificationViewController: UIViewController {
         }
     }
     
-    func jumpToSettings() {
-        guard let url = URL(string: UIApplication.openSettingsURLString) else {
-            return
-        }
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:])
-        }
-    }
-    
     @objc
     func publicHolidayToggle(_ toggle: UISwitch) {
         var appConfig = AppConfiguration.get()
