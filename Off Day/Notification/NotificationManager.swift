@@ -11,6 +11,10 @@ import ZCCalendar
 import BackgroundTasks
 import UIKit
 
+extension Notification.Name {
+    static let NotificationPermissionUpdated = Notification.Name(rawValue: "com.zizicici.common.notification.permission.updated")
+}
+
 class NotificationManager {
     enum NotificationType: Hashable {
         case template
@@ -40,6 +44,14 @@ class NotificationManager {
     
     private var reloadDataDebounce: Debounce<Int>?
     
+    private(set) var hasAuthorization: Bool = false {
+        didSet {
+            if oldValue != hasAuthorization {
+                NotificationCenter.default.post(name: .NotificationPermissionUpdated, object: nil)
+            }
+        }
+    }
+    
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .DatabaseUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .SettingsUpdate, object: nil)
@@ -47,13 +59,17 @@ class NotificationManager {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
-    func requestPermission() {
+    func requestPermission(completion: ((Bool) -> ())?) {
         let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound]) { granted, error in
+        center.requestAuthorization(options: [.alert, .sound]) { [weak self] granted, error in
+            self?.hasAuthorization = granted
             if granted {
                 print("Notification permission granted")
             } else if let error = error {
                 print("Notification permission error: \(error.localizedDescription)")
+            }
+            DispatchQueue.main.async {
+                completion?(granted)
             }
         }
     }
@@ -70,8 +86,10 @@ class NotificationManager {
     
     func updateNotifications() async {
         guard await UNUserNotificationCenter.current().notificationSettings().authorizationStatus == .authorized else {
+            hasAuthorization = false
             return
         }
+        hasAuthorization = true
         
         var newItems: [Item] = []
         
