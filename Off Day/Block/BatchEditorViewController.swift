@@ -88,7 +88,7 @@ class BatchEditorViewController: UIViewController {
         view.backgroundColor = .secondarySystemGroupedBackground
         
         title = String(localized: "batchEditor.title")
-        let saveItem = UIBarButtonItem(title: String(localized: "batchEditor.button.update"), style: .plain, target: self, action: #selector(showAlert))
+        let saveItem = UIBarButtonItem(title: String(localized: "batchEditor.button.update"), style: .plain, target: self, action: #selector(showSaveAlert))
         navigationItem.rightBarButtonItem = saveItem
         saveItem.isEnabled = false
         
@@ -113,7 +113,7 @@ class BatchEditorViewController: UIViewController {
     }
     
     @objc
-    func showAlert() {
+    func showSaveAlert() {
         guard allowSave() else {
             return
         }
