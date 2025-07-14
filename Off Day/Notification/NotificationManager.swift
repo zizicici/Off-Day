@@ -53,10 +53,10 @@ class NotificationManager {
     }
     
     init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .DatabaseUpdated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .SettingsUpdate, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataInMainAsync), name: .DatabaseUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataInMainAsync), name: .SettingsUpdate, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataInMainAsync), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataInMainAsync), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     func requestPermission(completion: ((Bool) -> ())?) {
@@ -75,7 +75,13 @@ class NotificationManager {
     }
     
     @objc
-    func reloadData() {
+    private func reloadDataInMainAsync() {
+        DispatchQueue.main.async {
+            self.reloadData()
+        }
+    }
+    
+    private func reloadData() {
         if reloadDataDebounce == nil {
             reloadDataDebounce = Debounce(duration: 0.5, block: { [weak self] value in
                 await self?.updateNotifications()
