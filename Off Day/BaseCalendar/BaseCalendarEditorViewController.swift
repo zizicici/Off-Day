@@ -100,6 +100,15 @@ class BaseCalendarEditorViewController: UIViewController, UITableViewDelegate {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: String(localized: "controller.publicDay.cancel"), style: .plain, target: self, action: #selector(cancelAction))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: String(localized: "controller.publicDay.confirm"), style: .plain, target: self, action: #selector(confirmAction))
+        
+        if #available(iOS 26.0, *) {
+            navigationItem.leftBarButtonItem?.hidesSharedBackground = true
+            navigationItem.leftBarButtonItem?.tintColor = .white
+            navigationItem.rightBarButtonItem?.hidesSharedBackground = true
+            navigationItem.rightBarButtonItem?.tintColor = .white
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     func configureHierarchy() {

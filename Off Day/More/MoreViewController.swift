@@ -258,7 +258,6 @@ class MoreViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = AppColor.background
-        updateNavigationBarStyle()
         
         configureHierarchy()
         configureDataSource()
@@ -269,7 +268,7 @@ class MoreViewController: UIViewController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
     
     func configureHierarchy() {

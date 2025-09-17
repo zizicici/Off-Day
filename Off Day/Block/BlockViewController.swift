@@ -91,14 +91,26 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         addGestures()
         
         let publicPlanButton = UIBarButtonItem(image: UIImage(systemName: "calendar.badge.checkmark"), style: .plain, target: self, action: #selector(showPublicPlanPicker))
+        if #available(iOS 26.0, *) {
+            publicPlanButton.hidesSharedBackground = true
+            publicPlanButton.tintColor = .white
+        } else {
+            // Fallback on earlier versions
+        }
         navigationItem.leftBarButtonItem = publicPlanButton
         self.publicPlanButton = publicPlanButton
         
-        moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
-        updateMoreMenu()
-        if let moreButton = moreButton {
-            navigationItem.rightBarButtonItem = moreButton
+        let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
+        if #available(iOS 26.0, *) {
+            moreButton.hidesSharedBackground = true
+            moreButton.tintColor = .white
+        } else {
+            // Fallback on earlier versions
         }
+        navigationItem.rightBarButtonItem = moreButton
+        self.moreButton = moreButton
+        
+        updateMoreMenu()
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .DatabaseUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .TodayUpdated, object: nil)
@@ -339,7 +351,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
 
 extension UINavigationItem {
     func setTitle(_ title: String, subtitle: String, menu: UIMenu?) {
-        var configuration = UIButton.Configuration.bordered()
+        var configuration = UIButton.Configuration.borderedTinted()
         configuration.title = title
         configuration.subtitle = subtitle
         configuration.titleAlignment = .center

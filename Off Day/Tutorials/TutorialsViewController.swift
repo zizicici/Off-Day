@@ -216,6 +216,12 @@ class TutorialsViewController: UIViewController {
             }
         }))
         helpButton.menu = UIMenu(title: "", children: [helpAction, contactDivider])
+        if #available(iOS 26.0, *) {
+            helpButton.hidesSharedBackground = true
+            helpButton.tintColor = .white
+        } else {
+            // Fallback on earlier versions
+        }
         navigationItem.rightBarButtonItem = helpButton
         
         view.addSubview(scrollView)

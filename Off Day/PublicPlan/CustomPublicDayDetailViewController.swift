@@ -65,6 +65,15 @@ class CustomPublicDayDetailViewController: UIViewController {
             navigationItem.rightBarButtonItem = item
         }
         
+        if #available(iOS 26.0, *) {
+            navigationItem.leftBarButtonItem?.hidesSharedBackground = true
+            navigationItem.leftBarButtonItem?.tintColor = .white
+            navigationItem.rightBarButtonItem?.hidesSharedBackground = true
+            navigationItem.rightBarButtonItem?.tintColor = .white
+        } else {
+            // Fallback on earlier versions
+        }
+        
         configureHierarchy()
         configureDataSource()
         reloadData()
