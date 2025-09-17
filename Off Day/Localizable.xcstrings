@@ -4199,34 +4199,6 @@
         }
       }
     },
-    "more.item.contact.reddit" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "reddit"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "reddit"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "reddit"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "reddit"
-          }
-        }
-      }
-    },
     "more.item.contact.xiaohongshu" : {
       "localizations" : {
         "en" : {
