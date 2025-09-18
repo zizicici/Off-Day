@@ -88,13 +88,22 @@ class BatchEditorViewController: UIViewController {
         view.backgroundColor = .secondarySystemGroupedBackground
         
         title = String(localized: "batchEditor.title")
-        let saveItem = UIBarButtonItem(title: String(localized: "batchEditor.button.update"), style: .plain, target: self, action: #selector(showAlert))
+        let saveItem = UIBarButtonItem(title: String(localized: "batchEditor.button.update"), style: .plain, target: self, action: #selector(showSaveAlert))
         navigationItem.rightBarButtonItem = saveItem
         saveItem.isEnabled = false
         
         if navigationController?.viewControllers.count ?? 0 == 1 {
             let closeItem = UIBarButtonItem(title: String(localized: "batchEditor.button.cancel"), style: .plain, target: self, action: #selector(close))
             navigationItem.leftBarButtonItem = closeItem
+        }
+        
+        if #available(iOS 26.0, *) {
+            navigationItem.leftBarButtonItem?.hidesSharedBackground = true
+            navigationItem.leftBarButtonItem?.tintColor = .white
+            navigationItem.rightBarButtonItem?.hidesSharedBackground = true
+            navigationItem.rightBarButtonItem?.tintColor = .white
+        } else {
+            // Fallback on earlier versions
         }
 
         configureHierarchy()
@@ -113,7 +122,7 @@ class BatchEditorViewController: UIViewController {
     }
     
     @objc
-    func showAlert() {
+    func showSaveAlert() {
         guard allowSave() else {
             return
         }

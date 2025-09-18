@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1498CF0F2C3F72F8005562AA /* UpdateDayMarkIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */; };
 		1498CF1B2C402CD2005562AA /* ZCCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1498CF1A2C402CD2005562AA /* ZCCalendar */; };
+		149A7F322E7AEC910018AB08 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 149A7F312E7AEC910018AB08 /* AppIcon.icon */; };
 		14AF4B5E2E1FFDD300882931 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF4B5D2E1FFDD300882931 /* AppConfiguration.swift */; };
 		14B239BD2DBF25FE0007152C /* DayTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B239BC2DBF25FE0007152C /* DayTypeCell.swift */; };
 		14B239BF2DBF57480007152C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B239BE2DBF57480007152C /* String+Extension.swift */; };
@@ -129,6 +130,7 @@
 		141F38D92C9974D600347225 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		141F38DA2C9974D600347225 /* README_CN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README_CN.md; sourceTree = "<group>"; };
 		1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDayMarkIntent.swift; sourceTree = "<group>"; };
+		149A7F312E7AEC910018AB08 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		14AF4B5D2E1FFDD300882931 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		14B239BC2DBF25FE0007152C /* DayTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTypeCell.swift; sourceTree = "<group>"; };
 		14B239BE2DBF57480007152C /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 				14DD514B2BE27AA4004329E2 /* Intent */,
 				14DD512B2BE21AB8004329E2 /* Extension */,
 				14DD50BA2BE1F5C5004329E2 /* Assets.xcassets */,
+				149A7F312E7AEC910018AB08 /* AppIcon.icon */,
 				14DD50BC2BE1F5C5004329E2 /* LaunchScreen.storyboard */,
 				14DD50BF2BE1F5C5004329E2 /* Info.plist */,
 				14DD50C82BE1F7BD004329E2 /* Localizable.xcstrings */,
@@ -737,6 +740,7 @@
 				14B9E6782DE350D200E4B391 /* kyureki.json in Resources */,
 				14B9E67A2DE350D200E4B391 /* HKO1901_2099.json in Resources */,
 				14ECFF012BE6319B005D2D79 /* mo-public.json in Resources */,
+				149A7F322E7AEC910018AB08 /* AppIcon.icon in Resources */,
 				14DD50CB2BE1F7F2004329E2 /* InfoPlist.xcstrings in Resources */,
 				14ECFEF82BE5FBEE005D2D79 /* cn-xizang.json in Resources */,
 				14ECFEF62BE5FBEE005D2D79 /* cn-guangxi.json in Resources */,
@@ -1001,7 +1005,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.6;
+				MARKETING_VERSION = 1.6.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zizicici.zzz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1033,7 +1037,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.6;
+				MARKETING_VERSION = 1.6.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zizicici.zzz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

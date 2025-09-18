@@ -9,7 +9,11 @@ import UIKit
 import SnapKit
 
 class PublicPlanCell: UICollectionViewListCell {
-    var detail: UICellAccessory?
+    var detail: UICellAccessory? {
+        didSet {
+            setNeedsUpdateConfiguration()
+        }
+    }
     
     var customBackgroundView: UIView = {
         let view = UIView()
@@ -18,12 +22,6 @@ class PublicPlanCell: UICollectionViewListCell {
         
         return view
     }()
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        detail = nil
-    }
     
     private func setupViewsIfNeeded() {
         guard customBackgroundView.superview == nil else { return }

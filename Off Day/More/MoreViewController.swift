@@ -117,7 +117,6 @@ class MoreViewController: UIViewController {
         enum ContactItem: Hashable, CaseIterable {
             case email
             case xiaohongshu
-            case reddit
             case bilibili
 
             var title: String {
@@ -126,8 +125,6 @@ class MoreViewController: UIViewController {
                     return String(localized: "more.item.contact.email")
                 case .xiaohongshu:
                     return String(localized: "more.item.contact.xiaohongshu")
-                case .reddit:
-                    return String(localized: "more.item.contact.reddit")
                 case .bilibili:
                     return String(localized: "more.item.contact.bilibili")
                 }
@@ -137,8 +134,6 @@ class MoreViewController: UIViewController {
                 switch self {
                 case .email:
                     return MoreViewController.supportEmail
-                case .reddit:
-                    return "r/appjun"
                 case .bilibili, .xiaohongshu:
                     return "@App君"
                 }
@@ -150,8 +145,6 @@ class MoreViewController: UIViewController {
                     return UIImage(systemName: "envelope")
                 case .xiaohongshu:
                     return UIImage(systemName: "book.closed")
-                case .reddit:
-                    return UIImage(systemName: "bubble.left.and.exclamationmark.bubble.right")
                 case .bilibili:
                     return UIImage(systemName: "play.tv")
                 }
@@ -265,7 +258,6 @@ class MoreViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = AppColor.background
-        updateNavigationBarStyle()
         
         configureHierarchy()
         configureDataSource()
@@ -276,7 +268,7 @@ class MoreViewController: UIViewController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
     
     func configureHierarchy() {
@@ -385,7 +377,7 @@ class MoreViewController: UIViewController {
         snapshot.appendItems([.help], toSection: .help)
         
         snapshot.appendSections([.contact])
-        snapshot.appendItems([.contact(.email), .contact(.xiaohongshu), .contact(.bilibili), .contact(.reddit)], toSection: .contact)
+        snapshot.appendItems([.contact(.email), .contact(.xiaohongshu), .contact(.bilibili)], toSection: .contact)
         
         snapshot.appendSections([.appjun])
         var appItems: [Item] = [.appjun(.otherApps(.lemon)), .appjun(.otherApps(.moontake)), .appjun(.otherApps(.coconut)), .appjun(.otherApps(.pigeon))]
@@ -455,15 +447,6 @@ extension MoreViewController: UITableViewDelegate {
 }
 
 extension MoreViewController {
-    func jumpToSettings() {
-        guard let url = URL(string: UIApplication.openSettingsURLString) else {
-            return
-        }
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:])
-        }
-    }
-    
     func showPublicPlanPicker() {
         let publicPlanViewController = PublicPlanViewController()
         let nav = NavigationController(rootViewController: publicPlanViewController)
@@ -649,8 +632,6 @@ extension UIViewController {
             sendEmailToCustomerSupport()
         case .xiaohongshu:
             openXiaohongshuWebpage()
-        case .reddit:
-            openRedditWebpage()
         case .bilibili:
             openBilibiliWebpage()
         }
@@ -680,12 +661,6 @@ extension UIViewController {
     
     func openXiaohongshuWebpage() {
         if let url = URL(string: "https://www.xiaohongshu.com/user/profile/63f05fc5000000001001e524") {
-            openSF(with: url)
-        }
-    }
-    
-    func openRedditWebpage() {
-        if let url = URL(string: "https://www.reddit.com/r/appjun/") {
             openSF(with: url)
         }
     }

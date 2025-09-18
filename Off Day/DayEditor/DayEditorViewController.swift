@@ -108,6 +108,13 @@ class DayEditorViewController: UIViewController {
         let closeItem = UIBarButtonItem(title: String(localized: "button.close"), style: .plain, target: self, action: #selector(dismissViewController))
         navigationItem.leftBarButtonItem = closeItem
         
+        if #available(iOS 26.0, *) {
+            closeItem.tintColor = AppColor.offDay
+            saveItem.tintColor = AppColor.offDay
+        } else {
+            // Fallback on earlier versions
+        }
+        
         configureHierarchy()
         configureDataSource()
         reloadData()

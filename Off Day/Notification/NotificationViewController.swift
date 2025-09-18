@@ -122,8 +122,12 @@ class NotificationViewController: UIViewController {
         configureDataSource()
         reloadData()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: Notification.Name.DatabaseUpdated, object: nil)
+        NotificationCenter.default.addObserver(forName: .DatabaseUpdated, object: nil, queue: .main) { [weak self] _ in
+            self?.reloadData()
+        }
+        NotificationCenter.default.addObserver(forName: .NotificationPermissionUpdated, object: nil, queue: .main) { [weak self] _ in
+            self?.reloadData()
+        }
     }
     
     func configureHierarchy() {
@@ -299,22 +303,13 @@ class NotificationViewController: UIViewController {
     func handle(authStatus: UNAuthorizationStatus) {
         switch authStatus {
         case .notDetermined:
-            NotificationManager.shared.requestPermission()
+            NotificationManager.shared.requestPermission(completion: nil)
         case .denied, .provisional, .ephemeral:
             jumpToSettings()
         case .authorized:
             break
         @unknown default:
             fatalError()
-        }
-    }
-    
-    func jumpToSettings() {
-        guard let url = URL(string: UIApplication.openSettingsURLString) else {
-            return
-        }
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:])
         }
     }
     

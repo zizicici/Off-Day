@@ -75,7 +75,7 @@ class UITextFieldWithDoneButton: UITextField {
         doneToolbar.barStyle = .default
 
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: String(localized: "textInput.done.title"), style: .done, target: self, action: #selector(self.doneButtonAction))
+        let done: UIBarButtonItem = UIBarButtonItem(title: String(localized: "button.done"), style: .done, target: self, action: #selector(self.doneButtonAction))
         done.tintColor = AppColor.offDay
 
         let items = [flexSpace, done]

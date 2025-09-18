@@ -108,6 +108,21 @@ class TutorialsViewController: UIViewController {
         return button
     }()
     
+    private var manageNotificationButton: UIButton = {
+        var configuration = UIButton.Configuration.plain()
+        let button = UIButton(configuration: configuration)
+        button.tintColor = AppColor.offDay
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+            .font: UIFont.systemFont(ofSize: 14)
+        ]
+        let string = NSAttributedString(string: String(localized: "notificationEditor.title"),attributes: attributes)
+        button.setAttributedTitle(string, for: .normal)
+        
+        return button
+    }()
+    
     private var addShortcutsButton: UIButton = {
         var configuration = UIButton.Configuration.borderedTinted()
         configuration.image = UIImage(systemName: "3.circle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18.0))
@@ -201,6 +216,12 @@ class TutorialsViewController: UIViewController {
             }
         }))
         helpButton.menu = UIMenu(title: "", children: [helpAction, contactDivider])
+        if #available(iOS 26.0, *) {
+            helpButton.hidesSharedBackground = true
+            helpButton.tintColor = .white
+        } else {
+            // Fallback on earlier versions
+        }
         navigationItem.rightBarButtonItem = helpButton
         
         view.addSubview(scrollView)
@@ -231,6 +252,8 @@ class TutorialsViewController: UIViewController {
         
         stackView.addArrangedSubview(publicPlanButton)
         stackView.addArrangedSubview(notificationButton)
+        stackView.setCustomSpacing(4, after: notificationButton)
+        stackView.addArrangedSubview(manageNotificationButton)
         stackView.addArrangedSubview(addShortcutsButton)
         stackView.setCustomSpacing(4, after: addShortcutsButton)
         stackView.addArrangedSubview(tutorialsButton)
@@ -253,13 +276,23 @@ class TutorialsViewController: UIViewController {
         publicPlanButton.configurationUpdateHandler = { button in
             button.configuration?.subtitle = (PublicPlanManager.shared.dataSource == nil) ? String(localized: "tutorials.shortcuts.subtitle") : PublicPlanManager.shared.dataSource?.name
         }
+        
+        notificationButton.configurationUpdateHandler = { button in
+            button.configuration?.subtitle = NotificationManager.shared.hasAuthorization ? String(localized: "button.done") : String(localized: "tutorials.notification.subtitle")
+        }
 
         publicPlanButton.addTarget(self, action: #selector(showPublicPlanPicker), for: .touchUpInside)
         notificationButton.addTarget(self, action: #selector(requestNotificationPermission), for: .touchUpInside)
+        manageNotificationButton.addTarget(self, action: #selector(manageNotification), for: .touchUpInside)
         tutorialsButton.addTarget(self, action: #selector(openShortcutsHelp), for: .touchUpInside)
         automationButton.addTarget(self, action: #selector(openAutomationHelp), for: .touchUpInside)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .SettingsUpdate, object: nil)
+        NotificationCenter.default.addObserver(forName: .SettingsUpdate, object: nil, queue: .main) { [weak self] _ in
+            self?.reloadData()
+        }
+        NotificationCenter.default.addObserver(forName: .NotificationPermissionUpdated, object: nil, queue: .main) { [weak self] _ in
+            self?.reloadData()
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -309,11 +342,44 @@ class TutorialsViewController: UIViewController {
     
     @objc
     func requestNotificationPermission() {
-        NotificationManager.shared.requestPermission()
+        if NotificationManager.shared.hasAuthorization {
+            showAlert(title: String(localized: "action.done"), message: nil)
+        } else {
+            NotificationManager.shared.requestPermission { [weak self] result in
+                if !result {
+                    self?.showJumpToSettingsAlert()
+                }
+            }
+        }
+    }
+    
+    @objc
+    func manageNotification() {
+        let notificationViewController = NotificationViewController()
+        notificationViewController.hidesBottomBarWhenPushed = true
+        
+        navigationController?.pushViewController(notificationViewController, animated: ConsideringUser.pushAnimated)
     }
     
     @objc
     func reloadData() {
         publicPlanButton.setNeedsUpdateConfiguration()
+        notificationButton.setNeedsUpdateConfiguration()
+    }
+    
+    func showJumpToSettingsAlert() {
+        let alertController = UIAlertController(title: String(localized: "notificationEditor.auth.needToSettings"), message: nil, preferredStyle: .alert)
+
+        let cancelAction = UIAlertAction(title: String(localized: "button.cancel"), style: .cancel) { _ in
+            //
+        }
+        
+        let jumpAction = UIAlertAction(title: String(localized: "tutorials.authFailed.action"), style: .default) { [weak self] _ in
+            self?.jumpToSettings()
+        }
+
+        alertController.addAction(cancelAction)
+        alertController.addAction(jumpAction)
+        present(alertController, animated: ConsideringUser.animated, completion: nil)
     }
 }

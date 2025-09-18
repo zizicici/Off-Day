@@ -100,6 +100,15 @@ class BaseCalendarEditorViewController: UIViewController, UITableViewDelegate {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: String(localized: "controller.publicDay.cancel"), style: .plain, target: self, action: #selector(cancelAction))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: String(localized: "controller.publicDay.confirm"), style: .plain, target: self, action: #selector(confirmAction))
+        
+        if #available(iOS 26.0, *) {
+            navigationItem.leftBarButtonItem?.hidesSharedBackground = true
+            navigationItem.leftBarButtonItem?.tintColor = .white
+            navigationItem.rightBarButtonItem?.hidesSharedBackground = true
+            navigationItem.rightBarButtonItem?.tintColor = .white
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     func configureHierarchy() {
@@ -173,7 +182,7 @@ class BaseCalendarEditorViewController: UIViewController, UITableViewDelegate {
             case .date(let day):
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(DateCell.self), for: indexPath)
                 if let cell = cell as? DateCell {
-                    cell.update(with: DateCellItem(title: String(localized: "baseCalendar.days.start"), day: day))
+                    cell.update(with: DateCellItem(title: String(localized: "baseCalendar.days.start"), day: day, mode: .date))
                     cell.selectDateAction = { [weak self] nanoSeconds in
                         guard let self = self else { return }
                         let date = Date(nanoSecondSince1970: nanoSeconds)
