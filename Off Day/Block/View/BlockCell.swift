@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SnapKit
 import ZCCalendar
 import MarqueeLabel
 
@@ -118,6 +117,7 @@ class BlockCell: BlockBaseCell {
                 width: contentBounds.width - 2 * inset,
                 height: publicDayHeight
             )
+            publicDayLabel.setNeedsLayout()
             
             dateView.frame = CGRect(
                 x: inset,
