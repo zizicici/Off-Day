@@ -23,30 +23,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = TabbarController()
         tabBarController.view.tintColor = AppColor.offDay
         tabBarController.tabBar.tintColor = AppColor.offDay
-        self.tutorialSetting = TutorialEntranceType.getValue()
-        switch TutorialEntranceType.getValue() {
-        case .firstTab:
-            tabBarController.viewControllers = [
-                NavigationController(rootViewController: TutorialsViewController()),
-                NavigationController(rootViewController: BlockViewController()),
-                NavigationController(rootViewController: MoreViewController())
-            ]
-        case .secondTab:
-            tabBarController.viewControllers = [
-                NavigationController(rootViewController: BlockViewController()),
-                NavigationController(rootViewController: TutorialsViewController()),
-                NavigationController(rootViewController: MoreViewController())
-            ]
-        case .hidden:
-            tabBarController.viewControllers = [
-                NavigationController(rootViewController: BlockViewController()),
-                NavigationController(rootViewController: MoreViewController())
-            ]
-        }
-        window?.rootViewController = tabBarController
+        
+        reloadTabsIfNeeded()
+        
         window?.makeKeyAndVisible()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTabIfNeeded), name: .SettingsUpdate, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTabsIfNeeded), name: .SettingsUpdate, object: nil)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -78,29 +60,52 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     @objc
-    func reloadTabIfNeeded() {
+    func reloadTabsIfNeeded() {
         guard tutorialSetting != TutorialEntranceType.getValue() else {
             return
         }
         let newValue = TutorialEntranceType.getValue()
         tutorialSetting = newValue
         
-        if let tabBarController = window?.rootViewController as? TabbarController {
-            var newViewControllers = tabBarController.viewControllers
-            newViewControllers?.removeAll(where: { viewController in
-                return (viewController as? NavigationController)?.viewControllers.first is TutorialsViewController
-            })
-            switch newValue {
-            case .firstTab:
-                newViewControllers?.insert(NavigationController(rootViewController: TutorialsViewController()), at: 0)
-            case .secondTab:
-                newViewControllers?.insert(NavigationController(rootViewController: TutorialsViewController()), at: 1)
-            case .hidden:
-                break
-            }
-            tabBarController.setViewControllers(newViewControllers, animated: false)
-            window?.rootViewController = tabBarController
+        let tabbarController: TabbarController = window?.rootViewController as? TabbarController ?? TabbarController()
+        tabbarController.view.tintColor = AppColor.offDay
+        tabbarController.tabBar.tintColor = AppColor.offDay
+        
+        var viewControllers: [UIViewController] = []
+        let calendarViewController = tabbarController.viewControllers?.first { viewController in
+            return (viewController as? NavigationController)?.viewControllers.first is BlockViewController
+        } ?? NavigationController(rootViewController: BlockViewController())
+        let moreViewController = tabbarController.viewControllers?.first { viewController in
+            return (viewController as? NavigationController)?.viewControllers.first is MoreViewController
+        } ?? NavigationController(rootViewController: MoreViewController())
+        let tutorialViewController = tabbarController.viewControllers?.first { viewController in
+            return (viewController as? NavigationController)?.viewControllers.first is TutorialsViewController
+        } ?? NavigationController(rootViewController: TutorialsViewController())
+
+        switch newValue {
+        case .firstTab:
+            viewControllers = [tutorialViewController, calendarViewController, moreViewController]
+        case .secondTab:
+            viewControllers = [calendarViewController, tutorialViewController, moreViewController]
+        case .hidden:
+            viewControllers = [calendarViewController, moreViewController]
         }
+        
+        if #available(iOS 18.0, *) {
+            tabbarController.tabs = viewControllers.compactMap({ viewController in
+                if let tabItem = viewController.tabBarItem {
+                    return UITab(title: tabItem.title ?? "", image: tabItem.image, identifier: "\(tabItem.tag)") { tab in
+                        return viewController
+                    }
+                } else {
+                    return nil
+                }
+            })
+        } else {
+            tabbarController.setViewControllers(viewControllers, animated: false)
+        }
+        
+        window?.rootViewController = tabbarController
     }
 }
 

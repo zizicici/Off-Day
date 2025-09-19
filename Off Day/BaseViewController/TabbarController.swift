@@ -19,5 +19,11 @@ class TabbarController: UITabBarController {
         if #available(iOS 18, *), UIDevice.current.userInterfaceIdiom == .pad {
             setOverrideTraitCollection( UITraitCollection(horizontalSizeClass: .compact), forChild: self)
         }
+        
+        if #available(iOS 26.0, *) {
+            tabBarMinimizeBehavior = .onScrollDown
+        } else {
+            // Fallback on earlier versions
+        }
     }
 }

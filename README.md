@@ -1,7 +1,7 @@
 <h4 align="right">English | <strong><a href="README_CN.md">中文</a></strong></h4>
 
 <div align="center">
-    <img src="Off Day/Assets.xcassets/AppIcon.appiconset/zzz.png" width=200 height=200>
+    <img src="zzz.png" width=200 height=200>
     <h1>Off Day</h1>
 </div>
 

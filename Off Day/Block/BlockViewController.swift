@@ -59,7 +59,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         
         displayHandler = DayDisplayHandler(delegate: self)
         
-        tabBarItem = UITabBarItem(title: String(localized: "controller.calendar.title"), image: UIImage(systemName: "calendar"), tag: 0)
+        tabBarItem = UITabBarItem(title: String(localized: "controller.calendar.title"), image: UIImage(systemName: "calendar"), tag: 1)
     }
     
     required init?(coder: NSCoder) {
@@ -75,6 +75,9 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         
         view.backgroundColor = AppColor.background
         updateNavigationBarStyle(hideShadow: true)
+        
+        configureHierarchy()
+        
         weekdayOrderView = WeekdayOrderView(itemCount: 7, itemWidth: DayGrid.itemWidth(in: view.frame.width), interSpacing: DayGrid.interSpacing)
         weekdayOrderView.backgroundColor = AppColor.navigationBar
         view.addSubview(weekdayOrderView)
@@ -85,7 +88,6 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         }
         updateNavigationTitleView()
         
-        configureHierarchy()
         configureDataSource()
         
         addGestures()
@@ -228,7 +230,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         collectionView.delegate = self
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(weekdayOrderView.snp.bottom)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(22)
             make.leading.trailing.bottom.equalTo(view)
         }
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: CGFloat.leastNormalMagnitude, left: 0.0, bottom: 0.0, right: 0.0)
