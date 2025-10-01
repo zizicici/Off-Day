@@ -116,10 +116,10 @@ class NotificationManager {
                         if Int64(Date().timeIntervalSince(expirationDate.generateDate(secondsFromGMT: Calendar.current.timeZone.secondsFromGMT()) ?? Date()) * 1000) <= appConfig.templateNanoseconds {
                             newItems.append(Item(type: notificationType, day: targetDayIndex, notificationTime: appConfig.templateNanoseconds, notificationTitle: notificationTitle, notificationText: notificationText))
                         } else {
-                            break
+                            continue
                         }
                     } else {
-                        break
+                        continue
                     }
                 }
             }
@@ -146,10 +146,10 @@ class NotificationManager {
                     if Int64(Date().timeIntervalSince(GregorianDay(JDN: targetDayIndex).generateDate(secondsFromGMT: Calendar.current.timeZone.secondsFromGMT()) ?? Date()) * 1000) <= appConfig.publicDayNanoseconds {
                         newItems.append(Item(type: notificationType, day: targetDayIndex, notificationTime: appConfig.publicDayNanoseconds, notificationTitle: notificationTitle, notificationText: notificationText))
                     } else {
-                        break
+                        continue
                     }
                 } else {
-                    break
+                    continue
                 }
             }
         }
@@ -188,10 +188,10 @@ class NotificationManager {
                     if Int64(Date().timeIntervalSince(GregorianDay(JDN: targetDayIndex).generateDate(secondsFromGMT: Calendar.current.timeZone.secondsFromGMT()) ?? Date()) * 1000) <= appConfig.customDayNanoseconds {
                         newItems.append(Item(type: .customDay, day: targetDayIndex, notificationTime: appConfig.customDayNanoseconds, notificationTitle: notificationTitle, notificationText: notificationText))
                     } else {
-                        break
+                        continue
                     }
                 } else {
-                    break
+                    continue
                 }
             }
         }
