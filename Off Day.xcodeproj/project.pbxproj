@@ -1115,7 +1115,7 @@
 			repositoryURL = "https://github.com/zizicici/AppInfo";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.0;
+				minimumVersion = 1.2.0;
 			};
 		};
 		14F92E302E1BB2ED00712D87 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {

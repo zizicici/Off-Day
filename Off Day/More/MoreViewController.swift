@@ -178,31 +178,13 @@ class MoreViewController: UIViewController {
             }
         }
         
-        enum AppJunItem: Hashable {
-            case otherApps(AppInfo.App)
-            
-            var title: String {
-                switch self {
-                case .otherApps:
-                    return ""
-                }
-            }
-            
-            var value: String? {
-                switch self {
-                case .otherApps:
-                    return nil
-                }
-            }
-        }
-        
         case settings(GeneralItem)
         case dataSource(DataSourceItem)
         case notification
         case backup
         case help
         case contact(ContactItem)
-        case appjun(AppJunItem)
+        case appjun(AppInfo.App)
         case about(AboutItem)
         
         var title: String {
@@ -220,7 +202,7 @@ class MoreViewController: UIViewController {
             case .contact(let item):
                 return item.title
             case .appjun(let item):
-                return item.title
+                return ""
             case .about(let item):
                 return item.title
             }
@@ -335,16 +317,13 @@ class MoreViewController: UIViewController {
                 content.secondaryText = item.value
                 cell.contentConfiguration = content
                 return cell
-            case .appjun(let item):
-                switch item {
-                case .otherApps(let app):
-                    let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(AppCell.self), for: indexPath)
-                    if let cell = cell as? AppCell {
-                        cell.update(app)
-                    }
-                    cell.accessoryType = .disclosureIndicator
-                    return cell
+            case .appjun(let app):
+                let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(AppCell.self), for: indexPath)
+                if let cell = cell as? AppCell {
+                    cell.update(app)
                 }
+                cell.accessoryType = .disclosureIndicator
+                return cell
             case .about(let item):
                 let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
                 cell.accessoryType = .disclosureIndicator
@@ -380,11 +359,11 @@ class MoreViewController: UIViewController {
         snapshot.appendItems([.contact(.email), .contact(.xiaohongshu), .contact(.bilibili)], toSection: .contact)
         
         snapshot.appendSections([.appjun])
-        var appItems: [Item] = [.appjun(.otherApps(.lemon)), .appjun(.otherApps(.moontake)), .appjun(.otherApps(.coconut)), .appjun(.otherApps(.pigeon))]
+        var appItems: [Item] = [.appjun(.tagDay), .appjun(.lemon), .appjun(.moontake), .appjun(.coconut), .appjun(.pigeon)]
         if Language.type() == .zh {
-            appItems.append(.appjun(.otherApps(.festivals)))
+            appItems.append(.appjun(.festivals))
         }
-        appItems.append(.appjun(.otherApps(.one)))
+        appItems.append(.appjun(.one))
         snapshot.appendItems(appItems, toSection: .appjun)
         
         snapshot.appendSections([.about])
@@ -423,11 +402,8 @@ extension MoreViewController: UITableViewDelegate {
                 enterHelpCenter()
             case .contact(let item):
                 handle(contactItem: item)
-            case .appjun(let item):
-                switch item {
-                case .otherApps(let app):
-                    openStorePage(for: app)
-                }
+            case .appjun(let app):
+                openStorePage(for: app)
             case .about(let item):
                 switch item {
                 case .specifications:
