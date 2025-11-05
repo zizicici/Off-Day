@@ -9,7 +9,7 @@ import Foundation
 import ZCCalendar
 
 struct AppPublicPlan: Equatable, Hashable {
-    enum File: String {
+    enum File: String, CaseIterable {
         case cn
         case cn_xj
         case cn_xz

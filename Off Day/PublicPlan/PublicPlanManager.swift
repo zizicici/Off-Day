@@ -20,6 +20,20 @@ final class PublicPlanManager {
     
     @objc
     public func load() {
+#if DEBUG
+//        for file in AppPublicPlan.File.allCases {
+//            if let url = Bundle.main.url(forResource: file.resource, withExtension: "json") {
+//                do {
+//                    let jsonPlan = try JSONPublicPlan(from: url)
+//                    print(jsonPlan.name)
+//                }
+//                catch {
+//                    fatalError()
+//                }
+//            }
+//        }
+#endif
+        
         var appPlanDetail: AppPublicPlan.Detail?
         if let appPlanFile = UserDefaults.standard.string(forKey: UserDefaults.Settings.AppPublicPlanType.rawValue) {
             if let appPlanFile = AppPublicPlan.File(rawValue: appPlanFile) {
