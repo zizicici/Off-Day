@@ -10,6 +10,8 @@
 		1498CF0F2C3F72F8005562AA /* UpdateDayMarkIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */; };
 		1498CF1B2C402CD2005562AA /* ZCCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1498CF1A2C402CD2005562AA /* ZCCalendar */; };
 		149A7F322E7AEC910018AB08 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 149A7F312E7AEC910018AB08 /* AppIcon.icon */; };
+		14A52D522EBB41AF00BA6758 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A52D512EBB41AF00BA6758 /* ThemeManager.swift */; };
+		14A52D552EBB420600BA6758 /* Logo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A52D542EBB420600BA6758 /* Logo.swift */; };
 		14AF4B5E2E1FFDD300882931 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF4B5D2E1FFDD300882931 /* AppConfiguration.swift */; };
 		14B239BD2DBF25FE0007152C /* DayTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B239BC2DBF25FE0007152C /* DayTypeCell.swift */; };
 		14B239BF2DBF57480007152C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B239BE2DBF57480007152C /* String+Extension.swift */; };
@@ -131,6 +133,8 @@
 		141F38DA2C9974D600347225 /* README_CN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README_CN.md; sourceTree = "<group>"; };
 		1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDayMarkIntent.swift; sourceTree = "<group>"; };
 		149A7F312E7AEC910018AB08 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
+		14A52D512EBB41AF00BA6758 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		14A52D542EBB420600BA6758 /* Logo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logo.swift; sourceTree = "<group>"; };
 		14AF4B5D2E1FFDD300882931 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		14B239BC2DBF25FE0007152C /* DayTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTypeCell.swift; sourceTree = "<group>"; };
 		14B239BE2DBF57480007152C /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -262,6 +266,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		14A52D532EBB41CE00BA6758 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				14A52D512EBB41AF00BA6758 /* ThemeManager.swift */,
+				14A52D542EBB420600BA6758 /* Logo.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
 		14B4339D2DE9F2BD001F7D12 /* Notification */ = {
 			isa = PBXGroup;
 			children = (
@@ -389,6 +402,7 @@
 				14DD51262BE213AD004329E2 /* DataManager */,
 				14F371232BE3CA7100254C39 /* Settings */,
 				14DD514B2BE27AA4004329E2 /* Intent */,
+				14A52D532EBB41CE00BA6758 /* Theme */,
 				14DD512B2BE21AB8004329E2 /* Extension */,
 				14DD50BA2BE1F5C5004329E2 /* Assets.xcassets */,
 				149A7F312E7AEC910018AB08 /* AppIcon.icon */,
@@ -758,6 +772,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14B4339C2DE9F2B4001F7D12 /* NotificationManager.swift in Sources */,
+				14A52D552EBB420600BA6758 /* Logo.swift in Sources */,
 				14DD512D2BE21AB8004329E2 /* UIViewController+Extension.swift in Sources */,
 				14B239BD2DBF25FE0007152C /* DayTypeCell.swift in Sources */,
 				14DD51282BE213AD004329E2 /* CustomDayManager.swift in Sources */,
@@ -783,6 +798,7 @@
 				14DD50EC2BE20BC1004329E2 /* BlockViewController+Enum.swift in Sources */,
 				14DD50F62BE20BC1004329E2 /* BlockItem.swift in Sources */,
 				14ED08AC2BEE503D00100E2D /* PublicPlanInfo.swift in Sources */,
+				14A52D522EBB41AF00BA6758 /* ThemeManager.swift in Sources */,
 				14F8D7CE2C5C6776000B48A3 /* WeekdayOrderView.swift in Sources */,
 				14E967E42D0DC029001CEB38 /* Debounce.swift in Sources */,
 				1498CF0F2C3F72F8005562AA /* UpdateDayMarkIntent.swift in Sources */,
@@ -987,6 +1003,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "Off Day/Off Day.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1019,6 +1036,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "Off Day/Off Day.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

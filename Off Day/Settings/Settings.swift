@@ -24,6 +24,8 @@ extension UserDefaults {
         case NotificationTemplateExpiry = "com.zizicici.common.settings.NotificationTemplateExpiry"
         case NotificationPublicHolidayStart = "com.zizicici.common.settings.NotificationPublicHolidayStart"
         case NotificationCustomDayStart = "com.zizicici.common.settings.NotificationCustomDayStart"
+        // Theme
+        case Logo = "com.zizicici.common.settings.Logo"
     }
 }
 
@@ -55,7 +57,7 @@ extension SettingsOption {
         if type(of: lhs) != type(of: rhs) {
             return false
         } else {
-            return lhs.getName() == rhs.getName()
+            return lhs.hashValue == rhs.hashValue
         }
     }
 }
@@ -327,5 +329,27 @@ extension AlternativeCalendarType: UserDefaultSettable {
     
     static func getFooter() -> String? {
         return String(localized: "settings.alternativeCalendarType.footer")
+    }
+}
+
+extension Logo: UserDefaultSettable {
+    static func getKey() -> UserDefaults.Settings {
+        return .Logo
+    }
+    
+    static var defaultOption: Self {
+        return .glass
+    }
+    
+    func getName() -> String {
+        return name
+    }
+    
+    static func getTitle() -> String {
+        return String(localized: "settings.logo.title")
+    }
+    
+    static func getFooter() -> String? {
+        return String(localized: "settings.logo.footer")
     }
 }

@@ -34,6 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             await NotificationManager.shared.updateNotifications()            
         }
         
+        _ = ThemeManager.shared
+        
         NotificationCenter.default.addObserver(self, selector: #selector(scheduleBGTasks), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(cancelBGTasks), name: UIApplication.didBecomeActiveNotification, object: nil)
         
