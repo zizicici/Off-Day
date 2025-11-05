@@ -73,7 +73,7 @@ class SpecificationsViewController: UIViewController {
                 case .publisher:
                     return "ZIZICICI LIMITED"
                 case .date:
-                    return "2025/10/01"
+                    return "2025/11/05"
                 case .license:
                     return "闽ICP备2023015823号-8A"
                 }
@@ -106,7 +106,12 @@ class SpecificationsViewController: UIViewController {
                     name: "MarqueeLabel",
                     version: "4.5.0"
                 )
-                return [SnapKit, GRDB, Toast, MarqueeLabel]
+                let ZipArchive = ThirdParty(
+                    urlString: "https://github.com/ZipArchive/ZipArchive",
+                    name: "ZipArchive",
+                    version: "2.6.0"
+                )
+                return [SnapKit, GRDB, Toast, MarqueeLabel, ZipArchive]
             }()
         }
         
