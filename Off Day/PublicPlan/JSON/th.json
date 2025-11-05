@@ -1,7 +1,7 @@
 {
     "name": "Thailand Public Holiday",
     "start": "2024-01-01",
-    "end": "2025-12-31",
+    "end": "2026-12-31",
     "days": [
         {
             "date": "2024-01-01",
@@ -195,6 +195,101 @@
         },
         {
             "date": "2025-12-31",
+            "name": "New Year's Eve",
+            "type": 0
+        },
+        {
+            "date": "2026-01-01",
+            "name": "New Year's Day",
+            "type": 0
+        },
+        {
+            "date": "2026-01-02",
+            "name": "Additional special holiday",
+            "type": 0
+        },
+        {
+            "date": "2026-03-03",
+            "name": "Makha Bucha Day",
+            "type": 0
+        },
+        {
+            "date": "2026-04-06",
+            "name": "Chakri Memorial Day",
+            "type": 0
+        },
+        {
+            "date": "2026-04-13",
+            "name": "Songkran Festival",
+            "type": 0
+        },
+        {
+            "date": "2026-04-14",
+            "name": "Songkran Festival",
+            "type": 0
+        },
+        {
+            "date": "2026-04-15",
+            "name": "Songkran Festival",
+            "type": 0
+        },
+        {
+            "date": "2026-05-01",
+            "name": "National Labour Day",
+            "type": 0
+        },
+        {
+            "date": "2026-05-04",
+            "name": "Coronation Day",
+            "type": 0
+        },
+        {
+            "date": "2026-06-01",
+            "name": "Substitution for Visakha Bucha Day",
+            "type": 0
+        },
+        {
+            "date": "2026-06-03",
+            "name": "H.M. Queen Suthida Bajrasudhabimalalakshana's Birthday",
+            "type": 0
+        },
+        {
+            "date": "2026-07-28",
+            "name": "H.M. King Maha Vajiralongkorn Phra Vajiraklaochaoyuhua's Birthday",
+            "type": 0
+        },
+        {
+            "date": "2026-07-29",
+            "name": "Asarnha Bucha Day",
+            "type": 0
+        },
+        {
+            "date": "2026-08-12",
+            "name": "H.M. Queen Sirikit The Queen Mother's Birthday / Mother's Day",
+            "type": 0
+        },
+        {
+            "date": "2026-10-13",
+            "name": "H.M. King Bhumibol Adulyadej The Great Memorial Day",
+            "type": 0
+        },
+        {
+            "date": "2026-10-23",
+            "name": "H.M. King Chulalongkorn The Great Memorial Day",
+            "type": 0
+        },
+        {
+            "date": "2026-12-7",
+            "name": "Substitution for H.M. King Bhumibol Adulyadej The Great's Birthday / National Day / Father's Day",
+            "type": 0
+        },
+        {
+            "date": "2026-12-10",
+            "name": "Constitution Day",
+            "type": 0
+        },
+        {
+            "date": "2026-12-31",
             "name": "New Year's Eve",
             "type": 0
         }
