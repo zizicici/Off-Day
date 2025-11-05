@@ -155,18 +155,19 @@ class NotificationManager {
         }
         
         if appConfig.isCustomDayNotificationEnabled {
-            let customDays = CustomDayManager.shared.fetchAll(after: todayIndex - 1)
+            let customDays = CustomDayManager.shared.fetchAll(after: todayIndex - 2)
             var filterCustomDays: [CustomDay] = []
             
+            var lastDay: CustomDay? = customDays.first
+            
             for customDay in customDays {
-                guard let lastDay = customDays.last else {
+                guard let target = lastDay else { break }
+                
+                if !(customDay.dayIndex == target.dayIndex + 1 && customDay.dayType == target.dayType) {
                     filterCustomDays.append(customDay)
-                    return
                 }
                 
-                if !(customDay.dayIndex == lastDay.dayIndex + 1 && customDay.dayType == lastDay.dayType) {
-                    filterCustomDays.append(customDay)
-                }
+                lastDay = customDay
             }
             
             for filterCustomDay in filterCustomDays {
