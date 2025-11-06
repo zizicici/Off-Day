@@ -25,6 +25,8 @@ struct CheckDayClashIntent: AppIntent {
         }
     }
     
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
+    
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
         var isOffDay = false
@@ -56,6 +58,8 @@ struct CheckTodayClashIntent: AppIntent {
         }
     }
     
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
+    
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
         var isOffDay = false
@@ -86,6 +90,8 @@ struct CheckTomorrowClashIntent: AppIntent {
             \.$enableUserMark
         }
     }
+    
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
@@ -121,6 +127,8 @@ struct CheckOffsetDayClashIntent: AppIntent {
             \.$enableUserMark
         }
     }
+    
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {

@@ -38,6 +38,8 @@ struct UpdateDayMarkIntent: AppIntent {
         Summary("Update Day Mark of \(\.$date) to \(\.$mark)?")
     }
     
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
+    
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
         var result = false

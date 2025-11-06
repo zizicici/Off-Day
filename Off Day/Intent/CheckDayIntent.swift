@@ -34,6 +34,8 @@ struct CheckDayIntent: AppIntent {
         Summary("Is \(\.$date) an Off Day?")
     }
     
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
+    
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
         var isOffDay = false
@@ -60,6 +62,8 @@ struct CheckTodayIntent: AppIntent {
         Summary("Is Today an Off Day?")
     }
     
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
+    
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
         var isOffDay = false
@@ -85,6 +89,8 @@ struct CheckTomorrowIntent: AppIntent {
     static var parameterSummary: some ParameterSummary {
         Summary("Is Tomorrow an Off Day?")
     }
+    
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
@@ -115,6 +121,8 @@ struct CheckOffsetDayOffIntent: AppIntent {
     static var parameterSummary: some ParameterSummary {
         Summary("Is it an Off Day in \(\.$dayCount) day(s)?")
     }
+    
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {

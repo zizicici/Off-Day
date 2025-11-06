@@ -90,6 +90,8 @@ struct DayDetailIntent: AppIntent {
         Summary("Get Day Detail of \(\.$date)")
     }
     
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
+    
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<DayDetailEntity> {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: date)

@@ -20,6 +20,8 @@ struct NextOffDayDetailIntent: AppIntent {
         Summary("Next Off Day Detail after \(\.$date)")
     }
     
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
+    
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<DayDetailEntity> {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
@@ -50,6 +52,8 @@ struct NextWorkDayDetailIntent: AppIntent {
     static var parameterSummary: some ParameterSummary {
         Summary("Next Work Day Detail after \(\.$date)")
     }
+    
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<DayDetailEntity> {

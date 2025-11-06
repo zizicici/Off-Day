@@ -21,6 +21,8 @@ struct GetDayCommentIntent: AppIntent {
         Summary("intent.comment.get\(\.$date)")
     }
     
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
+    
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<String?> {
         var result: String?
@@ -50,6 +52,8 @@ struct UpdateDayCommentIntent: AppIntent {
     static var parameterSummary: some ParameterSummary {
         Summary("intent.comment.update\(\.$date)\(\.$content)")
     }
+    
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
@@ -90,6 +94,8 @@ struct DeleteDayCommentIntent: AppIntent {
     static var parameterSummary: some ParameterSummary {
         Summary("intent.comment.delete\(\.$date)")
     }
+    
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
