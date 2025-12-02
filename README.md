@@ -47,7 +47,7 @@ The determination of 'Off Day' involves three levels of data: 1. User Annotation
 # Requirements
 
 - iOS/iPadOS 16+
-- Xcode 16
+- Xcode 26
 
 # License
 
