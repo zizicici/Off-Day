@@ -73,7 +73,7 @@ class SpecificationsViewController: UIViewController {
                 case .publisher:
                     return "ZIZICICI LIMITED"
                 case .date:
-                    return "2025/12/24"
+                    return "2026/01/28"
                 case .license:
                     return "闽ICP备2023015823号-8A"
                 }
@@ -89,7 +89,7 @@ class SpecificationsViewController: UIViewController {
                 let GRDB = ThirdParty(
                     urlString: "https://github.com/groue/GRDB.swift",
                     name: "GRDB",
-                    version: "7.5.0"
+                    version: "7.9.0"
                 )
                 let SnapKit = ThirdParty(
                     urlString: "https://github.com/SnapKit/SnapKit",
@@ -104,7 +104,7 @@ class SpecificationsViewController: UIViewController {
                 let MarqueeLabel = ThirdParty(
                     urlString: "https://github.com/cbpowell/MarqueeLabel",
                     name: "MarqueeLabel",
-                    version: "4.5.0"
+                    version: "4.5.3"
                 )
                 let ZipArchive = ThirdParty(
                     urlString: "https://github.com/ZipArchive/ZipArchive",
