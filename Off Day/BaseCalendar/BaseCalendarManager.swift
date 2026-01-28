@@ -36,6 +36,12 @@ enum WeekCount: Int, CaseIterable, Hashable, Equatable, Codable {
     case two = 2
     case three
     case four
+    case five
+    case six
+    case seven
+    case eight
+    case nine
+    case ten
     
     var title: String {
         switch self {
@@ -45,6 +51,18 @@ enum WeekCount: Int, CaseIterable, Hashable, Equatable, Codable {
             return String(localized: "baseCalendar.weeks.3")
         case .four:
             return String(localized: "baseCalendar.weeks.4")
+        case .five:
+            return String(localized: "baseCalendar.weeks.5")
+        case .six:
+            return String(localized: "baseCalendar.weeks.6")
+        case .seven:
+            return String(localized: "baseCalendar.weeks.7")
+        case .eight:
+            return String(localized: "baseCalendar.weeks.8")
+        case .nine:
+            return String(localized: "baseCalendar.weeks.9")
+        case .ten:
+            return String(localized: "baseCalendar.weeks.10")
         }
     }
 }
