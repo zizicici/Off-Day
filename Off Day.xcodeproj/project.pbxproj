@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		149065902F3E8E31002DEAB7 /* UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1490658E2F3E8E31002DEAB7 /* UnitTests.swift */; };
 		1498CF0F2C3F72F8005562AA /* UpdateDayMarkIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */; };
 		1498CF1B2C402CD2005562AA /* ZCCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1498CF1A2C402CD2005562AA /* ZCCalendar */; };
 		149A7F322E7AEC910018AB08 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 149A7F312E7AEC910018AB08 /* AppIcon.icon */; };
@@ -126,11 +127,37 @@
 		14F92E322E1BB2ED00712D87 /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = 14F92E312E1BB2ED00712D87 /* ZipArchive */; };
 		14F92E342E1BB37500712D87 /* SQLFileBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F92E332E1BB37500712D87 /* SQLFileBackup.swift */; };
 		14F92E362E1BB49D00712D87 /* ConsideringUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F92E352E1BB49D00712D87 /* ConsideringUser.swift */; };
+		24A200000000000000000001 /* TestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A100000000000000000001 /* TestSupport.swift */; };
+		24A200000000000000000002 /* PublicPlanJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A100000000000000000002 /* PublicPlanJSONTests.swift */; };
+		24A200000000000000000003 /* PublicPlanInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A100000000000000000003 /* PublicPlanInfoTests.swift */; };
+		24A200000000000000000004 /* PublicDayProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A100000000000000000004 /* PublicDayProtocolTests.swift */; };
+		24A200000000000000000005 /* UtilityExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A100000000000000000005 /* UtilityExtensionTests.swift */; };
+		24A200000000000000000006 /* DatabaseModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A100000000000000000006 /* DatabaseModelTests.swift */; };
+		24A200000000000000000007 /* BaseCalendarConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A100000000000000000007 /* BaseCalendarConfigTests.swift */; };
+		24A200000000000000000008 /* AppPublicPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A100000000000000000008 /* AppPublicPlanTests.swift */; };
+		24A200000000000000000009 /* ChineseCalendarManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A100000000000000000009 /* ChineseCalendarManagerTests.swift */; };
+		24A20000000000000000000A /* ChineseYearAndRangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A10000000000000000000A /* ChineseYearAndRangeTests.swift */; };
+		24A20000000000000000000B /* IntentMetadataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A10000000000000000000B /* IntentMetadataTests.swift */; };
+		24A20000000000000000000C /* DayDetailIntentEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A10000000000000000000C /* DayDetailIntentEntityTests.swift */; };
+		24A20000000000000000000D /* IntentPerformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A10000000000000000000D /* IntentPerformTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		149065892F3E8E26002DEAB7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 14DD50A62BE1F5C4004329E2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 14DD50AD2BE1F5C4004329E2;
+			remoteInfo = "Off Day";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		141F38D92C9974D600347225 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		141F38DA2C9974D600347225 /* README_CN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README_CN.md; sourceTree = "<group>"; };
+		149065852F3E8E26002DEAB7 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1490658E2F3E8E31002DEAB7 /* UnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTests.swift; sourceTree = "<group>"; };
+		149065922F3E9ADF002DEAB7 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 		1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDayMarkIntent.swift; sourceTree = "<group>"; };
 		149A7F312E7AEC910018AB08 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		14A52D512EBB41AF00BA6758 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
@@ -246,9 +273,29 @@
 		14F92E2F2E1BB21700712D87 /* Off Day.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Off Day.entitlements"; sourceTree = "<group>"; };
 		14F92E332E1BB37500712D87 /* SQLFileBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLFileBackup.swift; sourceTree = "<group>"; };
 		14F92E352E1BB49D00712D87 /* ConsideringUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsideringUser.swift; sourceTree = "<group>"; };
+		24A100000000000000000001 /* TestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSupport.swift; sourceTree = "<group>"; };
+		24A100000000000000000002 /* PublicPlanJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPlanJSONTests.swift; sourceTree = "<group>"; };
+		24A100000000000000000003 /* PublicPlanInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPlanInfoTests.swift; sourceTree = "<group>"; };
+		24A100000000000000000004 /* PublicDayProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicDayProtocolTests.swift; sourceTree = "<group>"; };
+		24A100000000000000000005 /* UtilityExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityExtensionTests.swift; sourceTree = "<group>"; };
+		24A100000000000000000006 /* DatabaseModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseModelTests.swift; sourceTree = "<group>"; };
+		24A100000000000000000007 /* BaseCalendarConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCalendarConfigTests.swift; sourceTree = "<group>"; };
+		24A100000000000000000008 /* AppPublicPlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPublicPlanTests.swift; sourceTree = "<group>"; };
+		24A100000000000000000009 /* ChineseCalendarManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseCalendarManagerTests.swift; sourceTree = "<group>"; };
+		24A10000000000000000000A /* ChineseYearAndRangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseYearAndRangeTests.swift; sourceTree = "<group>"; };
+		24A10000000000000000000B /* IntentMetadataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentMetadataTests.swift; sourceTree = "<group>"; };
+		24A10000000000000000000C /* DayDetailIntentEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDetailIntentEntityTests.swift; sourceTree = "<group>"; };
+		24A10000000000000000000D /* IntentPerformTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentPerformTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		149065822F3E8E26002DEAB7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		14DD50AB2BE1F5C4004329E2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -266,6 +313,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1490658F2F3E8E31002DEAB7 /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				1490658E2F3E8E31002DEAB7 /* UnitTests.swift */,
+				24A100000000000000000001 /* TestSupport.swift */,
+				24A100000000000000000002 /* PublicPlanJSONTests.swift */,
+				24A100000000000000000003 /* PublicPlanInfoTests.swift */,
+				24A100000000000000000004 /* PublicDayProtocolTests.swift */,
+				24A100000000000000000005 /* UtilityExtensionTests.swift */,
+				24A100000000000000000006 /* DatabaseModelTests.swift */,
+				24A100000000000000000007 /* BaseCalendarConfigTests.swift */,
+				24A100000000000000000008 /* AppPublicPlanTests.swift */,
+				24A100000000000000000009 /* ChineseCalendarManagerTests.swift */,
+				24A10000000000000000000A /* ChineseYearAndRangeTests.swift */,
+				24A10000000000000000000B /* IntentMetadataTests.swift */,
+				24A10000000000000000000C /* DayDetailIntentEntityTests.swift */,
+				24A10000000000000000000D /* IntentPerformTests.swift */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
 		14A52D532EBB41CE00BA6758 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
@@ -365,9 +433,11 @@
 		14DD50A52BE1F5C4004329E2 = {
 			isa = PBXGroup;
 			children = (
+				149065922F3E9ADF002DEAB7 /* TestPlan.xctestplan */,
 				141F38D92C9974D600347225 /* README.md */,
 				141F38DA2C9974D600347225 /* README_CN.md */,
 				14DD50B02BE1F5C4004329E2 /* Off Day */,
+				1490658F2F3E8E31002DEAB7 /* UnitTests */,
 				14DD50AF2BE1F5C4004329E2 /* Products */,
 				14DD51042BE20CF8004329E2 /* Frameworks */,
 			);
@@ -377,6 +447,7 @@
 			isa = PBXGroup;
 			children = (
 				14DD50AE2BE1F5C4004329E2 /* Off Day.app */,
+				149065852F3E8E26002DEAB7 /* UnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -664,6 +735,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		149065842F3E8E26002DEAB7 /* UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1490658D2F3E8E26002DEAB7 /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				149065812F3E8E26002DEAB7 /* Sources */,
+				149065822F3E8E26002DEAB7 /* Frameworks */,
+				149065832F3E8E26002DEAB7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1490658A2F3E8E26002DEAB7 /* PBXTargetDependency */,
+			);
+			name = UnitTests;
+			packageProductDependencies = (
+			);
+			productName = UnitTests;
+			productReference = 149065852F3E8E26002DEAB7 /* UnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		14DD50AD2BE1F5C4004329E2 /* Off Day */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 14DD50C22BE1F5C5004329E2 /* Build configuration list for PBXNativeTarget "Off Day" */;
@@ -697,9 +788,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1530;
+				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
+					149065842F3E8E26002DEAB7 = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 14DD50AD2BE1F5C4004329E2;
+					};
 					14DD50AD2BE1F5C4004329E2 = {
 						CreatedOnToolsVersion = 15.3;
 					};
@@ -731,11 +826,19 @@
 			projectRoot = "";
 			targets = (
 				14DD50AD2BE1F5C4004329E2 /* Off Day */,
+				149065842F3E8E26002DEAB7 /* UnitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		149065832F3E8E26002DEAB7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		14DD50AC2BE1F5C4004329E2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -767,6 +870,27 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		149065812F3E8E26002DEAB7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				149065902F3E8E31002DEAB7 /* UnitTests.swift in Sources */,
+				24A200000000000000000001 /* TestSupport.swift in Sources */,
+				24A200000000000000000002 /* PublicPlanJSONTests.swift in Sources */,
+				24A200000000000000000003 /* PublicPlanInfoTests.swift in Sources */,
+				24A200000000000000000004 /* PublicDayProtocolTests.swift in Sources */,
+				24A200000000000000000005 /* UtilityExtensionTests.swift in Sources */,
+				24A200000000000000000006 /* DatabaseModelTests.swift in Sources */,
+				24A200000000000000000007 /* BaseCalendarConfigTests.swift in Sources */,
+				24A200000000000000000008 /* AppPublicPlanTests.swift in Sources */,
+				24A200000000000000000009 /* ChineseCalendarManagerTests.swift in Sources */,
+				24A20000000000000000000A /* ChineseYearAndRangeTests.swift in Sources */,
+				24A20000000000000000000B /* IntentMetadataTests.swift in Sources */,
+				24A20000000000000000000C /* DayDetailIntentEntityTests.swift in Sources */,
+				24A20000000000000000000D /* IntentPerformTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		14DD50AA2BE1F5C4004329E2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -867,6 +991,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		1490658A2F3E8E26002DEAB7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 14DD50AD2BE1F5C4004329E2 /* Off Day */;
+			targetProxy = 149065892F3E8E26002DEAB7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		14DD50BC2BE1F5C5004329E2 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -879,6 +1011,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1490658B2F3E8E26002DEAB7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KKQQQNKMM6;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zizicici.zzz.test.unit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Off Day.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Off Day";
+			};
+			name = Debug;
+		};
+		1490658C2F3E8E26002DEAB7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KKQQQNKMM6;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zizicici.zzz.test.unit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Off Day.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Off Day";
+			};
+			name = Release;
+		};
 		14DD50C02BE1F5C5004329E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1067,6 +1243,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1490658D2F3E8E26002DEAB7 /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1490658B2F3E8E26002DEAB7 /* Debug */,
+				1490658C2F3E8E26002DEAB7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		14DD50A92BE1F5C4004329E2 /* Build configuration list for PBXProject "Off Day" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

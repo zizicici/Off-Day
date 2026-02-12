@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "608DCE57-1E95-492D-A897-472241BBD326",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Off Day.xcodeproj",
+        "identifier" : "149065842F3E8E26002DEAB7",
+        "name" : "UnitTests"
+      }
+    }
+  ],
+  "version" : 1
+}
