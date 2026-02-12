@@ -206,7 +206,7 @@ class MoreViewController: UIViewController {
                 return String(localized: "more.item.help")
             case .contact(let item):
                 return item.title
-            case .appjun(let item):
+            case .appjun:
                 return ""
             case .about(let item):
                 return item.title

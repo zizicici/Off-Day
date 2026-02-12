@@ -10,8 +10,8 @@ import ZCCalendar
 
 extension UserDefaults {
     enum Settings: String {
-        case AutoBackup = "com.zizicici.tag.settings.AutoBackup"
-        case BackupFolder = "com.zizicici.tag.settings.BackupFolder"
+        case AutoBackup = "com.zizicici.tag.settings.AutoBackup" // Mistake, Don't change
+        case BackupFolder = "com.zizicici.tag.settings.BackupFolder" // Mistake, Don't change
         case AppPublicPlanType = "com.zizicici.common.settings.PublicPlanType"
         case CustomPublicPlanType = "com.zizicici.common.settings.CustomPublicPlanType"
         case WeekStartType = "com.zizicici.common.settings.WeekStartType"
