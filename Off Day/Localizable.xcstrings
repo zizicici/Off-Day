@@ -6133,6 +6133,62 @@
         }
       }
     },
+    "publicDay.item.cn.liangshan" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "China Mainland Public Holiday (Sichuan Liangshan Version)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "四川省凉山彝族自治州节假日安排"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "四川省涼山彝族自治州節假日安排"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "四川省涼山彝族自治州節假日安排"
+          }
+        }
+      }
+    },
+    "publicDay.item.cn.liangshan.subtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cover 2026"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "覆盖2026年"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "涵蓋2026年"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "涵蓋2026年"
+          }
+        }
+      }
+    },
     "publicDay.item.cn.mainland" : {
       "localizations" : {
         "en" : {

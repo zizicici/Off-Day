@@ -15,6 +15,7 @@ struct AppPublicPlan: Equatable, Hashable {
         case cn_xz
         case cn_gx
         case cn_nx
+        case cn_sc_ls
         case hk
         case mo_public
         case mo_force
@@ -37,6 +38,8 @@ struct AppPublicPlan: Equatable, Hashable {
                 return "cn-guangxi"
             case .cn_nx:
                 return "cn-ningxia"
+            case .cn_sc_ls:
+                return "cn-sichuan-liangshan"
             case .hk:
                 return "hk"
             case .mo_public:
@@ -70,6 +73,8 @@ struct AppPublicPlan: Equatable, Hashable {
                 return String(localized: "publicDay.item.cn.ningxia")
             case .cn_gx:
                 return String(localized: "publicDay.item.cn.guangxi")
+            case .cn_sc_ls:
+                return String(localized: "publicDay.item.cn.liangshan")
             case .hk:
                 return String(localized: "publicDay.item.hk")
             case .mo_public:
@@ -103,6 +108,8 @@ struct AppPublicPlan: Equatable, Hashable {
                 return String(localized: "publicDay.item.cn.ningxia.subtitle")
             case .cn_gx:
                 return String(localized: "publicDay.item.cn.guangxi.subtitle")
+            case .cn_sc_ls:
+                return String(localized: "publicDay.item.cn.liangshan.subtitle")
             case .hk:
                 return String(localized: "publicDay.item.hk.subtitle")
             case .mo_public:

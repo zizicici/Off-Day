@@ -284,7 +284,7 @@ class PublicPlanViewController: UIViewController {
         snapshot.appendItems(topItems, toSection: .top)
         
         snapshot.appendSections([.cn])
-        snapshot.appendItems([.appPlan(AppPublicPlan(file: .cn)), .appPlan(AppPublicPlan(file: .cn_xj)), .appPlan(AppPublicPlan(file: .cn_xz)), .appPlan(AppPublicPlan(file: .cn_gx)), .appPlan(AppPublicPlan(file: .cn_nx))], toSection: .cn)
+        snapshot.appendItems([.appPlan(AppPublicPlan(file: .cn)), .appPlan(AppPublicPlan(file: .cn_xj)), .appPlan(AppPublicPlan(file: .cn_xz)), .appPlan(AppPublicPlan(file: .cn_gx)), .appPlan(AppPublicPlan(file: .cn_nx)), .appPlan(AppPublicPlan(file: .cn_sc_ls))], toSection: .cn)
         
         snapshot.appendSections([.hk])
         snapshot.appendItems([.appPlan(AppPublicPlan(file: .hk))], toSection: .hk)

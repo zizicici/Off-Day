@@ -19,6 +19,7 @@
 		14B36F7F2DE1C42D00E96C56 /* DayCommentIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B36F7E2DE1C42D00E96C56 /* DayCommentIntent.swift */; };
 		14B36F822DE2187600E96C56 /* MarqueeLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 14B36F812DE2187600E96C56 /* MarqueeLabel */; };
 		14B4339C2DE9F2B4001F7D12 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B4339B2DE9F2B4001F7D12 /* NotificationManager.swift */; };
+		14B7E4882F5AA56400BB3324 /* cn-sichuan-liangshan.json in Resources */ = {isa = PBXBuildFile; fileRef = 14B7E4872F5AA56400BB3324 /* cn-sichuan-liangshan.json */; };
 		14B9E66C2DE34FEA00E4B391 /* ChineseCalendarDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B9E6692DE34FEA00E4B391 /* ChineseCalendarDataSource.swift */; };
 		14B9E66D2DE34FEA00E4B391 /* ChineseDayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B9E6682DE34FEA00E4B391 /* ChineseDayInfo.swift */; };
 		14B9E66E2DE34FEA00E4B391 /* ChineseMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B9E6662DE34FEA00E4B391 /* ChineseMonth.swift */; };
@@ -167,6 +168,7 @@
 		14B239BE2DBF57480007152C /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		14B36F7E2DE1C42D00E96C56 /* DayCommentIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCommentIntent.swift; sourceTree = "<group>"; };
 		14B4339B2DE9F2B4001F7D12 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		14B7E4872F5AA56400BB3324 /* cn-sichuan-liangshan.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "cn-sichuan-liangshan.json"; sourceTree = "<group>"; };
 		14B9E6622DE34FEA00E4B391 /* ChineseCalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseCalendarManager.swift; sourceTree = "<group>"; };
 		14B9E6632DE34FEA00E4B391 /* YearRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearRange.swift; sourceTree = "<group>"; };
 		14B9E6652DE34FEA00E4B391 /* ChineseDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseDay.swift; sourceTree = "<group>"; };
@@ -679,6 +681,7 @@
 				14ECFEF02BE5FBED005D2D79 /* cn-guangxi.json */,
 				14ECFEF32BE5FBEE005D2D79 /* cn-mainland.json */,
 				14ECFEF12BE5FBED005D2D79 /* cn-ningxia.json */,
+				14B7E4872F5AA56400BB3324 /* cn-sichuan-liangshan.json */,
 				14ECFEEF2BE5FBED005D2D79 /* cn-xinjiang.json */,
 				14ECFEF22BE5FBEE005D2D79 /* cn-xizang.json */,
 				14ECFEFC2BE62DCE005D2D79 /* hk.json */,
@@ -863,6 +866,7 @@
 				14ECFEF62BE5FBEE005D2D79 /* cn-guangxi.json in Resources */,
 				14ECFF022BE6319B005D2D79 /* mo-civil-servant.json in Resources */,
 				14ECFEFD2BE62DCE005D2D79 /* hk.json in Resources */,
+				14B7E4882F5AA56400BB3324 /* cn-sichuan-liangshan.json in Resources */,
 				14DD50C92BE1F7BD004329E2 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
