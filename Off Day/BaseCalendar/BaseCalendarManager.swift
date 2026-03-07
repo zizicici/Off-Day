@@ -127,7 +127,7 @@ class BaseCalendarManager {
             case .standard:
                 return .standard(StandardConfig(weekdayOrders: config.standardWeekdayOrders()))
             case .weeksCircle:
-                return .weeksCircle(WeeksCircleConfig(offset: Int(config.weekOffset), weekCount: config.weekCount, indexs: config.weeksCircleIndexs()))
+                return .weeksCircle(WeeksCircleConfig(offset: Int(config.weekOffset), weekCount: config.weekCount, indexs: config.weeksCircleIndexes()))
             case .daysCircle:
                 return .daysCircle(DaysCircleConfig(start: Int(config.dayStart), workCount: Int(config.dayWorkCount), offCount: Int(config.dayOffCount)))
             }
@@ -186,7 +186,7 @@ class BaseCalendarManager {
         case .weeksCircle(let weeksCircleConfig):
             databaseConfig.weekCount = weeksCircleConfig.weekCount
             databaseConfig.weekOffset = Int64(weeksCircleConfig.offset)
-            databaseConfig.weekIndexs = weeksCircleConfig.indexs.map{ "\($0)" }.joined(separator: "/")
+            databaseConfig.weekIndexes = weeksCircleConfig.indexs.map{ "\($0)" }.joined(separator: "/")
         case .daysCircle(let daysCircleConfig):
             databaseConfig.dayStart = Int64(daysCircleConfig.start)
             databaseConfig.dayOffCount = Int64(daysCircleConfig.offCount)
@@ -255,7 +255,7 @@ class BaseCalendarManager {
             case .zero:
                 standardOffday = ""
             }
-            let needSaveConfig = BaseCalendarConfig(type: .standard, standardOffday: standardOffday, weekOffset: 0, weekCount: .two, weekIndexs: "", dayStart: 0, dayWorkCount: 1, dayOffCount: 1)
+            let needSaveConfig = BaseCalendarConfig(type: .standard, standardOffday: standardOffday, weekOffset: 0, weekCount: .two, weekIndexes: "", dayStart: 0, dayWorkCount: 1, dayOffCount: 1)
             BaseCalendarConfigManager.add(config: needSaveConfig)
             
             config = Config.generate(by: needSaveConfig)

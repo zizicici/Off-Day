@@ -17,7 +17,7 @@ struct BaseCalendarConfig: Identifiable, Hashable, MutablePersistableRecord {
     
     var weekOffset: Int64
     var weekCount: WeekCount
-    var weekIndexs: String
+    var weekIndexes: String
     
     var dayStart: Int64
     var dayWorkCount: Int64
@@ -26,7 +26,7 @@ struct BaseCalendarConfig: Identifiable, Hashable, MutablePersistableRecord {
 
 extension BaseCalendarConfig: Codable {
     enum CodingKeys: String, CodingKey {
-        case id, type, standardOffday = "standard_offday", weekOffset = "week_offset", weekCount = "week_count", weekIndexs = "week_indexs", dayStart = "day_start", dayWorkCount = "day_work_count", dayOffCount = "day_off_count"
+        case id, type, standardOffday = "standard_offday", weekOffset = "week_offset", weekCount = "week_count", weekIndexes = "week_indexs", dayStart = "day_start", dayWorkCount = "day_work_count", dayOffCount = "day_off_count"
     }
 }
 
@@ -45,7 +45,7 @@ extension BaseCalendarConfig {
         return standardOffday.split(separator: "/").compactMap{ Int($0) }.compactMap{ WeekdayOrder(rawValue: $0) }
     }
     
-    func weeksCircleIndexs() -> [Int] {
-        return weekIndexs.split(separator: "/").compactMap{ Int($0) }
+    func weeksCircleIndexes() -> [Int] {
+        return weekIndexes.split(separator: "/").compactMap{ Int($0) }
     }
 }

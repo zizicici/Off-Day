@@ -221,7 +221,7 @@ extension HolidayWorkColorType: UserDefaultSettable {
         case .workDay:
             return String(localized: "settings.holidayWorkColorType.workDay")
         case .paper:
-            return String(localized: "settings.holidayWorkColorType.papaer")
+            return String(localized: "settings.holidayWorkColorType.paper")
         }
     }
     

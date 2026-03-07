@@ -18,14 +18,14 @@ struct BaseCalendarConfigTests {
             standardOffday: "\(sat)/\(sun)/999",
             weekOffset: 1,
             weekCount: .two,
-            weekIndexs: "0/3/8",
+            weekIndexes: "0/3/8",
             dayStart: 0,
             dayWorkCount: 2,
             dayOffCount: 1
         )
         
         let weekdayOrders = config.standardWeekdayOrders()
-        let weekIndexes = config.weeksCircleIndexs()
+        let weekIndexes = config.weeksCircleIndexes()
         
         #expect(weekdayOrders.contains(.sat))
         #expect(weekdayOrders.contains(.sun))

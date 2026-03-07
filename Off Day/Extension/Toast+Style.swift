@@ -1,5 +1,5 @@
 //
-//  Toast+Stryle.swift
+//  Toast+Style.swift
 //  Off Day
 //
 //  Created by zici on 3/5/24.
