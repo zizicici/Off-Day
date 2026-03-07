@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 import UIKit
 import SnapKit
 import UniformTypeIdentifiers
@@ -346,7 +347,7 @@ extension BackupViewController {
                 try FileManager.default.removeItem(at: url)
             }
             catch {
-                print(error)
+                Logger.backup.error("\(error.localizedDescription)")
             }
         }
         

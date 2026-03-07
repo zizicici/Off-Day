@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 import GRDB
 
 extension AppDatabase {
@@ -16,13 +17,25 @@ extension AppDatabase {
     private static func makeShared() -> AppDatabase {
         do {
             let databasePool = try generateDatabasePool()
-            
+
             // Create the AppDatabase
             let database = try AppDatabase(databasePool)
-            
+
             return database
         } catch {
-            fatalError("Unresolved error \(error)")
+            // Attempt recovery: remove corrupted database and retry
+            Logger.database.error("Database initialization failed: \(error.localizedDescription). Attempting recovery...")
+            do {
+                let folderURL = try databaseFolderURL()
+                let dbURL = folderURL.appendingPathComponent(dbName)
+                try FileManager.default.removeItem(at: dbURL)
+                let databasePool = try generateDatabasePool()
+                let database = try AppDatabase(databasePool)
+                Logger.database.info("Database recovery succeeded")
+                return database
+            } catch {
+                fatalError("Database recovery failed: \(error)")
+            }
         }
     }
     

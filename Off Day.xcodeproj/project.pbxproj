@@ -87,6 +87,7 @@
 		14E49C992BEA078A00431EA9 /* th.json in Resources */ = {isa = PBXBuildFile; fileRef = 14E49C982BEA078A00431EA9 /* th.json */; };
 		14E49C9B2BEA117000431EA9 /* kr.json in Resources */ = {isa = PBXBuildFile; fileRef = 14E49C9A2BEA117000431EA9 /* kr.json */; };
 		14E6D9BA2BE495F000931F3D /* Toast+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6D9B92BE495F000931F3D /* Toast+Style.swift */; };
+		C1A0B0012E4C8A0000000001 /* Logger+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A0B0002E4C8A0000000001 /* Logger+Extension.swift */; };
 		14E6D9BC2BE4A81C00931F3D /* PublicPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6D9BB2BE4A81C00931F3D /* PublicPlanViewController.swift */; };
 		14E967E42D0DC029001CEB38 /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E967E32D0DC029001CEB38 /* Debounce.swift */; };
 		14EA29F22CA500850055A496 /* DayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA29F12CA500850055A496 /* DayManager.swift */; };
@@ -235,6 +236,7 @@
 		14E49C982BEA078A00431EA9 /* th.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = th.json; sourceTree = "<group>"; };
 		14E49C9A2BEA117000431EA9 /* kr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = kr.json; sourceTree = "<group>"; };
 		14E6D9B92BE495F000931F3D /* Toast+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Toast+Style.swift"; sourceTree = "<group>"; };
+		C1A0B0002E4C8A0000000001 /* Logger+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Extension.swift"; sourceTree = "<group>"; };
 		14E6D9BB2BE4A81C00931F3D /* PublicPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPlanViewController.swift; sourceTree = "<group>"; };
 		14E967E32D0DC029001CEB38 /* Debounce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debounce.swift; sourceTree = "<group>"; };
 		14EA29F12CA500850055A496 /* DayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayManager.swift; sourceTree = "<group>"; };
@@ -608,6 +610,7 @@
 				14E6D9B92BE495F000931F3D /* Toast+Style.swift */,
 				14F8D7D12C5C8471000B48A3 /* UIFont+Extension.swift */,
 				14E967E32D0DC029001CEB38 /* Debounce.swift */,
+				C1A0B0002E4C8A0000000001 /* Logger+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -920,6 +923,7 @@
 				14D6F9282BEB6B5E008712E1 /* WeekCalendarCell.swift in Sources */,
 				14ED08AE2BEE511000100E2D /* PublicPlanCell.swift in Sources */,
 				14E6D9BA2BE495F000931F3D /* Toast+Style.swift in Sources */,
+				C1A0B0012E4C8A0000000001 /* Logger+Extension.swift in Sources */,
 				14F92E362E1BB49D00712D87 /* ConsideringUser.swift in Sources */,
 				14DD50F52BE20BC1004329E2 /* DayGrid.swift in Sources */,
 				14F371222BE3CA6500254C39 /* Settings.swift in Sources */,

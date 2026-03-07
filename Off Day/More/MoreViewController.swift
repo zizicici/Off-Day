@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import os
 import SnapKit
 import SafariServices
 import AppInfo
@@ -508,7 +509,7 @@ extension MoreViewController {
                 self?.present(storeViewController, animated: ConsideringUser.animated, completion: nil)
             } else if let error = error {
                 // 加载失败，可以选择跳转到 App Store 应用作为后备方案
-                print("Error loading App Store: \(error.localizedDescription)")
+                Logger.theme.error("Error loading App Store: \(error.localizedDescription)")
                 self?.jumpToAppStorePage(for: app)
             }
         }

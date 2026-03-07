@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 import GRDB
 
 struct CustomDayInfo: Equatable, Hashable {
@@ -27,7 +28,7 @@ struct CustomDayManager {
                 }
             }
             catch {
-                print(error)
+                Logger.customDay.error("\(error.localizedDescription)")
             }
         }
     }
@@ -66,7 +67,7 @@ struct CustomDayManager {
                 }
             }
             catch {
-                print(error)
+                Logger.customDay.error("\(error.localizedDescription)")
             }
         }
     }
@@ -85,7 +86,7 @@ struct CustomDayManager {
             }
         }
         catch {
-            print(error)
+            Logger.customDay.error("\(error.localizedDescription)")
         }
         return result
     }
@@ -99,7 +100,7 @@ struct CustomDayManager {
             }
         }
         catch {
-            print(error)
+            Logger.customDay.error("\(error.localizedDescription)")
         }
         return result
     }
@@ -114,7 +115,7 @@ struct CustomDayManager {
             }
         }
         catch {
-            print(error)
+            Logger.customDay.error("\(error.localizedDescription)")
         }
         return result
     }
@@ -129,7 +130,7 @@ struct CustomDayManager {
             }
         }
         catch {
-            print(error)
+            Logger.customDay.error("\(error.localizedDescription)")
         }
         return result
     }
@@ -175,7 +176,7 @@ extension CustomDayManager {
             }
         }
         catch {
-            print(error)
+            Logger.customDay.error("\(error.localizedDescription)")
         }
         return result
     }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import os
 import StoreKit
 import ZCCalendar
 
@@ -89,7 +90,7 @@ extension AppDelegate {
                 AppStore.requestReview(in: windowScene)
             }
         } catch {
-            print("\(error.localizedDescription)")
+            Logger.database.error("Failed to check app review eligibility: \(error.localizedDescription)")
         }
     }
     

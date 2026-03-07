@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 import ZCCalendar
 
 enum BaseCalendarType: Int, Codable {
@@ -273,7 +274,7 @@ struct BaseCalendarConfigManager {
             }
         }
         catch {
-            print(error)
+            Logger.baseCalendar.error("\(error.localizedDescription)")
         }
         return result
     }

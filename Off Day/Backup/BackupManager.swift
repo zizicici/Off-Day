@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 import UIKit
 import BackgroundTasks
 
@@ -38,7 +39,7 @@ class BackupManager {
             try BGTaskScheduler.shared.submit(request)
         }
         catch {
-            print("Could not schedule database cleaning: \(error)")
+            Logger.backup.error("Could not schedule backup task: \(error.localizedDescription)")
         }
     }
     
@@ -69,7 +70,7 @@ extension BackupManager {
             return true
         }
         catch {
-            print(error)
+            Logger.backup.error("\(error.localizedDescription)")
             return false
         }
     }

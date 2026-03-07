@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 import ZCCalendar
 import GRDB
 
@@ -202,7 +203,7 @@ extension PublicPlanManager {
                     .fetchOne(db)
             }
             catch {
-                print(error)
+                Logger.publicPlan.error("\(error.localizedDescription)")
             }
         })
         
@@ -221,7 +222,7 @@ extension PublicPlanManager {
                     .fetchAll(db)
             }
             catch {
-                print(error)
+                Logger.publicPlan.error("\(error.localizedDescription)")
             }
         })
         
@@ -255,7 +256,7 @@ extension PublicPlanManager {
             return url
         }
         catch {
-            print("Error encoding JSON: \(error)")
+            Logger.publicPlan.error("Error encoding JSON: \(error.localizedDescription)")
             return nil
         }
     }

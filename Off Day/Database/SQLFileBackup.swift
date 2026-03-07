@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 import GRDB
 import ZipArchive
 
@@ -23,7 +24,7 @@ extension AppDatabase {
         do {
             try FileManager.default.createDirectory(atPath: directoryPath, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
-            print(error)
+            Logger.backup.error("\(error.localizedDescription)")
         }
         
         let filePath = (directoryPath as NSString).appendingPathComponent(fileName)
@@ -33,7 +34,7 @@ extension AppDatabase {
             try dbWriter?.backup(to: DatabasePool(path: filePath))
         }
         catch {
-            print(error)
+            Logger.backup.error("\(error.localizedDescription)")
             return nil
         }
         
@@ -46,7 +47,7 @@ extension AppDatabase {
             try FileManager.default.removeItem(atPath: targetPath)
         }
         catch {
-            print(error)
+            Logger.backup.error("\(error.localizedDescription)")
         }
         
         return zipFile
@@ -62,7 +63,7 @@ extension AppDatabase {
                 NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
             }
         } catch {
-            print(error)
+            Logger.backup.error("\(error.localizedDescription)")
         }
     }
     

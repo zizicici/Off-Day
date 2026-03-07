@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 import UIKit
 
 class ThemeManager: NSObject {
@@ -16,9 +17,9 @@ class ThemeManager: NSObject {
             if oldValue != logo {
                 UIApplication.shared.setAlternateIconName(logo.appIcon) { error in
                     if let error = error {
-                        print(error)
+                        Logger.theme.error("Failed to set app icon: \(error.localizedDescription)")
                     } else {
-                        print("Success for \(self.logo.getName())")
+                        Logger.theme.info("App icon changed to \(self.logo.getName())")
                     }
                 }
             }

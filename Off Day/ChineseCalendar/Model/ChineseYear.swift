@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 import ZCCalendar
 
 enum ChineseYearType: Int, Codable {
@@ -82,7 +83,7 @@ enum ChineseYearType: Int, Codable {
         if let index = getIndex(for: targetMonth) {
             return repeatableChineseMonth(at: index + 1)
         } else {
-            print("getNext index is is nil")
+            Logger.chineseCalendar.warning("getNext index is nil")
             return nil
         }
     }

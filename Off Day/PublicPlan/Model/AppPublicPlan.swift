@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 import ZCCalendar
 
 struct AppPublicPlan: Equatable, Hashable {
@@ -177,7 +178,7 @@ struct AppPublicPlan: Equatable, Hashable {
                     self.days = jsonPlan.days
                     self.plan = plan
                 } catch {
-                    print("Unexpected error: \(error).")
+                    Logger.publicPlan.error("Failed to load public plan: \(error.localizedDescription)")
                     return nil
                 }
             } else {

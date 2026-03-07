@@ -7,6 +7,7 @@
 
 import ZCCalendar
 import Foundation
+import os
 
 class ChineseCalendarManager {
     static let shared = ChineseCalendarManager()
@@ -33,7 +34,7 @@ class ChineseCalendarManager {
                 dataSource.variant = variant
                 chineseDataSources.append(dataSource)
             } catch {
-                print("Unexpected error: \(error).")
+                Logger.chineseCalendar.error("Failed to decode calendar data: \(error.localizedDescription)")
             }
         }
     }

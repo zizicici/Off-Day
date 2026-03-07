@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import os
 import SnapKit
 import ZCCalendar
 import UniformTypeIdentifiers
@@ -406,7 +407,7 @@ class PublicPlanViewController: UIViewController {
                 try FileManager.default.removeItem(at: url)
             }
             catch {
-                print(error)
+                Logger.publicPlan.error("\(error.localizedDescription)")
             }
         }
         

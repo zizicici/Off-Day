@@ -6,11 +6,14 @@
 //
 
 import Foundation
+import os
 import GRDB
 
 extension Notification.Name {
     static let DatabaseUpdated = Notification.Name(rawValue: "com.zizicici.common.database.updated")
 }
+
+private let logger = Logger.database
 
 final class AppDatabase {
     init(_ dbWriter: any DatabaseWriter) throws {
@@ -114,7 +117,7 @@ final class AppDatabase {
             try migrator.migrate(databasePool)
             self.dbWriter = databasePool
         } catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
         }
     }
 }
@@ -131,7 +134,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -149,7 +152,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -166,7 +169,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -185,7 +188,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -205,7 +208,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -225,7 +228,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -243,7 +246,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -260,7 +263,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -280,7 +283,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -297,7 +300,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -317,7 +320,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return nil
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -335,7 +338,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -352,7 +355,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -372,7 +375,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -389,7 +392,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -407,7 +410,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -424,7 +427,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
@@ -440,7 +443,7 @@ extension AppDatabase {
             }
         }
         catch {
-            print(error)
+            logger.error("\(error.localizedDescription)")
             return false
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)

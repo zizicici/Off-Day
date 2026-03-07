@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 import UserNotifications
 import ZCCalendar
 import BackgroundTasks
@@ -64,9 +65,9 @@ class NotificationManager {
         center.requestAuthorization(options: [.alert, .sound]) { [weak self] granted, error in
             self?.hasAuthorization = granted
             if granted {
-                print("Notification permission granted")
+                Logger.notification.info("Notification permission granted")
             } else if let error = error {
-                print("Notification permission error: \(error.localizedDescription)")
+                Logger.notification.error("Notification permission error: \(error.localizedDescription)")
             }
             DispatchQueue.main.async {
                 completion?(granted)
@@ -235,7 +236,7 @@ class NotificationManager {
         
         center.add(request) { error in
             if let error = error {
-                print("添加通知失败: \(error.localizedDescription)")
+                Logger.notification.error("Failed to add notification: \(error.localizedDescription)")
             }
         }
     }
@@ -265,7 +266,7 @@ extension NotificationManager {
             try BGTaskScheduler.shared.submit(request)
         }
         catch {
-            print("Could not schedule database cleaning: \(error)")
+            Logger.notification.error("Could not schedule notification task: \(error.localizedDescription)")
         }
     }
     
