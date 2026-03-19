@@ -19,12 +19,14 @@ struct JSONPublicPlan: Codable {
     var days: [JSONPublicDay]
     var start: GregorianDay
     var end: GregorianDay
+    var note: String?
     
-    init(name: String, days: [JSONPublicDay], start: GregorianDay, end: GregorianDay) {
+    init(name: String, days: [JSONPublicDay], start: GregorianDay, end: GregorianDay, note: String? = nil) {
         self.name = name
         self.days = days
         self.start = start
         self.end = end
+        self.note = note
     }
     
     init(from url: URL) throws {

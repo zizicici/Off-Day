@@ -42,9 +42,10 @@ class PublicPlanViewController: UIViewController {
         case empty
         case create
         case importPlan
+        case subscribePlan
         case appPlan(AppPublicPlan)
         case customPlan(CustomPublicPlan)
-        
+
         var title: String {
             switch self {
             case .empty:
@@ -53,6 +54,8 @@ class PublicPlanViewController: UIViewController {
                 return String(localized: "publicDay.item.special.create")
             case .importPlan:
                 return String(localized: "publicDay.item.special.import")
+            case .subscribePlan:
+                return String(localized: "publicDay.item.special.subscribe")
             case .appPlan(let plan):
                 return plan.title
             case .customPlan(let plan):
@@ -68,10 +71,20 @@ class PublicPlanViewController: UIViewController {
                 return nil
             case .importPlan:
                 return nil
+            case .subscribePlan:
+                return nil
             case .appPlan(let plan):
                 return plan.subtitle
             case .customPlan(let plan):
-                return "\(plan.start.formatString() ?? "") - \(plan.end.formatString() ?? "")"
+                let dateRange = "\(plan.start.formatString() ?? "") - \(plan.end.formatString() ?? "")"
+                if plan.isPaused == true {
+                    return "\(dateRange)\n\(String(localized: "publicPlan.paused.indicator"))"
+                } else if plan.sourceURL != nil, let ts = plan.lastRefreshTime, ts > 0 {
+                    let date = Date(timeIntervalSince1970: TimeInterval(ts))
+                    let formatted = date.formatted(.relative(presentation: .named))
+                    return "\(dateRange)\n\(String(format: String(localized: "publicPlan.lastRefresh.indicator"), formatted))"
+                }
+                return dateRange
             }
         }
     }
@@ -97,9 +110,10 @@ class PublicPlanViewController: UIViewController {
         configureDataSource()
         reloadData()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .SettingsUpdate, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .DatabaseUpdated, object: nil)
     }
-    
+
     deinit {
         print("PublicPlanViewController is deinited")
     }
@@ -125,9 +139,9 @@ class PublicPlanViewController: UIViewController {
                     }
                 }
                 switch item {
-                case .empty, .appPlan,.customPlan:
+                case .empty, .appPlan, .customPlan:
                     return sectionSeparatorConfiguration
-                case .create, .importPlan:
+                case .create, .importPlan, .subscribePlan:
                     var configuration = sectionSeparatorConfiguration
                     configuration.topSeparatorVisibility = .visible
                     configuration.topSeparatorInsets = .zero
@@ -159,7 +173,7 @@ class PublicPlanViewController: UIViewController {
             switch itemIdentifier {
             case .empty:
                 return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
-            case .create, .importPlan:
+            case .create, .importPlan, .subscribePlan:
                 return collectionView.dequeueConfiguredReusableCell(using: normalCellRegistration, for: indexPath, item: itemIdentifier)
             case .appPlan:
                 return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
@@ -181,7 +195,7 @@ class PublicPlanViewController: UIViewController {
                 content.directionalLayoutMargins = layoutMargins
                 cell.contentConfiguration = content
                 cell.detail = nil
-            case .create, .importPlan:
+            case .create, .importPlan, .subscribePlan:
                 return
             case .appPlan, .customPlan:
                 var content = UIListContentConfiguration.subtitleCell()
@@ -218,24 +232,77 @@ class PublicPlanViewController: UIViewController {
             return nil
         case .importPlan:
             return nil
+        case .subscribePlan:
+            return nil
         case .appPlan:
             return nil
         case .customPlan(let customPublicPlan):
-            let shareAction = UIContextualAction(style: .normal, title: nil) { [weak self] (_, _, completion) in
-                guard let self = self else {
-                    completion(false)
-                    return
-                }
-                
-                self.sharePlan(customPlan: customPublicPlan)
-                
-                completion(true)
-            }
-            shareAction.title = String(localized: "publicPlan.share.title")
-            shareAction.backgroundColor = AppColor.offDay
-            return UISwipeActionsConfiguration(actions: [shareAction])
-        }
+            if customPublicPlan.sourceURL != nil {
+                if customPublicPlan.isPaused == true {
+                    let resumeAction = UIContextualAction(style: .normal, title: nil) { (_, _, completion) in
+                        if let planId = customPublicPlan.id {
+                            SubscriptionManager.shared.resumeSubscription(for: planId)
+                            completion(true)
+                            Task {
+                                do {
+                                    _ = try await SubscriptionManager.shared.refresh(plan: customPublicPlan, ignorePause: true, clearRejected: true)
+                                } catch {
+                                    Logger.subscription.error("Refresh after resume failed: \(error.localizedDescription)")
+                                }
+                                SubscriptionManager.shared.presentPendingUpdateAlert(for: planId)
+                            }
+                        } else {
+                            completion(true)
+                        }
+                    }
+                    resumeAction.title = String(localized: "publicPlan.resume.title")
+                    resumeAction.backgroundColor = AppColor.offDay
 
+                    return UISwipeActionsConfiguration(actions: [resumeAction])
+                } else {
+                    let pauseAction = UIContextualAction(style: .normal, title: nil) { (_, _, completion) in
+                        if let planId = customPublicPlan.id {
+                            SubscriptionManager.shared.pauseSubscription(for: planId)
+                        }
+                        completion(true)
+                    }
+                    pauseAction.title = String(localized: "publicPlan.pause.title")
+                    pauseAction.backgroundColor = .systemOrange
+
+                    let refreshAction = UIContextualAction(style: .normal, title: nil) { (_, _, completion) in
+                        Task {
+                            do {
+                                _ = try await SubscriptionManager.shared.refresh(plan: customPublicPlan, clearRejected: true)
+                            } catch {
+                                Logger.subscription.error("Refresh failed: \(error.localizedDescription)")
+                            }
+                            if let planId = customPublicPlan.id {
+                                SubscriptionManager.shared.presentPendingUpdateAlert(for: planId)
+                            }
+                            await MainActor.run {
+                                completion(true)
+                            }
+                        }
+                    }
+                    refreshAction.title = String(localized: "publicPlan.refresh.title")
+                    refreshAction.backgroundColor = AppColor.offDay
+
+                    return UISwipeActionsConfiguration(actions: [pauseAction, refreshAction])
+                }
+            } else {
+                let shareAction = UIContextualAction(style: .normal, title: nil) { [weak self] (_, _, completion) in
+                    guard let self = self else {
+                        completion(false)
+                        return
+                    }
+                    self.sharePlan(customPlan: customPublicPlan)
+                    completion(true)
+                }
+                shareAction.title = String(localized: "publicPlan.share.title")
+                shareAction.backgroundColor = AppColor.offDay
+                return UISwipeActionsConfiguration(actions: [shareAction])
+            }
+        }
     }
     
     func detailAccessoryForListCellItem(_ item: Item) -> UICellAccessory {
@@ -248,7 +315,7 @@ class PublicPlanViewController: UIViewController {
         switch item {
         case .empty:
             break
-        case .create, .importPlan:
+        case .create, .importPlan, .subscribePlan:
             break
         case .appPlan(let plan):
             if let detailViewController = PublicPlanDetailViewController(appPlan: plan) {
@@ -256,7 +323,8 @@ class PublicPlanViewController: UIViewController {
                 navigationController?.present(nav, animated: ConsideringUser.animated)
             }
         case .customPlan(let plan):
-            if let detailViewController = PublicPlanDetailViewController(customPlan: plan, allowEditing: true) {
+            let allowEditing = plan.sourceURL == nil
+            if let detailViewController = PublicPlanDetailViewController(customPlan: plan, allowEditing: allowEditing) {
                 let nav = NavigationController(rootViewController: detailViewController)
                 navigationController?.present(nav, animated: ConsideringUser.animated)
             }
@@ -282,6 +350,7 @@ class PublicPlanViewController: UIViewController {
         }
         topItems.append(.create)
         topItems.append(.importPlan)
+        topItems.append(.subscribePlan)
         snapshot.appendItems(topItems, toSection: .top)
         
         snapshot.appendSections([.cn])
@@ -360,7 +429,7 @@ class PublicPlanViewController: UIViewController {
         switch selectedItem {
         case .empty:
             PublicPlanManager.shared.select(plan: nil)
-        case .create, .importPlan:
+        case .create, .importPlan, .subscribePlan:
             return
         case .appPlan(let plan):
             PublicPlanManager.shared.select(plan: .app(plan))
@@ -390,6 +459,62 @@ class PublicPlanViewController: UIViewController {
         let style = ToastStyle.getStyle(messageColor: .white, backgroundColor: AppColor.offDay)
         view.makeToast(
             result ? String(localized: "publicDetail.import.success") : String(localized: "publicDetail.import.failure"), position: .center, style: style)
+    }
+    
+    func subscribeAction() {
+        let alertController = UIAlertController(
+            title: String(localized: "publicPlan.subscribe.alert.title"),
+            message: String(localized: "publicPlan.subscribe.alert.message"),
+            preferredStyle: .alert
+        )
+        alertController.addTextField { textField in
+            textField.placeholder = String(localized: "publicPlan.subscribe.alert.placeholder")
+            textField.keyboardType = .URL
+            textField.autocapitalizationType = .none
+            textField.autocorrectionType = .no
+        }
+        let confirmAction = UIAlertAction(title: String(localized: "publicPlan.subscribe.alert.confirm"), style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            guard let urlString = alertController.textFields?.first?.text, !urlString.isEmpty else { return }
+            if SubscriptionManager.shared.isURLAlreadySubscribed(urlString) {
+                let duplicateAlert = UIAlertController(
+                    title: String(localized: "publicPlan.subscribe.duplicate.title"),
+                    message: String(localized: "publicPlan.subscribe.duplicate.message"),
+                    preferredStyle: .alert
+                )
+                duplicateAlert.addAction(UIAlertAction(title: String(localized: "button.ok"), style: .default))
+                self.present(duplicateAlert, animated: ConsideringUser.animated)
+                return
+            }
+            Task { [weak self] in
+                do {
+                    let result = try await SubscriptionManager.shared.subscribe(from: urlString)
+                    await MainActor.run { [weak self] in
+                        guard let self = self else { return }
+                        let style = ToastStyle.getStyle(messageColor: .white, backgroundColor: AppColor.offDay)
+                        self.view.makeToast(
+                            result ? String(localized: "publicPlan.subscribe.success") : String(localized: "publicPlan.subscribe.failure"),
+                            position: .center,
+                            style: style
+                        )
+                    }
+                } catch {
+                    await MainActor.run { [weak self] in
+                        guard let self = self else { return }
+                        let style = ToastStyle.getStyle(messageColor: .white, backgroundColor: AppColor.offDay)
+                        self.view.makeToast(
+                            String(localized: "publicPlan.subscribe.failure"),
+                            position: .center,
+                            style: style
+                        )
+                    }
+                }
+            }
+        }
+        let cancelAction = UIAlertAction(title: String(localized: "publicPlan.subscribe.alert.cancel"), style: .cancel)
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: ConsideringUser.animated)
     }
     
     func sharePlan(customPlan: CustomPublicPlan) {
@@ -443,6 +568,9 @@ extension PublicPlanViewController: UICollectionViewDelegate {
             case .importPlan:
                 importPlanAction()
                 return false
+            case .subscribePlan:
+                subscribeAction()
+                return false
             case .appPlan:
                 return true
             case .customPlan(let customPlan):
@@ -470,17 +598,11 @@ extension PublicPlanViewController: UIDocumentPickerDelegate {
             return
         }
         
-        defer { url.stopAccessingSecurityScopedResource() }
-        
-        guard let pickedURL = urls.first else {
-            return
-        }
-        
         let coordinator = NSFileCoordinator()
         
-        coordinator.coordinate(readingItemAt: pickedURL, options: [], error: nil) { [weak self] (url) in
-            self?.importPlan(from: url)
-            pickedURL.stopAccessingSecurityScopedResource()
+        coordinator.coordinate(readingItemAt: url, options: [], error: nil) { [weak self] (coordinatedURL) in
+            self?.importPlan(from: coordinatedURL)
+            url.stopAccessingSecurityScopedResource()
         }
     }
     

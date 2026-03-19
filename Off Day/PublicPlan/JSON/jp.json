@@ -2,6 +2,7 @@
     "name": "日本国民の祝日・休日",
     "start": "1955-01-01",
     "end": "2026-12-31",
+    "note": "データ出典：内閣府[https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html]",
     "days": [
         {
             "date": "1955-01-01",

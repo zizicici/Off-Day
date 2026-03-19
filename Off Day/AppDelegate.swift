@@ -32,7 +32,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         NotificationManager.shared.registerBGTasks()
         Task {
-            await NotificationManager.shared.updateNotifications()            
+            await NotificationManager.shared.updateNotifications()
+        }
+        
+        SubscriptionManager.shared.registerBGTasks()
+        Task {
+            await SubscriptionManager.shared.refreshAll()
+            SubscriptionManager.shared.presentPendingUpdateAlertIfNeeded()
         }
         
         _ = ThemeManager.shared
@@ -61,12 +67,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func cancelBGTasks() {
         BackupManager.shared.cancelBGTasks()
         NotificationManager.shared.cancelBGTasks()
+        SubscriptionManager.shared.cancelBGTasks()
     }
     
     @objc
     func scheduleBGTasks() {
         BackupManager.shared.scheduleBGTasks()
         NotificationManager.shared.scheduleBGTasks()
+        SubscriptionManager.shared.scheduleBGTasks()
     }
 }
 

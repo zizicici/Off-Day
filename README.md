@@ -31,6 +31,8 @@ The app is local-first:
   China Mainland, Xinjiang, Tibet, Guangxi, Ningxia, Hong Kong, Macau (Public / Force / Civil Servant), Singapore, Thailand, Korea, Japan, United States
 - Custom public holiday plans:
   create, edit, duplicate, import JSON, export JSON
+- Subscription-based remote templates:
+  subscribe via URL, background refresh, update review with diff comparison, accept/reject/pause
 - Flexible base calendar modes:
   Standard weekly, Week-cycle, Day-cycle
 - Rich App Intents for Shortcuts automation:
@@ -155,7 +157,7 @@ Reference model: `Off Day/PublicPlan/Model/JSONPublicPlan.swift`.
 - [x] App Intents + automation workflow
 - [x] Backup and restore
 - [ ] Interactive widget
-- [ ] Subscribable remote holiday templates
+- [x] Subscribable remote holiday templates with update review
 
 ## Contributing
 

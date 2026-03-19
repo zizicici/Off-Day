@@ -2,6 +2,7 @@
     "name": "新加坡公共假日",
     "start": "2024-01-01",
     "end": "2026-12-31",
+    "note": "Source: Ministry of Manpower, Singapore[https://www.mom.gov.sg/employment-practices/public-holidays]",
     "days": [
         {
             "date": "2024-01-01",

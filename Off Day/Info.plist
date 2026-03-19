@@ -6,6 +6,7 @@
 	<array>
 		<string>com.zizicici.zzz.backup</string>
 		<string>com.zizicici.zzz.notification</string>
+		<string>com.zizicici.zzz.subscription</string>
 	</array>
 	<key>NSUbiquitousContainers</key>
 	<dict>

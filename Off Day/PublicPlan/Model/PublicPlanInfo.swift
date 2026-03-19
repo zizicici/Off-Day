@@ -16,6 +16,7 @@ struct PublicPlanInfo {
     
     var plan: Plan
     var days: [Int: any PublicDay] // julian day as Key
+    private var appNote: String?
     
     init(plan: Plan, days: [Int : any PublicDay]) {
         self.plan = plan
@@ -29,6 +30,7 @@ struct PublicPlanInfo {
                 grouping: detail.days,
                 by: { Int($0.date.julianDay) }
             ).compactMapValues { $0.first }
+            self.appNote = detail.note
         } else {
             return nil
         }
@@ -105,8 +107,29 @@ struct PublicPlanInfo {
         }
     }
     
+    var note: String? {
+        get {
+            switch plan {
+            case .app:
+                return appNote
+            case .custom(let customPublicPlan):
+                return customPublicPlan.note
+            }
+        }
+        set {
+            switch plan {
+            case .app:
+                break
+            case .custom(let customPublicPlan):
+                var plan = customPublicPlan
+                plan.note = newValue
+                self.plan = .custom(plan)
+            }
+        }
+    }
+    
     func getDuplicateCustomPlan() -> PublicPlanInfo {
-        let newPlan = Plan.custom(CustomPublicPlan(name: self.name, start: self.start, end: self.end))
+        let newPlan = Plan.custom(CustomPublicPlan(name: self.name, start: self.start, end: self.end, note: self.note))
         
         return PublicPlanInfo(plan: newPlan, days: days.mapValues({ CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }))
     }

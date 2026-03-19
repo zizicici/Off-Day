@@ -2,6 +2,7 @@
     "name": "Thailand Public Holiday",
     "start": "2024-01-01",
     "end": "2026-12-31",
+    "note": "Source: Bank of Thailand[https://www.bot.or.th/en/financial-institutions-holiday.html]",
     "days": [
         {
             "date": "2024-01-01",

@@ -1,0 +1,564 @@
+//
+//  SubscriptionManager.swift
+//  Off Day
+//
+//  Created by zici on 8/3/26.
+//
+
+import Foundation
+import os
+import BackgroundTasks
+import CryptoKit
+import UserNotifications
+import ZCCalendar
+import UIKit
+
+final class SubscriptionManager {
+    static let shared = SubscriptionManager()
+
+    private let taskIdentifier = "com.zizicici.zzz.subscription"
+
+    private var currentRefreshTask: Task<Void, Never>?
+    private var isShowingPendingAlerts = false
+
+    private enum SubscriptionError: LocalizedError {
+        case invalidHTTPResponse(Int)
+
+        var errorDescription: String? {
+            switch self {
+            case .invalidHTTPResponse(let code):
+                return "HTTP error: \(code)"
+            }
+        }
+    }
+
+    private var pendingDirectory: URL? {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        return documents?.appendingPathComponent("subscription_pending")
+    }
+
+    // MARK: - Subscribe
+
+    func isURLAlreadySubscribed(_ urlString: String) -> Bool {
+        guard let plans = try? AppDatabase.shared.fetchAllSubscribedPlans() else { return false }
+        return plans.contains { $0.sourceURL == urlString }
+    }
+
+    func subscribe(from urlString: String) async throws -> Bool {
+        guard let url = URL(string: urlString), url.scheme == "https" else {
+            Logger.subscription.error("Invalid URL: \(urlString)")
+            return false
+        }
+
+        var request = URLRequest(url: url)
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+        let (data, response) = try await URLSession.shared.data(for: request)
+        if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
+            throw SubscriptionError.invalidHTTPResponse(httpResponse.statusCode)
+        }
+        let jsonPlan = try JSONDecoder().decode(JSONPublicPlan.self, from: data)
+
+        let plan = CustomPublicPlan(
+            name: jsonPlan.name,
+            start: jsonPlan.start,
+            end: jsonPlan.end,
+            sourceURL: urlString,
+            lastRefreshTime: Int64(Date().timeIntervalSince1970),
+            note: jsonPlan.note
+        )
+
+        let days = jsonPlan.days.map { CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }
+
+        guard let savedPlan = try AppDatabase.shared.savePlanWithDays(plan: plan, days: days) else {
+            Logger.subscription.error("Failed to save subscribed plan")
+            return false
+        }
+
+        await MainActor.run {
+            PublicPlanManager.shared.select(plan: .custom(savedPlan))
+        }
+        Logger.subscription.info("Subscribed to plan: \(jsonPlan.name)")
+        return true
+    }
+
+    // MARK: - Refresh
+
+    func refresh(plan: CustomPublicPlan, ignorePause: Bool = false, clearRejected: Bool = false) async throws -> Bool {
+        if !ignorePause {
+            guard plan.isPaused != true else {
+                Logger.subscription.info("Plan \(plan.name) is paused, skipping refresh")
+                return false
+            }
+        }
+        guard let sourceURL = plan.sourceURL, let url = URL(string: sourceURL) else {
+            return false
+        }
+        guard let planId = plan.id else {
+            return false
+        }
+
+        if clearRejected {
+            clearRejectedFingerprint(for: planId)
+        }
+
+        var request = URLRequest(url: url)
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+        let (data, response) = try await URLSession.shared.data(for: request)
+        if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
+            throw SubscriptionError.invalidHTTPResponse(httpResponse.statusCode)
+        }
+        let jsonPlan = try JSONDecoder().decode(JSONPublicPlan.self, from: data)
+
+        let currentDays = try AppDatabase.shared.fetchCustomPublicDays(for: planId)
+        let diff = computeDiff(planId: planId, planName: plan.name, currentDays: currentDays, newDays: jsonPlan.days)
+
+        let metadataChanged = plan.name != jsonPlan.name ||
+            plan.start != jsonPlan.start ||
+            plan.end != jsonPlan.end ||
+            plan.note != jsonPlan.note
+
+        if diff.hasChanges || metadataChanged {
+            let fingerprint = updateFingerprint(jsonPlan: jsonPlan)
+            if loadRejectedFingerprint(for: planId) == fingerprint {
+                try AppDatabase.shared.updateRefreshTime(for: planId)
+                Logger.subscription.info("Skipping update - same changes previously rejected: \(jsonPlan.name)")
+                return true
+            }
+            clearRejectedFingerprint(for: planId)
+            let pending = PendingSubscriptionUpdate(
+                planId: planId,
+                planName: plan.name,
+                fetchTime: Int64(Date().timeIntervalSince1970),
+                jsonPlan: jsonPlan,
+                diff: diff
+            )
+            savePendingUpdate(pending)
+            sendUpdateNotification(diff: diff)
+            Logger.subscription.info("Pending update saved for plan: \(jsonPlan.name)")
+        } else {
+            try AppDatabase.shared.updateRefreshTime(for: planId)
+            Logger.subscription.info("No changes for plan: \(jsonPlan.name), updated timestamp")
+        }
+
+        return true
+    }
+
+    @discardableResult
+    func refreshAll(includePaused: Bool = false) async -> Bool {
+        do {
+            let plans = try AppDatabase.shared.fetchAllSubscribedPlans()
+            let results = await withTaskGroup(of: Bool.self, returning: [Bool].self) { group in
+                for plan in plans {
+                    if !includePaused, plan.isPaused == true { continue }
+                    group.addTask {
+                        do {
+                            return try await self.refresh(plan: plan, ignorePause: includePaused)
+                        } catch {
+                            Logger.subscription.error("Failed to refresh plan \(plan.name): \(error.localizedDescription)")
+                            return false
+                        }
+                    }
+                }
+                var collected: [Bool] = []
+                for await result in group {
+                    collected.append(result)
+                }
+                return collected
+            }
+            return results.isEmpty || !results.contains(false)
+        } catch {
+            Logger.subscription.error("Failed to fetch subscribed plans: \(error.localizedDescription)")
+            return false
+        }
+    }
+
+    // MARK: - Diff
+
+    func computeDiff(planId: Int64, planName: String, currentDays: [CustomPublicDay], newDays: [JSONPublicDay]) -> SubscriptionDiff {
+        var currentDict: [Int: CustomPublicDay] = [:]
+        for day in currentDays {
+            currentDict[day.date.julianDay] = day
+        }
+
+        var newDict: [Int: JSONPublicDay] = [:]
+        for day in newDays {
+            newDict[day.date.julianDay] = day
+        }
+
+        var added: [DayChange] = []
+        var removed: [DayChange] = []
+        var modified: [DayChange] = []
+
+        for (julianDay, newDay) in newDict {
+            if let oldDay = currentDict[julianDay] {
+                if oldDay.type != newDay.type || oldDay.name != newDay.name {
+                    modified.append(DayChange(date: newDay.date, name: newDay.name, oldType: oldDay.type, newType: newDay.type))
+                }
+            } else {
+                added.append(DayChange(date: newDay.date, name: newDay.name, oldType: nil, newType: newDay.type))
+            }
+        }
+
+        for (julianDay, oldDay) in currentDict {
+            if newDict[julianDay] == nil {
+                removed.append(DayChange(date: oldDay.date, name: oldDay.name, oldType: oldDay.type, newType: nil))
+            }
+        }
+
+        return SubscriptionDiff(
+            planId: planId,
+            planName: planName,
+            addedDays: added,
+            removedDays: removed,
+            modifiedDays: modified
+        )
+    }
+
+    // MARK: - Rejected Update Fingerprint
+
+    func updateFingerprint(jsonPlan: JSONPublicPlan) -> String {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .sortedKeys
+        guard let data = try? encoder.encode(jsonPlan) else { return UUID().uuidString }
+        return SHA256.hash(data: data).compactMap { String(format: "%02x", $0) }.joined()
+    }
+
+    private func rejectedFingerprintKey(for planId: Int64) -> String {
+        "subscription.rejected.\(planId)"
+    }
+
+    private func saveRejectedFingerprint(_ fingerprint: String, for planId: Int64) {
+        UserDefaults.standard.set(fingerprint, forKey: rejectedFingerprintKey(for: planId))
+    }
+
+    private func loadRejectedFingerprint(for planId: Int64) -> String? {
+        UserDefaults.standard.string(forKey: rejectedFingerprintKey(for: planId))
+    }
+
+    private func clearRejectedFingerprint(for planId: Int64) {
+        UserDefaults.standard.removeObject(forKey: rejectedFingerprintKey(for: planId))
+    }
+
+    // MARK: - Pending File Management
+
+    func savePendingUpdate(_ update: PendingSubscriptionUpdate) {
+        guard let directory = pendingDirectory else { return }
+        if !FileManager.default.fileExists(atPath: directory.path) {
+            try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        }
+        let fileURL = directory.appendingPathComponent("\(update.planId).json")
+        do {
+            let data = try JSONEncoder().encode(update)
+            try data.write(to: fileURL, options: .atomic)
+        } catch {
+            Logger.subscription.error("Failed to save pending update: \(error.localizedDescription)")
+        }
+    }
+
+    func loadAllPendingUpdates() -> [PendingSubscriptionUpdate] {
+        guard let directory = pendingDirectory else { return [] }
+        guard FileManager.default.fileExists(atPath: directory.path) else { return [] }
+        do {
+            let files = try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
+            return files.compactMap { fileURL -> PendingSubscriptionUpdate? in
+                guard fileURL.pathExtension == "json" else { return nil }
+                guard let data = try? Data(contentsOf: fileURL) else { return nil }
+                return try? JSONDecoder().decode(PendingSubscriptionUpdate.self, from: data)
+            }
+        } catch {
+            Logger.subscription.error("Failed to load pending updates: \(error.localizedDescription)")
+            return []
+        }
+    }
+
+    func removePendingUpdate(for planId: Int64) {
+        guard let directory = pendingDirectory else { return }
+        let fileURL = directory.appendingPathComponent("\(planId).json")
+        guard FileManager.default.fileExists(atPath: fileURL.path) else { return }
+        do {
+            try FileManager.default.removeItem(at: fileURL)
+        } catch {
+            Logger.subscription.error("Failed to remove pending update for plan \(planId): \(error.localizedDescription)")
+        }
+    }
+
+    func cleanupForDeletedPlan(_ planId: Int64) {
+        removePendingUpdate(for: planId)
+        clearRejectedFingerprint(for: planId)
+    }
+
+    // MARK: - User Actions
+
+    func acceptUpdate(for planId: Int64) -> Bool {
+        let updates = loadAllPendingUpdates()
+        guard let update = updates.first(where: { $0.planId == planId }) else { return false }
+
+        do {
+            let days = update.jsonPlan.days.map { CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }
+            try AppDatabase.shared.replacePlanDaysAndUpdate(planId: planId, fields: { plan in
+                plan.name = update.jsonPlan.name
+                plan.start = update.jsonPlan.start
+                plan.end = update.jsonPlan.end
+                plan.note = update.jsonPlan.note
+                plan.lastRefreshTime = Int64(Date().timeIntervalSince1970)
+            }, days: days)
+
+            removePendingUpdate(for: planId)
+            clearRejectedFingerprint(for: planId)
+            Logger.subscription.info("Accepted update for plan: \(update.planName)")
+            return true
+        } catch {
+            Logger.subscription.error("Failed to accept update: \(error.localizedDescription)")
+            return false
+        }
+    }
+
+    func rejectUpdate(for planId: Int64) {
+        if let update = loadAllPendingUpdates().first(where: { $0.planId == planId }) {
+            saveRejectedFingerprint(updateFingerprint(jsonPlan: update.jsonPlan), for: planId)
+        }
+        removePendingUpdate(for: planId)
+        Logger.subscription.info("Rejected update for plan ID: \(planId)")
+    }
+
+    func pauseSubscription(for planId: Int64) {
+        do {
+            let plans = try AppDatabase.shared.fetchAllSubscribedPlans()
+            guard var plan = plans.first(where: { $0.id == planId }) else { return }
+            plan.isPaused = true
+            _ = AppDatabase.shared.update(publicPlan: plan)
+            removePendingUpdate(for: planId)
+            Logger.subscription.info("Paused subscription for plan: \(plan.name)")
+        } catch {
+            Logger.subscription.error("Failed to pause subscription: \(error.localizedDescription)")
+        }
+    }
+
+    func resumeSubscription(for planId: Int64) {
+        do {
+            let plans = try AppDatabase.shared.fetchAllSubscribedPlans()
+            guard var plan = plans.first(where: { $0.id == planId }) else { return }
+            plan.isPaused = false
+            _ = AppDatabase.shared.update(publicPlan: plan)
+            clearRejectedFingerprint(for: planId)
+            Logger.subscription.info("Resumed subscription for plan: \(plan.name)")
+        } catch {
+            Logger.subscription.error("Failed to resume subscription: \(error.localizedDescription)")
+        }
+    }
+
+    // MARK: - Pending Update Alert
+
+    @MainActor
+    func presentPendingUpdateAlertIfNeeded() {
+        guard !isShowingPendingAlerts else { return }
+        let pendingUpdates = loadAllPendingUpdates()
+        guard !pendingUpdates.isEmpty else { return }
+        isShowingPendingAlerts = true
+        presentNextAlert(from: pendingUpdates, index: 0)
+    }
+
+    @MainActor
+    func presentPendingUpdateAlert(for planId: Int64) {
+        guard !isShowingPendingAlerts else { return }
+        let updates = loadAllPendingUpdates().filter { $0.planId == planId }
+        guard !updates.isEmpty else { return }
+        isShowingPendingAlerts = true
+        presentNextAlert(from: updates, index: 0)
+    }
+
+    @MainActor
+    private func presentNextAlert(from updates: [PendingSubscriptionUpdate], index: Int) {
+        guard index < updates.count else {
+            isShowingPendingAlerts = false
+            return
+        }
+        let update = updates[index]
+
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let rootVC = windowScene.windows.first(where: { $0.isKeyWindow })?.rootViewController else {
+            isShowingPendingAlerts = false
+            return
+        }
+
+        var topVC = rootVC
+        while let presented = topVC.presentedViewController {
+            topVC = presented
+        }
+
+        let title = String(format: String(localized: "subscription.update.alert.title"), update.planName)
+        let message = String(localized: "subscription.update.alert.message")
+
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: String(localized: "subscription.update.alert.preview"), style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self.presentPreview(for: update, from: updates, index: index, on: topVC)
+        })
+
+        alert.addAction(UIAlertAction(title: String(localized: "subscription.update.alert.cancel"), style: .cancel) { [weak self] _ in
+            self?.isShowingPendingAlerts = false
+        })
+
+        topVC.present(alert, animated: true)
+    }
+
+    @MainActor
+    private func presentPreview(for update: PendingSubscriptionUpdate, from updates: [PendingSubscriptionUpdate], index: Int, on presenter: UIViewController) {
+        let planInfo = PublicPlanInfo(
+            plan: .custom(CustomPublicPlan(
+                name: update.jsonPlan.name,
+                start: update.jsonPlan.start,
+                end: update.jsonPlan.end,
+                note: update.jsonPlan.note
+            )),
+            days: Dictionary(
+                grouping: update.jsonPlan.days,
+                by: { $0.date.julianDay }
+            ).compactMapValues { $0.first }
+        )
+        let previewVC = PublicPlanDetailViewController(publicPlan: planInfo, allowEditing: false)
+        previewVC.mode = .subscriptionPreview
+        previewVC.changeEntries = buildChangeEntries(for: update)
+        previewVC.onAccept = { [weak self] in
+            guard let self = self else { return }
+            _ = self.acceptUpdate(for: update.planId)
+            self.presentNextAlert(from: updates, index: index + 1)
+        }
+        previewVC.onDecline = { [weak self] action in
+            guard let self = self else { return }
+            switch action {
+            case .skip:
+                self.rejectUpdate(for: update.planId)
+            case .pause:
+                self.pauseSubscription(for: update.planId)
+            }
+            self.presentNextAlert(from: updates, index: index + 1)
+        }
+        let nav = NavigationController(rootViewController: previewVC)
+        nav.isModalInPresentation = true
+        presenter.present(nav, animated: true)
+    }
+
+    private func buildChangeEntries(for update: PendingSubscriptionUpdate) -> [PublicPlanDetailViewController.ChangeEntry] {
+        typealias Entry = PublicPlanDetailViewController.ChangeEntry
+        var entries: [Entry] = []
+
+        // Metadata changes
+        let currentPlan = try? AppDatabase.shared.fetchAllSubscribedPlans().first(where: { $0.id == update.planId })
+        if let old = currentPlan {
+            if old.name != update.jsonPlan.name {
+                entries.append(Entry(
+                    icon: "pencil",
+                    text: String(format: String(localized: "subscription.preview.change.name"), old.name, update.jsonPlan.name),
+                    color: AppColor.text
+                ))
+            }
+            if old.start != update.jsonPlan.start {
+                entries.append(Entry(
+                    icon: "pencil",
+                    text: String(format: String(localized: "subscription.preview.change.start"), old.start.formatString() ?? "", update.jsonPlan.start.formatString() ?? ""),
+                    color: AppColor.text
+                ))
+            }
+            if old.end != update.jsonPlan.end {
+                entries.append(Entry(
+                    icon: "pencil",
+                    text: String(format: String(localized: "subscription.preview.change.end"), old.end.formatString() ?? "", update.jsonPlan.end.formatString() ?? ""),
+                    color: AppColor.text
+                ))
+            }
+            if old.note != update.jsonPlan.note {
+                entries.append(Entry(
+                    icon: "pencil",
+                    text: String(localized: "subscription.preview.change.note"),
+                    color: AppColor.text
+                ))
+            }
+        }
+
+        // Day changes
+        for day in update.diff.addedDays.sorted(by: { $0.date.julianDay < $1.date.julianDay }) {
+            entries.append(Entry(
+                icon: "plus.circle",
+                text: "\(day.name) (\(day.date.completeFormatString() ?? ""))",
+                color: .systemGreen
+            ))
+        }
+        for day in update.diff.removedDays.sorted(by: { $0.date.julianDay < $1.date.julianDay }) {
+            entries.append(Entry(
+                icon: "minus.circle",
+                text: "\(day.name) (\(day.date.completeFormatString() ?? ""))",
+                color: .systemRed
+            ))
+        }
+        for day in update.diff.modifiedDays.sorted(by: { $0.date.julianDay < $1.date.julianDay }) {
+            entries.append(Entry(
+                icon: "arrow.triangle.2.circlepath",
+                text: "\(day.name) (\(day.date.completeFormatString() ?? ""))",
+                color: .systemOrange
+            ))
+        }
+
+        return entries
+    }
+
+    // MARK: - Local Notification
+
+    func sendUpdateNotification(diff: SubscriptionDiff) {
+        let content = UNMutableNotificationContent()
+        content.title = String(format: String(localized: "subscription.update.notification.title"), diff.planName)
+        content.body = String(localized: "subscription.update.notification.body")
+        content.sound = .default
+
+        let request = UNNotificationRequest(identifier: "subscription.update.\(diff.planId)", content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                Logger.subscription.error("Failed to send update notification: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    // MARK: - Background Tasks
+
+    func registerBGTasks() {
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: taskIdentifier, using: nil) { [weak self] task in
+            if let task = task as? BGProcessingTask {
+                self?.handleRefreshTask(task: task)
+            }
+        }
+    }
+
+    func scheduleBGTasks() {
+        let request = BGProcessingTaskRequest(identifier: taskIdentifier)
+        request.requiresExternalPower = false
+        request.requiresNetworkConnectivity = true
+
+        do {
+            try BGTaskScheduler.shared.submit(request)
+        } catch {
+            Logger.subscription.error("Could not schedule subscription refresh task: \(error.localizedDescription)")
+        }
+    }
+
+    func cancelBGTasks() {
+        BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: taskIdentifier)
+    }
+
+    private func handleRefreshTask(task: BGProcessingTask) {
+        scheduleBGTasks()
+        let completed = OSAllocatedUnfairLock(initialState: false)
+        currentRefreshTask = Task {
+            let success = await refreshAll()
+            if completed.withLock({ let old = $0; $0 = true; return !old }) {
+                task.setTaskCompleted(success: success)
+            }
+        }
+        task.expirationHandler = { [weak self] in
+            self?.currentRefreshTask?.cancel()
+            if completed.withLock({ let old = $0; $0 = true; return !old }) {
+                task.setTaskCompleted(success: false)
+            }
+        }
+    }
+}

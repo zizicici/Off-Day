@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import os
 import SnapKit
 import ZCCalendar
 
@@ -13,19 +14,46 @@ class PublicPlanDetailViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
     private var publicPlanInfo: PublicPlanInfo?
-    private var mode: Mode = .viewer
+    var mode: Mode = .viewer
     private var titleButton: UIButton?
     
     enum Mode {
         case viewer
         case editor
+        case subscriptionPreview
+    }
+
+    enum DeclineAction {
+        case skip
+        case pause
+    }
+
+    var onAccept: (() -> Void)?
+    var onDecline: ((DeclineAction) -> Void)?
+    var changeEntries: [ChangeEntry] = []
+
+    struct ChangeEntry: Hashable {
+        let icon: String
+        let text: String
+        let color: UIColor
+
+        static func == (lhs: ChangeEntry, rhs: ChangeEntry) -> Bool {
+            lhs.icon == rhs.icon && lhs.text == rhs.text
+        }
+
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(icon)
+            hasher.combine(text)
+        }
     }
 
     enum Section: Hashable {
+        case changes
         case info
         case year(Int)
         case add
         case delete
+        case actions
     }
     
     enum Item: Hashable {
@@ -39,6 +67,20 @@ class PublicPlanDetailViewController: UIViewController {
                 return lDay == rDay
             case (.end(let lDay), .end(let rDay)):
                 return lDay == rDay
+            case (.note(let lNote), .note(let rNote)):
+                return lNote == rNote
+            case (.changeItem(let lEntry), .changeItem(let rEntry)):
+                return lEntry == rEntry
+            case (.sourceURL(let l), .sourceURL(let r)):
+                return l == r
+            case (.lastRefreshTime(let l), .lastRefreshTime(let r)):
+                return l == r
+            case (.refreshSubscription, .refreshSubscription):
+                return true
+            case (.pauseSubscription, .pauseSubscription):
+                return true
+            case (.resumeSubscription, .resumeSubscription):
+                return true
             default:
                 return false
             }
@@ -56,14 +98,39 @@ class PublicPlanDetailViewController: UIViewController {
                 day.hash(into: &hasher)
             case .end(let day):
                 day.hash(into: &hasher)
+            case .note(let note):
+                hasher.combine("note")
+                hasher.combine(note)
+            case .changeItem(let entry):
+                hasher.combine("changeItem")
+                entry.hash(into: &hasher)
+            case .sourceURL(let url):
+                hasher.combine("sourceURL")
+                hasher.combine(url)
+            case .lastRefreshTime(let time):
+                hasher.combine("lastRefreshTime")
+                hasher.combine(time)
+            case .refreshSubscription:
+                hasher.combine("refreshSubscription")
+            case .pauseSubscription:
+                hasher.combine("pauseSubscription")
+            case .resumeSubscription:
+                hasher.combine("resumeSubscription")
             }
         }
-        
+
         case start(GregorianDay)
         case end(GregorianDay)
+        case note(String?)
         case dayInfo(any PublicDay)
         case add
         case delete
+        case changeItem(ChangeEntry)
+        case sourceURL(String)
+        case lastRefreshTime(Int64)
+        case refreshSubscription
+        case pauseSubscription
+        case resumeSubscription
     }
     
     convenience init(publicPlan: PublicPlanInfo, allowEditing: Bool = false) {
@@ -123,9 +190,13 @@ class PublicPlanDetailViewController: UIViewController {
             navigationItem.rightBarButtonItem = moreButton
         case .editor:
             setupTitleButton()
-            
+
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: String(localized: "publicDetail.cancel.title"), style: .plain, target: self, action: #selector(dismissAction))
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: String(localized: "publicDetail.save.title"), style: .plain, target: self, action: #selector(saveAction))
+        case .subscriptionPreview:
+            title = publicPlanInfo?.name
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: String(localized: "subscription.preview.decline"), style: .plain, target: self, action: #selector(showDeclineAlert))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: String(localized: "subscription.preview.accept"), style: .plain, target: self, action: #selector(acceptAction))
         }
         
         if #available(iOS 26.0, *) {
@@ -176,7 +247,7 @@ class PublicPlanDetailViewController: UIViewController {
             switch itemIdentifier {
             case .start, .end:
                 switch self.mode {
-                case .viewer:
+                case .viewer, .subscriptionPreview:
                     return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: itemIdentifier)
                 case .editor:
                     return collectionView.dequeueConfiguredReusableCell(using: dateCellRegistration, for: indexPath, item: itemIdentifier)
@@ -230,6 +301,56 @@ class PublicPlanDetailViewController: UIViewController {
                 content.text = String(localized: "publicDetail.end")
                 content.secondaryText = day.formatString()
                 cell.contentConfiguration = content
+            case .changeItem(let entry):
+                var content = UIListContentConfiguration.cell()
+                content.image = UIImage(systemName: entry.icon)
+                content.imageProperties.tintColor = entry.color
+                content.text = entry.text
+                content.textProperties.color = entry.color
+                content.textProperties.numberOfLines = 0
+                cell.contentConfiguration = content
+            case .note(let note):
+                var content = UIListContentConfiguration.valueCell()
+                content.text = String(localized: "publicDetail.note")
+                if let note = note, !note.isEmpty {
+                    content.secondaryText = note
+                } else {
+                    content.secondaryText = String(localized: "publicDetail.note.empty")
+                    content.secondaryTextProperties.color = .placeholderText
+                }
+                content.secondaryTextProperties.numberOfLines = 0
+                cell.contentConfiguration = content
+            case .sourceURL(let url):
+                var content = UIListContentConfiguration.valueCell()
+                content.text = String(localized: "publicDetail.sourceURL")
+                content.secondaryText = url
+                content.secondaryTextProperties.numberOfLines = 0
+                content.secondaryTextProperties.color = .secondaryLabel
+                cell.contentConfiguration = content
+            case .lastRefreshTime(let timestamp):
+                var content = UIListContentConfiguration.valueCell()
+                content.text = String(localized: "publicDetail.lastRefreshTime")
+                let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
+                content.secondaryText = date.formatted(.relative(presentation: .named))
+                cell.contentConfiguration = content
+            case .refreshSubscription:
+                var content = UIListContentConfiguration.cell()
+                content.text = String(localized: "publicDetail.button.refresh")
+                content.textProperties.color = AppColor.offDay
+                content.textProperties.alignment = .center
+                cell.contentConfiguration = content
+            case .pauseSubscription:
+                var content = UIListContentConfiguration.cell()
+                content.text = String(localized: "publicDetail.button.pause")
+                content.textProperties.color = .systemOrange
+                content.textProperties.alignment = .center
+                cell.contentConfiguration = content
+            case .resumeSubscription:
+                var content = UIListContentConfiguration.cell()
+                content.text = String(localized: "publicDetail.button.resume")
+                content.textProperties.color = AppColor.offDay
+                content.textProperties.alignment = .center
+                cell.contentConfiguration = content
             }
         }
     }
@@ -265,9 +386,34 @@ class PublicPlanDetailViewController: UIViewController {
         let dicts = Dictionary(grouping: days, by: { $0.date.year })
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        
+
+        if mode == .subscriptionPreview, !changeEntries.isEmpty {
+            snapshot.appendSections([.changes])
+            snapshot.appendItems(changeEntries.map { .changeItem($0) }, toSection: .changes)
+        }
+
         snapshot.appendSections([.info])
-        snapshot.appendItems([.start(publicPlanInfo.start), .end(publicPlanInfo.end)], toSection: .info)
+        var infoItems: [Item] = [.start(publicPlanInfo.start), .end(publicPlanInfo.end)]
+        switch mode {
+        case .viewer:
+            if let note = publicPlanInfo.note, !note.isEmpty {
+                infoItems.append(.note(publicPlanInfo.note))
+            }
+            // Subscribed plan: show URL and last refresh time
+            if case .custom(let plan) = publicPlanInfo.plan, let url = plan.sourceURL {
+                infoItems.append(.sourceURL(url))
+                if let ts = plan.lastRefreshTime, ts > 0 {
+                    infoItems.append(.lastRefreshTime(ts))
+                }
+            }
+        case .subscriptionPreview:
+            if let note = publicPlanInfo.note, !note.isEmpty {
+                infoItems.append(.note(publicPlanInfo.note))
+            }
+        case .editor:
+            infoItems.append(.note(publicPlanInfo.note))
+        }
+        snapshot.appendItems(infoItems, toSection: .info)
         
         for key in dicts.keys.sorted() {
             snapshot.appendSections([.year(key)])
@@ -280,6 +426,21 @@ class PublicPlanDetailViewController: UIViewController {
         
         switch mode {
         case .viewer:
+            // Subscribed plan: show actions + delete
+            if case .custom(let plan) = publicPlanInfo.plan, plan.sourceURL != nil, plan.id != nil {
+                snapshot.appendSections([.actions])
+                var actionItems: [Item] = [.refreshSubscription]
+                if plan.isPaused == true {
+                    actionItems.append(.resumeSubscription)
+                } else {
+                    actionItems.append(.pauseSubscription)
+                }
+                snapshot.appendItems(actionItems, toSection: .actions)
+
+                snapshot.appendSections([.delete])
+                snapshot.appendItems([.delete], toSection: .delete)
+            }
+        case .subscriptionPreview:
             break
         case .editor:
             snapshot.appendSections([.add])
@@ -328,7 +489,33 @@ class PublicPlanDetailViewController: UIViewController {
     func dismissAction() {
         dismiss(animated: ConsideringUser.animated)
     }
-    
+
+    @objc
+    func acceptAction() {
+        dismiss(animated: ConsideringUser.animated) { [weak self] in
+            self?.onAccept?()
+        }
+    }
+
+    @objc
+    func showDeclineAlert() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: String(localized: "subscription.preview.decline.skip"), style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self.dismiss(animated: ConsideringUser.animated) {
+                self.onDecline?(.skip)
+            }
+        })
+        alertController.addAction(UIAlertAction(title: String(localized: "subscription.preview.decline.pause"), style: .destructive) { [weak self] _ in
+            guard let self = self else { return }
+            self.dismiss(animated: ConsideringUser.animated) {
+                self.onDecline?(.pause)
+            }
+        })
+        alertController.addAction(UIAlertAction(title: String(localized: "subscription.preview.decline.cancel"), style: .cancel))
+        present(alertController, animated: ConsideringUser.animated)
+    }
+
     func duplicateTemplate() {
         if let nav = presentingViewController as? NavigationController, let root = nav.topViewController as? PublicPlanViewController {
             if let customTemplateInfo = publicPlanInfo?.getDuplicateCustomPlan() {
@@ -474,10 +661,72 @@ class PublicPlanDetailViewController: UIViewController {
         present(alertController, animated: ConsideringUser.animated, completion: nil)
     }
     
+    func showNoteAlert() {
+        let alertController = UIAlertController(title: String(localized: "publicDetail.note.alert.title"), message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: String(localized: "publicDetail.alert.cancel"), style: .cancel) { _ in
+        }
+        let okAction = UIAlertAction(title: String(localized: "publicDetail.alert.confirm"), style: .default) { [weak self] _ in
+            let text = alertController.textFields?.first?.text
+            self?.publicPlanInfo?.note = (text?.isEmpty == true) ? nil : text
+            self?.reloadData()
+        }
+        alertController.addTextField { [weak self] textField in
+            textField.placeholder = String(localized: "publicDetail.note.empty")
+            textField.text = self?.publicPlanInfo?.note
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        present(alertController, animated: ConsideringUser.animated, completion: nil)
+    }
+    
     func deleteAction() {
         guard let publicPlanInfo = publicPlanInfo else { return }
         dismiss(animated: ConsideringUser.animated) {
             _ = PublicPlanManager.shared.delete(publicPlanInfo)
+        }
+    }
+
+    func refreshSubscriptionAction() {
+        guard case .custom(let plan) = publicPlanInfo?.plan else { return }
+        Task {
+            do {
+                _ = try await SubscriptionManager.shared.refresh(plan: plan, ignorePause: true, clearRejected: true)
+            } catch {
+                Logger.subscription.error("Refresh failed: \(error.localizedDescription)")
+            }
+            if let planId = plan.id {
+                if let detail = try? PublicPlanManager.shared.fetchCustomPublicPlan(with: planId) {
+                    self.publicPlanInfo = PublicPlanInfo(detail: detail)
+                    self.reloadData()
+                }
+                SubscriptionManager.shared.presentPendingUpdateAlert(for: planId)
+            }
+        }
+    }
+
+    func pauseSubscriptionAction() {
+        guard case .custom(let plan) = publicPlanInfo?.plan, let planId = plan.id else { return }
+        SubscriptionManager.shared.pauseSubscription(for: planId)
+        if let detail = try? PublicPlanManager.shared.fetchCustomPublicPlan(with: planId) {
+            self.publicPlanInfo = PublicPlanInfo(detail: detail)
+            self.reloadData()
+        }
+    }
+
+    func resumeSubscriptionAction() {
+        guard case .custom(let plan) = publicPlanInfo?.plan, let planId = plan.id else { return }
+        SubscriptionManager.shared.resumeSubscription(for: planId)
+        Task {
+            do {
+                _ = try await SubscriptionManager.shared.refresh(plan: plan, ignorePause: true, clearRejected: true)
+            } catch {
+                Logger.subscription.error("Refresh after resume failed: \(error.localizedDescription)")
+            }
+            if let detail = try? PublicPlanManager.shared.fetchCustomPublicPlan(with: planId) {
+                self.publicPlanInfo = PublicPlanInfo(detail: detail)
+                self.reloadData()
+            }
+            SubscriptionManager.shared.presentPendingUpdateAlert(for: planId)
         }
     }
 }
@@ -499,10 +748,33 @@ extension PublicPlanDetailViewController: UICollectionViewDelegate {
                 if publicPlanInfo != nil {
                     showDeleteAlert()
                 }
-            case .start, .end:
+            case .note:
+                if self.mode == .editor {
+                    showNoteAlert()
+                }
+            case .refreshSubscription:
+                refreshSubscriptionAction()
+            case .pauseSubscription:
+                pauseSubscriptionAction()
+            case .resumeSubscription:
+                resumeSubscriptionAction()
+            case .start, .end, .changeItem, .sourceURL, .lastRefreshTime:
                 break
             }
         }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else { return nil }
+        if case .sourceURL(let url) = item {
+            return UIContextMenuConfiguration(actionProvider: { _ in
+                let copyAction = UIAction(title: String(localized: "publicDetail.sourceURL.copy"), image: UIImage(systemName: "doc.on.doc")) { _ in
+                    UIPasteboard.general.string = url
+                }
+                return UIMenu(children: [copyAction])
+            })
+        }
+        return nil
     }
 }
 

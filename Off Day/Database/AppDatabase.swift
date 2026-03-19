@@ -104,6 +104,15 @@ final class AppDatabase {
             }
         }
         
+        migrator.registerMigration("add_subscription_and_note_fields") { db in
+            try db.alter(table: "custom_public_plan") { table in
+                table.add(column: "source_url", .text)
+                table.add(column: "last_refresh_time", .integer)
+                table.add(column: "is_paused", .boolean).defaults(to: false)
+                table.add(column: "note", .text)
+            }
+        }
+        
         return migrator
     }
     
@@ -360,6 +369,80 @@ extension AppDatabase {
         }
         NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
         return true
+    }
+}
+
+extension AppDatabase {
+    private enum AppDatabaseError: Error {
+        case databaseUnavailable
+    }
+
+    func fetchAllSubscribedPlans() throws -> [CustomPublicPlan] {
+        guard let dbWriter = dbWriter else { throw AppDatabaseError.databaseUnavailable }
+        var result: [CustomPublicPlan] = []
+        try dbWriter.read { db in
+            result = try CustomPublicPlan
+                .filter(Column("source_url") != nil)
+                .fetchAll(db)
+        }
+        return result
+    }
+
+    func fetchCustomPublicDays(for planId: Int64) throws -> [CustomPublicDay] {
+        guard let dbWriter = dbWriter else { throw AppDatabaseError.databaseUnavailable }
+        var result: [CustomPublicDay] = []
+        try dbWriter.read { db in
+            let planIdColumn = CustomPublicDay.Columns.planId
+            result = try CustomPublicDay.filter(planIdColumn == planId).fetchAll(db)
+        }
+        return result
+    }
+
+    func savePlanWithDays(plan: CustomPublicPlan, days: [CustomPublicDay]) throws -> CustomPublicPlan? {
+        guard let dbWriter = dbWriter else { throw AppDatabaseError.databaseUnavailable }
+        var savedPlan = plan
+        try dbWriter.write { db in
+            try savedPlan.save(db)
+            guard let planId = savedPlan.id else { return }
+            for var day in days {
+                day.planId = planId
+                try day.save(db)
+            }
+        }
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
+        }
+        return savedPlan
+    }
+
+    func replacePlanDaysAndUpdate(planId: Int64, fields: (inout CustomPublicPlan) -> Void, days: [CustomPublicDay]) throws {
+        guard let dbWriter = dbWriter else { throw AppDatabaseError.databaseUnavailable }
+        try dbWriter.write { db in
+            guard var current = try CustomPublicPlan.fetchOne(db, id: planId) else { return }
+            fields(&current)
+            let planIdColumn = CustomPublicDay.Columns.planId
+            try CustomPublicDay.filter(planIdColumn == planId).deleteAll(db)
+            for var day in days {
+                day.planId = planId
+                try day.save(db)
+            }
+            try current.updateWithTimestamp(db)
+        }
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
+        }
+    }
+
+    func updateRefreshTime(for planId: Int64) throws {
+        guard let dbWriter = dbWriter else { throw AppDatabaseError.databaseUnavailable }
+        try dbWriter.write { db in
+            guard var current = try CustomPublicPlan.fetchOne(db, id: planId) else { return }
+            current.lastRefreshTime = Int64(Date().timeIntervalSince1970)
+            try current.updateWithTimestamp(db)
+        }
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: Notification.Name.DatabaseUpdated, object: nil)
+        }
     }
 }
 

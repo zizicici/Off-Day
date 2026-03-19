@@ -5,6 +5,7 @@
 //  Created by zici on 8/3/26.
 //
 
+import Foundation
 import os
 
 extension Logger {
@@ -18,4 +19,5 @@ extension Logger {
     static let customDay = Logger(subsystem: subsystem, category: "CustomDay")
     static let theme = Logger(subsystem: subsystem, category: "Theme")
     static let chineseCalendar = Logger(subsystem: subsystem, category: "ChineseCalendar")
+    static let subscription = Logger(subsystem: subsystem, category: "Subscription")
 }

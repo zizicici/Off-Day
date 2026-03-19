@@ -2,6 +2,7 @@
     "name": "U.S. Federal Holidays",
     "start": "2024-01-01",
     "end": "2026-12-31",
+    "note": "Source: U.S. Office of Personnel Management[https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays]",
     "days": [
         {
             "date": "2024-01-01",

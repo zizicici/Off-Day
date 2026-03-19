@@ -2,6 +2,7 @@
     "name": "韩国法定节假日",
     "start": "2024-01-01",
     "end": "2026-12-31",
+    "note": "데이터 출처: visitkorea.or.kr[https://chinese.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=140051]",
     "days": [
         {
             "date": "2024-01-01",
@@ -224,8 +225,18 @@
             "type": 0
         },
         {
+            "date": "2026-06-03",
+            "name": "地方选举",
+            "type": 0
+        },
+        {
             "date": "2026-06-06",
             "name": "현충일（顯忠日）",
+            "type": 0
+        },
+        {
+            "date": "2026-07-17",
+            "name": "制宪节",
             "type": 0
         },
         {
@@ -254,11 +265,6 @@
             "type": 0
         },
         {
-            "date": "2026-09-27",
-            "name": "추석（秋夕）",
-            "type": 0
-        },
-        {
             "date": "2026-10-03",
             "name": "개천절（開天節）",
             "type": 0
@@ -270,7 +276,7 @@
         },
         {
             "date": "2026-10-09",
-            "name": "한글날",
+            "name": "한글날（韩文节）",
             "type": 0
         },
         {

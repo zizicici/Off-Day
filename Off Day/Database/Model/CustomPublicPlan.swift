@@ -23,6 +23,11 @@ struct CustomPublicPlan: Identifiable, Hashable {
     var name: String
     var start: GregorianDay
     var end: GregorianDay
+        
+    var sourceURL: String?
+    var lastRefreshTime: Int64?
+    var isPaused: Bool?
+    var note: String?
 }
 
 extension CustomPublicPlan: Codable {
@@ -31,7 +36,7 @@ extension CustomPublicPlan: Codable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case id, creationTime = "creation_time", modificationTime = "modification_time", name, start, end
+        case id, creationTime = "creation_time", modificationTime = "modification_time", name, start, end, sourceURL = "source_url", lastRefreshTime = "last_refresh_time", isPaused = "is_paused", note
     }
 }
 

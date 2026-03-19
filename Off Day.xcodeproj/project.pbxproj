@@ -17,6 +17,7 @@
 		14B239BD2DBF25FE0007152C /* DayTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B239BC2DBF25FE0007152C /* DayTypeCell.swift */; };
 		14B239BF2DBF57480007152C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B239BE2DBF57480007152C /* String+Extension.swift */; };
 		14B36F7F2DE1C42D00E96C56 /* DayCommentIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B36F7E2DE1C42D00E96C56 /* DayCommentIntent.swift */; };
+		D94B243F79C51411024A918F /* RefreshSubscriptionIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7831A565F6EB41EAFF5F20 /* RefreshSubscriptionIntent.swift */; };
 		14B36F822DE2187600E96C56 /* MarqueeLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 14B36F812DE2187600E96C56 /* MarqueeLabel */; };
 		14B4339C2DE9F2B4001F7D12 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B4339B2DE9F2B4001F7D12 /* NotificationManager.swift */; };
 		14B7E4882F5AA56400BB3324 /* cn-sichuan-liangshan.json in Resources */ = {isa = PBXBuildFile; fileRef = 14B7E4872F5AA56400BB3324 /* cn-sichuan-liangshan.json */; };
@@ -94,6 +95,8 @@
 		14EC7FDA2BEF0FA3003BB07E /* AppPublicPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EC7FD92BEF0FA3003BB07E /* AppPublicPlan.swift */; };
 		14EC7FDC2BEF3CEE003BB07E /* PublicDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EC7FDB2BEF3CEE003BB07E /* PublicDay.swift */; };
 		14ECFEED2BE5F30C005D2D79 /* PublicPlanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ECFEEC2BE5F30C005D2D79 /* PublicPlanManager.swift */; };
+		D3F6AF988523DB5719AF7B97 /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650CCBBED27CCD4591BAA2B6 /* SubscriptionManager.swift */; };
+		81CE171C10217111DAE05380 /* PendingSubscriptionUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7E90605D53BB0DD8984ADE /* PendingSubscriptionUpdate.swift */; };
 		14ECFEF52BE5FBEE005D2D79 /* cn-xinjiang.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEEF2BE5FBED005D2D79 /* cn-xinjiang.json */; };
 		14ECFEF62BE5FBEE005D2D79 /* cn-guangxi.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEF02BE5FBED005D2D79 /* cn-guangxi.json */; };
 		14ECFEF72BE5FBEE005D2D79 /* cn-ningxia.json in Resources */ = {isa = PBXBuildFile; fileRef = 14ECFEF12BE5FBED005D2D79 /* cn-ningxia.json */; };
@@ -142,6 +145,7 @@
 		24A20000000000000000000B /* IntentMetadataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A10000000000000000000B /* IntentMetadataTests.swift */; };
 		24A20000000000000000000C /* DayDetailIntentEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A10000000000000000000C /* DayDetailIntentEntityTests.swift */; };
 		24A20000000000000000000D /* IntentPerformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A10000000000000000000D /* IntentPerformTests.swift */; };
+		24A20000000000000000000E /* SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A10000000000000000000E /* SubscriptionTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +172,7 @@
 		14B239BC2DBF25FE0007152C /* DayTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTypeCell.swift; sourceTree = "<group>"; };
 		14B239BE2DBF57480007152C /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		14B36F7E2DE1C42D00E96C56 /* DayCommentIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCommentIntent.swift; sourceTree = "<group>"; };
+		1D7831A565F6EB41EAFF5F20 /* RefreshSubscriptionIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshSubscriptionIntent.swift; sourceTree = "<group>"; };
 		14B4339B2DE9F2B4001F7D12 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		14B7E4872F5AA56400BB3324 /* cn-sichuan-liangshan.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "cn-sichuan-liangshan.json"; sourceTree = "<group>"; };
 		14B9E6622DE34FEA00E4B391 /* ChineseCalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseCalendarManager.swift; sourceTree = "<group>"; };
@@ -243,6 +248,8 @@
 		14EC7FD92BEF0FA3003BB07E /* AppPublicPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPublicPlan.swift; sourceTree = "<group>"; };
 		14EC7FDB2BEF3CEE003BB07E /* PublicDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicDay.swift; sourceTree = "<group>"; };
 		14ECFEEC2BE5F30C005D2D79 /* PublicPlanManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPlanManager.swift; sourceTree = "<group>"; };
+		650CCBBED27CCD4591BAA2B6 /* SubscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionManager.swift; sourceTree = "<group>"; };
+		6E7E90605D53BB0DD8984ADE /* PendingSubscriptionUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingSubscriptionUpdate.swift; sourceTree = "<group>"; };
 		14ECFEEF2BE5FBED005D2D79 /* cn-xinjiang.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cn-xinjiang.json"; sourceTree = "<group>"; };
 		14ECFEF02BE5FBED005D2D79 /* cn-guangxi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cn-guangxi.json"; sourceTree = "<group>"; };
 		14ECFEF12BE5FBED005D2D79 /* cn-ningxia.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cn-ningxia.json"; sourceTree = "<group>"; };
@@ -290,6 +297,7 @@
 		24A10000000000000000000B /* IntentMetadataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentMetadataTests.swift; sourceTree = "<group>"; };
 		24A10000000000000000000C /* DayDetailIntentEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDetailIntentEntityTests.swift; sourceTree = "<group>"; };
 		24A10000000000000000000D /* IntentPerformTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentPerformTests.swift; sourceTree = "<group>"; };
+		24A10000000000000000000E /* SubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -334,6 +342,7 @@
 				24A10000000000000000000B /* IntentMetadataTests.swift */,
 				24A10000000000000000000C /* DayDetailIntentEntityTests.swift */,
 				24A10000000000000000000D /* IntentPerformTests.swift */,
+				24A10000000000000000000E /* SubscriptionTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -660,6 +669,7 @@
 				14D9D71B2CA44A2E00257C07 /* NextDayIntent.swift */,
 				1498CF0E2C3F72F8005562AA /* UpdateDayMarkIntent.swift */,
 				14B36F7E2DE1C42D00E96C56 /* DayCommentIntent.swift */,
+				1D7831A565F6EB41EAFF5F20 /* RefreshSubscriptionIntent.swift */,
 			);
 			path = Intent;
 			sourceTree = "<group>";
@@ -668,6 +678,7 @@
 			isa = PBXGroup;
 			children = (
 				14ECFEEC2BE5F30C005D2D79 /* PublicPlanManager.swift */,
+				650CCBBED27CCD4591BAA2B6 /* SubscriptionManager.swift */,
 				14E6D9BB2BE4A81C00931F3D /* PublicPlanViewController.swift */,
 				14ED08A12BEDCCB800100E2D /* PublicPlanDetailViewController.swift */,
 				14ED08A32BEE0E8F00100E2D /* CustomPublicDayDetailViewController.swift */,
@@ -717,6 +728,7 @@
 				14ED08AB2BEE503D00100E2D /* PublicPlanInfo.swift */,
 				14EC7FD92BEF0FA3003BB07E /* AppPublicPlan.swift */,
 				14F2FA722BF05CB700BBE7FB /* JSONPublicPlan.swift */,
+				6E7E90605D53BB0DD8984ADE /* PendingSubscriptionUpdate.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -895,6 +907,7 @@
 				24A20000000000000000000B /* IntentMetadataTests.swift in Sources */,
 				24A20000000000000000000C /* DayDetailIntentEntityTests.swift in Sources */,
 				24A20000000000000000000D /* IntentPerformTests.swift in Sources */,
+				24A20000000000000000000E /* SubscriptionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -955,6 +968,7 @@
 				14F2FA732BF05CB700BBE7FB /* JSONPublicPlan.swift in Sources */,
 				14DD51222BE21050004329E2 /* Persistence.swift in Sources */,
 				14B36F7F2DE1C42D00E96C56 /* DayCommentIntent.swift in Sources */,
+				D94B243F79C51411024A918F /* RefreshSubscriptionIntent.swift in Sources */,
 				14EC7FDA2BEF0FA3003BB07E /* AppPublicPlan.swift in Sources */,
 				14D3625B2DE0A17B00C0BAFE /* CustomComment.swift in Sources */,
 				14AF4B5E2E1FFDD300882931 /* AppConfiguration.swift in Sources */,
@@ -970,6 +984,8 @@
 				14DD51232BE21050004329E2 /* TimestampedRecord.swift in Sources */,
 				14D6F92C2BEB90F6008712E1 /* BaseCalendarManager.swift in Sources */,
 				14ECFEED2BE5F30C005D2D79 /* PublicPlanManager.swift in Sources */,
+				D3F6AF988523DB5719AF7B97 /* SubscriptionManager.swift in Sources */,
+				81CE171C10217111DAE05380 /* PendingSubscriptionUpdate.swift in Sources */,
 				14DD51432BE24642004329E2 /* TutorialsViewController.swift in Sources */,
 				14DD51212BE21050004329E2 /* AppDatabase.swift in Sources */,
 				14D6F92A2BEB6C86008712E1 /* DateCell.swift in Sources */,

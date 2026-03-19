@@ -167,6 +167,7 @@ struct AppPublicPlan: Equatable, Hashable {
         var start: GregorianDay
         var end: GregorianDay
         var days: [any PublicDay]
+        var note: String?
         
         init?(plan: AppPublicPlan) {
             if let url = Bundle.main.url(forResource: plan.resource, withExtension: "json") {
@@ -176,6 +177,7 @@ struct AppPublicPlan: Equatable, Hashable {
                     self.start = jsonPlan.start
                     self.end = jsonPlan.end
                     self.days = jsonPlan.days
+                    self.note = jsonPlan.note
                     self.plan = plan
                 } catch {
                     Logger.publicPlan.error("Failed to load public plan: \(error.localizedDescription)")
