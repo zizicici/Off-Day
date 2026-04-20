@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import MoreKit
 
 struct HelpURL {
     static let shortcutsNormalURL = URL(string: String(localized: "url.shortcuts.normal"))
@@ -210,7 +211,7 @@ class TutorialsViewController: UIViewController {
         let helpAction = UIAction(title: String(localized: "more.item.help"), subtitle: String(localized: "more.section.help.hint"), image: UIImage(systemName: "questionmark.circle")) { [weak self] _ in
             self?.enterHelpCenter()
         }
-        let contactDivider = UIMenu(title: String(localized: "more.section.contact"), subtitle: String(localized: "more.section.contact.hint"), children: MoreViewController.Item.ContactItem.allCases.map({ item in
+        let contactDivider = UIMenu(title: String(localized: "more.section.contact"), subtitle: String(localized: "more.section.contact.hint"), children: ContactItem.allCases.map({ item in
             return UIAction(title: item.title, subtitle: item.value, image: item.image) { [weak self] _ in
                 self?.handle(contactItem: item)
             }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MoreKit
 import ZCCalendar
 
 extension UserDefaults {
@@ -29,104 +30,24 @@ extension UserDefaults {
     }
 }
 
-extension Notification.Name {
-    static let SettingsUpdate = Notification.Name(rawValue: "com.zizicici.common.settings.updated")
-}
-
-protocol SettingsOption: Hashable, Equatable {
-    func getName() -> String
-    static func getHeader() -> String?
-    static func getFooter() -> String?
-    static func getTitle() -> String
-    static func getOptions() -> [Self]
-    static var current: Self { get set}
-}
-
-extension SettingsOption {
-    static func getHeader() -> String? {
-        return nil
-    }
-    
-    static func getFooter() -> String? {
-        return nil
-    }
-}
-
-extension SettingsOption {
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        if type(of: lhs) != type(of: rhs) {
-            return false
-        } else {
-            return lhs.hashValue == rhs.hashValue
-        }
-    }
-}
-
-protocol UserDefaultSettable: SettingsOption {
-    static func getKey() -> UserDefaults.Settings
-    static var defaultOption: Self { get }
-}
-
-extension UserDefaultSettable where Self: RawRepresentable, Self.RawValue == Int {
-    static func getValue() -> Self {
-        if let intValue = UserDefaults.standard.getInt(forKey: getKey().rawValue), let value = Self(rawValue: intValue) {
-            return value
-        } else {
-            return defaultOption
-        }
-    }
-    
-    static func setValue(_ value: Self) {
-        UserDefaults.standard.set(value.rawValue, forKey: getKey().rawValue)
-        NotificationCenter.default.post(name: Notification.Name.SettingsUpdate, object: nil)
-    }
-    
-    static func getOptions<T: CaseIterable>() -> [T] {
-        return Array(T.allCases)
-    }
-    
-    static var current: Self {
-        get {
-            return getValue()
-        }
-        set {
-            setValue(newValue)
-        }
-    }
-}
-
-extension UserDefaults {
-    func getInt(forKey key: String) -> Int? {
-        return object(forKey: key) as? Int
-    }
-    
-    func getBool(forKey key: String) -> Bool? {
-        return object(forKey: key) as? Bool
-    }
-    
-    func getString(forKey key: String) -> String? {
-        return object(forKey: key) as? String
-    }
-}
-
 enum AutoBackup: Int, CaseIterable, Codable {
     case enable
     case disable
 }
 
 extension AutoBackup: UserDefaultSettable {
-    static func getKey() -> UserDefaults.Settings {
-        return .AutoBackup
+    static func getKey() -> String {
+        return UserDefaults.Settings.AutoBackup.rawValue
     }
-    
+
     static var defaultOption: AutoBackup {
         return .disable
     }
-    
+
     func getName() -> String {
         return ""
     }
-    
+
     static func getTitle() -> String {
         return ""
     }
@@ -144,14 +65,14 @@ enum WeekStartType: Int, CaseIterable, Codable {
 }
 
 extension WeekStartType: UserDefaultSettable {
-    static func getKey() -> UserDefaults.Settings {
-        return .WeekStartType
+    static func getKey() -> String {
+        return UserDefaults.Settings.WeekStartType.rawValue
     }
-    
+
     static var defaultOption: WeekStartType {
         return .followSystem
     }
-    
+
     func getName() -> String {
         switch self {
         case .followSystem:
@@ -160,15 +81,15 @@ extension WeekStartType: UserDefaultSettable {
             return (WeekdayOrder(rawValue: rawValue) ?? .mon).getShortSymbol()
         }
     }
-    
+
     static func getTitle() -> String {
         return String(localized: "settings.weekStartType.title")
     }
-    
+
     static func getHeader() -> String? {
         return nil
     }
-    
+
     static func getFooter() -> String? {
         return nil
     }
@@ -180,14 +101,14 @@ enum WeekEndColorType: Int, CaseIterable, Codable {
 }
 
 extension WeekEndColorType: UserDefaultSettable {
-    static func getKey() -> UserDefaults.Settings {
-        return .WeekEndColorType
+    static func getKey() -> String {
+        return UserDefaults.Settings.WeekEndColorType.rawValue
     }
-    
+
     static var defaultOption: WeekEndColorType {
         return .offDay
     }
-    
+
     func getName() -> String {
         switch self {
         case .offDay:
@@ -196,7 +117,7 @@ extension WeekEndColorType: UserDefaultSettable {
             return String(localized: "settings.weekEndColorType.blue")
         }
     }
-    
+
     static func getTitle() -> String {
         return String(localized: "settings.weekEndColorType.title")
     }
@@ -208,14 +129,14 @@ enum HolidayWorkColorType: Int, CaseIterable {
 }
 
 extension HolidayWorkColorType: UserDefaultSettable {
-    static func getKey() -> UserDefaults.Settings {
-        return .HolidayWorkColorType
+    static func getKey() -> String {
+        return UserDefaults.Settings.HolidayWorkColorType.rawValue
     }
-    
+
     static var defaultOption: HolidayWorkColorType {
         return .workDay
     }
-    
+
     func getName() -> String {
         switch self {
         case .workDay:
@@ -224,7 +145,7 @@ extension HolidayWorkColorType: UserDefaultSettable {
             return String(localized: "settings.holidayWorkColorType.paper")
         }
     }
-    
+
     static func getTitle() -> String {
         return String(localized: "settings.holidayWorkColorType.title")
     }
@@ -237,14 +158,14 @@ enum WeekEndOffDayType: Int, CaseIterable, Codable {
 }
 
 extension WeekEndOffDayType: UserDefaultSettable {
-    static func getKey() -> UserDefaults.Settings {
-        return .WeekEndOffDayType
+    static func getKey() -> String {
+        return UserDefaults.Settings.WeekEndOffDayType.rawValue
     }
-    
+
     static var defaultOption: WeekEndOffDayType {
         return .two
     }
-    
+
     func getName() -> String {
         switch self {
         case .two:
@@ -255,11 +176,11 @@ extension WeekEndOffDayType: UserDefaultSettable {
             return String(localized: "settings.weekEndOffDayType.zero")
         }
     }
-    
+
     static func getTitle() -> String {
         return String(localized: "settings.weekEndOffDayType.title")
     }
-    
+
     static func getFooter() -> String? {
         return String(localized: "settings.weekEndOffDayType.footer")
     }
@@ -272,14 +193,14 @@ enum TutorialEntranceType: Int, CaseIterable, Codable {
 }
 
 extension TutorialEntranceType: UserDefaultSettable {
-    static func getKey() -> UserDefaults.Settings {
-        .TutorialEntranceType
+    static func getKey() -> String {
+        UserDefaults.Settings.TutorialEntranceType.rawValue
     }
-    
+
     static var defaultOption: TutorialEntranceType {
         return .firstTab
     }
-    
+
     func getName() -> String {
         switch self {
         case .firstTab:
@@ -290,7 +211,7 @@ extension TutorialEntranceType: UserDefaultSettable {
             return String(localized: "settings.tutorialEntranceType.hidden")
         }
     }
-    
+
     static func getTitle() -> String {
         return String(localized: "settings.tutorialEntranceType.title")
     }
@@ -302,10 +223,10 @@ enum AlternativeCalendarType: Int, CaseIterable, Codable {
 }
 
 extension AlternativeCalendarType: UserDefaultSettable {
-    static func getKey() -> UserDefaults.Settings {
-        return .AlternativeCalendarType
+    static func getKey() -> String {
+        return UserDefaults.Settings.AlternativeCalendarType.rawValue
     }
-    
+
     static var defaultOption: AlternativeCalendarType {
         if Language.type() == .zh {
             return .chineseCalendar
@@ -313,7 +234,7 @@ extension AlternativeCalendarType: UserDefaultSettable {
             return .off
         }
     }
-    
+
     func getName() -> String {
         switch self {
         case .off:
@@ -322,33 +243,33 @@ extension AlternativeCalendarType: UserDefaultSettable {
             return String(localized: "settings.alternativeCalendarType.chineseCalendar")
         }
     }
-    
+
     static func getTitle() -> String {
         return String(localized: "settings.alternativeCalendarType.title")
     }
-    
+
     static func getFooter() -> String? {
         return String(localized: "settings.alternativeCalendarType.footer")
     }
 }
 
 extension Logo: UserDefaultSettable {
-    static func getKey() -> UserDefaults.Settings {
-        return .Logo
+    static func getKey() -> String {
+        return UserDefaults.Settings.Logo.rawValue
     }
-    
+
     static var defaultOption: Self {
         return .glass
     }
-    
+
     func getName() -> String {
         return name
     }
-    
+
     static func getTitle() -> String {
         return String(localized: "settings.logo.title")
     }
-    
+
     static func getFooter() -> String? {
         return String(localized: "settings.logo.footer")
     }

@@ -8,6 +8,7 @@
 import Foundation
 import os
 import UIKit
+import MoreKit
 
 class ThemeManager: NSObject {
     static let shared: ThemeManager = ThemeManager()

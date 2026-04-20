@@ -11,6 +11,7 @@ import UserNotifications
 import ZCCalendar
 import BackgroundTasks
 import UIKit
+import MoreKit
 
 extension Notification.Name {
     static let NotificationPermissionUpdated = Notification.Name(rawValue: "com.zizicici.common.notification.permission.updated")

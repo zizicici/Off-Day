@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MoreKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -73,7 +74,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } ?? NavigationController(rootViewController: BlockViewController())
         let moreViewController = tabbarController.viewControllers?.first { viewController in
             return (viewController as? NavigationController)?.viewControllers.first is MoreViewController
-        } ?? NavigationController(rootViewController: MoreViewController())
+        } ?? MoreNavigationController(rootViewController: MoreControllerFactory.make())
         let tutorialViewController = tabbarController.viewControllers?.first { viewController in
             return (viewController as? NavigationController)?.viewControllers.first is TutorialsViewController
         } ?? NavigationController(rootViewController: TutorialsViewController())

@@ -9,6 +9,7 @@ import Foundation
 import os
 import ZCCalendar
 import GRDB
+import MoreKit
 
 final class PublicPlanManager {
     static let shared: PublicPlanManager = PublicPlanManager()
