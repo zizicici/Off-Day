@@ -4367,34 +4367,6 @@
         }
       }
     },
-    "more.item.contact.bilibili" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "bilibili"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "哔哩哔哩"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "哔哩哔哩"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "哔哩哔哩"
-          }
-        }
-      }
-    },
     "more.item.contact.email" : {
       "localizations" : {
         "en" : {

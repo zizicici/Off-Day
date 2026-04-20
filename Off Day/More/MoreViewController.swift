@@ -12,7 +12,6 @@ import SafariServices
 enum ContactItem: Hashable, CaseIterable {
     case email
     case xiaohongshu
-    case bilibili
 
     var title: String {
         switch self {
@@ -20,8 +19,6 @@ enum ContactItem: Hashable, CaseIterable {
             return String(localized: "more.item.contact.email")
         case .xiaohongshu:
             return String(localized: "more.item.contact.xiaohongshu")
-        case .bilibili:
-            return String(localized: "more.item.contact.bilibili")
         }
     }
 
@@ -29,7 +26,7 @@ enum ContactItem: Hashable, CaseIterable {
         switch self {
         case .email:
             return MoreControllerFactory.supportEmail
-        case .bilibili, .xiaohongshu:
+        case .xiaohongshu:
             return "@App君"
         }
     }
@@ -40,8 +37,6 @@ enum ContactItem: Hashable, CaseIterable {
             return UIImage(systemName: "envelope")
         case .xiaohongshu:
             return UIImage(systemName: "book.closed")
-        case .bilibili:
-            return UIImage(systemName: "play.tv")
         }
     }
 }
@@ -53,8 +48,6 @@ extension UIViewController {
             sendEmailToCustomerSupport()
         case .xiaohongshu:
             openXiaohongshuWebpage()
-        case .bilibili:
-            openBilibiliWebpage()
         }
     }
 
@@ -64,12 +57,6 @@ extension UIViewController {
               let url = URL(string: urlString) else { return }
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:])
-        }
-    }
-
-    func openBilibiliWebpage() {
-        if let url = URL(string: "https://space.bilibili.com/4969209") {
-            openSF(with: url)
         }
     }
 
@@ -106,11 +93,10 @@ enum MoreControllerFactory {
             ],
             thirdPartyLibraries: [
                 .init(name: "SnapKit", version: "5.7.1", urlString: "https://github.com/SnapKit/SnapKit"),
-                .init(name: "GRDB", version: "7.9.0", urlString: "https://github.com/groue/GRDB.swift"),
+                .init(name: "GRDB", version: "7.10.0", urlString: "https://github.com/groue/GRDB.swift"),
                 .init(name: "Toast", version: "5.1.1", urlString: "https://github.com/scalessec/Toast-Swift"),
                 .init(name: "MarqueeLabel", version: "4.5.3", urlString: "https://github.com/cbpowell/MarqueeLabel"),
                 .init(name: "ZipArchive", version: "2.6.0", urlString: "https://github.com/ZipArchive/ZipArchive"),
-                .init(name: "MoreKit", version: "1.7.0", urlString: "https://github.com/zizicici/MoreKit"),
             ]
         )
 
