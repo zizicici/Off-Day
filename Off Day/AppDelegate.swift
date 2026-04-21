@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         SubscriptionManager.shared.registerBGTasks()
         Task {
-            await SubscriptionManager.shared.refreshAll()
+            await SubscriptionManager.shared.refreshAll(trigger: .launch)
             SubscriptionManager.shared.presentPendingUpdateAlertIfNeeded()
         }
         

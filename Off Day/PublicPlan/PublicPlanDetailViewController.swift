@@ -690,7 +690,7 @@ class PublicPlanDetailViewController: UIViewController {
         guard case .custom(let plan) = publicPlanInfo?.plan else { return }
         Task {
             do {
-                _ = try await SubscriptionManager.shared.refresh(plan: plan, ignorePause: true, clearRejected: true)
+                _ = try await SubscriptionManager.shared.refresh(plan: plan, trigger: .manual, ignorePause: true, clearRejected: true)
             } catch {
                 Logger.subscription.error("Refresh failed: \(error.localizedDescription)")
             }
@@ -718,7 +718,7 @@ class PublicPlanDetailViewController: UIViewController {
         SubscriptionManager.shared.resumeSubscription(for: planId)
         Task {
             do {
-                _ = try await SubscriptionManager.shared.refresh(plan: plan, ignorePause: true, clearRejected: true)
+                _ = try await SubscriptionManager.shared.refresh(plan: plan, trigger: .manual, ignorePause: true, clearRejected: true)
             } catch {
                 Logger.subscription.error("Refresh after resume failed: \(error.localizedDescription)")
             }

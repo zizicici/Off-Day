@@ -246,7 +246,7 @@ class PublicPlanViewController: UIViewController {
                             completion(true)
                             Task {
                                 do {
-                                    _ = try await SubscriptionManager.shared.refresh(plan: customPublicPlan, ignorePause: true, clearRejected: true)
+                                    _ = try await SubscriptionManager.shared.refresh(plan: customPublicPlan, trigger: .manual, ignorePause: true, clearRejected: true)
                                 } catch {
                                     Logger.subscription.error("Refresh after resume failed: \(error.localizedDescription)")
                                 }
@@ -273,7 +273,7 @@ class PublicPlanViewController: UIViewController {
                     let refreshAction = UIContextualAction(style: .normal, title: nil) { (_, _, completion) in
                         Task {
                             do {
-                                _ = try await SubscriptionManager.shared.refresh(plan: customPublicPlan, clearRejected: true)
+                                _ = try await SubscriptionManager.shared.refresh(plan: customPublicPlan, trigger: .manual, clearRejected: true)
                             } catch {
                                 Logger.subscription.error("Refresh failed: \(error.localizedDescription)")
                             }

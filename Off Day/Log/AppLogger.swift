@@ -152,11 +152,28 @@ final class AppLogger {
         }
     }
 
+    enum SubscriptionTrigger: String {
+        case launch
+        case background
+        case manual
+        case intent
+
+        var localizationKey: String.LocalizationValue {
+            switch self {
+            case .launch:     return "log.subscription.trigger.launch"
+            case .background: return "log.subscription.trigger.background"
+            case .manual:     return "log.subscription.trigger.manual"
+            case .intent:     return "log.subscription.trigger.intent"
+            }
+        }
+    }
+
     func logSubscription(
         event: SubscriptionEvent,
         planId: Int64?,
         planName: String?,
         success: Bool,
+        trigger: SubscriptionTrigger? = nil,
         extraInput: [String: AnyEncodable] = [:],
         diff: SubscriptionDiff? = nil,
         metadataChanges: [String]? = nil,
@@ -169,6 +186,9 @@ final class AppLogger {
         }
         if let planId = planId {
             input["planId"] = AnyEncodable(planId)
+        }
+        if let trigger = trigger {
+            input["trigger"] = AnyEncodable(trigger.rawValue)
         }
 
         let sanitizedMetadata = metadataChanges?.filter { !$0.isEmpty }

@@ -95,42 +95,69 @@ final class LogCell: UITableViewCell {
         switch log.category {
         case .intent:
             iconView.image = UIImage(systemName: "square.stack.3d.up.fill")
+            titleLabel.text = log.displayTitle
+            subtitleLabel.text = intentSummary(for: log)
         case .subscription:
             iconView.image = UIImage(systemName: "arrow.clockwise")
+            let input = Self.decodeInput(from: log.inputJSON)
+            let planName = input?["planName"] as? String
+            titleLabel.text = planName ?? log.displayTitle
+            subtitleLabel.text = subscriptionSummary(
+                for: log,
+                input: input,
+                includeEventName: planName != nil
+            )
         }
-        titleLabel.text = log.displayTitle
-        subtitleLabel.text = summary(for: log)
         timeLabel.text = Self.relativeFormatter.localizedString(for: log.creationDate, relativeTo: Date())
         statusDot.isHidden = log.success
     }
 
-    private func summary(for log: AppLog) -> String? {
+    private func intentSummary(for log: AppLog) -> String? {
         if !log.success, let error = log.errorMessage {
             return error
         }
-        switch log.category {
-        case .intent:
-            return log.outputJSON.map { collapse($0) }
-        case .subscription:
-            if let json = log.outputJSON,
-               let data = json.data(using: .utf8),
-               let parsed = try? JSONDecoder().decode(SubscriptionLogOutput.self, from: data) {
-                let total = parsed.added.count + parsed.removed.count + parsed.modified.count
-                let dayPart = total == 0 ? nil : "+\(parsed.added.count) −\(parsed.removed.count) ~\(parsed.modified.count)"
-                let metadata = parsed.metadataChanges ?? []
-                let metaPart = metadata.isEmpty ? nil : String(
+        return log.outputJSON.map { collapse($0) }
+    }
+
+    private func subscriptionSummary(for log: AppLog, input: [String: Any]?, includeEventName: Bool) -> String? {
+        var parts: [String] = []
+        if includeEventName {
+            parts.append(log.displayTitle)
+        }
+        if let raw = input?["trigger"] as? String,
+           let trigger = AppLogger.SubscriptionTrigger(rawValue: raw) {
+            parts.append(String(localized: trigger.localizationKey))
+        }
+
+        if !log.success, let error = log.errorMessage {
+            parts.append(error)
+            return parts.joined(separator: " · ")
+        }
+
+        if let json = log.outputJSON,
+           let data = json.data(using: .utf8),
+           let parsed = try? JSONDecoder().decode(SubscriptionLogOutput.self, from: data) {
+            let total = parsed.added.count + parsed.removed.count + parsed.modified.count
+            if total > 0 {
+                parts.append("+\(parsed.added.count) −\(parsed.removed.count) ~\(parsed.modified.count)")
+            }
+            if let metadata = parsed.metadataChanges, !metadata.isEmpty {
+                parts.append(String(
                     format: String(localized: "log.summary.metadataChanges"),
                     metadata.joined(separator: ", ")
-                )
-                switch (dayPart, metaPart) {
-                case (nil, nil): return String(localized: "log.summary.noChanges")
-                case (let d?, nil): return d
-                case (nil, let m?): return m
-                case (let d?, let m?): return "\(d) · \(m)"
-                }
+                ))
             }
-            return log.inputJSON.map { collapse($0) }
+            if total == 0 && (parsed.metadataChanges?.isEmpty ?? true) {
+                parts.append(String(localized: "log.summary.noChanges"))
+            }
         }
+
+        return parts.joined(separator: " · ")
+    }
+
+    private static func decodeInput(from json: String?) -> [String: Any]? {
+        guard let json = json, let data = json.data(using: .utf8) else { return nil }
+        return (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
     }
 
     private func collapse(_ json: String) -> String {

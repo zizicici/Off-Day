@@ -97,11 +97,23 @@ final class LogDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = AppColor.background
-        title = log.displayTitle
+        title = resolvedTitle()
 
         configureHierarchy()
         configureDataSource()
         applySnapshot()
+    }
+
+    private func resolvedTitle() -> String {
+        guard log.category == .subscription,
+              let json = log.inputJSON,
+              let data = json.data(using: .utf8),
+              let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let planName = object["planName"] as? String,
+              !planName.isEmpty else {
+            return log.displayTitle
+        }
+        return planName
     }
 
     private func configureHierarchy() {

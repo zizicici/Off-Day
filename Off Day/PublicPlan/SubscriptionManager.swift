@@ -117,7 +117,7 @@ final class SubscriptionManager {
 
     // MARK: - Refresh
 
-    func refresh(plan: CustomPublicPlan, ignorePause: Bool = false, clearRejected: Bool = false) async throws -> Bool {
+    func refresh(plan: CustomPublicPlan, trigger: AppLogger.SubscriptionTrigger, ignorePause: Bool = false, clearRejected: Bool = false) async throws -> Bool {
         if !ignorePause {
             guard plan.isPaused != true else {
                 Logger.subscription.info("Plan \(plan.name) is paused, skipping refresh")
@@ -159,7 +159,7 @@ final class SubscriptionManager {
                 if loadRejectedFingerprint(for: planId) == fingerprint {
                     try AppDatabase.shared.updateRefreshTime(for: planId)
                     Logger.subscription.info("Skipping update - same changes previously rejected: \(jsonPlan.name)")
-                    logRefreshSuccess(planId: planId, planName: plan.name, diff: diff, metadataChanges: changedMetadataFields, skipped: "previouslyRejected")
+                    logRefreshSuccess(planId: planId, planName: plan.name, trigger: trigger, diff: diff, metadataChanges: changedMetadataFields, skipped: "previouslyRejected")
                     return true
                 }
                 clearRejectedFingerprint(for: planId)
@@ -173,11 +173,11 @@ final class SubscriptionManager {
                 savePendingUpdate(pending)
                 sendUpdateNotification(diff: diff)
                 Logger.subscription.info("Pending update saved for plan: \(jsonPlan.name)")
-                logRefreshSuccess(planId: planId, planName: plan.name, diff: diff, metadataChanges: changedMetadataFields)
+                logRefreshSuccess(planId: planId, planName: plan.name, trigger: trigger, diff: diff, metadataChanges: changedMetadataFields)
             } else {
                 try AppDatabase.shared.updateRefreshTime(for: planId)
                 Logger.subscription.info("No changes for plan: \(jsonPlan.name), updated timestamp")
-                logRefreshSuccess(planId: planId, planName: plan.name, diff: diff)
+                logRefreshSuccess(planId: planId, planName: plan.name, trigger: trigger, diff: diff)
             }
             return true
         } catch {
@@ -186,6 +186,7 @@ final class SubscriptionManager {
                 planId: planId,
                 planName: plan.name,
                 success: false,
+                trigger: trigger,
                 error: error
             )
             throw error
@@ -195,6 +196,7 @@ final class SubscriptionManager {
     private func logRefreshSuccess(
         planId: Int64,
         planName: String,
+        trigger: AppLogger.SubscriptionTrigger,
         diff: SubscriptionDiff,
         metadataChanges: [String]? = nil,
         skipped: String? = nil
@@ -205,6 +207,7 @@ final class SubscriptionManager {
             planId: planId,
             planName: planName,
             success: true,
+            trigger: trigger,
             extraInput: extraInput,
             diff: diff,
             metadataChanges: metadataChanges
@@ -212,7 +215,7 @@ final class SubscriptionManager {
     }
 
     @discardableResult
-    func refreshAll(includePaused: Bool = false) async -> Bool {
+    func refreshAll(trigger: AppLogger.SubscriptionTrigger, includePaused: Bool = false) async -> Bool {
         do {
             let plans = try AppDatabase.shared.fetchAllSubscribedPlans()
             let results = await withTaskGroup(of: Bool.self, returning: [Bool].self) { group in
@@ -220,7 +223,7 @@ final class SubscriptionManager {
                     if !includePaused, plan.isPaused == true { continue }
                     group.addTask {
                         do {
-                            return try await self.refresh(plan: plan, ignorePause: includePaused)
+                            return try await self.refresh(plan: plan, trigger: trigger, ignorePause: includePaused)
                         } catch {
                             Logger.subscription.error("Failed to refresh plan \(plan.name): \(error.localizedDescription)")
                             return false
@@ -665,7 +668,7 @@ final class SubscriptionManager {
         scheduleBGTasks()
         let completed = OSAllocatedUnfairLock(initialState: false)
         currentRefreshTask = Task {
-            let success = await refreshAll()
+            let success = await refreshAll(trigger: .background)
             if completed.withLock({ let old = $0; $0 = true; return !old }) {
                 task.setTaskCompleted(success: success)
             }

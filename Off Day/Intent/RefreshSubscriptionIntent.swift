@@ -31,7 +31,7 @@ struct RefreshSubscriptionIntent: AppIntent {
             intent: Self.titleLogKey,
             params: ["includePaused": AnyEncodable(includePaused)]
         ) { () throws -> Bool in
-            await SubscriptionManager.shared.refreshAll(includePaused: includePaused)
+            await SubscriptionManager.shared.refreshAll(trigger: .intent, includePaused: includePaused)
         }
         return .result(value: value)
     }
