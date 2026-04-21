@@ -30,7 +30,7 @@
 		141F38D92C9974D600347225 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		141F38DA2C9974D600347225 /* README_CN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README_CN.md; sourceTree = "<group>"; };
 		149065852F3E8E26002DEAB7 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		149065922F3E9ADF002DEAB7 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
+		149065922F3E9ADF002DEAB7 /* Unit.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Unit.xctestplan; sourceTree = "<group>"; };
 		14DD50AE2BE1F5C4004329E2 /* Off Day.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Off Day.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -88,7 +88,7 @@
 		14DD50A52BE1F5C4004329E2 = {
 			isa = PBXGroup;
 			children = (
-				149065922F3E9ADF002DEAB7 /* TestPlan.xctestplan */,
+				149065922F3E9ADF002DEAB7 /* Unit.xctestplan */,
 				141F38D92C9974D600347225 /* README.md */,
 				141F38DA2C9974D600347225 /* README_CN.md */,
 				148522602F9655D2007417CE /* Off Day */,
