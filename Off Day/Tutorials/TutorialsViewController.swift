@@ -207,7 +207,7 @@ class TutorialsViewController: UIViewController {
         view.backgroundColor = AppColor.background
         updateNavigationBarStyle()
         
-        let helpButton = UIBarButtonItem(title: String(localized: "more.section.help"), style: .plain, target: self, action: nil)
+        let helpButton = UIBarButtonItem(image: UIImage(systemName: "questionmark.circle"), style: .plain, target: self, action: nil)
         let helpAction = UIAction(title: String(localized: "more.item.help"), subtitle: String(localized: "more.section.help.hint"), image: UIImage(systemName: "questionmark.circle")) { [weak self] _ in
             self?.enterHelpCenter()
         }
