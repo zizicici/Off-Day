@@ -22,10 +22,13 @@ final class SubscriptionManager {
     private var isShowingPendingAlerts = false
 
     private enum SubscriptionError: LocalizedError {
+        case invalidURL(String)
         case invalidHTTPResponse(Int)
 
         var errorDescription: String? {
             switch self {
+            case .invalidURL(let raw):
+                return "Invalid URL: \(raw)"
             case .invalidHTTPResponse(let code):
                 return "HTTP error: \(code)"
             }
@@ -45,18 +48,38 @@ final class SubscriptionManager {
     }
 
     func subscribe(from urlString: String) async throws -> Bool {
+        let urlInput: [String: AnyEncodable] = ["url": AnyEncodable(urlString)]
+
+        func logFailure(planName: String? = nil, error: Error? = nil) {
+            AppLogger.shared.logSubscription(
+                event: .subscribe,
+                planId: nil,
+                planName: planName,
+                success: false,
+                extraInput: urlInput,
+                error: error
+            )
+        }
+
         guard let url = URL(string: urlString), url.scheme == "https" else {
             Logger.subscription.error("Invalid URL: \(urlString)")
+            logFailure(error: SubscriptionError.invalidURL(urlString))
             return false
         }
 
-        var request = URLRequest(url: url)
-        request.cachePolicy = .reloadIgnoringLocalCacheData
-        let (data, response) = try await URLSession.shared.data(for: request)
-        if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
-            throw SubscriptionError.invalidHTTPResponse(httpResponse.statusCode)
+        let jsonPlan: JSONPublicPlan
+        do {
+            var request = URLRequest(url: url)
+            request.cachePolicy = .reloadIgnoringLocalCacheData
+            let (data, response) = try await URLSession.shared.data(for: request)
+            if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
+                throw SubscriptionError.invalidHTTPResponse(httpResponse.statusCode)
+            }
+            jsonPlan = try JSONDecoder().decode(JSONPublicPlan.self, from: data)
+        } catch {
+            logFailure(error: error)
+            throw error
         }
-        let jsonPlan = try JSONDecoder().decode(JSONPublicPlan.self, from: data)
 
         let plan = CustomPublicPlan(
             name: jsonPlan.name,
@@ -71,6 +94,7 @@ final class SubscriptionManager {
 
         guard let savedPlan = try AppDatabase.shared.savePlanWithDays(plan: plan, days: days) else {
             Logger.subscription.error("Failed to save subscribed plan")
+            logFailure(planName: jsonPlan.name)
             return false
         }
 
@@ -78,6 +102,16 @@ final class SubscriptionManager {
             PublicPlanManager.shared.select(plan: .custom(savedPlan))
         }
         Logger.subscription.info("Subscribed to plan: \(jsonPlan.name)")
+        AppLogger.shared.logSubscription(
+            event: .subscribe,
+            planId: savedPlan.id,
+            planName: jsonPlan.name,
+            success: true,
+            extraInput: [
+                "url": AnyEncodable(urlString),
+                "dayCount": AnyEncodable(jsonPlan.days.count)
+            ]
+        )
         return true
     }
 
@@ -101,46 +135,80 @@ final class SubscriptionManager {
             clearRejectedFingerprint(for: planId)
         }
 
-        var request = URLRequest(url: url)
-        request.cachePolicy = .reloadIgnoringLocalCacheData
-        let (data, response) = try await URLSession.shared.data(for: request)
-        if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
-            throw SubscriptionError.invalidHTTPResponse(httpResponse.statusCode)
-        }
-        let jsonPlan = try JSONDecoder().decode(JSONPublicPlan.self, from: data)
-
-        let currentDays = try AppDatabase.shared.fetchCustomPublicDays(for: planId)
-        let diff = computeDiff(planId: planId, planName: plan.name, currentDays: currentDays, newDays: jsonPlan.days)
-
-        let metadataChanged = plan.name != jsonPlan.name ||
-            plan.start != jsonPlan.start ||
-            plan.end != jsonPlan.end ||
-            plan.note != jsonPlan.note
-
-        if diff.hasChanges || metadataChanged {
-            let fingerprint = updateFingerprint(jsonPlan: jsonPlan)
-            if loadRejectedFingerprint(for: planId) == fingerprint {
-                try AppDatabase.shared.updateRefreshTime(for: planId)
-                Logger.subscription.info("Skipping update - same changes previously rejected: \(jsonPlan.name)")
-                return true
+        do {
+            var request = URLRequest(url: url)
+            request.cachePolicy = .reloadIgnoringLocalCacheData
+            let (data, response) = try await URLSession.shared.data(for: request)
+            if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
+                throw SubscriptionError.invalidHTTPResponse(httpResponse.statusCode)
             }
-            clearRejectedFingerprint(for: planId)
-            let pending = PendingSubscriptionUpdate(
+            let jsonPlan = try JSONDecoder().decode(JSONPublicPlan.self, from: data)
+
+            let currentDays = try AppDatabase.shared.fetchCustomPublicDays(for: planId)
+            let diff = computeDiff(planId: planId, planName: plan.name, currentDays: currentDays, newDays: jsonPlan.days)
+
+            var changedMetadataFields: [String] = []
+            if plan.name != jsonPlan.name { changedMetadataFields.append("name") }
+            if plan.start != jsonPlan.start { changedMetadataFields.append("start") }
+            if plan.end != jsonPlan.end { changedMetadataFields.append("end") }
+            if plan.note != jsonPlan.note { changedMetadataFields.append("note") }
+            let metadataChanged = !changedMetadataFields.isEmpty
+
+            if diff.hasChanges || metadataChanged {
+                let fingerprint = updateFingerprint(jsonPlan: jsonPlan)
+                if loadRejectedFingerprint(for: planId) == fingerprint {
+                    try AppDatabase.shared.updateRefreshTime(for: planId)
+                    Logger.subscription.info("Skipping update - same changes previously rejected: \(jsonPlan.name)")
+                    logRefreshSuccess(planId: planId, planName: plan.name, diff: diff, metadataChanges: changedMetadataFields, skipped: "previouslyRejected")
+                    return true
+                }
+                clearRejectedFingerprint(for: planId)
+                let pending = PendingSubscriptionUpdate(
+                    planId: planId,
+                    planName: plan.name,
+                    fetchTime: Int64(Date().timeIntervalSince1970),
+                    jsonPlan: jsonPlan,
+                    diff: diff
+                )
+                savePendingUpdate(pending)
+                sendUpdateNotification(diff: diff)
+                Logger.subscription.info("Pending update saved for plan: \(jsonPlan.name)")
+                logRefreshSuccess(planId: planId, planName: plan.name, diff: diff, metadataChanges: changedMetadataFields)
+            } else {
+                try AppDatabase.shared.updateRefreshTime(for: planId)
+                Logger.subscription.info("No changes for plan: \(jsonPlan.name), updated timestamp")
+                logRefreshSuccess(planId: planId, planName: plan.name, diff: diff)
+            }
+            return true
+        } catch {
+            AppLogger.shared.logSubscription(
+                event: .refresh,
                 planId: planId,
                 planName: plan.name,
-                fetchTime: Int64(Date().timeIntervalSince1970),
-                jsonPlan: jsonPlan,
-                diff: diff
+                success: false,
+                error: error
             )
-            savePendingUpdate(pending)
-            sendUpdateNotification(diff: diff)
-            Logger.subscription.info("Pending update saved for plan: \(jsonPlan.name)")
-        } else {
-            try AppDatabase.shared.updateRefreshTime(for: planId)
-            Logger.subscription.info("No changes for plan: \(jsonPlan.name), updated timestamp")
+            throw error
         }
+    }
 
-        return true
+    private func logRefreshSuccess(
+        planId: Int64,
+        planName: String,
+        diff: SubscriptionDiff,
+        metadataChanges: [String]? = nil,
+        skipped: String? = nil
+    ) {
+        let extraInput: [String: AnyEncodable] = skipped.map { ["skipped": AnyEncodable($0)] } ?? [:]
+        AppLogger.shared.logSubscription(
+            event: .refresh,
+            planId: planId,
+            planName: planName,
+            success: true,
+            extraInput: extraInput,
+            diff: diff,
+            metadataChanges: metadataChanges
+        )
     }
 
     @discardableResult
@@ -306,44 +374,92 @@ final class SubscriptionManager {
             removePendingUpdate(for: planId)
             clearRejectedFingerprint(for: planId)
             Logger.subscription.info("Accepted update for plan: \(update.planName)")
+            AppLogger.shared.logSubscription(
+                event: .accept,
+                planId: planId,
+                planName: update.planName,
+                success: true,
+                diff: update.diff
+            )
             return true
         } catch {
             Logger.subscription.error("Failed to accept update: \(error.localizedDescription)")
+            AppLogger.shared.logSubscription(
+                event: .accept,
+                planId: planId,
+                planName: update.planName,
+                success: false,
+                diff: update.diff,
+                error: error
+            )
             return false
         }
     }
 
     func rejectUpdate(for planId: Int64) {
-        if let update = loadAllPendingUpdates().first(where: { $0.planId == planId }) {
+        let rejectedUpdate = loadAllPendingUpdates().first(where: { $0.planId == planId })
+        if let update = rejectedUpdate {
             saveRejectedFingerprint(updateFingerprint(jsonPlan: update.jsonPlan), for: planId)
         }
         removePendingUpdate(for: planId)
         Logger.subscription.info("Rejected update for plan ID: \(planId)")
-    }
-
-    func pauseSubscription(for planId: Int64) {
-        do {
-            let plans = try AppDatabase.shared.fetchAllSubscribedPlans()
-            guard var plan = plans.first(where: { $0.id == planId }) else { return }
-            plan.isPaused = true
-            _ = AppDatabase.shared.update(publicPlan: plan)
-            removePendingUpdate(for: planId)
-            Logger.subscription.info("Paused subscription for plan: \(plan.name)")
-        } catch {
-            Logger.subscription.error("Failed to pause subscription: \(error.localizedDescription)")
+        if let update = rejectedUpdate {
+            AppLogger.shared.logSubscription(
+                event: .reject,
+                planId: planId,
+                planName: update.planName,
+                success: true,
+                diff: update.diff
+            )
         }
     }
 
+    func pauseSubscription(for planId: Int64) {
+        setPaused(true, for: planId)
+    }
+
     func resumeSubscription(for planId: Int64) {
+        setPaused(false, for: planId)
+    }
+
+    private func setPaused(_ paused: Bool, for planId: Int64) {
+        let event: AppLogger.SubscriptionEvent = paused ? .pause : .resume
+        let verb = paused ? "pause" : "resume"
         do {
             let plans = try AppDatabase.shared.fetchAllSubscribedPlans()
             guard var plan = plans.first(where: { $0.id == planId }) else { return }
-            plan.isPaused = false
-            _ = AppDatabase.shared.update(publicPlan: plan)
-            clearRejectedFingerprint(for: planId)
-            Logger.subscription.info("Resumed subscription for plan: \(plan.name)")
+            plan.isPaused = paused
+            guard AppDatabase.shared.update(publicPlan: plan) else {
+                Logger.subscription.error("Failed to \(verb) subscription: DB update returned false for \(plan.name)")
+                AppLogger.shared.logSubscription(
+                    event: event,
+                    planId: planId,
+                    planName: plan.name,
+                    success: false
+                )
+                return
+            }
+            if paused {
+                removePendingUpdate(for: planId)
+            } else {
+                clearRejectedFingerprint(for: planId)
+            }
+            Logger.subscription.info("\(paused ? "Paused" : "Resumed") subscription for plan: \(plan.name)")
+            AppLogger.shared.logSubscription(
+                event: event,
+                planId: planId,
+                planName: plan.name,
+                success: true
+            )
         } catch {
-            Logger.subscription.error("Failed to resume subscription: \(error.localizedDescription)")
+            Logger.subscription.error("Failed to \(verb) subscription: \(error.localizedDescription)")
+            AppLogger.shared.logSubscription(
+                event: event,
+                planId: planId,
+                planName: nil,
+                success: false,
+                error: error
+            )
         }
     }
 

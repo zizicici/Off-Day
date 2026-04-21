@@ -28,7 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
 
         _ = AppDatabase.shared
-        
+        _ = AppLogger.shared
+
         PublicPlanManager.shared.load()
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5.0) {

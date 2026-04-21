@@ -29,16 +29,25 @@ struct CheckDayClashIntent: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
-        var isOffDay = false
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
-            let target = GregorianDay(year: year, month: month, day: day)
-            if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
-                throw FetchError.overReach
+        let value = try await AppLogger.shared.run(
+            intent: Self.titleLogKey,
+            params: [
+                "date": AnyEncodable(date),
+                "enableUserMark": AnyEncodable(enableUserMark)
+            ]
+        ) { () throws -> Bool in
+            var isOffDay = false
+            let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+            if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
+                let target = GregorianDay(year: year, month: month, day: day)
+                if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
+                    throw FetchError.overReach
+                }
+                isOffDay = DayManager.checkClashDay(target, customMarkEnabled: enableUserMark)
             }
-            isOffDay = DayManager.checkClashDay(target, customMarkEnabled: enableUserMark)
+            return isOffDay
         }
-        return .result(value: isOffDay)
+        return .result(value: value)
     }
 
     static var openAppWhenRun: Bool = false
@@ -62,16 +71,22 @@ struct CheckTodayClashIntent: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
-        var isOffDay = false
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
-        if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
-            let target = GregorianDay(year: year, month: month, day: day)
-            if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
-                throw FetchError.overReach
+        let value = try await AppLogger.shared.run(
+            intent: Self.titleLogKey,
+            params: ["enableUserMark": AnyEncodable(enableUserMark)]
+        ) { () throws -> Bool in
+            var isOffDay = false
+            let components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
+            if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
+                let target = GregorianDay(year: year, month: month, day: day)
+                if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
+                    throw FetchError.overReach
+                }
+                isOffDay = DayManager.checkClashDay(target, customMarkEnabled: enableUserMark)
             }
-            isOffDay = DayManager.checkClashDay(target, customMarkEnabled: enableUserMark)
+            return isOffDay
         }
-        return .result(value: isOffDay)
+        return .result(value: value)
     }
 
     static var openAppWhenRun: Bool = false
@@ -95,17 +110,23 @@ struct CheckTomorrowClashIntent: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
-        var isOffDay = false
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: tomorrow)
-        if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
-            let target = GregorianDay(year: year, month: month, day: day)
-            if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
-                throw FetchError.overReach
+        let value = try await AppLogger.shared.run(
+            intent: Self.titleLogKey,
+            params: ["enableUserMark": AnyEncodable(enableUserMark)]
+        ) { () throws -> Bool in
+            var isOffDay = false
+            let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+            let components = Calendar.current.dateComponents([.year, .month, .day], from: tomorrow)
+            if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
+                let target = GregorianDay(year: year, month: month, day: day)
+                if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
+                    throw FetchError.overReach
+                }
+                isOffDay = DayManager.checkClashDay(target, customMarkEnabled: enableUserMark)
             }
-            isOffDay = DayManager.checkClashDay(target, customMarkEnabled: enableUserMark)
+            return isOffDay
         }
-        return .result(value: isOffDay)
+        return .result(value: value)
     }
 
     static var openAppWhenRun: Bool = false
@@ -132,17 +153,26 @@ struct CheckOffsetDayClashIntent: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
-        var isOffDay = false
-        let tomorrow = Calendar.current.date(byAdding: .day, value: dayCount, to: Date())!
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: tomorrow)
-        if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
-            let target = GregorianDay(year: year, month: month, day: day)
-            if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
-                throw FetchError.overReach
+        let value = try await AppLogger.shared.run(
+            intent: Self.titleLogKey,
+            params: [
+                "dayCount": AnyEncodable(dayCount),
+                "enableUserMark": AnyEncodable(enableUserMark)
+            ]
+        ) { () throws -> Bool in
+            var isOffDay = false
+            let tomorrow = Calendar.current.date(byAdding: .day, value: dayCount, to: Date())!
+            let components = Calendar.current.dateComponents([.year, .month, .day], from: tomorrow)
+            if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
+                let target = GregorianDay(year: year, month: month, day: day)
+                if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
+                    throw FetchError.overReach
+                }
+                isOffDay = DayManager.checkClashDay(target, customMarkEnabled: enableUserMark)
             }
-            isOffDay = DayManager.checkClashDay(target, customMarkEnabled: enableUserMark)
+            return isOffDay
         }
-        return .result(value: isOffDay)
+        return .result(value: value)
     }
 
     static var openAppWhenRun: Bool = false

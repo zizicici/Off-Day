@@ -8,6 +8,7 @@
 import Foundation
 import os
 import GRDB
+import MoreKit
 
 extension Notification.Name {
     static let DatabaseUpdated = Notification.Name(rawValue: "com.zizicici.common.database.updated")
@@ -112,7 +113,22 @@ final class AppDatabase {
                 table.add(column: "note", .text)
             }
         }
-        
+
+        migrator.registerMigration("create_app_log") { db in
+            try db.create(table: "app_log") { table in
+                table.autoIncrementedPrimaryKey("id")
+
+                table.column("creation_time", .integer).notNull().indexed()
+                table.column("category", .integer).notNull()
+                table.column("subtype", .text).notNull()
+                table.column("plan_id", .integer)
+                table.column("success", .boolean).notNull()
+                table.column("input_json", .text)
+                table.column("output_json", .text)
+                table.column("error_message", .text)
+            }
+        }
+
         return migrator
     }
     
@@ -538,5 +554,119 @@ extension AppDatabase {
     /// Provides a read-only access to the database
     var reader: DatabaseReader? {
         dbWriter
+    }
+}
+
+extension Notification.Name {
+    static let AppLogAdded = Notification.Name(rawValue: "com.zizicici.common.appLog.added")
+    static let AppLogCleared = Notification.Name(rawValue: "com.zizicici.common.appLog.cleared")
+}
+
+extension AppDatabase {
+    @discardableResult
+    func add(appLog: AppLog) -> Bool {
+        guard appLog.id == nil else {
+            return false
+        }
+        guard let dbWriter = dbWriter else {
+            return false
+        }
+        let retention = LogRetentionType.getValue()
+        if retention == .disabled {
+            return false
+        }
+        do {
+            try dbWriter.write { db in
+                var saveLog = appLog
+                try saveLog.insert(db)
+                if let limit = retention.limit {
+                    try Self.pruneAppLogs(db: db, keeping: limit)
+                }
+            }
+        }
+        catch {
+            logger.error("\(error.localizedDescription)")
+            return false
+        }
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: Notification.Name.AppLogAdded, object: nil)
+        }
+        return true
+    }
+
+    private static func pruneAppLogs(db: Database, keeping limit: Int) throws {
+        let survivors = AppLog
+            .select(AppLog.Columns.id)
+            .order(AppLog.Columns.creationTime.desc)
+            .limit(limit)
+        try AppLog
+            .filter(!survivors.contains(AppLog.Columns.id))
+            .deleteAll(db)
+    }
+
+    func fetchAppLogs(limit: Int? = nil, offset: Int? = nil) -> [AppLog] {
+        guard let dbWriter = dbWriter else { return [] }
+        var result: [AppLog] = []
+        do {
+            try dbWriter.read { db in
+                var request = AppLog.order(AppLog.Columns.creationTime.desc)
+                if let limit = limit {
+                    request = request.limit(limit, offset: offset)
+                }
+                result = try request.fetchAll(db)
+            }
+        }
+        catch {
+            logger.error("\(error.localizedDescription)")
+            return []
+        }
+        return result
+    }
+
+    @discardableResult
+    func deleteAllAppLogs() -> Bool {
+        guard let dbWriter = dbWriter else {
+            return false
+        }
+        do {
+            _ = try dbWriter.write { db in
+                try AppLog.deleteAll(db)
+            }
+        }
+        catch {
+            logger.error("\(error.localizedDescription)")
+            return false
+        }
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: Notification.Name.AppLogCleared, object: nil)
+        }
+        return true
+    }
+
+    @discardableResult
+    func trimAppLogs(to retention: LogRetentionType) -> Bool {
+        guard let dbWriter = dbWriter else {
+            return false
+        }
+        guard retention != .disabled, let limit = retention.limit else {
+            return false
+        }
+        var didDelete = false
+        do {
+            try dbWriter.write { db in
+                try Self.pruneAppLogs(db: db, keeping: limit)
+                didDelete = db.changesCount > 0
+            }
+        }
+        catch {
+            logger.error("\(error.localizedDescription)")
+            return false
+        }
+        if didDelete {
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: Notification.Name.AppLogCleared, object: nil)
+            }
+        }
+        return didDelete
     }
 }

@@ -27,6 +27,9 @@ extension UserDefaults {
         case NotificationCustomDayStart = "com.zizicici.common.settings.NotificationCustomDayStart"
         // Theme
         case Logo = "com.zizicici.common.settings.Logo"
+        // Log
+        case LogRetention = "com.zizicici.common.settings.LogRetention"
+        case LogEntranceType = "com.zizicici.common.settings.LogEntranceType"
     }
 }
 
@@ -250,6 +253,81 @@ extension AlternativeCalendarType: UserDefaultSettable {
 
     static func getFooter() -> String? {
         return String(localized: "settings.alternativeCalendarType.footer")
+    }
+}
+
+enum LogEntranceType: Int, CaseIterable, Codable {
+    case tab = 0
+    case hidden = 1
+}
+
+extension LogEntranceType: UserDefaultSettable {
+    static func getKey() -> String {
+        return UserDefaults.Settings.LogEntranceType.rawValue
+    }
+
+    static var defaultOption: LogEntranceType {
+        return .tab
+    }
+
+    func getName() -> String {
+        switch self {
+        case .tab:
+            return String(localized: "settings.logEntrance.tab")
+        case .hidden:
+            return String(localized: "settings.logEntrance.hidden")
+        }
+    }
+
+    static func getTitle() -> String {
+        return String(localized: "settings.logEntrance.title")
+    }
+}
+
+enum LogRetentionType: Int, CaseIterable, Codable {
+    case oneHundred = 0
+    case tenThousand = 1
+    case unlimited = 2
+    case disabled = 3
+
+    var limit: Int? {
+        switch self {
+        case .oneHundred: return 100
+        case .tenThousand: return 10_000
+        case .unlimited: return nil
+        case .disabled: return 0
+        }
+    }
+}
+
+extension LogRetentionType: UserDefaultSettable {
+    static func getKey() -> String {
+        return UserDefaults.Settings.LogRetention.rawValue
+    }
+
+    static var defaultOption: LogRetentionType {
+        return .oneHundred
+    }
+
+    func getName() -> String {
+        switch self {
+        case .oneHundred:
+            return String(localized: "settings.logRetention.oneHundred")
+        case .tenThousand:
+            return String(localized: "settings.logRetention.tenThousand")
+        case .unlimited:
+            return String(localized: "settings.logRetention.unlimited")
+        case .disabled:
+            return String(localized: "settings.logRetention.disabled")
+        }
+    }
+
+    static func getTitle() -> String {
+        return String(localized: "settings.logRetention.title")
+    }
+
+    static func getFooter() -> String? {
+        return String(localized: "settings.logRetention.footer")
     }
 }
 

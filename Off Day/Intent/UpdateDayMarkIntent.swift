@@ -42,24 +42,33 @@ struct UpdateDayMarkIntent: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
-        var result = false
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
-            let target = GregorianDay(year: year, month: month, day: day)
-            result = true
-            switch mark {
-            case .off:
-                CustomDayManager.shared.update(dayType: .offDay, to: target.julianDay)
-            case .work:
-                CustomDayManager.shared.update(dayType: .workDay, to: target.julianDay)
-            case .blank:
-                CustomDayManager.shared.update(dayType: nil, to: target.julianDay)
+        let value = try await AppLogger.shared.run(
+            intent: Self.titleLogKey,
+            params: [
+                "date": AnyEncodable(date),
+                "mark": AnyEncodable(mark.rawValue)
+            ]
+        ) { () throws -> Bool in
+            var result = false
+            let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+            if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
+                let target = GregorianDay(year: year, month: month, day: day)
+                result = true
+                switch mark {
+                case .off:
+                    CustomDayManager.shared.update(dayType: .offDay, to: target.julianDay)
+                case .work:
+                    CustomDayManager.shared.update(dayType: .workDay, to: target.julianDay)
+                case .blank:
+                    CustomDayManager.shared.update(dayType: nil, to: target.julianDay)
+                }
             }
-        }
-        
-        await NotificationManager.shared.updateNotifications()
 
-        return .result(value: result)
+            await NotificationManager.shared.updateNotifications()
+
+            return result
+        }
+        return .result(value: value)
     }
 
     static var openAppWhenRun: Bool = false

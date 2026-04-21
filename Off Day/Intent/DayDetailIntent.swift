@@ -94,21 +94,29 @@ struct DayDetailIntent: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<DayDetailEntity> {
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
-            let target = GregorianDay(year: year, month: month, day: day)
-            if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
-                throw FetchError.overReach
-            }
-            
-            if let detail = DayManager.getDayDetail(from: target) {
-                return .result(value: detail)
-            } else {
-                throw FetchError.notFound
-            }
-        } else {
-            throw FetchError.notFound
-        }
+        let detail = try await AppLogger.shared.run(
+            intent: Self.titleLogKey,
+            params: ["date": AnyEncodable(date)],
+            operation: { () throws -> DayDetailEntity in
+                let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+                if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
+                    let target = GregorianDay(year: year, month: month, day: day)
+                    if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
+                        throw FetchError.overReach
+                    }
+
+                    if let detail = DayManager.getDayDetail(from: target) {
+                        return detail
+                    } else {
+                        throw FetchError.notFound
+                    }
+                } else {
+                    throw FetchError.notFound
+                }
+            },
+            toOutput: { DayDetailLog($0) }
+        )
+        return .result(value: detail)
     }
 
     static var openAppWhenRun: Bool = false

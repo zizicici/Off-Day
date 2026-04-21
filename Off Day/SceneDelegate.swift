@@ -13,6 +13,37 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     var tutorialSetting: TutorialEntranceType?
+    var logEntranceSetting: LogEntranceType?
+
+    private enum TabKind: String, CaseIterable {
+        case tutorial
+        case calendar
+        case log
+        case more
+
+        var tag: Int {
+            switch self {
+            case .tutorial: return 0
+            case .calendar: return 1
+            case .more:     return 2
+            case .log:      return 3
+            }
+        }
+
+        @MainActor
+        func makeViewController() -> UIViewController {
+            switch self {
+            case .tutorial:
+                return NavigationController(rootViewController: TutorialsViewController())
+            case .calendar:
+                return NavigationController(rootViewController: BlockViewController())
+            case .log:
+                return NavigationController(rootViewController: LogViewController())
+            case .more:
+                return MoreNavigationController(rootViewController: MoreControllerFactory.make())
+            }
+        }
+    }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -58,51 +89,75 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     @objc
     func reloadTabsIfNeeded() {
-        guard tutorialSetting != TutorialEntranceType.getValue() else {
+        let tutorialValue = TutorialEntranceType.getValue()
+        let logEntranceValue = LogEntranceType.getValue()
+        guard tutorialSetting != tutorialValue || logEntranceSetting != logEntranceValue else {
             return
         }
-        let newValue = TutorialEntranceType.getValue()
-        tutorialSetting = newValue
-        
-        let tabbarController: TabbarController = window?.rootViewController as? TabbarController ?? TabbarController()
+        tutorialSetting = tutorialValue
+        logEntranceSetting = logEntranceValue
+
+        let tabbarController = (window?.rootViewController as? TabbarController) ?? TabbarController()
         tabbarController.view.tintColor = AppColor.offDay
         tabbarController.tabBar.tintColor = AppColor.offDay
-        
-        var viewControllers: [UIViewController] = []
-        let calendarViewController = tabbarController.viewControllers?.first { viewController in
-            return (viewController as? NavigationController)?.viewControllers.first is BlockViewController
-        } ?? NavigationController(rootViewController: BlockViewController())
-        let moreViewController = tabbarController.viewControllers?.first { viewController in
-            return (viewController as? NavigationController)?.viewControllers.first is MoreViewController
-        } ?? MoreNavigationController(rootViewController: MoreControllerFactory.make())
-        let tutorialViewController = tabbarController.viewControllers?.first { viewController in
-            return (viewController as? NavigationController)?.viewControllers.first is TutorialsViewController
-        } ?? NavigationController(rootViewController: TutorialsViewController())
 
-        switch newValue {
-        case .firstTab:
-            viewControllers = [tutorialViewController, calendarViewController, moreViewController]
-        case .secondTab:
-            viewControllers = [calendarViewController, tutorialViewController, moreViewController]
-        case .hidden:
-            viewControllers = [calendarViewController, moreViewController]
-        }
-        
+        let kinds = Self.orderedTabs(tutorial: tutorialValue, logEntrance: logEntranceValue)
+
         if #available(iOS 18.0, *) {
-            tabbarController.tabs = viewControllers.compactMap({ viewController in
-                if let tabItem = viewController.tabBarItem {
-                    return UITab(title: tabItem.title ?? "", image: tabItem.image, identifier: "\(tabItem.tag)") { tab in
-                        return viewController
-                    }
-                } else {
-                    return nil
-                }
-            })
+            applyTabsUsingUITab(kinds: kinds, on: tabbarController)
         } else {
-            tabbarController.setViewControllers(viewControllers, animated: false)
+            applyTabsLegacy(kinds: kinds, on: tabbarController)
         }
-        
-        window?.rootViewController = tabbarController
+
+        if window?.rootViewController !== tabbarController {
+            window?.rootViewController = tabbarController
+        }
+    }
+
+    private static func orderedTabs(tutorial: TutorialEntranceType, logEntrance: LogEntranceType) -> [TabKind] {
+        var kinds: [TabKind]
+        switch tutorial {
+        case .firstTab:  kinds = [.tutorial, .calendar]
+        case .secondTab: kinds = [.calendar, .tutorial]
+        case .hidden:    kinds = [.calendar]
+        }
+        if logEntrance == .tab {
+            kinds.append(.log)
+        }
+        kinds.append(.more)
+        return kinds
+    }
+
+    @available(iOS 18.0, *)
+    private func applyTabsUsingUITab(kinds: [TabKind], on tabbarController: TabbarController) {
+        var reusable: [String: UITab] = [:]
+        for tab in tabbarController.tabs {
+            reusable[tab.identifier] = tab
+        }
+        tabbarController.tabs = kinds.map { kind in
+            if let existing = reusable[kind.rawValue] {
+                return existing
+            }
+            let viewController = kind.makeViewController()
+            let item = viewController.tabBarItem
+            return UITab(
+                title: item?.title ?? "",
+                image: item?.image,
+                identifier: kind.rawValue
+            ) { _ in viewController }
+        }
+    }
+
+    private func applyTabsLegacy(kinds: [TabKind], on tabbarController: TabbarController) {
+        var reusable: [Int: UIViewController] = [:]
+        for viewController in tabbarController.viewControllers ?? [] {
+            if let tag = viewController.tabBarItem?.tag {
+                reusable[tag] = viewController
+            }
+        }
+        let viewControllers = kinds.map { kind in
+            reusable[kind.tag] ?? kind.makeViewController()
+        }
+        tabbarController.setViewControllers(viewControllers, animated: false)
     }
 }
-

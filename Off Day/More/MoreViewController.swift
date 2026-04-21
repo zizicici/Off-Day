@@ -139,6 +139,7 @@ final class MoreDataSource: NSObject, MoreViewControllerDataSource {
                 id: "help",
                 items: [MoreCustomItem(id: "help", title: String(localized: "more.item.help"))]
             )),
+            .custom(logSection()),
             .contact,
             .appjun,
             .about,
@@ -153,6 +154,12 @@ final class MoreDataSource: NSObject, MoreViewControllerDataSource {
             controller.enterSettings(AlternativeCalendarType.self)
         case "settings.logo":
             controller.enterSettings(Logo.self)
+        case "settings.logEntrance":
+            controller.enterSettings(LogEntranceType.self)
+        case "log.open":
+            controller.pushViewController(LogViewController())
+        case "settings.logRetention":
+            controller.enterSettings(LogRetentionType.self)
         case "dataSource.publicPlan":
             presentPublicPlan(from: controller)
         case "dataSource.baseCalendar":
@@ -196,6 +203,32 @@ final class MoreDataSource: NSObject, MoreViewControllerDataSource {
                     value: Logo.getValue().getName()
                 ),
             ]
+        )
+    }
+
+    private func logSection() -> MoreCustomSection {
+        var items: [MoreCustomItem] = [
+            MoreCustomItem(
+                id: "settings.logEntrance",
+                title: LogEntranceType.getTitle(),
+                value: LogEntranceType.getValue().getName()
+            )
+        ]
+        if LogEntranceType.getValue() == .hidden {
+            items.append(MoreCustomItem(
+                id: "log.open",
+                title: String(localized: "controller.log.title")
+            ))
+        }
+        items.append(MoreCustomItem(
+            id: "settings.logRetention",
+            title: LogRetentionType.getTitle(),
+            value: LogRetentionType.getValue().getName()
+        ))
+        return MoreCustomSection(
+            id: "log",
+            header: String(localized: "more.section.log"),
+            items: items
         )
     }
 

@@ -27,8 +27,13 @@ struct RefreshSubscriptionIntent: AppIntent {
     static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
 
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
-        let success = await SubscriptionManager.shared.refreshAll(includePaused: includePaused)
-        return .result(value: success)
+        let value = try await AppLogger.shared.run(
+            intent: Self.titleLogKey,
+            params: ["includePaused": AnyEncodable(includePaused)]
+        ) { () throws -> Bool in
+            await SubscriptionManager.shared.refreshAll(includePaused: includePaused)
+        }
+        return .result(value: value)
     }
 
     static var openAppWhenRun: Bool = false

@@ -25,14 +25,20 @@ struct GetDayCommentIntent: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<String?> {
-        var result: String?
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
-            let target = GregorianDay(year: year, month: month, day: day)
-            let comment = CustomDayManager.shared.fetchCustomComment(by: target.julianDay)
-            result = comment?.content
+        let value: String? = try await AppLogger.shared.run(
+            intent: Self.titleLogKey,
+            params: ["date": AnyEncodable(date)]
+        ) { () throws -> String? in
+            var result: String?
+            let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+            if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
+                let target = GregorianDay(year: year, month: month, day: day)
+                let comment = CustomDayManager.shared.fetchCustomComment(by: target.julianDay)
+                result = comment?.content
+            }
+            return result
         }
-        return .result(value: result)
+        return .result(value: value)
     }
 
     static var openAppWhenRun: Bool = false
@@ -57,27 +63,36 @@ struct UpdateDayCommentIntent: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
-        var result = false
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
-            let target = GregorianDay(year: year, month: month, day: day)
-            if var comment = CustomDayManager.shared.fetchCustomComment(by: target.julianDay) {
-                if content.count == 0 {
-                    result = CustomDayManager.shared.delete(customComment: comment)
+        let value = try await AppLogger.shared.run(
+            intent: Self.titleLogKey,
+            params: [
+                "date": AnyEncodable(date),
+                "content": AnyEncodable(content)
+            ]
+        ) { () throws -> Bool in
+            var result = false
+            let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+            if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
+                let target = GregorianDay(year: year, month: month, day: day)
+                if var comment = CustomDayManager.shared.fetchCustomComment(by: target.julianDay) {
+                    if content.count == 0 {
+                        result = CustomDayManager.shared.delete(customComment: comment)
+                    } else {
+                        comment.content = content
+                        result = CustomDayManager.shared.update(customComment: comment)
+                    }
                 } else {
-                    comment.content = content
-                    result = CustomDayManager.shared.update(customComment: comment)
-                }
-            } else {
-                if content.count == 0 {
-                    // Do nothing
-                    result = true
-                } else {
-                    result = CustomDayManager.shared.add(customComment: CustomComment(dayIndex: Int64(target.julianDay), content: content))
+                    if content.count == 0 {
+                        // Do nothing
+                        result = true
+                    } else {
+                        result = CustomDayManager.shared.add(customComment: CustomComment(dayIndex: Int64(target.julianDay), content: content))
+                    }
                 }
             }
+            return result
         }
-        return .result(value: result)
+        return .result(value: value)
     }
 
     static var openAppWhenRun: Bool = false
@@ -99,17 +114,23 @@ struct DeleteDayCommentIntent: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<Bool> {
-        var result = false
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
-            let target = GregorianDay(year: year, month: month, day: day)
-            if let comment = CustomDayManager.shared.fetchCustomComment(by: target.julianDay) {
-                result = CustomDayManager.shared.delete(customComment: comment)
-            } else {
-                result = true
+        let value = try await AppLogger.shared.run(
+            intent: Self.titleLogKey,
+            params: ["date": AnyEncodable(date)]
+        ) { () throws -> Bool in
+            var result = false
+            let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+            if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
+                let target = GregorianDay(year: year, month: month, day: day)
+                if let comment = CustomDayManager.shared.fetchCustomComment(by: target.julianDay) {
+                    result = CustomDayManager.shared.delete(customComment: comment)
+                } else {
+                    result = true
+                }
             }
+            return result
         }
-        return .result(value: result)
+        return .result(value: value)
     }
 
     static var openAppWhenRun: Bool = false

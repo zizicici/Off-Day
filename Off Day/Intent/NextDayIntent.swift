@@ -24,18 +24,26 @@ struct NextOffDayDetailIntent: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<DayDetailEntity> {
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
-            let day = GregorianDay(year: year, month: month, day: day)
-            
-            if let resultDay = DayManager.fetchNextDay(type: .offDay, after: day), let detail = DayManager.getDayDetail(from: resultDay) {
-                return .result(value: detail)
-            } else {
-                throw FetchError.notFound
-            }
-        } else {
-            throw FetchError.notFound
-        }
+        let detail = try await AppLogger.shared.run(
+            intent: Self.titleLogKey,
+            params: ["date": AnyEncodable(date)],
+            operation: { () throws -> DayDetailEntity in
+                let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+                if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
+                    let day = GregorianDay(year: year, month: month, day: day)
+
+                    if let resultDay = DayManager.fetchNextDay(type: .offDay, after: day), let detail = DayManager.getDayDetail(from: resultDay) {
+                        return detail
+                    } else {
+                        throw FetchError.notFound
+                    }
+                } else {
+                    throw FetchError.notFound
+                }
+            },
+            toOutput: { DayDetailLog($0) }
+        )
+        return .result(value: detail)
     }
 
     static var openAppWhenRun: Bool = false
@@ -57,18 +65,26 @@ struct NextWorkDayDetailIntent: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<DayDetailEntity> {
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
-            let day = GregorianDay(year: year, month: month, day: day)
-            
-            if let resultDay = DayManager.fetchNextDay(type: .workDay, after: day), let detail = DayManager.getDayDetail(from: resultDay) {
-                return .result(value: detail)
-            } else {
-                throw FetchError.notFound
-            }
-        } else {
-            throw FetchError.notFound
-        }
+        let detail = try await AppLogger.shared.run(
+            intent: Self.titleLogKey,
+            params: ["date": AnyEncodable(date)],
+            operation: { () throws -> DayDetailEntity in
+                let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+                if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
+                    let day = GregorianDay(year: year, month: month, day: day)
+
+                    if let resultDay = DayManager.fetchNextDay(type: .workDay, after: day), let detail = DayManager.getDayDetail(from: resultDay) {
+                        return detail
+                    } else {
+                        throw FetchError.notFound
+                    }
+                } else {
+                    throw FetchError.notFound
+                }
+            },
+            toOutput: { DayDetailLog($0) }
+        )
+        return .result(value: detail)
     }
 
     static var openAppWhenRun: Bool = false
