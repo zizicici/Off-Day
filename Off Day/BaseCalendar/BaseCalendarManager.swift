@@ -247,19 +247,8 @@ class BaseCalendarManager {
         if let storedConfig = BaseCalendarConfigManager.fetch() {
             config = Config.generate(by: storedConfig)
         } else {
-            let standardOffday: String
-            switch WeekEndOffDayType.getValue() {
-            case .two:
-                standardOffday = "6/7"
-            case .one:
-                standardOffday = "7"
-            case .zero:
-                standardOffday = ""
-            }
-            let needSaveConfig = BaseCalendarConfig(type: .standard, standardOffday: standardOffday, weekOffset: 0, weekCount: .two, weekIndexes: "", dayStart: 0, dayWorkCount: 1, dayOffCount: 1)
-            BaseCalendarConfigManager.add(config: needSaveConfig)
-            
-            config = Config.generate(by: needSaveConfig)
+            Logger.baseCalendar.error("Missing base calendar config after database seeding; using default config in memory")
+            config = Config.generate(by: .makeDefault())
         }
     }
 }
@@ -277,13 +266,6 @@ struct BaseCalendarConfigManager {
             Logger.baseCalendar.error("\(error.localizedDescription)")
         }
         return result
-    }
-    
-    static func add(config: BaseCalendarConfig) {
-        guard config.id == nil else {
-            return
-        }
-        _ = AppDatabase.shared.add(baseCalendarConfig: config)
     }
     
     static func update(config: BaseCalendarConfig) {

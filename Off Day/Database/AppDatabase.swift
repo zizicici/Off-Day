@@ -20,6 +20,7 @@ final class AppDatabase {
     init(_ dbWriter: any DatabaseWriter) throws {
         self.dbWriter = dbWriter
         try migrator.migrate(dbWriter)
+        try Self.ensureDefaultBaseCalendarConfig(in: dbWriter)
     }
     
     private(set) var dbWriter: (any DatabaseWriter)?
@@ -140,9 +141,20 @@ final class AppDatabase {
         do {
             let databasePool = try AppDatabase.generateDatabasePool()
             try migrator.migrate(databasePool)
+            try Self.ensureDefaultBaseCalendarConfig(in: databasePool)
             self.dbWriter = databasePool
         } catch {
             logger.error("\(error.localizedDescription)")
+        }
+    }
+
+    private static func ensureDefaultBaseCalendarConfig(in dbWriter: any DatabaseWriter) throws {
+        try dbWriter.write { db in
+            guard try BaseCalendarConfig.fetchOne(db) == nil else {
+                return
+            }
+            var config = BaseCalendarConfig.makeDefault()
+            try config.save(db)
         }
     }
 }

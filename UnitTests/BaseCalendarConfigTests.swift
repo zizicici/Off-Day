@@ -5,7 +5,10 @@
 //  Created by Codex on 2026/2/13.
 //
 
+import Foundation
 import Testing
+import GRDB
+import MoreKit
 import ZCCalendar
 @testable import Off_Day
 
@@ -32,6 +35,43 @@ struct BaseCalendarConfigTests {
         #expect(weekdayOrders.count == 2)
         
         #expect(weekIndexes == [0, 3, 8])
+    }
+
+    @Test func defaultBaseCalendarConfigShouldUseStandardWeekendPattern() {
+        let key = UserDefaults.Settings.WeekEndOffDayType.rawValue
+        let userDefaults = WeekEndOffDayType.userDefaults
+        let previousValue = userDefaults.object(forKey: key)
+        userDefaults.removeObject(forKey: key)
+        defer {
+            if let previousValue {
+                userDefaults.set(previousValue, forKey: key)
+            } else {
+                userDefaults.removeObject(forKey: key)
+            }
+        }
+
+        let config = BaseCalendarConfig.makeDefault()
+
+        #expect(config.type == .standard)
+        #expect(config.standardWeekdayOrders() == [.sat, .sun])
+        #expect(config.weekOffset == 0)
+        #expect(config.weekCount == .two)
+        #expect(config.weekIndexes.isEmpty)
+        #expect(config.dayStart == 0)
+        #expect(config.dayWorkCount == 1)
+        #expect(config.dayOffCount == 1)
+    }
+
+    @Test func appDatabaseInitializationShouldInsertDefaultBaseCalendarConfig() throws {
+        let dbQueue = try DatabaseQueue()
+        _ = try AppDatabase(dbQueue)
+
+        let config = try dbQueue.read { db in
+            try BaseCalendarConfig.fetchOne(db)
+        }
+
+        #expect(config != nil)
+        #expect(config?.type == .standard)
     }
     
     @Test func standardConfigComputedPropertiesShouldMatchWeekdayData() {

@@ -41,6 +41,28 @@ extension BaseCalendarConfig: FetchableRecord {
 }
 
 extension BaseCalendarConfig {
+    static func makeDefault() -> BaseCalendarConfig {
+        let standardOffday: String
+        switch WeekEndOffDayType.getValue() {
+        case .two:
+            standardOffday = "6/7"
+        case .one:
+            standardOffday = "7"
+        case .zero:
+            standardOffday = ""
+        }
+        return BaseCalendarConfig(
+            type: .standard,
+            standardOffday: standardOffday,
+            weekOffset: 0,
+            weekCount: .two,
+            weekIndexes: "",
+            dayStart: 0,
+            dayWorkCount: 1,
+            dayOffCount: 1
+        )
+    }
+
     func standardWeekdayOrders() -> [WeekdayOrder] {
         return standardOffday.split(separator: "/").compactMap{ Int($0) }.compactMap{ WeekdayOrder(rawValue: $0) }
     }
