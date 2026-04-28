@@ -5184,25 +5184,25 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Launch"
+            "value" : "User Launch"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "启动"
+            "value" : "用户启动"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "啟動"
+            "value" : "使用者啟動"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "啟動"
+            "value" : "用戶啟動"
           }
         }
       }

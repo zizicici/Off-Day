@@ -56,6 +56,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         reloadTabsIfNeeded()
         
         window?.makeKeyAndVisible()
+        refreshSubscriptionsForUserLaunch()
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTabsIfNeeded), name: .SettingsUpdate, object: nil)
     }
@@ -126,6 +127,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         kinds.append(.more)
         return kinds
+    }
+
+    private func refreshSubscriptionsForUserLaunch() {
+        Task {
+            await SubscriptionManager.shared.refreshAll(trigger: .launch)
+            await SubscriptionManager.shared.presentPendingUpdateAlertIfNeeded()
+        }
     }
 
     @available(iOS 18.0, *)
