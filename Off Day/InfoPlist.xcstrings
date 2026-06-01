@@ -10,6 +10,12 @@
             "value" : "Off Day"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off Day"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -40,6 +46,12 @@
             "value" : "Off Day"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off Day"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -67,6 +79,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notifications are used to alert you about upcoming off-day or workday."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "休日・出勤日の事前通知に使用します。"
           }
         },
         "zh-Hans" : {
