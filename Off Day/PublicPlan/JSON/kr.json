@@ -2,7 +2,7 @@
     "name": "韩国法定节假日",
     "start": "2024-01-01",
     "end": "2027-12-31",
-    "note": "데이터 출처: visitkorea.or.kr[https://chinese.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=140051]; 2024-10-01 임시공휴일[https://www.mpm.go.kr/mpm/comm/newsPress/newsPressRelease/?cntId=3940&mode=view]; 2025-01-27 임시공휴일[https://www.korea.kr/news/policyNewsView.do?newsId=148938559]; 2025-06-03 대통령선거[https://www.korea.kr/news/policyNewsView.do?newsId=148941443]; 2026년 노동절·제헌절 공휴일 지정[https://www.mpm.go.kr/mpm/comm/newsPress/newsPressRelease/?cntId=4250&mode=view]; 2027년 월력요항: 우주항공청[https://www.kasa.go.kr/prog/plcyBrf/brief/kor/sub01_01_04/view.do?plcyBrfNo=431]",
+    "note": "데이터 출처: visitkorea.or.kr[https://chinese.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=140051]; 2024-10-01 임시공휴일[https://www.mpm.go.kr/mpm/comm/newsPress/newsPressRelease/?cntId=3940&mode=view]; 2025-01-27 임시공휴일[https://www.korea.kr/news/policyNewsView.do?newsId=148938559]; 2025-06-03 대통령선거[https://www.korea.kr/news/policyNewsView.do?newsId=148941443]; 2026년 노동절·제헌절 공휴일 지정[https://www.mpm.go.kr/mpm/comm/newsPress/newsPressRelease/?cntId=4250&mode=view]; 2027년 월력요항: 우주항공청[https://www.kasa.go.kr/prog/plcyBrf/brief/kor/sub01_01_04/view.do?plcyBrfNo=431]; 설날의 전통 이칭 신일（愼日）: 한국민족문화대백과사전[https://encykorea.aks.ac.kr/Article/E0028997]",
     "days": [
         {
             "date": "2024-01-01",
@@ -131,7 +131,7 @@
         },
         {
             "date": "2025-03-03",
-            "name": "삼일절（三一節）(调)",
+            "name": "삼일절（三一節）（调）",
             "type": 0
         },
         {
@@ -141,7 +141,7 @@
         },
         {
             "date": "2025-05-06",
-            "name": "석가탄신일（釋迦誕辰日）(调)",
+            "name": "석가탄신일（釋迦誕辰日）（调）",
             "type": 0
         },
         {
@@ -181,7 +181,7 @@
         },
         {
             "date": "2025-10-08",
-            "name": "추석（秋夕）(调)",
+            "name": "추석（秋夕）（调）",
             "type": 0
         },
         {
@@ -221,7 +221,7 @@
         },
         {
             "date": "2026-03-02",
-            "name": "삼일절（三一節）(调)",
+            "name": "삼일절（三一節）（调）",
             "type": 0
         },
         {
@@ -241,7 +241,7 @@
         },
         {
             "date": "2026-05-25",
-            "name": "석가탄신일（釋迦誕辰日）(调)",
+            "name": "석가탄신일（釋迦誕辰日）（调）",
             "type": 0
         },
         {
@@ -266,7 +266,7 @@
         },
         {
             "date": "2026-08-17",
-            "name": "광복절（光復節）(调)",
+            "name": "광복절（光復節）（调）",
             "type": 0
         },
         {
@@ -291,7 +291,7 @@
         },
         {
             "date": "2026-10-05",
-            "name": "개천절（開天節）(调)",
+            "name": "개천절（開天節）（调）",
             "type": 0
         },
         {
@@ -307,122 +307,242 @@
         {
             "date": "2027-01-01",
             "name": "신정（新正）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "신정（新正）",
+                "zh-Hans": "元旦",
+                "zh-Hant": "元旦"
+            }
         },
         {
             "date": "2027-02-06",
             "name": "설날（春节）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "설날（愼日）",
+                "zh-Hans": "春节",
+                "zh-Hant": "春節"
+            }
         },
         {
             "date": "2027-02-07",
             "name": "설날（春节）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "설날（愼日）",
+                "zh-Hans": "春节",
+                "zh-Hant": "春節"
+            }
         },
         {
             "date": "2027-02-08",
             "name": "설날（春节）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "설날（愼日）",
+                "zh-Hans": "春节",
+                "zh-Hant": "春節"
+            }
         },
         {
             "date": "2027-02-09",
-            "name": "설날（春节）(调)",
-            "type": 0
+            "name": "설날（春节）（调）",
+            "type": 0,
+            "localizedNames": {
+                "ko": "설날（愼日） 대체공휴일",
+                "zh-Hans": "春节补假",
+                "zh-Hant": "春節補假"
+            }
         },
         {
             "date": "2027-03-01",
             "name": "삼일절（三一節）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "삼일절（三一節）",
+                "zh-Hans": "三一节",
+                "zh-Hant": "三一節"
+            }
         },
         {
             "date": "2027-05-01",
             "name": "노동절（劳动节）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "노동절（勞動節）",
+                "zh-Hans": "劳动节",
+                "zh-Hant": "勞動節"
+            }
         },
         {
             "date": "2027-05-03",
-            "name": "노동절（劳动节）(调)",
-            "type": 0
+            "name": "노동절（劳动节）（调）",
+            "type": 0,
+            "localizedNames": {
+                "ko": "노동절（勞動節） 대체공휴일",
+                "zh-Hans": "劳动节补假",
+                "zh-Hant": "勞動節補假"
+            }
         },
         {
             "date": "2027-05-05",
             "name": "어린이날",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "어린이날",
+                "zh-Hans": "儿童节",
+                "zh-Hant": "兒童節"
+            }
         },
         {
             "date": "2027-05-13",
             "name": "석가탄신일（釋迦誕辰日）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "석가탄신일（釋迦誕辰日）",
+                "zh-Hans": "佛诞日",
+                "zh-Hant": "佛誕日"
+            }
         },
         {
             "date": "2027-06-06",
             "name": "현충일（顯忠日）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "현충일（顯忠日）",
+                "zh-Hans": "显忠日",
+                "zh-Hant": "顯忠日"
+            }
         },
         {
             "date": "2027-07-17",
             "name": "제헌절（制宪节）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "제헌절（制憲節）",
+                "zh-Hans": "制宪节",
+                "zh-Hant": "制憲節"
+            }
         },
         {
             "date": "2027-07-19",
-            "name": "제헌절（制宪节）(调)",
-            "type": 0
+            "name": "제헌절（制宪节）（调）",
+            "type": 0,
+            "localizedNames": {
+                "ko": "제헌절（制憲節） 대체공휴일",
+                "zh-Hans": "制宪节补假",
+                "zh-Hant": "制憲節補假"
+            }
         },
         {
             "date": "2027-08-15",
             "name": "광복절（光復節）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "광복절（光復節）",
+                "zh-Hans": "光复节",
+                "zh-Hant": "光復節"
+            }
         },
         {
             "date": "2027-08-16",
-            "name": "광복절（光復節）(调)",
-            "type": 0
+            "name": "광복절（光復節）（调）",
+            "type": 0,
+            "localizedNames": {
+                "ko": "광복절（光復節） 대체공휴일",
+                "zh-Hans": "光复节补假",
+                "zh-Hant": "光復節補假"
+            }
         },
         {
             "date": "2027-09-14",
             "name": "추석（秋夕）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "추석（秋夕）",
+                "zh-Hans": "秋夕",
+                "zh-Hant": "秋夕"
+            }
         },
         {
             "date": "2027-09-15",
             "name": "추석（秋夕）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "추석（秋夕）",
+                "zh-Hans": "秋夕",
+                "zh-Hant": "秋夕"
+            }
         },
         {
             "date": "2027-09-16",
             "name": "추석（秋夕）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "추석（秋夕）",
+                "zh-Hans": "秋夕",
+                "zh-Hant": "秋夕"
+            }
         },
         {
             "date": "2027-10-03",
             "name": "개천절（開天節）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "개천절（開天節）",
+                "zh-Hans": "开天节",
+                "zh-Hant": "開天節"
+            }
         },
         {
             "date": "2027-10-04",
-            "name": "개천절（開天節）(调)",
-            "type": 0
+            "name": "개천절（開天節）（调）",
+            "type": 0,
+            "localizedNames": {
+                "ko": "개천절（開天節） 대체공휴일",
+                "zh-Hans": "开天节补假",
+                "zh-Hant": "開天節補假"
+            }
         },
         {
             "date": "2027-10-09",
             "name": "한글날（韩文节）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "한글날",
+                "zh-Hans": "韩文节",
+                "zh-Hant": "韓文節"
+            }
         },
         {
             "date": "2027-10-11",
-            "name": "한글날（韩文节）(调)",
-            "type": 0
+            "name": "한글날（韩文节）（调）",
+            "type": 0,
+            "localizedNames": {
+                "ko": "한글날 대체공휴일",
+                "zh-Hans": "韩文节补假",
+                "zh-Hant": "韓文節補假"
+            }
         },
         {
             "date": "2027-12-25",
             "name": "성탄절（聖誕節）",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ko": "성탄절（聖誕節）",
+                "zh-Hans": "圣诞节",
+                "zh-Hant": "聖誕節"
+            }
         },
         {
             "date": "2027-12-27",
-            "name": "성탄절（聖誕節）(调)",
-            "type": 0
+            "name": "성탄절（聖誕節）（调）",
+            "type": 0,
+            "localizedNames": {
+                "ko": "성탄절（聖誕節） 대체공휴일",
+                "zh-Hans": "圣诞节补假",
+                "zh-Hant": "聖誕節補假"
+            }
         }
     ]
 }

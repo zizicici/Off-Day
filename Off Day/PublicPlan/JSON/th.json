@@ -287,92 +287,182 @@
         {
             "date": "2027-01-01",
             "name": "New Year’s Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "วันขึ้นปีใหม่",
+                "zh-Hans": "元旦",
+                "zh-Hant": "元旦"
+            }
         },
         {
             "date": "2027-02-22",
             "name": "Substitution for Makha Bucha Day (Sunday 21st February 2027)",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "ชดเชยวันมาฆบูชา",
+                "zh-Hans": "万佛节补假",
+                "zh-Hant": "萬佛節補假"
+            }
         },
         {
             "date": "2027-04-06",
             "name": "Chakri Memorial Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "วันพระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช และวันที่ระลึกมหาจักรีบรมราชวงศ์",
+                "zh-Hans": "拉玛一世纪念日暨却克里王朝纪念日",
+                "zh-Hant": "拉瑪一世紀念日暨卻克里王朝紀念日"
+            }
         },
         {
             "date": "2027-04-13",
             "name": "Songkran Festival",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "วันสงกรานต์",
+                "zh-Hans": "宋干节",
+                "zh-Hant": "宋干節"
+            }
         },
         {
             "date": "2027-04-14",
             "name": "Songkran Festival",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "วันสงกรานต์",
+                "zh-Hans": "宋干节",
+                "zh-Hant": "宋干節"
+            }
         },
         {
             "date": "2027-04-15",
             "name": "Songkran Festival",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "วันสงกรานต์",
+                "zh-Hans": "宋干节",
+                "zh-Hant": "宋干節"
+            }
         },
         {
             "date": "2027-05-03",
             "name": "Substitution for National Labor Day (Saturday 1st May 2027)",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "ชดเชยวันแรงงานแห่งชาติ",
+                "zh-Hans": "国家劳动节补假",
+                "zh-Hant": "國家勞動節補假"
+            }
         },
         {
             "date": "2027-05-04",
             "name": "Coronation Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "วันฉัตรมงคล",
+                "zh-Hans": "加冕纪念日",
+                "zh-Hant": "加冕紀念日"
+            }
         },
         {
             "date": "2027-05-20",
             "name": "Visakha Bucha Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "วันวิสาขบูชา",
+                "zh-Hans": "卫塞节",
+                "zh-Hant": "衛塞節"
+            }
         },
         {
             "date": "2027-06-03",
             "name": "H.M. Queen Suthida Bajrasudhabimalalakshana’s Birthday",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "วันเฉลิมพระชนมพรรษาสมเด็จพระนางเจ้าสุทิดา พัชรสุธาพิมลลักษณ พระบรมราชินี",
+                "zh-Hans": "素提达王后诞辰",
+                "zh-Hant": "素提達王后誕辰"
+            }
         },
         {
             "date": "2027-07-19",
             "name": "Substitution for Asarnha Bucha Day (Sunday 18th July 2027)",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "ชดเชยวันอาสาฬหบูชา",
+                "zh-Hans": "三宝佛节补假",
+                "zh-Hant": "三寶佛節補假"
+            }
         },
         {
             "date": "2027-07-28",
             "name": "H.M. King Maha Vajiralongkorn Phra Vajiraklaochaoyuhua’s Birthday",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "วันเฉลิมพระชนมพรรษาพระบาทสมเด็จพระเจ้าอยู่หัว",
+                "zh-Hans": "哇集拉隆功国王诞辰",
+                "zh-Hant": "哇集拉隆功國王誕辰"
+            }
         },
         {
             "date": "2027-08-12",
             "name": "H.M. Queen Sirikit the Queen Mother’s Birthday Anniversary and National Mother’s Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "วันคล้ายวันพระราชสมภพสมเด็จพระนางเจ้าสิริกิติ์ พระบรมราชินีนาถ พระบรมราชชนนีพันปีหลวง และวันแม่แห่งชาติ",
+                "zh-Hans": "诗丽吉王太后诞辰暨母亲节",
+                "zh-Hant": "詩麗吉王太后誕辰暨母親節"
+            }
         },
         {
             "date": "2027-10-13",
             "name": "H.M. King Bhumibol Adulyadej the Great Memorial Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "วันนวมินทรมหาราช",
+                "zh-Hans": "普密蓬大帝纪念日",
+                "zh-Hant": "普密蓬大帝紀念日"
+            }
         },
         {
             "date": "2027-10-25",
             "name": "Substitution for H.M. King Chulalongkorn the Great Memorial Day (Saturday 23rd October 2027)",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "ชดเชยวันปิยมหาราช",
+                "zh-Hans": "朱拉隆功大帝纪念日补假",
+                "zh-Hant": "朱拉隆功大帝紀念日補假"
+            }
         },
         {
             "date": "2027-12-06",
             "name": "Substitution for H.M. King Bhumibol Adulyadej the Great’s Birthday, National Day and Father’s Day (Sunday 5th December 2027)",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "ชดเชยวันคล้ายวันพระบรมราชสมภพพระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร วันชาติ และวันพ่อแห่งชาติ",
+                "zh-Hans": "普密蓬大帝诞辰、国庆日暨父亲节补假",
+                "zh-Hant": "普密蓬大帝誕辰、國慶日暨父親節補假"
+            }
         },
         {
             "date": "2027-12-10",
             "name": "Constitution Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "วันรัฐธรรมนูญ",
+                "zh-Hans": "宪法日",
+                "zh-Hant": "憲法日"
+            }
         },
         {
             "date": "2027-12-31",
             "name": "New Year’s Eve",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "th": "วันสิ้นปี",
+                "zh-Hans": "除夕",
+                "zh-Hant": "除夕"
+            }
         }
     ]
 }

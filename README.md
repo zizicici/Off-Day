@@ -151,17 +151,26 @@ Imported/exported plans follow this shape:
 ```json
 {
   "name": "My Plan",
-  "start": "2026-01-01",
-  "end": "2026-12-31",
+  "start": "2027-01-01",
+  "end": "2027-12-31",
   "days": [
     {
       "name": "New Year",
-      "date": "2026-01-01",
-      "type": "offDay"
+      "date": "2027-01-01",
+      "type": 0,
+      "localizedNames": {
+        "en": "New Year",
+        "zh-Hans": "元旦",
+        "zh-Hant": "元旦"
+      }
     }
   ]
 }
 ```
+
+`name` is the required original name. Optional `localizedNames` maps language codes (such as `pt`, `th`, `ta`, or `zh-Hant`) to translations, independently of the app’s interface languages. `type` is `0` for a day off or `1` for a workday. Dates must be valid, with years from 1 to 9999; legacy dates without zero padding remain supported. Existing templates without `localizedNames` remain compatible; missing or blank translations fall back to `name`. The earlier `names` key is accepted when reading; exports use `localizedNames`. If both keys are present, `localizedNames` takes precedence.
+
+For templates with translations, choose Holiday Name Language from the calendar home screen’s top-right (…) menu. Original Names is the default. Changes take effect immediately and are remembered separately for each template. Imports, exports, copies, and subscription updates preserve translations. When editing a custom holiday, selecting a language updates that translation while preserving the original and other translations; Original Names edits `name`. Newly created holidays also receive an original name for fallback. Language selection affects display text; reminder grouping continues to use original names. Bundled 2027 entries include local official languages and simplified/traditional Chinese: English for Hong Kong and the US, Portuguese for Macao, English/Malay/Tamil for Singapore, and Japanese/Korean/Thai for their respective regions. Mainland and local Chinese templates initially include simplified/traditional Chinese; minority languages will follow later. Earlier entries retain their original names. Portuguese names follow the [Macao government calendar](https://www.gov.mo/pt/feriados/year-2027/); Thai names follow the [Bank of Thailand notice](https://www.bot.or.th/content/dam/bot/fipcs/documents/FPG/2569/ThaiPDF/25690175.pdf). Singapore terminology follows MOM’s [Malay guide](https://www.mom.gov.sg/-/media/mom/documents/employment-practices/workright/workright-guide-employment-laws-malay.pdf) and [Tamil guide](https://www.mom.gov.sg/-/media/mom/documents/employment-practices/workright/workright-guide-employment-laws-tamil.pdf).
 
 Reference model: `Off Day/PublicPlan/Model/JSONPublicPlan.swift`.
 

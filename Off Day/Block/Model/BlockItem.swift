@@ -31,7 +31,7 @@ extension BlockItem {
 extension BlockItem {
     var calendarString: String {
         var suffix = ""
-        if let name = PublicPlanManager.shared.dataSource?.days[day.julianDay]?.name {
+        if let name = PublicPlanManager.shared.publicDay(at: day.julianDay)?.name {
             suffix = "\n\(name)"
         }
         return (day.completeFormatString() ?? "") + suffix

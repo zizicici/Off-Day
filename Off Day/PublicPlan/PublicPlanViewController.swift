@@ -120,7 +120,9 @@ class PublicPlanViewController: UIViewController {
     }
     
     func createLayout() -> UICollectionViewLayout {
-        let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+        let sectionProvider = { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            guard let self = self else { return nil }
+            
             var configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
             configuration.separatorConfiguration = UIListSeparatorConfiguration(listAppearance: .insetGrouped)
             configuration.backgroundColor = AppColor.background

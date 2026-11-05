@@ -90,7 +90,7 @@ final class SubscriptionManager {
             note: jsonPlan.note
         )
 
-        let days = jsonPlan.days.map { CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }
+        let days = jsonPlan.days.map { CustomPublicDay(name: $0.name, date: $0.date, type: $0.type, localizedNames: $0.localizedNames) }
 
         guard let savedPlan = try AppDatabase.shared.savePlanWithDays(plan: plan, days: days) else {
             Logger.subscription.error("Failed to save subscribed plan")
@@ -262,7 +262,7 @@ final class SubscriptionManager {
 
         for (julianDay, newDay) in newDict {
             if let oldDay = currentDict[julianDay] {
-                if oldDay.type != newDay.type || oldDay.name != newDay.name {
+                if oldDay.type != newDay.type || oldDay.name != newDay.name || oldDay.localizedNames != newDay.localizedNames {
                     modified.append(DayChange(date: newDay.date, name: newDay.name, oldType: oldDay.type, newType: newDay.type))
                 }
             } else {
@@ -365,7 +365,7 @@ final class SubscriptionManager {
         guard let update = updates.first(where: { $0.planId == planId }) else { return false }
 
         do {
-            let days = update.jsonPlan.days.map { CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }
+            let days = update.jsonPlan.days.map { CustomPublicDay(name: $0.name, date: $0.date, type: $0.type, localizedNames: $0.localizedNames) }
             try AppDatabase.shared.replacePlanDaysAndUpdate(planId: planId, fields: { plan in
                 plan.name = update.jsonPlan.name
                 plan.start = update.jsonPlan.start
@@ -526,6 +526,7 @@ final class SubscriptionManager {
     private func presentPreview(for update: PendingSubscriptionUpdate, from updates: [PendingSubscriptionUpdate], index: Int, on presenter: UIViewController) {
         let planInfo = PublicPlanInfo(
             plan: .custom(CustomPublicPlan(
+                id: update.planId,
                 name: update.jsonPlan.name,
                 start: update.jsonPlan.start,
                 end: update.jsonPlan.end,

@@ -16,6 +16,9 @@ class CustomPublicDayDetailViewController: UIViewController {
     private var editMode: EditMode = .add
     private var titleCell: TextInputCell?
     private var saveBarItem: UIBarButtonItem?
+    private var language: String?
+    private var nameText = ""
+    private var needsOriginalName = false
     
     var saveClosure: ((CustomPublicDay?) -> (Bool))?
     
@@ -39,11 +42,14 @@ class CustomPublicDayDetailViewController: UIViewController {
     class DataSource: UITableViewDiffableDataSource<Section, Item> {
     }
     
-    convenience init(day: CustomPublicDay?, saveClosure: @escaping (CustomPublicDay?) -> (Bool)) {
+    convenience init(day: CustomPublicDay?, language: String? = nil, saveClosure: @escaping (CustomPublicDay?) -> (Bool)) {
         self.init(nibName: nil, bundle: nil)
         self.editMode = (day == nil) ? .add : .update
         self.saveClosure = saveClosure
         self.day = day ?? CustomPublicDay(name: "", date: ZCCalendar.manager.today, type: .offDay)
+        self.language = language.map(PublicPlanLanguage.identifier)
+        self.nameText = self.day.localizedName(language: self.language)
+        self.needsOriginalName = self.day.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
     
     override func viewDidLoad() {
@@ -85,7 +91,7 @@ class CustomPublicDayDetailViewController: UIViewController {
         super.viewDidAppear(animated)
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25) { [weak self] in
-            if self?.day.name.count == 0 {
+            if self?.nameText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true {
                 _ = self?.titleCell?.becomeFirstResponder()
             }
         }
@@ -124,8 +130,7 @@ class CustomPublicDayDetailViewController: UIViewController {
                     self.titleCell = cell
                     cell.update(text: title, placeholder: String(localized: "publicDay.detail.title.placeholder"))
                     cell.textDidChanged = { [weak self] text in
-                        self?.day.name = text
-                        self?.updateSaveBarItem()
+                        self?.updateName(text)
                     }
                 }
                 return cell
@@ -171,7 +176,7 @@ class CustomPublicDayDetailViewController: UIViewController {
     func reloadData() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.main])
-        snapshot.appendItems([.title(day.name), .date(day.date), .type(day.type)], toSection: .main)
+        snapshot.appendItems([.title(nameText), .date(day.date), .type(day.type)], toSection: .main)
         
         switch editMode {
         case .add:
@@ -191,6 +196,7 @@ class CustomPublicDayDetailViewController: UIViewController {
     
     @objc
     func saveAction() {
+        guard canSave else { return }
         if saveClosure?(day) == true {
             dismissAction()
         } else {
@@ -228,8 +234,24 @@ class CustomPublicDayDetailViewController: UIViewController {
         present(alertController, animated: ConsideringUser.animated, completion: nil)
     }
     
+    func updateName(_ text: String) {
+        nameText = text
+        if let language {
+            if day.localizedNames == nil { day.localizedNames = [:] }
+            day.localizedNames?[language] = text
+            if needsOriginalName { day.name = text }
+        } else {
+            day.name = text
+        }
+        updateSaveBarItem()
+    }
+
+    private var canSave: Bool {
+        day.allowSave() && !nameText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
     func updateSaveBarItem() {
-        saveBarItem?.isEnabled = day.allowSave()
+        saveBarItem?.isEnabled = canSave
     }
 }
 

@@ -130,6 +130,16 @@ final class AppDatabase {
             }
         }
 
+        migrator.registerMigration("add_public_day_localized_names") { db in
+            try db.alter(table: "custom_public_day") { table in
+                table.add(column: "names", .text)
+            }
+        }
+
+        migrator.registerMigration("rename_public_day_localized_names") { db in
+            try db.execute(sql: "ALTER TABLE custom_public_day RENAME COLUMN names TO localized_names")
+        }
+
         return migrator
     }
     

@@ -197,62 +197,146 @@
         {
             "date": "2027-01-01",
             "name": "New Year's Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "New Year's Day",
+                "ms": "Hari Tahun Baru",
+                "ta": "புத்தாண்டு தினம்",
+                "zh-Hans": "元旦",
+                "zh-Hant": "元旦"
+            }
         },
         {
             "date": "2027-02-06",
             "name": "Chinese New Year",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Chinese New Year",
+                "ms": "Tahun Baru Cina",
+                "ta": "சீனப் புத்தாண்டு",
+                "zh-Hans": "农历新年",
+                "zh-Hant": "農曆新年"
+            }
         },
         {
             "date": "2027-02-07",
             "name": "Chinese New Year",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Chinese New Year",
+                "ms": "Tahun Baru Cina",
+                "ta": "சீனப் புத்தாண்டு",
+                "zh-Hans": "农历新年",
+                "zh-Hant": "農曆新年"
+            }
         },
         {
             "date": "2027-02-08",
             "name": "Chinese New Year",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Chinese New Year",
+                "ms": "Tahun Baru Cina",
+                "ta": "சீனப் புத்தாண்டு",
+                "zh-Hans": "农历新年",
+                "zh-Hant": "農曆新年"
+            }
         },
         {
             "date": "2027-03-10",
             "name": "Hari Raya Puasa",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Hari Raya Puasa",
+                "ms": "Hari Raya Puasa",
+                "ta": "நோன்புப் பெருநாள்",
+                "zh-Hans": "开斋节",
+                "zh-Hant": "開齋節"
+            }
         },
         {
             "date": "2027-03-26",
             "name": "Good Friday",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Good Friday",
+                "ms": "Good Friday",
+                "ta": "புனித வெள்ளி",
+                "zh-Hans": "耶稣受难日",
+                "zh-Hant": "耶穌受難日"
+            }
         },
         {
             "date": "2027-05-01",
             "name": "Labour Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Labour Day",
+                "ms": "Hari Buruh",
+                "ta": "தொழிலாளர் தினம்",
+                "zh-Hans": "劳动节",
+                "zh-Hant": "勞動節"
+            }
         },
         {
             "date": "2027-05-17",
             "name": "Hari Raya Haji",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Hari Raya Haji",
+                "ms": "Hari Raya Haji",
+                "ta": "ஹாஜி பெருநாள்",
+                "zh-Hans": "哈芝节",
+                "zh-Hant": "哈芝節"
+            }
         },
         {
             "date": "2027-05-20",
             "name": "Vesak Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Vesak Day",
+                "ms": "Hari Vesak",
+                "ta": "விசாக தினம்",
+                "zh-Hans": "卫塞节",
+                "zh-Hant": "衛塞節"
+            }
         },
         {
             "date": "2027-08-09",
             "name": "National Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "National Day",
+                "ms": "Hari Kebangsaan",
+                "ta": "தேசிய தினம்",
+                "zh-Hans": "国庆日",
+                "zh-Hant": "國慶日"
+            }
         },
         {
             "date": "2027-10-28",
             "name": "Deepavali",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Deepavali",
+                "ms": "Deepavali",
+                "ta": "தீபாவளி",
+                "zh-Hans": "屠妖节",
+                "zh-Hant": "屠妖節"
+            }
         },
         {
             "date": "2027-12-25",
             "name": "Christmas Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Christmas Day",
+                "ms": "Hari Natal",
+                "ta": "கிறிஸ்துமஸ் தினம்",
+                "zh-Hans": "圣诞节",
+                "zh-Hant": "聖誕節"
+            }
         }
     ]
 }

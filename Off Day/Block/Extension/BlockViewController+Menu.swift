@@ -9,6 +9,29 @@ import UIKit
 import MoreKit
 
 extension BlockViewController {
+    func getPublicPlanLanguageMenu() -> UIMenu? {
+        guard let info = PublicPlanManager.shared.dataSource, !info.availableLanguages.isEmpty else { return nil }
+        let languages: [String?] = [nil] + info.availableLanguages.map { Optional($0) }
+        let actions = languages.map { language in
+            UIAction(title: PublicPlanLanguage.title(for: language),
+                     identifier: UIAction.Identifier("publicPlan.language.\(language ?? "original")"),
+                     state: language == info.language ? .on : .off) { [weak self] _ in
+                self?.selectPublicPlanLanguage(language)
+            }
+        }
+        return UIMenu(title: String(localized: "publicPlan.language.title"),
+                      subtitle: PublicPlanLanguage.title(for: info.language),
+                      image: UIImage(systemName: "character.bubble"),
+                      identifier: UIMenu.Identifier("publicPlan.language"), children: actions)
+    }
+
+    func selectPublicPlanLanguage(_ language: String?) {
+        guard let info = PublicPlanManager.shared.dataSource else { return }
+        let language = language.map(PublicPlanLanguage.identifier)
+        if let language, !info.availableLanguages.contains(language) { return }
+        PublicPlanManager.shared.select(plan: info.plan, language: language)
+    }
+
     func getWeekStartType() -> WeekStartType {
         return WeekStartType.getValue()
     }

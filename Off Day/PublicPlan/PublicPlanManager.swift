@@ -61,14 +61,15 @@ final class PublicPlanManager {
     }
     
     public func publicDay(at julianDay: Int) -> (any PublicDay)? {
-        return dataSource?.days[julianDay]
+        guard let dataSource, let day = dataSource.days[julianDay] else { return nil }
+        return dataSource.displayDay(day)
     }
     
     public func fetchPublicDay(after julianDay: Int, dayType: DayType) -> (any PublicDay)? {
-        guard let days = dataSource?.days else { return nil }
-        for (index, day) in days {
+        guard let dataSource else { return nil }
+        for (index, day) in dataSource.days {
             if index > julianDay && day.type == dayType {
-                return day
+                return dataSource.displayDay(day)
             }
         }
         return nil
@@ -99,8 +100,15 @@ final class PublicPlanManager {
     }
     
     public func select(plan: PublicPlanInfo.Plan?) {
-        guard dataSource?.plan != plan else {
+        select(plan: plan, language: plan.flatMap { PublicPlanLanguage.saved(for: $0) })
+    }
+
+    public func select(plan: PublicPlanInfo.Plan?, language: String?) {
+        guard dataSource?.plan != plan || dataSource?.language != language else {
             return
+        }
+        if let plan {
+            PublicPlanLanguage.save(language, for: plan)
         }
         let appPlanStoredKey = UserDefaults.Settings.AppPublicPlanType.rawValue
         let customPlanStoredKey = UserDefaults.Settings.CustomPublicPlanType.rawValue
@@ -126,22 +134,22 @@ final class PublicPlanManager {
     }
     
     public func getDaysAfter(day: GregorianDay) -> [(key: Int, value: any PublicDay)] {
-        guard let days = dataSource?.days else { return [] }
-        let filteredAndSorted = days
+        guard let dataSource else { return [] }
+        let filteredAndSorted = dataSource.days
             .filter { $0.key > day.julianDay }
             .sorted { $0.key < $1.key }
         
         guard !filteredAndSorted.isEmpty else { return [] }
         
         var result: [(key: Int, value: any PublicDay)] = []
-        var previousDayName: String? = nil
+        var previousOriginalName: String? = nil
         
         for day in filteredAndSorted {
-            let currentDayName = day.value.name
-            
-            if currentDayName != previousDayName {
-                result.append(day)
-                previousDayName = currentDayName
+            // Translation availability must not split or merge holiday reminder groups.
+            let originalName = day.value.name
+            if originalName != previousOriginalName {
+                result.append((key: day.key, value: dataSource.displayDay(day.value)))
+                previousOriginalName = originalName
             }
         }
         
@@ -191,7 +199,11 @@ extension PublicPlanManager {
             if let planId = customPlan.id, customPlan.sourceURL != nil {
                 SubscriptionManager.shared.cleanupForDeletedPlan(planId)
             }
-            return AppDatabase.shared.delete(publicPlan: customPlan)
+            let deleted = AppDatabase.shared.delete(publicPlan: customPlan)
+            if deleted {
+                PublicPlanLanguage.save(nil, for: .custom(customPlan))
+            }
+            return deleted
         }
     }
     
@@ -236,7 +248,7 @@ extension PublicPlanManager {
 extension PublicPlanManager {
     func importPlan(from url: URL) -> Bool {
         if let jsonPlan = try? JSONPublicPlan(from: url) {
-            let newCustomPlan = CustomPublicPlan.Detail(plan: CustomPublicPlan(name: jsonPlan.name, start: jsonPlan.start, end: jsonPlan.end, note: jsonPlan.note), days: jsonPlan.days.map({ CustomPublicDay(name: $0.name, date: $0.date, type: $0.type) }))
+            let newCustomPlan = CustomPublicPlan.Detail(plan: CustomPublicPlan(name: jsonPlan.name, start: jsonPlan.start, end: jsonPlan.end, note: jsonPlan.note), days: jsonPlan.days.map({ CustomPublicDay(name: $0.name, date: $0.date, type: $0.type, localizedNames: $0.localizedNames) }))
             let planInfo = PublicPlanInfo(detail: newCustomPlan)
             return create(planInfo)
         } else {
@@ -249,7 +261,7 @@ extension PublicPlanManager {
 
         do {
             guard let planDetail = try fetchCustomPublicPlan(with: customPlanId) else { return nil }
-            let exportPlan = JSONPublicPlan(name: planDetail.plan.name, days: planDetail.days.map{ JSONPublicDay(name: $0.name, date: $0.date, type: $0.type)}, start: planDetail.plan.start, end: planDetail.plan.end, note: planDetail.plan.note)
+            let exportPlan = JSONPublicPlan(name: planDetail.plan.name, days: planDetail.days.map{ JSONPublicDay(name: $0.name, date: $0.date, type: $0.type, localizedNames: $0.localizedNames)}, start: planDetail.plan.start, end: planDetail.plan.end, note: planDetail.plan.note)
             
             guard let jsonString = try exportPlan.jsonContent() else { return nil }
             

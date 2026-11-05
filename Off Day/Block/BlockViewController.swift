@@ -249,6 +249,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
             self.customDayInfos = customDayInfos
         }
         self.updateNavigationTitleView()
+        updateMoreMenu()
         
         publicPlanButton?.image = getPublicPlanIndicator()
         publicPlanButton?.accessibilityLabel = String(localized: "controller.publicDay.title")
@@ -305,7 +306,11 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     }
     
     private func updateMoreMenu() {
-        var children: [UIMenuElement] = [getWeekStartTypeMenu(), getWeekEndColorMenu()]
+        var children: [UIMenuElement] = []
+        if let languageMenu = getPublicPlanLanguageMenu() {
+            children.append(languageMenu)
+        }
+        children.append(contentsOf: [getWeekStartTypeMenu(), getWeekEndColorMenu()])
         
         if PublicPlanManager.shared.hasHolidayShift() {
             children.append(getHolidayWorkColorMenu())

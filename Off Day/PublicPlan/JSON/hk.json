@@ -262,87 +262,172 @@
         {
             "date": "2027-01-01",
             "name": "一月一日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "The first day of January",
+                "zh-Hans": "一月一日",
+                "zh-Hant": "一月一日"
+            }
         },
         {
             "date": "2027-02-06",
             "name": "農曆年初一",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Lunar New Year's Day",
+                "zh-Hans": "农历年初一",
+                "zh-Hant": "農曆年初一"
+            }
         },
         {
             "date": "2027-02-08",
             "name": "農曆年初三",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "The third day of Lunar New Year",
+                "zh-Hans": "农历年初三",
+                "zh-Hant": "農曆年初三"
+            }
         },
         {
             "date": "2027-02-09",
             "name": "農曆年初四",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "The fourth day of Lunar New Year",
+                "zh-Hans": "农历年初四",
+                "zh-Hant": "農曆年初四"
+            }
         },
         {
             "date": "2027-03-26",
             "name": "耶穌受難節",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Good Friday",
+                "zh-Hans": "耶稣受难节",
+                "zh-Hant": "耶穌受難節"
+            }
         },
         {
             "date": "2027-03-27",
             "name": "耶穌受難節翌日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "The day following Good Friday",
+                "zh-Hans": "耶稣受难节翌日",
+                "zh-Hant": "耶穌受難節翌日"
+            }
         },
         {
             "date": "2027-03-29",
             "name": "復活節星期一",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Easter Monday",
+                "zh-Hans": "复活节星期一",
+                "zh-Hant": "復活節星期一"
+            }
         },
         {
             "date": "2027-04-05",
             "name": "清明節",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Ching Ming Festival",
+                "zh-Hans": "清明节",
+                "zh-Hant": "清明節"
+            }
         },
         {
             "date": "2027-05-01",
             "name": "勞動節",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Labour Day",
+                "zh-Hans": "劳动节",
+                "zh-Hant": "勞動節"
+            }
         },
         {
             "date": "2027-05-13",
             "name": "佛誕",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "The Birthday of the Buddha",
+                "zh-Hans": "佛诞",
+                "zh-Hant": "佛誕"
+            }
         },
         {
             "date": "2027-06-09",
             "name": "端午節",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Tuen Ng Festival",
+                "zh-Hans": "端午节",
+                "zh-Hant": "端午節"
+            }
         },
         {
             "date": "2027-07-01",
             "name": "香港特別行政區成立紀念日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Hong Kong Special Administrative Region Establishment Day",
+                "zh-Hans": "香港特别行政区成立纪念日",
+                "zh-Hant": "香港特別行政區成立紀念日"
+            }
         },
         {
             "date": "2027-09-16",
             "name": "中秋節翌日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "The day following the Chinese Mid-Autumn Festival",
+                "zh-Hans": "中秋节翌日",
+                "zh-Hant": "中秋節翌日"
+            }
         },
         {
             "date": "2027-10-01",
             "name": "國慶日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "National Day",
+                "zh-Hans": "国庆日",
+                "zh-Hant": "國慶日"
+            }
         },
         {
             "date": "2027-10-08",
             "name": "重陽節",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Chung Yeung Festival",
+                "zh-Hans": "重阳节",
+                "zh-Hant": "重陽節"
+            }
         },
         {
             "date": "2027-12-25",
             "name": "聖誕節",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Christmas Day",
+                "zh-Hans": "圣诞节",
+                "zh-Hant": "聖誕節"
+            }
         },
         {
             "date": "2027-12-27",
             "name": "聖誕節後第一個周日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "The first weekday after Christmas Day",
+                "zh-Hans": "圣诞节后第一个周日",
+                "zh-Hant": "聖誕節後第一個周日"
+            }
         }
     ]
 }

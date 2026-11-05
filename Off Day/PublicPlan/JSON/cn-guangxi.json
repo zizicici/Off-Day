@@ -587,172 +587,308 @@
         {
             "date": "2027-01-01",
             "name": "元旦",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "元旦",
+                "zh-Hant": "元旦"
+            }
         },
         {
             "date": "2027-01-02",
             "name": "元旦",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "元旦",
+                "zh-Hant": "元旦"
+            }
         },
         {
             "date": "2027-01-03",
             "name": "元旦",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "元旦",
+                "zh-Hant": "元旦"
+            }
         },
         {
             "date": "2027-01-31",
             "name": "春节调班",
-            "type": 1
+            "type": 1,
+            "localizedNames": {
+                "zh-Hans": "春节调班",
+                "zh-Hant": "春節調班"
+            }
         },
         {
             "date": "2027-02-05",
             "name": "春节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "春节",
+                "zh-Hant": "春節"
+            }
         },
         {
             "date": "2027-02-06",
             "name": "春节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "春节",
+                "zh-Hant": "春節"
+            }
         },
         {
             "date": "2027-02-07",
             "name": "春节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "春节",
+                "zh-Hant": "春節"
+            }
         },
         {
             "date": "2027-02-08",
             "name": "春节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "春节",
+                "zh-Hant": "春節"
+            }
         },
         {
             "date": "2027-02-09",
             "name": "春节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "春节",
+                "zh-Hant": "春節"
+            }
         },
         {
             "date": "2027-02-10",
             "name": "春节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "春节",
+                "zh-Hant": "春節"
+            }
         },
         {
             "date": "2027-02-11",
             "name": "春节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "春节",
+                "zh-Hant": "春節"
+            }
         },
         {
             "date": "2027-02-12",
             "name": "春节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "春节",
+                "zh-Hant": "春節"
+            }
         },
         {
             "date": "2027-02-13",
             "name": "春节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "春节",
+                "zh-Hant": "春節"
+            }
         },
         {
             "date": "2027-02-14",
             "name": "春节调班",
-            "type": 1
+            "type": 1,
+            "localizedNames": {
+                "zh-Hans": "春节调班",
+                "zh-Hant": "春節調班"
+            }
         },
         {
             "date": "2027-04-03",
             "name": "清明节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "清明节",
+                "zh-Hant": "清明節"
+            }
         },
         {
             "date": "2027-04-04",
             "name": "清明节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "清明节",
+                "zh-Hant": "清明節"
+            }
         },
         {
             "date": "2027-04-05",
             "name": "清明节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "清明节",
+                "zh-Hant": "清明節"
+            }
         },
         {
             "date": "2027-05-01",
             "name": "劳动节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "劳动节",
+                "zh-Hant": "勞動節"
+            }
         },
         {
             "date": "2027-05-02",
             "name": "劳动节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "劳动节",
+                "zh-Hant": "勞動節"
+            }
         },
         {
             "date": "2027-05-03",
             "name": "劳动节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "劳动节",
+                "zh-Hant": "勞動節"
+            }
         },
         {
             "date": "2027-05-04",
             "name": "劳动节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "劳动节",
+                "zh-Hant": "勞動節"
+            }
         },
         {
             "date": "2027-05-05",
             "name": "劳动节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "劳动节",
+                "zh-Hant": "勞動節"
+            }
         },
         {
             "date": "2027-05-08",
             "name": "劳动节调班",
-            "type": 1
+            "type": 1,
+            "localizedNames": {
+                "zh-Hans": "劳动节调班",
+                "zh-Hant": "勞動節調班"
+            }
         },
         {
             "date": "2027-06-09",
             "name": "端午节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "端午节",
+                "zh-Hant": "端午節"
+            }
         },
         {
             "date": "2027-09-15",
             "name": "中秋节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "中秋节",
+                "zh-Hant": "中秋節"
+            }
         },
         {
             "date": "2027-09-26",
             "name": "国庆节调班",
-            "type": 1
+            "type": 1,
+            "localizedNames": {
+                "zh-Hans": "国庆节调班",
+                "zh-Hant": "國慶節調班"
+            }
         },
         {
             "date": "2027-10-01",
             "name": "国庆节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "国庆节",
+                "zh-Hant": "國慶節"
+            }
         },
         {
             "date": "2027-10-02",
             "name": "国庆节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "国庆节",
+                "zh-Hant": "國慶節"
+            }
         },
         {
             "date": "2027-10-03",
             "name": "国庆节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "国庆节",
+                "zh-Hant": "國慶節"
+            }
         },
         {
             "date": "2027-10-04",
             "name": "国庆节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "国庆节",
+                "zh-Hant": "國慶節"
+            }
         },
         {
             "date": "2027-10-05",
             "name": "国庆节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "国庆节",
+                "zh-Hant": "國慶節"
+            }
         },
         {
             "date": "2027-10-06",
             "name": "国庆节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "国庆节",
+                "zh-Hant": "國慶節"
+            }
         },
         {
             "date": "2027-10-07",
             "name": "国庆节",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "zh-Hans": "国庆节",
+                "zh-Hant": "國慶節"
+            }
         },
         {
             "date": "2027-10-09",
             "name": "国庆节调班",
-            "type": 1
+            "type": 1,
+            "localizedNames": {
+                "zh-Hans": "国庆节调班",
+                "zh-Hant": "國慶節調班"
+            }
         }
     ]
 }

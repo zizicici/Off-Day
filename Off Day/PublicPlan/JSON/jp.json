@@ -5257,87 +5257,172 @@
         {
             "date": "2027-01-01",
             "name": "元日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "元日",
+                "zh-Hans": "元旦",
+                "zh-Hant": "元旦"
+            }
         },
         {
             "date": "2027-01-11",
             "name": "成人の日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "成人の日",
+                "zh-Hans": "成人节",
+                "zh-Hant": "成人節"
+            }
         },
         {
             "date": "2027-02-11",
             "name": "建国記念の日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "建国記念の日",
+                "zh-Hans": "建国纪念日",
+                "zh-Hant": "建國紀念日"
+            }
         },
         {
             "date": "2027-02-23",
             "name": "天皇誕生日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "天皇誕生日",
+                "zh-Hans": "天皇诞辰",
+                "zh-Hant": "天皇誕辰"
+            }
         },
         {
             "date": "2027-03-21",
             "name": "春分の日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "春分の日",
+                "zh-Hans": "春分日",
+                "zh-Hant": "春分日"
+            }
         },
         {
             "date": "2027-03-22",
             "name": "休日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "休日",
+                "zh-Hans": "补假",
+                "zh-Hant": "補假"
+            }
         },
         {
             "date": "2027-04-29",
             "name": "昭和の日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "昭和の日",
+                "zh-Hans": "昭和日",
+                "zh-Hant": "昭和日"
+            }
         },
         {
             "date": "2027-05-03",
             "name": "憲法記念日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "憲法記念日",
+                "zh-Hans": "宪法纪念日",
+                "zh-Hant": "憲法紀念日"
+            }
         },
         {
             "date": "2027-05-04",
             "name": "みどりの日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "みどりの日",
+                "zh-Hans": "绿之日",
+                "zh-Hant": "綠之日"
+            }
         },
         {
             "date": "2027-05-05",
             "name": "こどもの日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "こどもの日",
+                "zh-Hans": "儿童节",
+                "zh-Hant": "兒童節"
+            }
         },
         {
             "date": "2027-07-19",
             "name": "海の日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "海の日",
+                "zh-Hans": "海之日",
+                "zh-Hant": "海之日"
+            }
         },
         {
             "date": "2027-08-11",
             "name": "山の日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "山の日",
+                "zh-Hans": "山之日",
+                "zh-Hant": "山之日"
+            }
         },
         {
             "date": "2027-09-20",
             "name": "敬老の日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "敬老の日",
+                "zh-Hans": "敬老日",
+                "zh-Hant": "敬老日"
+            }
         },
         {
             "date": "2027-09-23",
             "name": "秋分の日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "秋分の日",
+                "zh-Hans": "秋分日",
+                "zh-Hant": "秋分日"
+            }
         },
         {
             "date": "2027-10-11",
             "name": "スポーツの日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "スポーツの日",
+                "zh-Hans": "体育日",
+                "zh-Hant": "體育日"
+            }
         },
         {
             "date": "2027-11-03",
             "name": "文化の日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "文化の日",
+                "zh-Hans": "文化日",
+                "zh-Hant": "文化日"
+            }
         },
         {
             "date": "2027-11-23",
             "name": "勤労感謝の日",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "ja": "勤労感謝の日",
+                "zh-Hans": "劳动感谢日",
+                "zh-Hant": "勞動感謝日"
+            }
         }
     ]
 }

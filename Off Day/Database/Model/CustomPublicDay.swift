@@ -15,13 +15,15 @@ struct CustomPublicDay: PublicDay, Identifiable, Codable, Equatable, Hashable {
     var name: String
     var date: GregorianDay
     var type: DayType
+    var localizedNames: [String: String]?
     
     var planId: Int64 = -1
     
-    init(name: String, date: GregorianDay, type: DayType) {
+    init(name: String, date: GregorianDay, type: DayType, localizedNames: [String: String]? = nil) {
         self.name = name
         self.date = date
         self.type = type
+        self.localizedNames = localizedNames
     }
     
     enum Columns: String, ColumnExpression {
@@ -31,7 +33,7 @@ struct CustomPublicDay: PublicDay, Identifiable, Codable, Equatable, Hashable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case id, name, date, type, planId = "plan_id"
+        case id, name, date, type, localizedNames = "localized_names", planId = "plan_id"
     }
 }
 

@@ -192,62 +192,122 @@
         {
             "date": "2027-01-01",
             "name": "New Year's Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "New Year's Day",
+                "zh-Hans": "元旦",
+                "zh-Hant": "元旦"
+            }
         },
         {
             "date": "2027-01-18",
             "name": "Birthday of Martin Luther King, Jr.",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Birthday of Martin Luther King, Jr.",
+                "zh-Hans": "马丁·路德·金诞辰",
+                "zh-Hant": "馬丁·路德·金誕辰"
+            }
         },
         {
             "date": "2027-02-15",
             "name": "Washington’s Birthday",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Washington’s Birthday",
+                "zh-Hans": "华盛顿诞辰",
+                "zh-Hant": "華盛頓誕辰"
+            }
         },
         {
             "date": "2027-05-31",
             "name": "Memorial Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Memorial Day",
+                "zh-Hans": "阵亡将士纪念日",
+                "zh-Hant": "陣亡將士紀念日"
+            }
         },
         {
             "date": "2027-06-18",
             "name": "Juneteenth National Independence Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Juneteenth National Independence Day",
+                "zh-Hans": "六月节全国独立日",
+                "zh-Hant": "六月節全國獨立日"
+            }
         },
         {
             "date": "2027-07-05",
             "name": "Independence Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Independence Day",
+                "zh-Hans": "独立日",
+                "zh-Hant": "獨立日"
+            }
         },
         {
             "date": "2027-09-06",
             "name": "Labor Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Labor Day",
+                "zh-Hans": "劳动节",
+                "zh-Hant": "勞動節"
+            }
         },
         {
             "date": "2027-10-11",
             "name": "Columbus Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Columbus Day",
+                "zh-Hans": "哥伦布日",
+                "zh-Hant": "哥倫布日"
+            }
         },
         {
             "date": "2027-11-11",
             "name": "Veterans Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Veterans Day",
+                "zh-Hans": "退伍军人节",
+                "zh-Hant": "退伍軍人節"
+            }
         },
         {
             "date": "2027-11-25",
             "name": "Thanksgiving Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Thanksgiving Day",
+                "zh-Hans": "感恩节",
+                "zh-Hant": "感恩節"
+            }
         },
         {
             "date": "2027-12-24",
             "name": "Christmas Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "Christmas Day",
+                "zh-Hans": "圣诞节",
+                "zh-Hant": "聖誕節"
+            }
         },
         {
             "date": "2027-12-31",
             "name": "New Year's Day",
-            "type": 0
+            "type": 0,
+            "localizedNames": {
+                "en": "New Year's Day",
+                "zh-Hans": "元旦",
+                "zh-Hant": "元旦"
+            }
         }
     ]
 }

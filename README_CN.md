@@ -151,17 +151,26 @@ Off Day/
 ```json
 {
   "name": "My Plan",
-  "start": "2026-01-01",
-  "end": "2026-12-31",
+  "start": "2027-01-01",
+  "end": "2027-12-31",
   "days": [
     {
       "name": "New Year",
-      "date": "2026-01-01",
-      "type": "offDay"
+      "date": "2027-01-01",
+      "type": 0,
+      "localizedNames": {
+        "en": "New Year",
+        "zh-Hans": "元旦",
+        "zh-Hant": "元旦"
+      }
     }
   ]
 }
 ```
+
+`name` 是必填的原始名称；`localizedNames` 是可选的多语言名称，键为语言代码（如 `pt`、`th`、`ta` 或 `zh-Hant`），不限于 App 的界面语言。`type` 为 `0`（休息日）或 `1`（工作日）。日期必须有效，年份范围为 1–9999；兼容旧模板未补零的年月日。不含 `localizedNames` 的旧模板可继续导入和使用；译名缺失或为空时显示 `name`。读取时兼容之前的 `names` 字段，导出统一使用 `localizedNames`；两者同时存在时以 `localizedNames` 为准。
+
+选中含译名的模板后，可在日期主页右上角“…”菜单中的“节日名称语言”切换原始名称与译名。默认使用原始名称；切换立即生效，并分别记住每个模板的语言偏好。导入、导出、复制和订阅更新均保留多语言名称。编辑自定义节日时，选择某种语言会修改对应译名并保留原始名称及其他译名；选择“原始名称”则修改 `name`。新建节日时同时建立原始名称作为回退。语言选择只影响显示文字，假期提醒仍按原始名称分组。2027 年内置模板提供当地官方语言及简繁中文：香港含英语，澳门含葡萄牙语，新加坡含英语、马来语和泰米尔语，日本、韩国、泰国分别含日语、韩语、泰语，美国含英语。大陆及地方模板本次先提供简繁中文，少数民族语言待后续补充。2027 年以前的条目保持原名称。葡萄牙语名称参考[澳门政府葡文日历](https://www.gov.mo/pt/feriados/year-2027/)，泰语名称参考[泰国央行泰文通知](https://www.bot.or.th/content/dam/bot/fipcs/documents/FPG/2569/ThaiPDF/25690175.pdf)；新加坡用语参考人力部[马来语指南](https://www.mom.gov.sg/-/media/mom/documents/employment-practices/workright/workright-guide-employment-laws-malay.pdf)和[泰米尔语指南](https://www.mom.gov.sg/-/media/mom/documents/employment-practices/workright/workright-guide-employment-laws-tamil.pdf)。
 
 参考模型：`Off Day/PublicPlan/Model/JSONPublicPlan.swift`。
 

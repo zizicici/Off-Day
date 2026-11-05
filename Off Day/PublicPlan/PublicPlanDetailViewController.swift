@@ -59,7 +59,7 @@ class PublicPlanDetailViewController: UIViewController {
     enum Item: Hashable {
         static func == (lhs: Item, rhs: Item) -> Bool {
             switch (lhs, rhs) {
-            case (.add, .add):
+            case (.add, .add), (.delete, .delete):
                 return true
             case (.dayInfo(let lhsDay), .dayInfo(let rhsDay)):
                 return lhsDay.isEqual(rhsDay)
@@ -260,16 +260,15 @@ class PublicPlanDetailViewController: UIViewController {
     
     func createListCellRegistration() -> UICollectionView.CellRegistration<UICollectionViewListCell, Item> {
         return UICollectionView.CellRegistration<UICollectionViewListCell, Item> { [weak self] (cell, indexPath, item) in
-            guard self != nil else { return }
+            guard let self else { return }
             switch item {
             case .dayInfo(let item):
                 var content = UIListContentConfiguration.valueCell()
-                content.text = item.name
+                content.text = item.localizedName(language: self.publicPlanInfo?.language)
                 content.secondaryText = item.date.completeFormatString()
                 content.textToSecondaryTextVerticalPadding = 6.0
                 content.textProperties.color = item.type == .offDay ? AppColor.offDay : AppColor.workDay
-                content.textProperties.adjustsFontSizeToFitWidth = true
-                content.textProperties.minimumScaleFactor = 0.5
+                content.textProperties.numberOfLines = 0
                 content.secondaryTextProperties.color = AppColor.text
                 content.secondaryTextProperties.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: .regular)
                 content.secondaryTextProperties.adjustsFontSizeToFitWidth = true
@@ -554,7 +553,7 @@ class PublicPlanDetailViewController: UIViewController {
     }
     
     func enterDayDetail(day: CustomPublicDay?) {
-        let detailViewController = CustomPublicDayDetailViewController(day: day) { [weak self] publicDay in
+        let detailViewController = CustomPublicDayDetailViewController(day: day, language: publicPlanInfo?.language) { [weak self] publicDay in
             guard let self = self else { return false }
             if let day = day {
                 if let newPublicDay = publicDay {
