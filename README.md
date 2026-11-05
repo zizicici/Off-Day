@@ -110,7 +110,7 @@ Select the `Off Day` scheme and run on simulator or device.
 - [Toast-Swift](https://github.com/scalessec/Toast-Swift) `5.1.1`
 - [MarqueeLabel](https://github.com/cbpowell/MarqueeLabel) `4.5.3`
 - [ZipArchive](https://github.com/ZipArchive/ZipArchive) `2.6.0`
-- [ZCCalendar](https://github.com/zizicici/ZCCalendar) `0.1.4`
+- [ZCCalendar](https://github.com/zizicici/ZCCalendar) `0.2.0`
 - [MoreKit](https://github.com/zizicici/MoreKit) `2.2.0`
 
 ## Project Structure
