@@ -68,14 +68,30 @@ finalDayType = userMark ?? publicHolidayType ?? baseCalendarType
 
 | 地区 | 覆盖区间 |
 | --- | --- |
-| 中国大陆 / 新疆 / 西藏 / 广西 / 宁夏 | 2024-01-01 至 2026-12-31 |
-| 香港 | 2024-01-01 至 2026-12-31 |
-| 澳门（公众 / 强制 / 公务员） | 2024-01-01 至 2026-12-31 |
-| 新加坡 | 2024-01-01 至 2026-12-31 |
-| 泰国 | 2024-01-01 至 2026-12-31 |
-| 韩国 | 2024-01-01 至 2026-12-31 |
-| 美国（联邦假日） | 2024-01-01 至 2026-12-31 |
-| 日本 | 1955-01-01 至 2026-12-31 |
+| 中国大陆 / 新疆 / 西藏 / 广西 / 宁夏 | 2024-01-01 至 2027-12-31 |
+| 四川凉山 | 2026-01-01 至 2027-12-31 |
+| 香港 | 2024-01-01 至 2027-12-31 |
+| 澳门（公众 / 强制 / 公务员） | 2024-01-01 至 2027-12-31 |
+| 新加坡 | 2024-01-01 至 2027-12-31 |
+| 泰国（金融机构假日） | 2024-01-01 至 2027-12-31 |
+| 韩国 | 2024-01-01 至 2027-12-31 |
+| 美国（联邦假日） | 2024-01-01 至 2027-12-31 |
+| 日本 | 1955-01-01 至 2027-12-31 |
+
+2027 年中国大陆安排依据[国务院办公厅通知（新华社受权发布）](https://www.xinhuanet.com/20261105/ac6792e1565949dc8e7d6e8261b9a055/c.html)。新疆、西藏、广西、宁夏、四川凉山模板的 2027 年数据暂采用大陆安排，地方节假日待更新；历年地方安排保留。
+
+其他地区的 2027 年数据依据[香港政府](https://www.info.gov.hk/gia/general/202605/15/P2026051400304p.htm)、[澳门政府](https://www.gov.mo/zh-hant/public-holidays/year-2027/)、[新加坡人力部](https://www.mom.gov.sg/newsroom/press-releases/2026/0618-public-holidays-for-2027)、[泰国央行](https://www.bot.or.th/content/dam/bot/fipcs/documents/FPG/2569/EngPDF/25690175.pdf)、[韩国宇宙航空厅](https://www.kasa.go.kr/prog/plcyBrf/brief/kor/sub01_01_04/view.do?plcyBrfNo=431)、[美国人事管理局](https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/)及[日本内阁府](https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html)。澳门公务员模板仅标记全日假期；美国模板包含 2028 年元旦提前至 2027 年 12 月 31 日的补假。
+
+模板按通知中明确列出的放假、补假和调班日期记录；仅与相邻周末连休时，普通周末由基础日历判断。西藏模板中的地方假期依据拉萨市通知，其他市县请按当地安排调整。泰国模板适用于全国金融机构，不包含曼谷等地区专属假日。美国模板适用于联邦雇员，包含官方统一休假通知；私营单位安排可能不同。
+
+2026-11-05 历史数据复核更正：
+
+- 新加坡：移除误记的 2024-06-01，补入 [2025-05-03 投票日](https://www.mom.gov.sg/newsroom/press-releases/2025/0415-public-holiday-on-polling-day_3-may-2025)和 [2026-06-01 佛诞补假](https://www.mom.gov.sg/newsroom/press-releases/2025/0616-public-holidays-for-2026)。
+- 韩国：补入 [2024-10-01 国军日](https://www.mpm.go.kr/mpm/comm/newsPress/newsPressRelease/?cntId=3940&mode=view)、[2025-01-27 临时假日](https://www.korea.kr/news/policyNewsView.do?newsId=148938559)、[2025-06-03 总统选举日](https://www.korea.kr/news/policyNewsView.do?newsId=148941443)和 [2026-05-01 劳动节](https://www.mpm.go.kr/mpm/comm/newsPress/newsPressRelease/?cntId=4250&mode=view)。
+- 泰国：按[央行金融机构日历](https://www.bot.or.th/en/financial-institutions-holiday.html)移除已取消的 2024-01-02、未列为金融机构假日的 2024-04-13/14，补入 2024-04-12 特别假日。
+- 新疆：按[自治区 2025 年通知](https://www.xinjiang.gov.cn/xinjiang/tzgg/202412/01242215d31b4ede946837906c473b7c.shtml)补齐 2025-03-29/30 肉孜节假期。
+- 拉萨：补入 [2025-08-25 雪顿节](https://www.lasa.gov.cn/lasa/tggs/202508/b93d0e1929294462ba882353756e41d7.shtml)、[2026-02-24 至 26 日春节及藏历新年](https://www.lasa.gov.cn/lasa/tggs/202601/f87553d7183d439fb044eca99fcbf225.shtml)和 [2026-08-14 雪顿节](https://www.lasa.gov.cn/lasa/tggs/202608/62250cb433474533a4fd40173b681f7e.shtml)。
+- 美国：按 OPM 通知补入 [2024-12-24](https://www.opm.gov/chcoc/transmittals/2024/Dec%2024%202024%20CPM%20and%20Attachment.pdf)、[2025-01-09](https://www.opm.gov/chcoc/transmittals/2024/National%20Day%20of%20Mourning%20for%20President%20Carter%20CPM%202024-28.pdf)、[2025-12-24/26](https://www.opm.gov/chcoc/published-memos/closing-of-federal-government-departments-and-agencies-on-wednesday-december-24-2025-and-friday-december-26-2025.pdf) 的联邦政府统一休假。
 
 ## 快速上手（用户）
 

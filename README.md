@@ -68,14 +68,30 @@ Template files are located at `Off Day/PublicPlan/JSON/`.
 
 | Region | Coverage |
 | --- | --- |
-| China Mainland / Xinjiang / Tibet / Guangxi / Ningxia | 2024-01-01 to 2026-12-31 |
-| Hong Kong | 2024-01-01 to 2026-12-31 |
-| Macau (Public / Force / Civil Servant) | 2024-01-01 to 2026-12-31 |
-| Singapore | 2024-01-01 to 2026-12-31 |
-| Thailand | 2024-01-01 to 2026-12-31 |
-| Korea | 2024-01-01 to 2026-12-31 |
-| United States (Federal) | 2024-01-01 to 2026-12-31 |
-| Japan | 1955-01-01 to 2026-12-31 |
+| China Mainland / Xinjiang / Tibet / Guangxi / Ningxia | 2024-01-01 to 2027-12-31 |
+| Liangshan, Sichuan | 2026-01-01 to 2027-12-31 |
+| Hong Kong | 2024-01-01 to 2027-12-31 |
+| Macau (Public / Force / Civil Servant) | 2024-01-01 to 2027-12-31 |
+| Singapore | 2024-01-01 to 2027-12-31 |
+| Thailand (Financial Institutions) | 2024-01-01 to 2027-12-31 |
+| Korea | 2024-01-01 to 2027-12-31 |
+| United States (Federal) | 2024-01-01 to 2027-12-31 |
+| Japan | 1955-01-01 to 2027-12-31 |
+
+The 2027 China Mainland schedule follows the [State Council notice published by Xinhua](https://www.xinhuanet.com/20261105/ac6792e1565949dc8e7d6e8261b9a055/c.html). For 2027, the Xinjiang, Tibet, Guangxi, Ningxia, and Liangshan templates temporarily use the mainland schedule pending local holiday updates. Historical local schedules are preserved.
+
+Other 2027 schedules follow the official publications from [Hong Kong](https://www.info.gov.hk/gia/general/202605/15/P2026051400304p.htm), [Macau](https://www.gov.mo/zh-hant/public-holidays/year-2027/), [Singapore's Ministry of Manpower](https://www.mom.gov.sg/newsroom/press-releases/2026/0618-public-holidays-for-2027), the [Bank of Thailand](https://www.bot.or.th/content/dam/bot/fipcs/documents/FPG/2569/EngPDF/25690175.pdf), [Korea AeroSpace Administration](https://www.kasa.go.kr/prog/plcyBrf/brief/kor/sub01_01_04/view.do?plcyBrfNo=431), the [U.S. Office of Personnel Management](https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/), and [Japan's Cabinet Office](https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html). The Macau Civil Servant template marks full-day holidays only. The U.S. template includes the observance of New Year's Day 2028 on December 31, 2027.
+
+Templates record the dates explicitly designated as holidays, substitute holidays, or make-up workdays. Adjacent ordinary weekends are handled by the base calendar. Local holidays in the Tibet template follow Lhasa notices; other cities and counties may differ. Thailand follows the nationwide financial institution calendar and excludes regional holidays such as Bangkok-only closures. The U.S. template covers Federal employees, including officially announced government-wide days off; private employers may follow different schedules.
+
+Historical corrections verified on November 5, 2026:
+
+- Singapore: removed the erroneous June 1, 2024 entry; added [Polling Day on May 3, 2025](https://www.mom.gov.sg/newsroom/press-releases/2025/0415-public-holiday-on-polling-day_3-may-2025) and the [Vesak Day observance on June 1, 2026](https://www.mom.gov.sg/newsroom/press-releases/2025/0616-public-holidays-for-2026).
+- Korea: added [October 1, 2024](https://www.mpm.go.kr/mpm/comm/newsPress/newsPressRelease/?cntId=3940&mode=view), [January 27, 2025](https://www.korea.kr/news/policyNewsView.do?newsId=148938559), [June 3, 2025](https://www.korea.kr/news/policyNewsView.do?newsId=148941443), and [Labor Day on May 1, 2026](https://www.mpm.go.kr/mpm/comm/newsPress/newsPressRelease/?cntId=4250&mode=view).
+- Thailand: followed the [BOT calendar](https://www.bot.or.th/en/financial-institutions-holiday.html) to remove cancelled January 2, 2024 and ordinary weekend dates April 13–14, 2024; added the special holiday on April 12, 2024.
+- Xinjiang: added March 29–30, 2025 to complete the Eid al-Fitr period in the [regional notice](https://www.xinjiang.gov.cn/xinjiang/tzgg/202412/01242215d31b4ede946837906c473b7c.shtml).
+- Lhasa: added [August 25, 2025](https://www.lasa.gov.cn/lasa/tggs/202508/b93d0e1929294462ba882353756e41d7.shtml), [February 24–26, 2026](https://www.lasa.gov.cn/lasa/tggs/202601/f87553d7183d439fb044eca99fcbf225.shtml), and [August 14, 2026](https://www.lasa.gov.cn/lasa/tggs/202608/62250cb433474533a4fd40173b681f7e.shtml).
+- United States: added government-wide closures on [December 24, 2024](https://www.opm.gov/chcoc/transmittals/2024/Dec%2024%202024%20CPM%20and%20Attachment.pdf), [January 9, 2025](https://www.opm.gov/chcoc/transmittals/2024/National%20Day%20of%20Mourning%20for%20President%20Carter%20CPM%202024-28.pdf), and [December 24 and 26, 2025](https://www.opm.gov/chcoc/published-memos/closing-of-federal-government-departments-and-agencies-on-wednesday-december-24-2025-and-friday-december-26-2025.pdf).
 
 ## Quick Start (User)
 

@@ -1,8 +1,8 @@
 {
     "name": "U.S. Federal Holidays",
     "start": "2024-01-01",
-    "end": "2026-12-31",
-    "note": "Source: U.S. Office of Personnel Management[https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays]",
+    "end": "2027-12-31",
+    "note": "Source: U.S. Office of Personnel Management[https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays]; Includes nationwide Federal Government closures under Executive orders (CPM 2024-22, CPM 2024-28, CPM 2025-17)[https://www.opm.gov/chcoc/published-memos/]. Excludes location-specific closures. Private employers may follow different schedules.",
     "days": [
         {
             "date": "2024-01-01",
@@ -55,6 +55,11 @@
             "type": 0
         },
         {
+            "date": "2024-12-24",
+            "name": "Christmas Eve (Federal Government Closure)",
+            "type": 0
+        },
+        {
             "date": "2024-12-25",
             "name": "Christmas Day",
             "type": 0
@@ -62,6 +67,11 @@
         {
             "date": "2025-01-01",
             "name": "New Year's Day",
+            "type": 0
+        },
+        {
+            "date": "2025-01-09",
+            "name": "National Day of Mourning for President James Earl Carter, Jr.",
             "type": 0
         },
         {
@@ -110,8 +120,18 @@
             "type": 0
         },
         {
+            "date": "2025-12-24",
+            "name": "Christmas Eve (Federal Government Closure)",
+            "type": 0
+        },
+        {
             "date": "2025-12-25",
             "name": "Christmas Day",
+            "type": 0
+        },
+        {
+            "date": "2025-12-26",
+            "name": "Federal Government Closure",
             "type": 0
         },
         {
@@ -167,6 +187,66 @@
         {
             "date": "2026-12-25",
             "name": "Christmas Day",
+            "type": 0
+        },
+        {
+            "date": "2027-01-01",
+            "name": "New Year's Day",
+            "type": 0
+        },
+        {
+            "date": "2027-01-18",
+            "name": "Birthday of Martin Luther King, Jr.",
+            "type": 0
+        },
+        {
+            "date": "2027-02-15",
+            "name": "Washington’s Birthday",
+            "type": 0
+        },
+        {
+            "date": "2027-05-31",
+            "name": "Memorial Day",
+            "type": 0
+        },
+        {
+            "date": "2027-06-18",
+            "name": "Juneteenth National Independence Day",
+            "type": 0
+        },
+        {
+            "date": "2027-07-05",
+            "name": "Independence Day",
+            "type": 0
+        },
+        {
+            "date": "2027-09-06",
+            "name": "Labor Day",
+            "type": 0
+        },
+        {
+            "date": "2027-10-11",
+            "name": "Columbus Day",
+            "type": 0
+        },
+        {
+            "date": "2027-11-11",
+            "name": "Veterans Day",
+            "type": 0
+        },
+        {
+            "date": "2027-11-25",
+            "name": "Thanksgiving Day",
+            "type": 0
+        },
+        {
+            "date": "2027-12-24",
+            "name": "Christmas Day",
+            "type": 0
+        },
+        {
+            "date": "2027-12-31",
+            "name": "New Year's Day",
             "type": 0
         }
     ]

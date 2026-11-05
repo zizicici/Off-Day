@@ -1,8 +1,8 @@
 {
     "name": "新加坡公共假日",
     "start": "2024-01-01",
-    "end": "2026-12-31",
-    "note": "Source: Ministry of Manpower, Singapore[https://www.mom.gov.sg/employment-practices/public-holidays]",
+    "end": "2027-12-31",
+    "note": "Source: Ministry of Manpower, Singapore[https://www.mom.gov.sg/employment-practices/public-holidays]; 2027 public holidays[https://www.mom.gov.sg/newsroom/press-releases/2026/0618-public-holidays-for-2027]; Historical corrections: 2026 holidays[https://www.mom.gov.sg/newsroom/press-releases/2025/0616-public-holidays-for-2026]; Polling Day 2025[https://www.mom.gov.sg/newsroom/press-releases/2025/0415-public-holiday-on-polling-day_3-may-2025]",
     "days": [
         {
             "date": "2024-01-01",
@@ -95,6 +95,11 @@
             "type": 0
         },
         {
+            "date": "2025-05-03",
+            "name": "Polling Day",
+            "type": 0
+        },
+        {
             "date": "2025-05-12",
             "name": "Vesak Day",
             "type": 0
@@ -160,7 +165,7 @@
             "type": 0
         },
         {
-            "date": "2024-06-01",
+            "date": "2026-06-01",
             "name": "Vesak Day Holiday",
             "type": 0
         },
@@ -171,7 +176,7 @@
         },
         {
             "date": "2026-08-10",
-            "name": "National Day Holicay",
+            "name": "National Day Holiday",
             "type": 0
         },
         {
@@ -186,6 +191,66 @@
         },
         {
             "date": "2026-12-25",
+            "name": "Christmas Day",
+            "type": 0
+        },
+        {
+            "date": "2027-01-01",
+            "name": "New Year's Day",
+            "type": 0
+        },
+        {
+            "date": "2027-02-06",
+            "name": "Chinese New Year",
+            "type": 0
+        },
+        {
+            "date": "2027-02-07",
+            "name": "Chinese New Year",
+            "type": 0
+        },
+        {
+            "date": "2027-02-08",
+            "name": "Chinese New Year",
+            "type": 0
+        },
+        {
+            "date": "2027-03-10",
+            "name": "Hari Raya Puasa",
+            "type": 0
+        },
+        {
+            "date": "2027-03-26",
+            "name": "Good Friday",
+            "type": 0
+        },
+        {
+            "date": "2027-05-01",
+            "name": "Labour Day",
+            "type": 0
+        },
+        {
+            "date": "2027-05-17",
+            "name": "Hari Raya Haji",
+            "type": 0
+        },
+        {
+            "date": "2027-05-20",
+            "name": "Vesak Day",
+            "type": 0
+        },
+        {
+            "date": "2027-08-09",
+            "name": "National Day",
+            "type": 0
+        },
+        {
+            "date": "2027-10-28",
+            "name": "Deepavali",
+            "type": 0
+        },
+        {
+            "date": "2027-12-25",
             "name": "Christmas Day",
             "type": 0
         }

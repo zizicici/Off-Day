@@ -1,17 +1,12 @@
 {
-    "name": "Thailand Public Holiday",
+    "name": "Thailand Financial Institutions Holidays",
     "start": "2024-01-01",
-    "end": "2026-12-31",
-    "note": "Source: Bank of Thailand[https://www.bot.or.th/en/financial-institutions-holiday.html]",
+    "end": "2027-12-31",
+    "note": "Source: Bank of Thailand[https://www.bot.or.th/en/financial-institutions-holiday.html]; 2027 holidays: Notification No. 37/2569[https://www.bot.or.th/content/dam/bot/fipcs/documents/FPG/2569/EngPDF/25690175.pdf]; Nationwide financial institutions only. Regional holidays, including Bangkok-only 2026-10-16, are excluded. 2024 changes: cancelled 2024-01-02; added 2024-04-12.",
     "days": [
         {
             "date": "2024-01-01",
             "name": "New Year's Day",
-            "type": 0
-        },
-        {
-            "date": "2024-01-02",
-            "name": "Substitution for New Year's Eve",
             "type": 0
         },
         {
@@ -25,13 +20,8 @@
             "type": 0
         },
         {
-            "date": "2024-04-13",
-            "name": "Songkran Festival",
-            "type": 0
-        },
-        {
-            "date": "2024-04-14",
-            "name": "Songkran Festival",
+            "date": "2024-04-12",
+            "name": "Additional special holiday",
             "type": 0
         },
         {
@@ -90,7 +80,7 @@
             "type": 0
         },
         {
-            "date": "2024-12-5",
+            "date": "2024-12-05",
             "name": "H.M. King Bhumibol Adulyadej The Great's Birthday / National Day / Father's Day",
             "type": 0
         },
@@ -185,7 +175,7 @@
             "type": 0
         },
         {
-            "date": "2025-12-5",
+            "date": "2025-12-05",
             "name": "H.M. King Bhumibol Adulyadej The Great's Birthday / National Day / Father's Day",
             "type": 0
         },
@@ -280,7 +270,7 @@
             "type": 0
         },
         {
-            "date": "2026-12-7",
+            "date": "2026-12-07",
             "name": "Substitution for H.M. King Bhumibol Adulyadej The Great's Birthday / National Day / Father's Day",
             "type": 0
         },
@@ -292,6 +282,96 @@
         {
             "date": "2026-12-31",
             "name": "New Year's Eve",
+            "type": 0
+        },
+        {
+            "date": "2027-01-01",
+            "name": "New Year’s Day",
+            "type": 0
+        },
+        {
+            "date": "2027-02-22",
+            "name": "Substitution for Makha Bucha Day (Sunday 21st February 2027)",
+            "type": 0
+        },
+        {
+            "date": "2027-04-06",
+            "name": "Chakri Memorial Day",
+            "type": 0
+        },
+        {
+            "date": "2027-04-13",
+            "name": "Songkran Festival",
+            "type": 0
+        },
+        {
+            "date": "2027-04-14",
+            "name": "Songkran Festival",
+            "type": 0
+        },
+        {
+            "date": "2027-04-15",
+            "name": "Songkran Festival",
+            "type": 0
+        },
+        {
+            "date": "2027-05-03",
+            "name": "Substitution for National Labor Day (Saturday 1st May 2027)",
+            "type": 0
+        },
+        {
+            "date": "2027-05-04",
+            "name": "Coronation Day",
+            "type": 0
+        },
+        {
+            "date": "2027-05-20",
+            "name": "Visakha Bucha Day",
+            "type": 0
+        },
+        {
+            "date": "2027-06-03",
+            "name": "H.M. Queen Suthida Bajrasudhabimalalakshana’s Birthday",
+            "type": 0
+        },
+        {
+            "date": "2027-07-19",
+            "name": "Substitution for Asarnha Bucha Day (Sunday 18th July 2027)",
+            "type": 0
+        },
+        {
+            "date": "2027-07-28",
+            "name": "H.M. King Maha Vajiralongkorn Phra Vajiraklaochaoyuhua’s Birthday",
+            "type": 0
+        },
+        {
+            "date": "2027-08-12",
+            "name": "H.M. Queen Sirikit the Queen Mother’s Birthday Anniversary and National Mother’s Day",
+            "type": 0
+        },
+        {
+            "date": "2027-10-13",
+            "name": "H.M. King Bhumibol Adulyadej the Great Memorial Day",
+            "type": 0
+        },
+        {
+            "date": "2027-10-25",
+            "name": "Substitution for H.M. King Chulalongkorn the Great Memorial Day (Saturday 23rd October 2027)",
+            "type": 0
+        },
+        {
+            "date": "2027-12-06",
+            "name": "Substitution for H.M. King Bhumibol Adulyadej the Great’s Birthday, National Day and Father’s Day (Sunday 5th December 2027)",
+            "type": 0
+        },
+        {
+            "date": "2027-12-10",
+            "name": "Constitution Day",
+            "type": 0
+        },
+        {
+            "date": "2027-12-31",
+            "name": "New Year’s Eve",
             "type": 0
         }
     ]
