@@ -111,7 +111,7 @@ Select the `Off Day` scheme and run on simulator or device.
 - [MarqueeLabel](https://github.com/cbpowell/MarqueeLabel) `4.5.3`
 - [ZipArchive](https://github.com/ZipArchive/ZipArchive) `2.6.0`
 - [ZCCalendar](https://github.com/zizicici/ZCCalendar) `0.1.4`
-- [AppInfo](https://github.com/zizicici/AppInfo) `1.3.0`
+- [MoreKit](https://github.com/zizicici/MoreKit) `2.2.0`
 
 ## Project Structure
 

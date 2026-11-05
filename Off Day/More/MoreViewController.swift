@@ -77,9 +77,9 @@ enum MoreControllerFactory {
 
     static func make() -> MoreViewController {
         let appShowcase = AppShowcaseConfiguration(
-            apps: [.pin, .tagDay, .lemon, .moontake, .coconut, .pigeon, .one, .campfire, .watermelon, .doufu, .festivals],
-            displayCount: 4,
-            automaticallyIncludesFestivalsForChineseLocales: true
+            apps: [.watermelon, .passcord],
+            displayCount: 2,
+            automaticallyIncludesFestivalsForChineseLocales: false
         )
 
         let specConfig = SpecificationsConfiguration(
