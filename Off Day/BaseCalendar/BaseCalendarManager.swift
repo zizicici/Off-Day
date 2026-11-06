@@ -144,6 +144,21 @@ class BaseCalendarManager {
                 return daysCircleConfig.length
             }
         }
+
+        func isOff(day: GregorianDay) -> Bool {
+            switch self {
+            case .standard(let config):
+                return config.weekdayOrders.contains(day.weekdayOrder())
+            case .weeksCircle(let config):
+                return config.indexs.contains(day.julianDay % config.length)
+            case .daysCircle(let config):
+                var offset = (day.julianDay - config.start) % config.length
+                if offset < 0 {
+                    offset += config.length
+                }
+                return offset >= config.workCount
+            }
+        }
         
         var hasOff: Bool {
             switch self {
@@ -198,19 +213,7 @@ class BaseCalendarManager {
     }
     
     func isOff(day: GregorianDay) -> Bool {
-        switch config! {
-        case .standard(let config):
-            return config.weekdayOrders.contains(day.weekdayOrder())
-        case .weeksCircle(let config):
-            return config.indexs.contains(day.julianDay % (7 * config.weekCount.rawValue))
-        case .daysCircle(let config):
-            let cycle = config.workCount + config.offCount
-            var offset = (day.julianDay - config.start) % cycle
-            if offset < 0 {
-                offset += cycle
-            }
-            return offset >= config.workCount
-        }
+        config.isOff(day: day)
     }
     
     public func fetchBaseDay(after startDay: Int, dayType: DayType) -> GregorianDay? {

@@ -14,6 +14,8 @@
 		14DD510C2BE20F3A004329E2 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 14DD510B2BE20F3A004329E2 /* GRDB */; };
 		14EF2B742BFB44FA00F8C684 /* MoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 14EF2B732BFB44FA00F8C684 /* MoreKit */; };
 		14F92E322E1BB2ED00712D87 /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = 14F92E312E1BB2ED00712D87 /* ZipArchive */; };
+		F01100000000000000000001 /* Widgets.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F01100000000000000000002 /* Widgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F01100000000000000000003 /* ZCCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = F01100000000000000000004 /* ZCCalendar */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,7 +26,28 @@
 			remoteGlobalIDString = 14DD50AD2BE1F5C4004329E2;
 			remoteInfo = "Off Day";
 		};
+		F01100000000000000000005 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 14DD50A62BE1F5C4004329E2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F01100000000000000000006;
+			remoteInfo = Widgets;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F01100000000000000000007 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F01100000000000000000001 /* Widgets.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		141F38D92C9974D600347225 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -32,6 +55,7 @@
 		149065852F3E8E26002DEAB7 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		149065922F3E9ADF002DEAB7 /* Unit.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Unit.xctestplan; sourceTree = "<group>"; };
 		14DD50AE2BE1F5C4004329E2 /* Off Day.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Off Day.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F01100000000000000000002 /* Widgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Widgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -42,6 +66,13 @@
 				Info.plist,
 			);
 			target = 14DD50AD2BE1F5C4004329E2 /* Off Day */;
+		};
+		F01100000000000000000008 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = F01100000000000000000006 /* Widgets */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -58,6 +89,8 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		148522602F9655D2007417CE /* Off Day */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (148522D62F9655D2007417CE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 148522D72F9655D2007417CE /* PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "Off Day"; sourceTree = "<group>"; };
 		148522E72F9655D7007417CE /* UnitTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = UnitTests; sourceTree = "<group>"; };
+		F01100000000000000000009 /* Widgets */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (F01100000000000000000008 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Widgets; sourceTree = "<group>"; };
+		F0110000000000000000000A /* WidgetShared */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WidgetShared; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +115,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F0110000000000000000000B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F01100000000000000000003 /* ZCCalendar in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -92,6 +133,8 @@
 				141F38D92C9974D600347225 /* README.md */,
 				141F38DA2C9974D600347225 /* README_CN.md */,
 				148522602F9655D2007417CE /* Off Day */,
+				F01100000000000000000009 /* Widgets */,
+				F0110000000000000000000A /* WidgetShared */,
 				148522E72F9655D7007417CE /* UnitTests */,
 				14DD50AF2BE1F5C4004329E2 /* Products */,
 				14DD51042BE20CF8004329E2 /* Frameworks */,
@@ -102,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				14DD50AE2BE1F5C4004329E2 /* Off Day.app */,
+				F01100000000000000000002 /* Widgets.appex */,
 				149065852F3E8E26002DEAB7 /* UnitTests.xctest */,
 			);
 			name = Products;
@@ -147,13 +191,16 @@
 				14DD50AA2BE1F5C4004329E2 /* Sources */,
 				14DD50AB2BE1F5C4004329E2 /* Frameworks */,
 				14DD50AC2BE1F5C4004329E2 /* Resources */,
+				F01100000000000000000007 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F0110000000000000000000F /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				148522602F9655D2007417CE /* Off Day */,
+				F0110000000000000000000A /* WidgetShared */,
 			);
 			name = "Off Day";
 			packageProductDependencies = (
@@ -168,6 +215,30 @@
 			productName = "Off Day";
 			productReference = 14DD50AE2BE1F5C4004329E2 /* Off Day.app */;
 			productType = "com.apple.product-type.application";
+		};
+		F01100000000000000000006 /* Widgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F0110000000000000000000C /* Build configuration list for PBXNativeTarget "Widgets" */;
+			buildPhases = (
+				F0110000000000000000000D /* Sources */,
+				F0110000000000000000000B /* Frameworks */,
+				F0110000000000000000000E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				F01100000000000000000009 /* Widgets */,
+				F0110000000000000000000A /* WidgetShared */,
+			);
+			name = Widgets;
+			packageProductDependencies = (
+				F01100000000000000000004 /* ZCCalendar */,
+			);
+			productName = Widgets;
+			productReference = F01100000000000000000002 /* Widgets.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -185,6 +256,9 @@
 					};
 					14DD50AD2BE1F5C4004329E2 = {
 						CreatedOnToolsVersion = 15.3;
+					};
+					F01100000000000000000006 = {
+						CreatedOnToolsVersion = 27.1;
 					};
 				};
 			};
@@ -216,6 +290,7 @@
 			projectRoot = "";
 			targets = (
 				14DD50AD2BE1F5C4004329E2 /* Off Day */,
+				F01100000000000000000006 /* Widgets */,
 				149065842F3E8E26002DEAB7 /* UnitTests */,
 			);
 		};
@@ -230,6 +305,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		14DD50AC2BE1F5C4004329E2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F0110000000000000000000E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -253,6 +335,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F0110000000000000000000D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -260,6 +349,11 @@
 			isa = PBXTargetDependency;
 			target = 14DD50AD2BE1F5C4004329E2 /* Off Day */;
 			targetProxy = 149065892F3E8E26002DEAB7 /* PBXContainerItemProxy */;
+		};
+		F0110000000000000000000F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F01100000000000000000006 /* Widgets */;
+			targetProxy = F01100000000000000000005 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -493,6 +587,62 @@
 			};
 			name = Release;
 		};
+		F01100000000000000000010 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = Widgets/Widgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KKQQQNKMM6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Off Day";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.8.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zizicici.zzz.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F01100000000000000000011 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = Widgets/Widgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KKQQQNKMM6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Off Day";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.8.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zizicici.zzz.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -519,6 +669,15 @@
 			buildConfigurations = (
 				14DD50C32BE1F5C5004329E2 /* Debug */,
 				14DD50C42BE1F5C5004329E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F0110000000000000000000C /* Build configuration list for PBXNativeTarget "Widgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F01100000000000000000010 /* Debug */,
+				F01100000000000000000011 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -619,6 +778,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 14F92E302E1BB2ED00712D87 /* XCRemoteSwiftPackageReference "ZipArchive" */;
 			productName = ZipArchive;
+		};
+		F01100000000000000000004 /* ZCCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1498CF192C402CD2005562AA /* XCRemoteSwiftPackageReference "ZCCalendar" */;
+			productName = ZCCalendar;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = AppLogger.shared
 
         PublicPlanManager.shared.load()
+        _ = WidgetCalendarPublisher.shared
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5.0) {
             self.requestAppReview()

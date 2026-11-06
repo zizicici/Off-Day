@@ -62,6 +62,7 @@ struct UpdateDayMarkIntent: AppIntent {
                 case .blank:
                     CustomDayManager.shared.update(dayType: nil, to: target.julianDay)
                 }
+                WidgetCalendarPublisher.shared.publishNow()
             }
 
             await NotificationManager.shared.updateNotifications()

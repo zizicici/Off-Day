@@ -39,6 +39,8 @@ The app is local-first:
   check day type, check clash day, get day details, find next off/work day, update day mark, manage day comments
 - Notification center for three scenarios:
   template expiration, upcoming public holidays, upcoming custom-mark days
+- Lock Screen widget:
+  side-by-side off/work status and holiday names for today and tomorrow, plus compact circular widgets for either day
 - Backup and restore:
   iCloud auto backup, manual database export/import (`.zip` / `.sqlite`)
 - Localization support:
@@ -102,6 +104,10 @@ Historical corrections verified on November 5, 2026:
 5. Optionally add manual day marks and comments for exceptions.
 
 ## Development
+
+The Lock Screen widget uses the `Widgets` extension and the `WidgetShared` models. Enable the `group.com.zizicici.zzz` App Group in the signing profiles for both the app and the extension. For a different developer account, replace the group in both entitlements files and `WidgetCalendarStore.appGroup` with a group registered to your account.
+
+Open the app once to sync the calendar, then long-press the Lock Screen, choose Customize → Lock Screen → Add Widgets, and select Off Day's Today & Tomorrow widget or the compact Today and Tomorrow circular widgets. The rectangular widget shows each holiday's name, falling back to the weekday when no holiday name is available. All three follow the app's day classification rules and advance at local midnight. Calendar edits request a timeline reload; WidgetKit controls when that reload occurs.
 
 ### Requirements
 
