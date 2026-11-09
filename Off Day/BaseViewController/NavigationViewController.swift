@@ -8,6 +8,16 @@
 import UIKit
 
 class NavigationController: UINavigationController {
+    @available(iOS 27.1, *)
+    override var preferredVerticalBarBehavior: UIVerticalBarBehavior {
+        .disabled
+    }
+
+    @available(iOS 27.1, *)
+    override var childForPreferredVerticalBarBehavior: UIViewController? {
+        nil
+    }
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return children.first?.preferredStatusBarStyle ?? super.preferredStatusBarStyle
     }

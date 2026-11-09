@@ -8,6 +8,16 @@
 import UIKit
 
 class TabbarController: UITabBarController {
+    @available(iOS 27.1, *)
+    override var preferredVerticalBarBehavior: UIVerticalBarBehavior {
+        .disabled
+    }
+
+    @available(iOS 27.1, *)
+    override var childForPreferredVerticalBarBehavior: UIViewController? {
+        nil
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
