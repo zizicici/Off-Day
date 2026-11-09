@@ -730,7 +730,7 @@
 			repositoryURL = "https://github.com/zizicici/MoreKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.0;
+				minimumVersion = 2.2.1;
 			};
 		};
 		14F92E302E1BB2ED00712D87 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
