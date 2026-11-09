@@ -88,7 +88,7 @@ enum MoreControllerFactory {
                 .init(type: .version, value: SpecificationsViewController.getAppVersion() ?? ""),
                 .init(type: .manufacturer, value: "@App君"),
                 .init(type: .publisher, value: "ZIZICICI LIMITED"),
-                .init(type: .dateOfProduction, value: "2026/11/06"),
+                .init(type: .dateOfProduction, value: "2026/11/09"),
                 .init(type: .license, value: "闽ICP备2023015823号-8A"),
             ],
             thirdPartyLibraries: [
