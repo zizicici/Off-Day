@@ -90,6 +90,10 @@ struct UpdateDayCommentIntent: AppIntent {
                     }
                 }
             }
+            if result {
+                // Finish publishing before a background intent returns; preserve the DB result if the cache fails.
+                _ = WidgetCalendarPublisher.shared.publishNow()
+            }
             return result
         }
         return .result(value: value)
@@ -127,6 +131,10 @@ struct DeleteDayCommentIntent: AppIntent {
                 } else {
                     result = true
                 }
+            }
+            if result {
+                // Finish publishing before a background intent returns; preserve the DB result if the cache fails.
+                _ = WidgetCalendarPublisher.shared.publishNow()
             }
             return result
         }

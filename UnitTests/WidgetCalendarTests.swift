@@ -1,5 +1,6 @@
 import Foundation
 import AppIntents
+import GRDB
 import Testing
 import ZCCalendar
 @testable import Off_Day
@@ -188,6 +189,74 @@ struct WidgetCalendarTests {
 @Suite(.serialized)
 @MainActor
 struct WidgetCalendarPublishingTests {
+    @Test(arguments: [1, 10_000])
+    func updateCommentIntentShouldPublishBeforeReturning(dayOffset: Int) async throws {
+        try await withCommentDay(offset: dayOffset) { index, date in
+            let intent = UpdateDayCommentIntent()
+            intent.date = date
+            for content in ["Created comment", "Updated comment", ""] {
+                intent.content = content
+                #expect(try await intent.perform().value == true)
+                // Read immediately: a delayed notification refresh must not satisfy this check.
+                let snapshot = try #require(WidgetCalendarStore.load())
+                let expected = content.isEmpty ? nil : content
+                #expect(CustomDayManager.shared.fetchCustomComment(by: index)?.content == expected)
+                #expect((snapshot.details?[index]?.hasComment ?? false) == !content.isEmpty)
+                if dayOffset == 1 || content.isEmpty {
+                    #expect(snapshot.details?[index]?.comment == expected)
+                }
+            }
+        }
+    }
+
+    @Test(arguments: [1, 10_000])
+    func deleteCommentIntentShouldPublishBeforeReturning(dayOffset: Int) async throws {
+        try await withCommentDay(offset: dayOffset) { index, date in
+            #expect(AppDatabase.shared.add(customComment: CustomComment(dayIndex: Int64(index), content: "Delete this comment")))
+            #expect(WidgetCalendarPublisher.shared.publishNow())
+            #expect(WidgetCalendarStore.load()?.details?[index]?.hasComment == true)
+
+            let intent = DeleteDayCommentIntent()
+            intent.date = date
+            // Also retain the successful no-op behavior when the comment is already gone.
+            for _ in 0..<2 {
+                #expect(try await intent.perform().value == true)
+                let snapshot = try #require(WidgetCalendarStore.load())
+                #expect(CustomDayManager.shared.fetchCustomComment(by: index) == nil)
+                #expect(snapshot.details?[index]?.comment == nil)
+                #expect(snapshot.details?[index]?.hasComment != true)
+            }
+        }
+    }
+
+    private func withCommentDay(offset: Int, operation: (Int, Date) async throws -> Void) async throws {
+        let calendar = WidgetCalendarTimeline.calendar()
+        let date = try #require(calendar.date(byAdding: .day, value: offset, to: Date()))
+        let parts = calendar.dateComponents([.year, .month, .day], from: date)
+        let year = try #require(parts.year)
+        let monthNumber = try #require(parts.month)
+        let month = try #require(Month(rawValue: monthNumber))
+        let day = try #require(parts.day)
+        let index = GregorianDay(year: year, month: month, day: day).julianDay
+        let writer = try #require(AppDatabase.shared.dbWriter)
+        let request = CustomComment.filter(CustomComment.Columns.dayIndex == index)
+        let saved = try await writer.read { try request.fetchAll($0) }
+        defer {
+            do {
+                try writer.write { db in
+                    try request.deleteAll(db)
+                    for var comment in saved { try comment.insert(db) }
+                }
+            } catch {
+                Issue.record(error, "Could not restore comment records")
+            }
+            WidgetCalendarPublisher.shared.publishNow()
+        }
+        _ = try await writer.write { try request.deleteAll($0) }
+        #expect(WidgetCalendarPublisher.shared.publishNow())
+        try await operation(index, date)
+    }
+
     @Test func markIntentShouldPublishBeforeReturning() async throws {
         _ = WidgetCalendarPublisher.shared
         let first = GregorianDay(year: 2098, month: .nov, day: 6).julianDay
