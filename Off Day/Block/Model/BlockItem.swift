@@ -20,6 +20,8 @@ struct BlockItem: Hashable {
     var isToday: Bool
     var alternativeCalendarDayName: String?
     var alternativeCalendarA11yName: String?
+    var appearance = CalendarDayAppearance.Palette(backgroundAsset: "PaperColor", whiteText: false)
+    var visualStyle = CalendarVisualStyle()
 }
 
 extension BlockItem {

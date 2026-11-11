@@ -52,6 +52,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
+        if let window { AppTheme.apply(to: window, revision: ThemeManager.shared.appearanceRevision) }
         
         reloadTabsIfNeeded()
         
@@ -99,8 +100,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         logEntranceSetting = logEntranceValue
 
         let tabbarController = (window?.rootViewController as? TabbarController) ?? TabbarController()
-        tabbarController.view.tintColor = AppColor.offDay
-        tabbarController.tabBar.tintColor = AppColor.offDay
+        tabbarController.view.tintColor = AppColor.accent
+        tabbarController.tabBar.tintColor = AppColor.accent
 
         let kinds = Self.orderedTabs(tutorial: tutorialValue, logEntrance: logEntranceValue)
 
@@ -132,7 +133,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func refreshSubscriptionsForUserLaunch() {
         Task {
             await SubscriptionManager.shared.refreshAll(trigger: .launch)
-            await SubscriptionManager.shared.presentPendingUpdateAlertIfNeeded()
+            SubscriptionManager.shared.presentPendingUpdateAlertIfNeeded()
         }
     }
 

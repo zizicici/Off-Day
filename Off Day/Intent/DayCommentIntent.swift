@@ -30,7 +30,7 @@ struct GetDayCommentIntent: AppIntent {
             params: ["date": AnyEncodable(date)]
         ) { () throws -> String? in
             var result: String?
-            let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+            let components = WidgetCalendarTimeline.calendar().dateComponents([.year, .month, .day], from: date)
             if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
                 let target = GregorianDay(year: year, month: month, day: day)
                 let comment = CustomDayManager.shared.fetchCustomComment(by: target.julianDay)
@@ -71,7 +71,7 @@ struct UpdateDayCommentIntent: AppIntent {
             ]
         ) { () throws -> Bool in
             var result = false
-            let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+            let components = WidgetCalendarTimeline.calendar().dateComponents([.year, .month, .day], from: date)
             if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
                 let target = GregorianDay(year: year, month: month, day: day)
                 if var comment = CustomDayManager.shared.fetchCustomComment(by: target.julianDay) {
@@ -119,7 +119,7 @@ struct DeleteDayCommentIntent: AppIntent {
             params: ["date": AnyEncodable(date)]
         ) { () throws -> Bool in
             var result = false
-            let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+            let components = WidgetCalendarTimeline.calendar().dateComponents([.year, .month, .day], from: date)
             if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
                 let target = GregorianDay(year: year, month: month, day: day)
                 if let comment = CustomDayManager.shared.fetchCustomComment(by: target.julianDay) {

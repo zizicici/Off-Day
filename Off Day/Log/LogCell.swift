@@ -36,7 +36,7 @@ final class LogCell: UITableViewCell {
 
         iconView.translatesAutoresizingMaskIntoConstraints = false
         iconView.contentMode = .scaleAspectFit
-        iconView.tintColor = .secondaryLabel
+        iconView.tintColor = AppColor.secondaryText
         contentView.addSubview(iconView)
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -49,7 +49,7 @@ final class LogCell: UITableViewCell {
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = .preferredFont(forTextStyle: .footnote)
         subtitleLabel.adjustsFontForContentSizeCategory = true
-        subtitleLabel.textColor = .secondaryLabel
+        subtitleLabel.textColor = AppColor.secondaryText
         subtitleLabel.numberOfLines = 2
         contentView.addSubview(subtitleLabel)
 
@@ -62,7 +62,7 @@ final class LogCell: UITableViewCell {
 
         statusDot.translatesAutoresizingMaskIntoConstraints = false
         statusDot.layer.cornerRadius = 4
-        statusDot.backgroundColor = .systemRed
+        statusDot.backgroundColor = AppColor.destructive
         statusDot.isHidden = true
         contentView.addSubview(statusDot)
 

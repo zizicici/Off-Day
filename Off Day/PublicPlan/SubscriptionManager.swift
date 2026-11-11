@@ -602,21 +602,21 @@ final class SubscriptionManager {
             entries.append(Entry(
                 icon: "plus.circle",
                 text: "\(day.name) (\(day.date.completeFormatString() ?? ""))",
-                color: .systemGreen
+                color: AppColor.success
             ))
         }
         for day in update.diff.removedDays.sorted(by: { $0.date.julianDay < $1.date.julianDay }) {
             entries.append(Entry(
                 icon: "minus.circle",
                 text: "\(day.name) (\(day.date.completeFormatString() ?? ""))",
-                color: .systemRed
+                color: AppColor.destructive
             ))
         }
         for day in update.diff.modifiedDays.sorted(by: { $0.date.julianDay < $1.date.julianDay }) {
             entries.append(Entry(
                 icon: "arrow.triangle.2.circlepath",
                 text: "\(day.name) (\(day.date.completeFormatString() ?? ""))",
-                color: .systemOrange
+                color: AppColor.warning
             ))
         }
 

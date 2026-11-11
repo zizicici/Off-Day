@@ -115,9 +115,9 @@ extension WeekEndColorType: UserDefaultSettable {
     func getName() -> String {
         switch self {
         case .offDay:
-            return String(localized: "settings.weekEndColorType.offDay")
+            return AppTheme.current.dateStyleName(backgroundAsset: "OffDayColor", classicName: String(localized: "settings.weekEndColorType.offDay"))
         case .blue:
-            return String(localized: "settings.weekEndColorType.blue")
+            return AppTheme.current.dateStyleName(backgroundAsset: "WeekEndColor", classicName: String(localized: "settings.weekEndColorType.blue"))
         }
     }
 
@@ -143,7 +143,7 @@ extension HolidayWorkColorType: UserDefaultSettable {
     func getName() -> String {
         switch self {
         case .workDay:
-            return String(localized: "settings.holidayWorkColorType.workDay")
+            return AppTheme.current.dateStyleName(backgroundAsset: "WorkDayColor", classicName: String(localized: "settings.holidayWorkColorType.workDay"))
         case .paper:
             return String(localized: "settings.holidayWorkColorType.paper")
         }

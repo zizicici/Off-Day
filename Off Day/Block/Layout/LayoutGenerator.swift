@@ -11,6 +11,7 @@ import ZCCalendar
 struct LayoutGenerater {
     static func dayLayout(for snapshot: inout NSDiffableDataSourceSnapshot<Section, Item>, year: Int, customDayInfoDict: [Int : CustomDayInfo]) {
         let firstDayOfWeek: WeekdayOrder = WeekdayOrder(rawValue: WeekStartType.current.rawValue) ?? WeekdayOrder.firstDayOfWeek
+        let visualStyle = CalendarAppearanceSettings.load()
         
         for month in Month.allCases {
             let firstDay = GregorianDay(year: year, month: month, day: 1)
@@ -26,7 +27,7 @@ struct LayoutGenerater {
                     return Item.invisible(uuid)
                 }))
             }
-            snapshot.appendItems([.month(MonthItem(text: gregorianMonth.month.name, color: .label.withAlphaComponent(0.8)))])
+            snapshot.appendItems([.month(MonthItem(text: gregorianMonth.month.name, color: AppColor.text.withAlphaComponent(0.8)))])
             
             snapshot.appendSections([.row(gregorianMonth)])
             if firstOffset >= 1 {
@@ -41,33 +42,14 @@ struct LayoutGenerater {
                 let publicDay = PublicPlanManager.shared.publicDay(at: julianDay)
                 let customDayInfo = customDayInfoDict[julianDay] ?? CustomDayInfo(dayIndex: julianDay)
 
-                let backgroundColor: UIColor
-                let foregroundColor: UIColor
-                
-                if let dayType = publicDay?.type {
-                    switch dayType {
-                    case .offDay:
-                        backgroundColor = AppColor.offDay
-                        foregroundColor = .white
-                    case .workDay:
-                        switch HolidayWorkColorType.getValue() {
-                        case .workDay:
-                            backgroundColor = AppColor.workDay
-                            foregroundColor = .white
-                        case .paper:
-                            backgroundColor = AppColor.paper
-                            foregroundColor = AppColor.text
-                        }
-                    }
-                } else {
-                    if BaseCalendarManager.shared.isOff(day: gregorianDay) {
-                        backgroundColor = WeekEndColorType.getValue().getColor()
-                        foregroundColor = .white
-                    } else {
-                        backgroundColor = AppColor.paper
-                        foregroundColor = AppColor.text
-                    }
-                }
+                let palette = CalendarDayAppearance.palette(
+                    baseIsOffDay: BaseCalendarManager.shared.isOff(day: gregorianDay),
+                    publicIsOffDay: publicDay.map { $0.type == .offDay },
+                    blueWeekends: WeekEndColorType.getValue() == .blue,
+                    paperHolidayWorkdays: HolidayWorkColorType.getValue() == .paper)
+                let presentation = CalendarCellPresentation(style: visualStyle, appearance: palette)
+                let backgroundColor = presentation.background
+                let foregroundColor = presentation.foreground
                 
                 var alternativeCalendarDayName: String? = nil
                 var alternativeCalendarA11yName: String? = nil
@@ -85,13 +67,13 @@ struct LayoutGenerater {
                     }
                 }
                 
-                return Item.block(BlockItem(index: julianDay, publicDayName: publicDay?.name, baseCalendarDayType: BaseCalendarManager.shared.isOff(day: gregorianDay) ? .offDay : .workDay, publicDayType: publicDay?.type, customDayInfo: customDayInfo, backgroundColor: backgroundColor, foregroundColor: foregroundColor, isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay), alternativeCalendarDayName: alternativeCalendarDayName, alternativeCalendarA11yName: alternativeCalendarA11yName))
+                return Item.block(BlockItem(index: julianDay, publicDayName: publicDay?.name, baseCalendarDayType: BaseCalendarManager.shared.isOff(day: gregorianDay) ? .offDay : .workDay, publicDayType: publicDay?.type, customDayInfo: customDayInfo, backgroundColor: backgroundColor, foregroundColor: foregroundColor, isToday: ZCCalendar.manager.isToday(gregorianDay: gregorianDay), alternativeCalendarDayName: alternativeCalendarDayName, alternativeCalendarA11yName: alternativeCalendarA11yName,
+                    appearance: palette, visualStyle: visualStyle))
             })
             snapshot.appendItems(items)
         }
     }
 }
-
 extension LayoutGenerater {
     static func rearrangeArray(startingFrom value: WeekdayOrder, in array: [WeekdayOrder]) -> [WeekdayOrder] {
         guard let index = array.firstIndex(of: value) else {
@@ -100,16 +82,5 @@ extension LayoutGenerater {
         let firstPart = array.suffix(from: index)
         let secondPart = array.prefix(index)
         return Array(firstPart + secondPart)
-    }
-}
-
-extension WeekEndColorType {
-    func getColor() -> UIColor {
-        switch self {
-        case .offDay:
-            return AppColor.offDay
-        case .blue:
-            return AppColor.weekEnd
-        }
     }
 }

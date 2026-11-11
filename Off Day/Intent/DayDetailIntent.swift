@@ -13,7 +13,6 @@ struct DayDetailEntity: Identifiable, Hashable, Equatable, AppEntity {
     typealias DefaultQuery = DayIntentQuery
     static var defaultQuery = DayIntentQuery()
     var displayRepresentation: DisplayRepresentation {
-        let day = GregorianDay(JDN: id)
         let subtitle = String.assembleDetail(
             for: finalOffDay ? .offDay : .workDay,
             publicDayName: publicDayName,
@@ -22,7 +21,9 @@ struct DayDetailEntity: Identifiable, Hashable, Equatable, AppEntity {
             customDayType: userOffDay == nil ? .none : userOffDay! == true ? .offDay : .workDay,
             customComment: userComment
         )
-        return DisplayRepresentation(title: "\(day.formatString() ?? "")", subtitle: "\(subtitle)")
+        let title = Date.FormatStyle(date: .abbreviated, time: .omitted)
+            .widgetGregorian(locale: .current).format(date)
+        return DisplayRepresentation(title: "\(title)", subtitle: "\(subtitle)")
     }
     
     var id: Int
@@ -98,7 +99,7 @@ struct DayDetailIntent: AppIntent {
             intent: Self.titleLogKey,
             params: ["date": AnyEncodable(date)],
             operation: { () throws -> DayDetailEntity in
-                let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+                let components = WidgetCalendarTimeline.calendar().dateComponents([.year, .month, .day], from: date)
                 if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
                     let target = GregorianDay(year: year, month: month, day: day)
                     if PublicPlanManager.shared.isOverReach(at: target.julianDay) {

@@ -100,9 +100,9 @@ class PublicPlanViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: String(localized: "controller.publicDay.confirm"), style: .plain, target: self, action: #selector(confirmAction))
         if #available(iOS 26.0, *) {
             navigationItem.leftBarButtonItem?.hidesSharedBackground = true
-            navigationItem.leftBarButtonItem?.tintColor = .white
+            navigationItem.leftBarButtonItem?.tintColor = AppColor.navigationText
             navigationItem.rightBarButtonItem?.hidesSharedBackground = true
-            navigationItem.rightBarButtonItem?.tintColor = .white
+            navigationItem.rightBarButtonItem?.tintColor = AppColor.navigationText
         } else {
             // Fallback on earlier versions
         }
@@ -222,7 +222,7 @@ class PublicPlanViewController: UIViewController {
             var content = UIListContentConfiguration.valueCell()
             content.text = item.title
             content.textProperties.alignment = .center
-            content.textProperties.color = AppColor.offDay
+            content.textProperties.color = AppColor.accent
             cell.contentConfiguration = content
         }
     }
@@ -259,7 +259,7 @@ class PublicPlanViewController: UIViewController {
                         }
                     }
                     resumeAction.title = String(localized: "publicPlan.resume.title")
-                    resumeAction.backgroundColor = AppColor.offDay
+                    resumeAction.backgroundColor = AppColor.accent
 
                     return UISwipeActionsConfiguration(actions: [resumeAction])
                 } else {
@@ -270,7 +270,7 @@ class PublicPlanViewController: UIViewController {
                         completion(true)
                     }
                     pauseAction.title = String(localized: "publicPlan.pause.title")
-                    pauseAction.backgroundColor = .systemOrange
+                    pauseAction.backgroundColor = AppColor.warning
 
                     let refreshAction = UIContextualAction(style: .normal, title: nil) { (_, _, completion) in
                         Task {
@@ -288,7 +288,7 @@ class PublicPlanViewController: UIViewController {
                         }
                     }
                     refreshAction.title = String(localized: "publicPlan.refresh.title")
-                    refreshAction.backgroundColor = AppColor.offDay
+                    refreshAction.backgroundColor = AppColor.accent
 
                     return UISwipeActionsConfiguration(actions: [pauseAction, refreshAction])
                 }
@@ -302,14 +302,14 @@ class PublicPlanViewController: UIViewController {
                     completion(true)
                 }
                 shareAction.title = String(localized: "publicPlan.share.title")
-                shareAction.backgroundColor = AppColor.offDay
+                shareAction.backgroundColor = AppColor.accent
                 return UISwipeActionsConfiguration(actions: [shareAction])
             }
         }
     }
     
     func detailAccessoryForListCellItem(_ item: Item) -> UICellAccessory {
-        return UICellAccessory.detail(options: UICellAccessory.DetailOptions(tintColor: AppColor.offDay), actionHandler: { [weak self] in
+        return UICellAccessory.detail(options: UICellAccessory.DetailOptions(tintColor: AppColor.accent), actionHandler: { [weak self] in
             self?.goToDetail(for: item)
         })
     }
@@ -459,7 +459,7 @@ class PublicPlanViewController: UIViewController {
     
     func importPlan(from url: URL) {
         let result = PublicPlanManager.shared.importPlan(from: url)
-        let style = ToastStyle.getStyle(messageColor: .white, backgroundColor: AppColor.offDay)
+        let style = ToastStyle.getStyle(messageColor: AppColor.onAccent, backgroundColor: AppColor.accent)
         view.makeToast(
             result ? String(localized: "publicDetail.import.success") : String(localized: "publicDetail.import.failure"), position: .center, style: style)
     }
@@ -494,7 +494,7 @@ class PublicPlanViewController: UIViewController {
                     let result = try await SubscriptionManager.shared.subscribe(from: urlString)
                     await MainActor.run { [weak self] in
                         guard let self = self else { return }
-                        let style = ToastStyle.getStyle(messageColor: .white, backgroundColor: AppColor.offDay)
+                        let style = ToastStyle.getStyle(messageColor: AppColor.onAccent, backgroundColor: AppColor.accent)
                         self.view.makeToast(
                             result ? String(localized: "publicPlan.subscribe.success") : String(localized: "publicPlan.subscribe.failure"),
                             position: .center,
@@ -504,7 +504,7 @@ class PublicPlanViewController: UIViewController {
                 } catch {
                     await MainActor.run { [weak self] in
                         guard let self = self else { return }
-                        let style = ToastStyle.getStyle(messageColor: .white, backgroundColor: AppColor.offDay)
+                        let style = ToastStyle.getStyle(messageColor: AppColor.onAccent, backgroundColor: AppColor.accent)
                         self.view.makeToast(
                             String(localized: "publicPlan.subscribe.failure"),
                             position: .center,

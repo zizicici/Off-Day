@@ -277,6 +277,8 @@ final class MoreDataSource: NSObject, MoreViewControllerDataSource {
 
     private func presentSafari(with url: URL, from controller: UIViewController) {
         let sf = SFSafariViewController(url: url)
+        sf.preferredControlTintColor = AppColor.accent
+        sf.preferredBarTintColor = AppColor.background
         controller.navigationController?.present(sf, animated: ConsideringUser.animated)
     }
 }

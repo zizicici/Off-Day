@@ -37,7 +37,7 @@ struct CheckDayClashIntent: AppIntent {
             ]
         ) { () throws -> Bool in
             var isOffDay = false
-            let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+            let components = WidgetCalendarTimeline.calendar().dateComponents([.year, .month, .day], from: date)
             if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
                 let target = GregorianDay(year: year, month: month, day: day)
                 if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
@@ -76,7 +76,7 @@ struct CheckTodayClashIntent: AppIntent {
             params: ["enableUserMark": AnyEncodable(enableUserMark)]
         ) { () throws -> Bool in
             var isOffDay = false
-            let components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
+            let components = WidgetCalendarTimeline.calendar().dateComponents([.year, .month, .day], from: Date())
             if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
                 let target = GregorianDay(year: year, month: month, day: day)
                 if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
@@ -115,8 +115,8 @@ struct CheckTomorrowClashIntent: AppIntent {
             params: ["enableUserMark": AnyEncodable(enableUserMark)]
         ) { () throws -> Bool in
             var isOffDay = false
-            let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
-            let components = Calendar.current.dateComponents([.year, .month, .day], from: tomorrow)
+            let tomorrow = WidgetCalendarTimeline.calendar().date(byAdding: .day, value: 1, to: Date())!
+            let components = WidgetCalendarTimeline.calendar().dateComponents([.year, .month, .day], from: tomorrow)
             if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
                 let target = GregorianDay(year: year, month: month, day: day)
                 if PublicPlanManager.shared.isOverReach(at: target.julianDay) {
@@ -161,8 +161,8 @@ struct CheckOffsetDayClashIntent: AppIntent {
             ]
         ) { () throws -> Bool in
             var isOffDay = false
-            let tomorrow = Calendar.current.date(byAdding: .day, value: dayCount, to: Date())!
-            let components = Calendar.current.dateComponents([.year, .month, .day], from: tomorrow)
+            let tomorrow = WidgetCalendarTimeline.calendar().date(byAdding: .day, value: dayCount, to: Date())!
+            let components = WidgetCalendarTimeline.calendar().dateComponents([.year, .month, .day], from: tomorrow)
             if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
                 let target = GregorianDay(year: year, month: month, day: day)
                 if PublicPlanManager.shared.isOverReach(at: target.julianDay) {

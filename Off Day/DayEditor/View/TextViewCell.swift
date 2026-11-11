@@ -12,6 +12,8 @@ class TextViewCell: UITableViewCell {
     private var textView: PlaceholderTextView = {
         let textView = PlaceholderTextView()
         textView.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        textView.textColor = AppColor.text
+        textView.backgroundColor = AppColor.paper
         textView.textContainerInset = UIEdgeInsets(top: 8, left: 11, bottom: 8, right: 11)
 
         return textView
@@ -75,7 +77,7 @@ class PlaceholderTextView: UITextView {
     
     private let placeholderLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .placeholderText
+        label.textColor = AppColor.placeholderText
         label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         label.numberOfLines = 0
         return label

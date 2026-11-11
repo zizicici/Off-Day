@@ -24,8 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MoreKit.configure()
         MoreKitAppearance.shared = MoreKitAppearance(
             backgroundColor: AppColor.background,
-            tintColor: AppColor.offDay
+            tintColor: AppColor.accent
         )
+        UITableView.appearance().backgroundColor = AppColor.background
+        UITableView.appearance().separatorColor = AppColor.separator
+        UITableViewCell.appearance().backgroundColor = AppColor.paper
 
         _ = AppDatabase.shared
         _ = AppLogger.shared

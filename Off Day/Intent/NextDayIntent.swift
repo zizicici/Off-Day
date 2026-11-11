@@ -28,7 +28,7 @@ struct NextOffDayDetailIntent: AppIntent {
             intent: Self.titleLogKey,
             params: ["date": AnyEncodable(date)],
             operation: { () throws -> DayDetailEntity in
-                let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+                let components = WidgetCalendarTimeline.calendar().dateComponents([.year, .month, .day], from: date)
                 if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
                     let day = GregorianDay(year: year, month: month, day: day)
 
@@ -69,7 +69,7 @@ struct NextWorkDayDetailIntent: AppIntent {
             intent: Self.titleLogKey,
             params: ["date": AnyEncodable(date)],
             operation: { () throws -> DayDetailEntity in
-                let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+                let components = WidgetCalendarTimeline.calendar().dateComponents([.year, .month, .day], from: date)
                 if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
                     let day = GregorianDay(year: year, month: month, day: day)
 

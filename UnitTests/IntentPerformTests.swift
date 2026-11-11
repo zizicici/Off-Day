@@ -50,7 +50,7 @@ struct IntentPerformTests {
     @Test @MainActor func checkDayIntentShouldThrowOverReachForDateBeyondSelectedPlan() async throws {
         IntentTestHelper.selectUSPublicPlan()
 
-        var intent = CheckDayIntent()
+        let intent = CheckDayIntent()
         intent.date = try #require(IntentTestHelper.date(for: GregorianDay(year: 2200, month: .jan, day: 1)))
 
         let didThrowOverReach = await IntentTestHelper.didThrowOverReach {
@@ -62,7 +62,7 @@ struct IntentPerformTests {
     @Test @MainActor func checkDayClashIntentShouldThrowOverReachForDateBeyondSelectedPlan() async throws {
         IntentTestHelper.selectUSPublicPlan()
 
-        var intent = CheckDayClashIntent()
+        let intent = CheckDayClashIntent()
         intent.date = try #require(IntentTestHelper.date(for: GregorianDay(year: 2200, month: .jan, day: 1)))
         intent.enableUserMark = false
 
@@ -75,7 +75,7 @@ struct IntentPerformTests {
     @Test @MainActor func dayDetailIntentShouldThrowOverReachForDateBeyondSelectedPlan() async throws {
         IntentTestHelper.selectUSPublicPlan()
 
-        var intent = DayDetailIntent()
+        let intent = DayDetailIntent()
         intent.date = try #require(IntentTestHelper.date(for: GregorianDay(year: 2200, month: .jan, day: 1)))
 
         let didThrowOverReach = await IntentTestHelper.didThrowOverReach {
@@ -87,7 +87,7 @@ struct IntentPerformTests {
     @Test @MainActor func checkOffsetIntentsShouldThrowOverReachForVeryLargeOffset() async {
         IntentTestHelper.selectUSPublicPlan()
 
-        var offIntent = CheckOffsetDayOffIntent()
+        let offIntent = CheckOffsetDayOffIntent()
         offIntent.dayCount = 100_000
 
         let offIntentOverReach = await IntentTestHelper.didThrowOverReach {
@@ -95,7 +95,7 @@ struct IntentPerformTests {
         }
         #expect(offIntentOverReach)
 
-        var clashIntent = CheckOffsetDayClashIntent()
+        let clashIntent = CheckOffsetDayClashIntent()
         clashIntent.dayCount = 100_000
         clashIntent.enableUserMark = true
 
@@ -115,19 +115,19 @@ struct IntentPerformTests {
             IntentTestHelper.clearCustomData(for: dayIndex)
         }
 
-        var updateIntent = UpdateDayCommentIntent()
+        let updateIntent = UpdateDayCommentIntent()
         updateIntent.date = date
         updateIntent.content = "Intent comment test"
 
         _ = try await updateIntent.perform()
         #expect(CustomDayManager.shared.fetchCustomComment(by: dayIndex)?.content == "Intent comment test")
 
-        var getIntent = GetDayCommentIntent()
+        let getIntent = GetDayCommentIntent()
         getIntent.date = date
         _ = try await getIntent.perform()
         #expect(CustomDayManager.shared.fetchCustomComment(by: dayIndex)?.content == "Intent comment test")
 
-        var deleteIntent = DeleteDayCommentIntent()
+        let deleteIntent = DeleteDayCommentIntent()
         deleteIntent.date = date
         _ = try await deleteIntent.perform()
 
@@ -144,7 +144,7 @@ struct IntentPerformTests {
             IntentTestHelper.clearCustomData(for: dayIndex)
         }
 
-        var intent = UpdateDayMarkIntent()
+        let intent = UpdateDayMarkIntent()
         intent.date = date
         intent.mark = .off
         _ = try await intent.perform()

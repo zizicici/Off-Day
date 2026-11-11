@@ -26,7 +26,7 @@ class TextInputCell: UITableViewCell {
             make.leading.trailing.equalTo(contentView).inset(20.0)
             make.height.greaterThanOrEqualTo(44.0)
         }
-        textField.tintColor = AppColor.offDay
+        textField.tintColor = AppColor.accent
         textField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
     }
     
@@ -76,7 +76,7 @@ class UITextFieldWithDoneButton: UITextField {
 
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let done: UIBarButtonItem = UIBarButtonItem(title: String(localized: "button.done"), style: .done, target: self, action: #selector(self.doneButtonAction))
-        done.tintColor = AppColor.offDay
+        done.tintColor = AppColor.accent
 
         let items = [flexSpace, done]
         doneToolbar.items = items

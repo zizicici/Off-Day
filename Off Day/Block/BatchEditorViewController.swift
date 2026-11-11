@@ -85,7 +85,7 @@ class BatchEditorViewController: UIViewController {
         super.viewDidLoad()
         
         updateNavigationBarStyle()
-        view.backgroundColor = .secondarySystemGroupedBackground
+        view.backgroundColor = AppColor.paper
         
         title = String(localized: "batchEditor.title")
         let saveItem = UIBarButtonItem(title: String(localized: "batchEditor.button.update"), style: .plain, target: self, action: #selector(showSaveAlert))
@@ -99,9 +99,9 @@ class BatchEditorViewController: UIViewController {
         
         if #available(iOS 26.0, *) {
             navigationItem.leftBarButtonItem?.hidesSharedBackground = true
-            navigationItem.leftBarButtonItem?.tintColor = .white
+            navigationItem.leftBarButtonItem?.tintColor = AppColor.navigationText
             navigationItem.rightBarButtonItem?.hidesSharedBackground = true
-            navigationItem.rightBarButtonItem?.tintColor = .white
+            navigationItem.rightBarButtonItem?.tintColor = AppColor.navigationText
         } else {
             // Fallback on earlier versions
         }

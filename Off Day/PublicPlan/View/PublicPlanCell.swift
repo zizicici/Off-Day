@@ -18,7 +18,7 @@ class PublicPlanCell: UICollectionViewListCell {
     var customBackgroundView: UIView = {
         let view = UIView()
         
-        view.backgroundColor = .secondarySystemGroupedBackground
+        view.backgroundColor = AppColor.paper
         
         return view
     }()
@@ -38,21 +38,21 @@ class PublicPlanCell: UICollectionViewListCell {
 
         if state.isSelected {
             let checkmark = UIImageView(image: UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18, weight: .medium)))
-            accessories = [detail, .customView(configuration: .init(customView: checkmark, placement: .leading(), reservedLayoutWidth: .custom(12), tintColor: AppColor.offDay))].compactMap{ $0 }
+            accessories = [detail, .customView(configuration: .init(customView: checkmark, placement: .leading(), reservedLayoutWidth: .custom(12), tintColor: AppColor.accent))].compactMap{ $0 }
         } else {
-            accessories = [detail, (.customView(configuration: .init(customView: UIView(), placement: .leading(), reservedLayoutWidth: .custom(12), tintColor: AppColor.offDay)))].compactMap{ $0 }
+            accessories = [detail, (.customView(configuration: .init(customView: UIView(), placement: .leading(), reservedLayoutWidth: .custom(12), tintColor: AppColor.accent)))].compactMap{ $0 }
         }
         if state.isHighlighted {
             if state.isSelected {
                 customBackgroundView.alpha = 1.0
-                customBackgroundView.backgroundColor = .systemGray4
+                customBackgroundView.backgroundColor = AppColor.selection
             } else {
                 customBackgroundView.alpha = 0.0
-                customBackgroundView.backgroundColor = .secondarySystemGroupedBackground
+                customBackgroundView.backgroundColor = AppColor.paper
             }
         } else {
             customBackgroundView.alpha = 1.0
-            customBackgroundView.backgroundColor = .secondarySystemGroupedBackground
+            customBackgroundView.backgroundColor = AppColor.paper
         }
         
         backgroundConfiguration = PublicPlanCellBackgroundConfiguration.configuration(for: state)

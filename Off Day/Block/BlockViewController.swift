@@ -96,7 +96,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         let publicPlanButton = UIBarButtonItem(image: UIImage(systemName: "calendar.badge.checkmark"), style: .plain, target: self, action: #selector(showPublicPlanPicker))
         if #available(iOS 26.0, *) {
             publicPlanButton.hidesSharedBackground = true
-            publicPlanButton.tintColor = .white
+            publicPlanButton.tintColor = AppColor.navigationText
         } else {
             // Fallback on earlier versions
         }
@@ -106,12 +106,12 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
         if #available(iOS 26.0, *) {
             moreButton.hidesSharedBackground = true
-            moreButton.tintColor = .white
+            moreButton.tintColor = AppColor.navigationText
         } else {
             // Fallback on earlier versions
         }
-        navigationItem.rightBarButtonItem = moreButton
         self.moreButton = moreButton
+        navigationItem.rightBarButtonItem = moreButton
         
         updateMoreMenu()
         
@@ -124,9 +124,21 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         super.viewDidAppear(animated)
         self.reloadData()
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        weekdayOrderView?.refreshTheme()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if isViewLoaded, traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateNavigationTitleView()
+        }
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return AppTheme.current.statusBarStyle(for: traitCollection)
     }
     
     override func tap(in indexPath: IndexPath) {
@@ -240,6 +252,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
 
     @objc
     internal func reloadData() {
+        weekdayOrderView.refreshTheme()
         let startWeekdayOrder = WeekdayOrder(rawValue: WeekStartType.current.rawValue) ?? WeekdayOrder.firstDayOfWeek
         weekdayOrderView.startWeekdayOrder = startWeekdayOrder
         let leading = displayHandler.getLeading()
@@ -267,9 +280,9 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         updateMoreMenu()
     }
     
-    internal func getPublicPlanIndicator(defaultColor: UIColor = .white) -> UIImage? {
+    internal func getPublicPlanIndicator(defaultColor: UIColor = AppColor.navigationText) -> UIImage? {
         if PublicPlanManager.shared.dataSource?.plan == nil {
-            return UIImage(systemName: "calendar.badge.exclamationmark")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors: [.systemPink, defaultColor]))
+            return UIImage(systemName: "calendar.badge.exclamationmark")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors: [AppColor.attention, defaultColor]))
         } else {
             return UIImage(systemName: "calendar.badge.checkmark")
         }
@@ -310,11 +323,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         if let languageMenu = getPublicPlanLanguageMenu() {
             children.append(languageMenu)
         }
-        children.append(contentsOf: [getWeekStartTypeMenu(), getWeekEndColorMenu()])
-        
-        if PublicPlanManager.shared.hasHolidayShift() {
-            children.append(getHolidayWorkColorMenu())
-        }
+        children.append(contentsOf: [getCalendarAppearanceMenu(), getWeekStartTypeMenu()])
         
         let batchEditorAction = UIAction(title: String(localized: "controller.calendar.batchEditor"), image: UIImage(systemName: "pencil")) { [weak self] _ in
             let batchEditor = BatchEditorViewController()
@@ -353,12 +362,13 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     
     private func updateNavigationTitleView() {
         let publicPlanName = getPublicPlanName()
-        navigationItem.setTitle(displayHandler.getTitle(), subtitle: publicPlanName, menu: getCatalogueMenu(publicPlanName: publicPlanName))
+        navigationItem.setTitle(displayHandler.getTitle(), subtitle: publicPlanName,
+            menu: getCatalogueMenu(publicPlanName: publicPlanName), traits: traitCollection)
     }
 }
 
 extension UINavigationItem {
-    func setTitle(_ title: String, subtitle: String, menu: UIMenu?) {
+    func setTitle(_ title: String, subtitle: String, menu: UIMenu?, traits: UITraitCollection = .current) {
         var configuration = UIButton.Configuration.borderedTinted()
         configuration.title = title
         configuration.subtitle = subtitle
@@ -375,7 +385,21 @@ extension UINavigationItem {
             
             return outgoing
         })
+        if AppTheme.current.style.usesColoredPatterns {
+            let colors = AppTheme.current.colors(for: traits)
+            let foreground = UIColor(colors.text).resolvedColor(with: traits)
+            let backing = UIColor(colors.background(for: CalendarNavigationPattern.palette)).resolvedColor(with: traits)
+            configuration.background.backgroundColor = .clear
+            configuration.background.backgroundColorTransformer = nil
+            configuration.baseForegroundColor = foreground
+            configuration.attributedTitle = AttributedString(CalendarInkTextAttachment.text(title,
+                font: .preferredFont(forTextStyle: .headline), foreground: foreground, backing: backing, traits: traits))
+            configuration.attributedSubtitle = AttributedString(CalendarInkTextAttachment.text(subtitle,
+                font: .preferredFont(forTextStyle: .caption2), foreground: foreground, backing: backing, traits: traits))
+        }
         let button = UIButton(configuration: configuration)
+        button.accessibilityLabel = title
+        button.accessibilityValue = subtitle.isEmpty ? nil : subtitle
         button.showsMenuAsPrimaryAction = true
         button.menu = menu
         titleView = button

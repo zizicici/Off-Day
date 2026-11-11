@@ -73,9 +73,9 @@ class CustomPublicDayDetailViewController: UIViewController {
         
         if #available(iOS 26.0, *) {
             navigationItem.leftBarButtonItem?.hidesSharedBackground = true
-            navigationItem.leftBarButtonItem?.tintColor = .white
+            navigationItem.leftBarButtonItem?.tintColor = AppColor.navigationText
             navigationItem.rightBarButtonItem?.hidesSharedBackground = true
-            navigationItem.rightBarButtonItem?.tintColor = .white
+            navigationItem.rightBarButtonItem?.tintColor = AppColor.navigationText
         } else {
             // Fallback on earlier versions
         }
@@ -165,7 +165,7 @@ class CustomPublicDayDetailViewController: UIViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(UITableViewCell.self), for: indexPath)
                 var content = UIListContentConfiguration.cell()
                 content.text = String(localized: "publicDay.detail.delete")
-                content.textProperties.color = .systemRed
+                content.textProperties.color = AppColor.destructive
                 content.textProperties.alignment = .center
                 cell.contentConfiguration = content
                 return cell

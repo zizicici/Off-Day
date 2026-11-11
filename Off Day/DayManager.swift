@@ -87,7 +87,8 @@ struct DayManager {
         } else {
             customOffValue = nil
         }
-        if let date = day.generateDate(secondsFromGMT: Calendar.current.timeZone.secondsFromGMT()) {
+        let calendar = WidgetCalendarTimeline.calendar()
+        if let date = calendar.date(from: .init(year: day.year, month: day.month.rawValue, day: day.day)) {
             let detail = DayDetailEntity(id: day.julianDay, date: date, finalOffDay: check(day, is: .offDay), userOffDay: customOffValue, publicOffDay: publicOffValue, baseOffDay: baseOffValue, publicDayName: publicDay?.name, userComment: customDayInfo.customComment?.content)
             return detail
         } else {

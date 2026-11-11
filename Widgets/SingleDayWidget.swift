@@ -3,25 +3,19 @@ import WidgetKit
 
 struct TodayWidget: Widget {
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: "TodayWidget", provider: LockScreenTimelineProvider()) { entry in
+        StaticConfiguration(kind: WidgetKind.today.rawValue, provider: LockScreenTimelineProvider()) { entry in
             SingleDayWidgetView(title: "widget.today", day: entry.today)
         }
-        .configurationDisplayName("widget.today")
-        .description("widget.today.description")
-        .supportedFamilies([.accessoryCircular])
-        .contentMarginsDisabled()
+        .calendarPresentation(for: .today)
     }
 }
 
 struct TomorrowWidget: Widget {
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: "TomorrowWidget", provider: LockScreenTimelineProvider()) { entry in
+        StaticConfiguration(kind: WidgetKind.tomorrow.rawValue, provider: LockScreenTimelineProvider()) { entry in
             SingleDayWidgetView(title: "widget.tomorrow", day: entry.tomorrow)
         }
-        .configurationDisplayName("widget.tomorrow")
-        .description("widget.tomorrow.description")
-        .supportedFamilies([.accessoryCircular])
-        .contentMarginsDisabled()
+        .calendarPresentation(for: .tomorrow)
     }
 }
 

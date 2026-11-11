@@ -103,9 +103,9 @@ class BaseCalendarEditorViewController: UIViewController, UITableViewDelegate {
         
         if #available(iOS 26.0, *) {
             navigationItem.leftBarButtonItem?.hidesSharedBackground = true
-            navigationItem.leftBarButtonItem?.tintColor = .white
+            navigationItem.leftBarButtonItem?.tintColor = AppColor.navigationText
             navigationItem.rightBarButtonItem?.hidesSharedBackground = true
-            navigationItem.rightBarButtonItem?.tintColor = .white
+            navigationItem.rightBarButtonItem?.tintColor = AppColor.navigationText
         } else {
             // Fallback on earlier versions
         }
@@ -138,10 +138,10 @@ class BaseCalendarEditorViewController: UIViewController, UITableViewDelegate {
             case .calendarType(let calendarType, let isSelected):
                 let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
                 cell.accessoryType = isSelected ? .checkmark : .none
-                cell.tintColor = AppColor.offDay
+                cell.tintColor = AppColor.accent
                 var content = UIListContentConfiguration.valueCell()
                 content.text = calendarType.title
-                content.textProperties.color = .label
+                content.textProperties.color = AppColor.text
                 cell.contentConfiguration = content
                 return cell
             case .stadardConfig(let weekdayOrders):

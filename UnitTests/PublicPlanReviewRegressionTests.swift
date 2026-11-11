@@ -2,7 +2,8 @@ import Foundation
 import Testing
 import UIKit
 import ZCCalendar
-@testable import Off_Day
+// UIKit fixtures from the Swift 5 app module are accessed only on MainActor.
+@preconcurrency @testable import Off_Day
 
 @Suite(.serialized)
 @MainActor

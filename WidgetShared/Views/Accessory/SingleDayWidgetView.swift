@@ -6,17 +6,11 @@ struct SingleDayWidgetView: View {
     var day: WidgetCalendarDay?
 
     var body: some View {
-        if #available(iOS 17.0, *) {
-            content.containerBackground(for: .widget) { Color.clear }
-        } else {
-            content
-        }
-    }
-
-    private var content: some View {
-        ZStack {
-            AccessoryWidgetBackground()
-            SingleDayWidgetContent(title: title, day: day)
+        WidgetAccessoryContainer {
+            ZStack {
+                AccessoryWidgetBackground()
+                SingleDayWidgetContent(title: title, day: day)
+            }
         }
     }
 }

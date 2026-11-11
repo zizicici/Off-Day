@@ -100,15 +100,9 @@ class WeekCalendarCell: UITableViewCell {
                 
                 let button = UIButton.init(configuration: configuration)
                 button.configuration = configuration
-                button.configurationUpdateHandler = { button in
-                    if button.isHighlighted || button.isSelected {
-                        button.configuration?.baseBackgroundColor = WeekEndColorType.getValue().getColor()
-                        button.configuration?.baseForegroundColor = .white
-                    } else {
-                        button.configuration?.baseBackgroundColor = .clear
-                        button.configuration?.baseForegroundColor = AppColor.text
-                    }
-                }
+                let appearance = CalendarSelectionAppearance(configuration: configuration,
+                    titleFont: .systemFont(ofSize: 9), subtitleFont: .systemFont(ofSize: today == day ? 14 : 16))
+                button.configurationUpdateHandler = { appearance.update($0) }
                 button.snp.makeConstraints { make in
                     make.width.height.equalTo(40.0)
                 }

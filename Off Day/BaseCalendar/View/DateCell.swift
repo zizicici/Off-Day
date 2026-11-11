@@ -64,7 +64,7 @@ class DateCell: DateBaseCell {
         
         let datePicker = UIDatePicker(frame: CGRect.zero)
         datePicker.datePickerMode = .dateAndTime
-        datePicker.tintColor = AppColor.offDay
+        datePicker.tintColor = AppColor.accent
         contentView.addSubview(datePicker)
         datePicker.snp.makeConstraints { make in
             make.trailing.equalTo(contentView).inset(16)

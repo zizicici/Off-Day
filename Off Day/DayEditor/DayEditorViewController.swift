@@ -97,7 +97,7 @@ class DayEditorViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = AppColor.background
-        navigationController?.navigationBar.tintColor = AppColor.offDay
+        navigationController?.navigationBar.tintColor = AppColor.accent
         
         self.title = String(localized: "dayEditor.comment")
         
@@ -109,8 +109,9 @@ class DayEditorViewController: UIViewController {
         navigationItem.leftBarButtonItem = closeItem
         
         if #available(iOS 26.0, *) {
-            closeItem.tintColor = AppColor.offDay
-            saveItem.tintColor = AppColor.offDay
+            closeItem.tintColor = AppColor.accent
+            saveItem.tintColor = AppColor.accent
+            saveItem.setTitleTextAttributes([.foregroundColor: AppColor.onAccent], for: .normal)
         } else {
             // Fallback on earlier versions
         }
@@ -148,7 +149,7 @@ class DayEditorViewController: UIViewController {
             case .comment(let content):
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(TextViewCell.self), for: indexPath)
                 if let cell = cell as? TextViewCell {
-                    cell.tintColor = AppColor.offDay
+                    cell.tintColor = AppColor.accent
                     cell.update(text: content, placeholder: String(localized: "dayEditor.placeholder.comment"))
                     cell.textDidChanged = { [weak self] text in
                         self?.content = text

@@ -201,9 +201,9 @@ class PublicPlanDetailViewController: UIViewController {
         
         if #available(iOS 26.0, *) {
             navigationItem.leftBarButtonItem?.hidesSharedBackground = true
-            navigationItem.leftBarButtonItem?.tintColor = .white
+            navigationItem.leftBarButtonItem?.tintColor = AppColor.navigationText
             navigationItem.rightBarButtonItem?.hidesSharedBackground = true
-            navigationItem.rightBarButtonItem?.tintColor = .white
+            navigationItem.rightBarButtonItem?.tintColor = AppColor.navigationText
         } else {
             // Fallback on earlier versions
         }
@@ -267,7 +267,7 @@ class PublicPlanDetailViewController: UIViewController {
                 content.text = item.localizedName(language: self.publicPlanInfo?.language)
                 content.secondaryText = item.date.completeFormatString()
                 content.textToSecondaryTextVerticalPadding = 6.0
-                content.textProperties.color = item.type == .offDay ? AppColor.offDay : AppColor.workDay
+                content.textProperties.color = item.type == .offDay ? AppColor.accent : AppColor.workDay
                 content.textProperties.numberOfLines = 0
                 content.secondaryTextProperties.color = AppColor.text
                 content.secondaryTextProperties.font = UIFont.monospacedDigitSystemFont(ofSize: 15, weight: .regular)
@@ -281,13 +281,13 @@ class PublicPlanDetailViewController: UIViewController {
             case .add:
                 var content = UIListContentConfiguration.cell()
                 content.text = String(localized: "publicDetail.button.new")
-                content.textProperties.color = AppColor.offDay
+                content.textProperties.color = AppColor.accent
                 content.textProperties.alignment = .center
                 cell.contentConfiguration = content
             case .delete:
                 var content = UIListContentConfiguration.cell()
                 content.text = String(localized: "publicDetail.button.delete")
-                content.textProperties.color = .systemRed
+                content.textProperties.color = AppColor.destructive
                 content.textProperties.alignment = .center
                 cell.contentConfiguration = content
             case .start(let day):
@@ -315,7 +315,7 @@ class PublicPlanDetailViewController: UIViewController {
                     content.secondaryText = note
                 } else {
                     content.secondaryText = String(localized: "publicDetail.note.empty")
-                    content.secondaryTextProperties.color = .placeholderText
+                    content.secondaryTextProperties.color = AppColor.placeholderText
                 }
                 content.secondaryTextProperties.numberOfLines = 0
                 cell.contentConfiguration = content
@@ -324,7 +324,7 @@ class PublicPlanDetailViewController: UIViewController {
                 content.text = String(localized: "publicDetail.sourceURL")
                 content.secondaryText = url
                 content.secondaryTextProperties.numberOfLines = 0
-                content.secondaryTextProperties.color = .secondaryLabel
+                content.secondaryTextProperties.color = AppColor.secondaryText
                 cell.contentConfiguration = content
             case .lastRefreshTime(let timestamp):
                 var content = UIListContentConfiguration.valueCell()
@@ -335,19 +335,19 @@ class PublicPlanDetailViewController: UIViewController {
             case .refreshSubscription:
                 var content = UIListContentConfiguration.cell()
                 content.text = String(localized: "publicDetail.button.refresh")
-                content.textProperties.color = AppColor.offDay
+                content.textProperties.color = AppColor.accent
                 content.textProperties.alignment = .center
                 cell.contentConfiguration = content
             case .pauseSubscription:
                 var content = UIListContentConfiguration.cell()
                 content.text = String(localized: "publicDetail.button.pause")
-                content.textProperties.color = .systemOrange
+                content.textProperties.color = AppColor.warning
                 content.textProperties.alignment = .center
                 cell.contentConfiguration = content
             case .resumeSubscription:
                 var content = UIListContentConfiguration.cell()
                 content.text = String(localized: "publicDetail.button.resume")
-                content.textProperties.color = AppColor.offDay
+                content.textProperties.color = AppColor.accent
                 content.textProperties.alignment = .center
                 cell.contentConfiguration = content
             }
@@ -477,7 +477,7 @@ class PublicPlanDetailViewController: UIViewController {
         configuration.imagePadding = 6.0
         
         let button = UIButton(configuration: configuration)
-        button.tintColor = .white
+        button.tintColor = AppColor.navigationText
         button.addTarget(self, action: #selector(showTitleAlert), for: .touchUpInside)
         titleButton = button
         

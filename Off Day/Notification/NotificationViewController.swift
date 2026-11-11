@@ -155,7 +155,7 @@ class NotificationViewController: UIViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(UITableViewCell.self), for: indexPath)
                 var content = UIListContentConfiguration.cell()
                 content.text = identifier.title
-                content.textProperties.color = AppColor.offDay
+                content.textProperties.color = AppColor.accent
                 content.textProperties.alignment = .center
                 cell.contentConfiguration = content
                 
@@ -165,7 +165,7 @@ class NotificationViewController: UIViewController {
                 let itemSwitch = UISwitch()
                 itemSwitch.isEnabled = isEnabled
                 itemSwitch.isOn = isEnabled && isOn
-                itemSwitch.onTintColor = AppColor.offDay
+                itemSwitch.onTintColor = AppColor.accent
                 itemSwitch.addTarget(self, action: #selector(self.publicHolidayToggle(_:)), for: .touchUpInside)
                 cell.accessoryView = itemSwitch
                 
@@ -190,7 +190,7 @@ class NotificationViewController: UIViewController {
                 let itemSwitch = UISwitch()
                 itemSwitch.isEnabled = isEnabled
                 itemSwitch.isOn = isEnabled && isOn
-                itemSwitch.onTintColor = AppColor.offDay
+                itemSwitch.onTintColor = AppColor.accent
                 itemSwitch.addTarget(self, action: #selector(self.customDayToggle(_:)), for: .touchUpInside)
                 cell.accessoryView = itemSwitch
                 
@@ -215,7 +215,7 @@ class NotificationViewController: UIViewController {
                 let itemSwitch = UISwitch()
                 itemSwitch.isEnabled = isEnabled
                 itemSwitch.isOn = isEnabled && isOn
-                itemSwitch.onTintColor = AppColor.offDay
+                itemSwitch.onTintColor = AppColor.accent
                 itemSwitch.addTarget(self, action: #selector(self.expiryToggle(_:)), for: .touchUpInside)
                 cell.accessoryView = itemSwitch
                 

@@ -110,7 +110,7 @@ final class LogViewController: UIViewController {
         emptyLabel = UILabel()
         emptyLabel.translatesAutoresizingMaskIntoConstraints = false
         emptyLabel.text = String(localized: "log.empty.message")
-        emptyLabel.textColor = .secondaryLabel
+        emptyLabel.textColor = AppColor.secondaryText
         emptyLabel.textAlignment = .center
         emptyLabel.numberOfLines = 0
         view.addSubview(emptyLabel)

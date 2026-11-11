@@ -5,10 +5,7 @@ struct LockScreenWidgetView: View {
     var entry: WidgetCalendarEntry
 
     var body: some View {
-        if #available(iOS 17.0, *) {
-            LockScreenWidgetContent(entry: entry)
-                .containerBackground(for: .widget) { Color.clear }
-        } else {
+        WidgetAccessoryContainer {
             LockScreenWidgetContent(entry: entry)
         }
     }
@@ -27,23 +24,16 @@ struct LockScreenWidgetContent: View {
                     dayColumn("widget.today", day: today, date: entry.date)
                     Rectangle()
                         .fill(.primary.opacity(0.18))
-                        .frame(width: 1, height: 36)
+                        .frame(width: 1)
+                        .padding(.vertical, 4)
                         .accessibilityHidden(true)
                     dayColumn("widget.tomorrow", day: tomorrow, date: tomorrowDate)
                 }
             } else {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("widget.openApp.title")
-                        .font(.subheadline.weight(.semibold))
-                    Text("widget.openApp.subtitle")
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                        .lineLimit(2)
-                }
+                WidgetOpenAppPlaceholder(style: .accessory)
             }
         }
         .padding(.horizontal, 4)
-        .padding(.vertical, 3)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
     }
 
@@ -54,12 +44,14 @@ struct LockScreenWidgetContent: View {
     private func dayColumn(_ title: LocalizedStringKey, day: WidgetCalendarDay, date: Date) -> some View {
         VStack(alignment: .leading, spacing: 3) {
             Text(title)
-                .font(.system(size: 10, weight: .medium))
+                .font(.system(size: 11, weight: .medium))
                 .foregroundStyle(.secondary)
+                .frame(height: 14, alignment: .leading)
             Text(LocalizedStringKey(day.isOffDay ? "widget.offDay" : "widget.workDay"))
-                .font(.system(size: 17, weight: .semibold))
+                .font(.system(size: 22, weight: .semibold))
                 .minimumScaleFactor(0.75)
                 .allowsTightening(true)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
             Group {
                 if let name = day.name?.trimmingCharacters(in: .whitespacesAndNewlines), !name.isEmpty {
                     Text(verbatim: name)
@@ -70,11 +62,12 @@ struct LockScreenWidgetContent: View {
                     Text(date, format: .dateTime.weekday(.abbreviated))
                 }
             }
-            .font(.system(size: 10))
+            .font(.system(size: 11))
             .foregroundStyle(.secondary)
+            .frame(height: 14, alignment: .leading)
         }
         .lineLimit(1)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .accessibilityElement(children: .combine)
     }
 }

@@ -8,12 +8,23 @@
 import UIKit
 
 struct AppColor {
-    static let offDay = UIColor.offDay
-    static let workDay = UIColor.workDay
-    static let weekEnd = UIColor.weekEnd
-    static let text = UIColor.text
-    static let paper = UIColor.paper
-    static let background = UIColor.background
-    static let navigationBar = UIColor.navigationBar
-    static let today = UIColor.today
+    static let workDay = AppTheme.dynamicColor(.workDay)
+    static let weekEnd = AppTheme.dynamicColor(.weekend)
+    static let text = AppTheme.dynamicColor(.text)
+    static let paper = AppTheme.dynamicColor(.paper)
+    static let background = AppTheme.dynamicColor(.background)
+    static let navigationBar = AppTheme.dynamicColor(.navigationBackground)
+    static let navigationText = AppTheme.dynamicColor(.navigationText)
+    static let solidNavigationText = AppTheme.dynamicColor(.solidNavigationText)
+    static let today = AppTheme.dynamicColor(.today)
+    static let accent = AppTheme.dynamicColor(.accent)
+    static let onAccent = AppTheme.dynamicColor(.onAccent)
+    static let secondaryText = AppTheme.dynamicColor(.secondaryText)
+    static let placeholderText = AppTheme.dynamicColor(.placeholderText)
+    static let selection = AppTheme.dynamicColor(.selection)
+    static let separator = AppTheme.dynamicColor(.separator)
+    static let attention = AppTheme.dynamicColor(.attention)
+    static let success = AppTheme.dynamicColor(.success)
+    static let warning = AppTheme.dynamicColor(.warning)
+    static let destructive = AppTheme.dynamicColor(.destructive)
 }

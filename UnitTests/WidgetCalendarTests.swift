@@ -4,6 +4,8 @@ import Testing
 import ZCCalendar
 @testable import Off_Day
 
+// ZCCalendar uses a blocking cache queue; avoid saturating the cooperative executor in parallel tests.
+@MainActor
 struct WidgetCalendarTests {
     @Test func snapshotShouldPreserveManualPublicAndBasePriority() throws {
         let friday = GregorianDay(year: 2026, month: .nov, day: 6)
@@ -111,6 +113,55 @@ struct WidgetCalendarTests {
         #expect(visibleEntry.tomorrow?.isOffDay == false)
     }
 
+    @Test func legacySnapshotShouldRemainSmallAndIndependentOfCalendarDetails() throws {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: url) }
+        let today = GregorianDay(year: 2026, month: .nov, day: 10).julianDay
+        var snapshot = WidgetCalendarSnapshot(cycleStartDay: today, cycle: [false, true],
+            overrides: [today: .init(isOffDay: true, name: "Holiday")],
+            details: [today: .init(comment: String(repeating: "Long history ", count: 10_000))],
+            display: .init(alternativeDays: [today: "初二"]),
+            interaction: .init(selectedDay: today, expiresAt: Date().addingTimeInterval(300)), displayedMonthStart: today - 9)
+        #expect(try WidgetCalendarStore.saveSummary(snapshot, to: url))
+        let summary = try #require(WidgetCalendarStore.load(from: url))
+        #expect(summary.details == nil && summary.display == nil && summary.interaction == nil && summary.displayedMonthStart == nil)
+        let calendar = WidgetCalendarTimeline.calendar()
+        let now = try #require(calendar.date(from: .init(year: 2026, month: 11, day: 10)))
+        let original = WidgetCalendarTimeline.entries(snapshot: snapshot, from: now, calendar: calendar)
+        let legacy = WidgetCalendarTimeline.entries(snapshot: summary, from: now, calendar: calendar)
+        #expect(zip(original, legacy).allSatisfy { $0.today == $1.today && $0.tomorrow == $1.tomorrow })
+        let data = try Data(contentsOf: url)
+        #expect(data.count < 1024)
+        snapshot.details?[today]?.comment = "Changed comment"
+        snapshot.interaction = nil
+        #expect(try !WidgetCalendarStore.saveSummary(snapshot, to: url))
+        #expect(try Data(contentsOf: url) == data)
+    }
+
+    @Test(arguments: ["Asia/Singapore", "America/Los_Angeles", "Pacific/Auckland"])
+    func commentWindowShouldCoverAllVisibleFallbackDatesWithoutIncludingDistantHistory(zone: String) throws {
+        let calendar = WidgetCalendarTimeline.calendar(timeZone: try #require(TimeZone(identifier: zone)))
+        let browsed = GregorianDay(year: 2020, month: .feb, day: 1).julianDay
+        for (year, month, day) in [(2026, 11, 1), (2026, 12, 31), (2028, 2, 28)] {
+            let date = try #require(calendar.date(from: .init(year: year, month: month, day: day, hour: 23, minute: 59)))
+            let ranges = WidgetCalendarPublisher.commentRanges(at: date, calendar: calendar, displayedMonthStart: browsed)
+            let contains: (Int) -> Bool = { index in ranges.contains { $0.contains(index) } }
+            #expect(!contains(GregorianDay(year: 1999, month: .jan, day: 1).julianDay))
+            #expect(ranges.reduce(0) { $0 + $1.count } <= 31 + 42 + 42)
+            for entry in WidgetCalendarTimeline.entries(snapshot: nil, from: date, calendar: calendar) {
+                for firstWeekday in 1...7 {
+                    let snapshot = WidgetCalendarSnapshot(cycleStartDay: 0, cycle: [false], overrides: [:], display: .init(firstWeekday: firstWeekday))
+                    #expect(WidgetMonthEntry(date: entry.date, snapshot: snapshot, calendar: calendar).days.allSatisfy { contains($0.id) })
+                    for surface in [WidgetCalendarSurface.twoWeeks, .threeDays] {
+                        #expect(WidgetPeriodEntry(date: entry.date, surface: surface, snapshot: snapshot, calendar: calendar).days.allSatisfy { contains($0.id) })
+                    }
+                }
+            }
+            let snapshot = WidgetCalendarSnapshot(cycleStartDay: 0, cycle: [false], overrides: [:], displayedMonthStart: browsed)
+            #expect(WidgetMonthEntry(date: date, snapshot: snapshot, calendar: calendar).days.allSatisfy { contains($0.id) })
+        }
+    }
+
     @Test func storeShouldReplaceSnapshotsAndRejectMissingOrInvalidData() throws {
         let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: url) }
@@ -148,7 +199,7 @@ struct WidgetCalendarPublishingTests {
                 _ = AppDatabase.shared.delete(customDay: saved)
             }
         }
-        var intent = UpdateDayMarkIntent()
+        let intent = UpdateDayMarkIntent()
         intent.date = try #require(GregorianDay(JDN: index).generateDate(secondsFromGMT: TimeZone.current.secondsFromGMT()))
         for mark in [DayMark.off, .work, .blank] {
             intent.mark = mark

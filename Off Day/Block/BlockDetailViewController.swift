@@ -13,10 +13,10 @@ class BlockDetailViewController: UIViewController {
     
     private var dateTypeDebounce: Debounce<DayType?>!
     
-    private var dateLabel: UILabel = {
-        let label = UILabel()
+    private var dateLabel: CalendarThemeHeaderLabel = {
+        let label = CalendarThemeHeaderLabel()
         label.font = UIFont.preferredFont(forTextStyle: .body)
-        label.textColor = .label
+        label.textColor = AppColor.text
         label.textAlignment = .center
         label.minimumScaleFactor = 0.25
         label.adjustsFontSizeToFitWidth = true
@@ -34,7 +34,7 @@ class BlockDetailViewController: UIViewController {
     private var customLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .footnote)
-        label.textColor = .label.withAlphaComponent(0.8)
+        label.textColor = AppColor.text.withAlphaComponent(0.8)
         label.textAlignment = .natural
         label.minimumScaleFactor = 0.25
         label.adjustsFontSizeToFitWidth = true
@@ -44,50 +44,11 @@ class BlockDetailViewController: UIViewController {
         return label
     }()
     
-    private var workDayButton: UIButton = {
-        var configuration = UIButton.Configuration.tinted()
-        configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
-            var outgoing = incoming
-            outgoing.font = UIFont.preferredSystemFont(for: .body, weight: .medium)
+    private let workDayButton = CalendarMarkButton(isOffDay: false)
+    private let offDayButton = CalendarMarkButton(isOffDay: true)
+    private let headerTexture = CalendarDayTextureView()
+    private let markStackView = UIStackView()
 
-            return outgoing
-        })
-        configuration.title = String(localized: "detail.day.work.title")
-        configuration.imagePadding = 4.0
-        configuration.contentInsets.leading = 0
-        configuration.contentInsets.trailing = 0
-        configuration.contentInsets.top = 12.0
-        configuration.contentInsets.bottom = 12.0
-
-        let button = UIButton(configuration: configuration)
-        button.tintColor = AppColor.workDay
-        button.accessibilityHint = String(localized: "detail.day.work.hint")
-        
-        return button
-    }()
-    
-    private var offDayButton: UIButton = {
-        var configuration = UIButton.Configuration.tinted()
-        configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
-            var outgoing = incoming
-            outgoing.font = UIFont.preferredSystemFont(for: .body, weight: .medium)
-
-            return outgoing
-        })
-        configuration.title = String(localized: "detail.day.off.title")
-        configuration.imagePadding = 4.0
-        configuration.contentInsets.leading = 0
-        configuration.contentInsets.trailing = 0
-        configuration.contentInsets.top = 12.0
-        configuration.contentInsets.bottom = 12.0
-        
-        let button = UIButton(configuration: configuration)
-        button.tintColor = AppColor.offDay
-        button.accessibilityHint = String(localized: "detail.day.off.hint")
-        
-        return button
-    }()
-    
     private var commentButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
@@ -123,14 +84,6 @@ class BlockDetailViewController: UIViewController {
         })
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        view.subviews.forEach { subview in
-            subview.removeFromSuperview()
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -149,7 +102,9 @@ class BlockDetailViewController: UIViewController {
             make.leading.trailing.top.equalTo(view)
             make.bottom.equalTo(dateLabel).offset(14.0)
         }
-        headView.backgroundColor = blockItem.backgroundColor
+        headView.addSubview(headerTexture)
+        headerTexture.isUserInteractionEnabled = false
+        headerTexture.snp.makeConstraints { $0.edges.equalTo(headView) }
         
         view.addSubview(customLabel)
         customLabel.snp.makeConstraints { make in
@@ -159,7 +114,7 @@ class BlockDetailViewController: UIViewController {
         customLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         customLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         
-        let stackView = UIStackView()
+        let stackView = markStackView
         stackView.axis = .horizontal
         stackView.spacing = 12.0
         
@@ -175,7 +130,7 @@ class BlockDetailViewController: UIViewController {
         stackView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         
         let separator = UIView()
-        separator.backgroundColor = UIColor.separator
+        separator.backgroundColor = AppColor.separator
         view.addSubview(separator)
         separator.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom).offset(12.0)
@@ -205,44 +160,6 @@ class BlockDetailViewController: UIViewController {
         
         updateDateLabelColor()
 
-        workDayButton.configurationUpdateHandler = { [weak self] button in
-            guard let self = self else { return }
-            var config = button.configuration
-            
-            var isSelected: Bool = false
-            switch self.customDayType {
-            case .offDay:
-                config?.image = nil
-            case .workDay:
-                isSelected = true
-                config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(textStyle: .callout))
-            case nil:
-                config?.image = nil
-            }
-            
-            button.configuration = config
-            button.isSelected = isSelected
-        }
-        
-        offDayButton.configurationUpdateHandler = { [weak self] button in
-            guard let self = self else { return }
-            var config = button.configuration
-            
-            var isSelected: Bool = false
-            switch self.customDayType {
-            case .offDay:
-                isSelected = true
-                config?.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(textStyle: .callout))
-            case .workDay:
-                config?.image = nil
-            case nil:
-                config?.image = nil
-            }
-            
-            button.configuration = config
-            button.isSelected = isSelected
-        }
-        
         commentButton.configurationUpdateHandler = { [weak self] button in
             guard let self = self else { return }
             var config = button.configuration
@@ -269,6 +186,7 @@ class BlockDetailViewController: UIViewController {
         commentButton.addTarget(self, action: #selector(commentButtonAction), for: .touchUpInside)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: .DatabaseUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateAppearance), name: .SettingsUpdate, object: nil)
     }
     
     var customDayType: DayType? {
@@ -278,7 +196,23 @@ class BlockDetailViewController: UIViewController {
     }
     
     func updateDateLabelColor() {
-        dateLabel.textColor = blockItem.foregroundColor
+        updateAppearance()
+    }
+
+    @objc
+    private func updateAppearance() {
+        guard isViewLoaded else { return }
+        let theme = AppTheme.current
+        let colors = theme.colors(for: traitCollection)
+        let background = UIColor(colors.background(for: blockItem.appearance)).resolvedColor(with: traitCollection)
+        view.backgroundColor = AppColor.background
+        headView.backgroundColor = background
+        headerTexture.update(appearance: blockItem.appearance, colors: colors)
+        dateLabel.textColor = UIColor(colors.foreground(for: blockItem.appearance)).resolvedColor(with: traitCollection)
+        dateLabel.inkBackingColor = colors.usesInkBacking(for: blockItem.appearance) ? background : nil
+        markStackView.distribution = theme.usesPatterns ? .fillEqually : .fill
+        markStackView.axis = traitCollection.preferredContentSizeCategory.isAccessibilityCategory ? .vertical : .horizontal
+        updateButtons()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -288,33 +222,17 @@ class BlockDetailViewController: UIViewController {
     
     @objc
     func workDayButtonAction() {
-        let targetDayType: DayType?
-        switch customDayType {
-        case .offDay:
-            targetDayType = .workDay
-        case .workDay:
-            targetDayType = nil
-        case nil:
-            targetDayType = .workDay
-        }
-        if UIAccessibility.isVoiceOverRunning {
-            commit(dayType: targetDayType)
-        } else {
-            dateTypeDebounce.emit(value: targetDayType)
-        }
+        updateMarkFromButton(isOffDay: false)
     }
     
     @objc
     func offDayButtonAction() {
-        let targetDayType: DayType?
-        switch customDayType {
-        case .offDay:
-            targetDayType = nil
-        case .workDay:
-            targetDayType = .offDay
-        case nil:
-            targetDayType = .offDay
-        }
+        updateMarkFromButton(isOffDay: true)
+    }
+
+    private func updateMarkFromButton(isOffDay: Bool) {
+        let next = CalendarDayMarkInteraction.nextValue(current: customDayType.map { $0 == .offDay }, tapped: isOffDay)
+        let targetDayType: DayType? = next.map { $0 ? .offDay : .workDay }
         if UIAccessibility.isVoiceOverRunning {
             commit(dayType: targetDayType)
         } else {
@@ -340,6 +258,8 @@ class BlockDetailViewController: UIViewController {
     }
     
     func updateButtons() {
+        offDayButton.isSelected = customDayType == .offDay
+        workDayButton.isSelected = customDayType == .workDay
         offDayButton.setNeedsUpdateConfiguration()
         workDayButton.setNeedsUpdateConfiguration()
         commentButton.setNeedsUpdateConfiguration()

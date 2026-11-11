@@ -27,5 +27,5 @@ struct DayGrid {
         }
     }
     
-    static let interSpacing: CGFloat = 4.0
+    static let interSpacing: CGFloat = CalendarDayAppearance.spacing
 }

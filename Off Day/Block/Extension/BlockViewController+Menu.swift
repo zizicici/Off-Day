@@ -9,6 +9,36 @@ import UIKit
 import MoreKit
 
 extension BlockViewController {
+    func getCalendarAppearanceMenu() -> UIMenu {
+        let current = CalendarAppearanceSettings.load()
+        let choices = WidgetCalendarPalette.allCases.map { palette in
+            UIAction(title: palette.calendarAppearanceName,
+                     identifier: UIAction.Identifier("calendar.appearance.palette.\(palette.rawValue)"),
+                     state: current.palette == palette ? .on : .off) { _ in
+                var updated = CalendarAppearanceSettings.load()
+                updated.palette = palette
+                CalendarAppearanceSettings.save(updated)
+            }
+        }
+        var sections: [UIMenuElement] = [UIMenu(options: .displayInline, children: choices)]
+        if current.palette == .classic {
+            let patterns = UIAction(title: String(localized: "calendar.appearance.coloredPatterns"),
+                subtitle: String(localized: "calendar.appearance.coloredPatterns.description"),
+                identifier: UIAction.Identifier("calendar.appearance.coloredPatterns"),
+                state: current.coloredPatterns ? .on : .off) { _ in
+                    var updated = CalendarAppearanceSettings.load()
+                    updated.coloredPatterns.toggle()
+                    CalendarAppearanceSettings.save(updated)
+                }
+            sections.append(UIMenu(options: .displayInline, children: [patterns]))
+        }
+        sections.append(contentsOf: [getWeekEndColorMenu(), getHolidayWorkColorMenu()])
+        return UIMenu(title: String(localized: "calendar.appearance.title"),
+                      subtitle: current.palette.calendarAppearanceName,
+                      image: UIImage(systemName: "swatchpalette"),
+                      identifier: UIMenu.Identifier("calendar.appearance"), children: sections)
+    }
+
     func getPublicPlanLanguageMenu() -> UIMenu? {
         guard let info = PublicPlanManager.shared.dataSource, !info.availableLanguages.isEmpty else { return nil }
         let languages: [String?] = [nil] + info.availableLanguages.map { Optional($0) }
@@ -61,7 +91,9 @@ extension BlockViewController {
             }
             return action
         }
-        let weekEndColorTypeMenu = UIMenu(title: WeekEndColorType.getTitle(), subtitle: getWeekEndColorType().getName(), image: UIImage(systemName: "swatchpalette"), children: weekEndCOlorActions)
+        let weekEndColorTypeMenu = UIMenu(title: WeekEndColorType.getTitle(),
+                                        identifier: UIMenu.Identifier("calendar.appearance.baseOffDay"),
+                                        options: .displayInline, children: weekEndCOlorActions)
         return weekEndColorTypeMenu
     }
     
@@ -77,7 +109,18 @@ extension BlockViewController {
             }
             return action
         }
-        let holidayWorkColorTypeMenu = UIMenu(title: HolidayWorkColorType.getTitle(), subtitle: getHolidayWorkColorType().getName(), image: UIImage(systemName: "swatchpalette"), children: weekEndCOlorActions)
+        let holidayWorkColorTypeMenu = UIMenu(title: HolidayWorkColorType.getTitle(),
+                                            identifier: UIMenu.Identifier("calendar.appearance.holidayWorkday"),
+                                            options: .displayInline, children: weekEndCOlorActions)
         return holidayWorkColorTypeMenu
+    }
+}
+
+extension WidgetCalendarPalette {
+    var calendarAppearanceName: String {
+        switch self {
+        case .classic: String(localized: "widget.calendar.palette.classic")
+        case .mono: String(localized: "widget.calendar.palette.mono")
+        }
     }
 }

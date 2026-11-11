@@ -8,21 +8,21 @@
 import UIKit
 
 class DateView: UIView {
-    private var firstLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .label
+    private var firstLabel: CalendarInkTextLabel = {
+        let label = CalendarInkTextLabel()
+        label.textColor = AppColor.text
         label.textAlignment = .center
-        label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: CalendarDayAppearance.dateFontSize, weight: .regular)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
         return label
     }()
     
-    private var secondaryLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .label
+    private var secondaryLabel: CalendarInkTextLabel = {
+        let label = CalendarInkTextLabel()
+        label.textColor = AppColor.text
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 9, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: CalendarDayAppearance.alternativeFontSize, weight: .regular)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
         return label
@@ -31,7 +31,7 @@ class DateView: UIView {
     private var hasAlternativeCalendar: Bool {
         return !secondaryLabel.isHidden
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -43,9 +43,12 @@ class DateView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func update(with date: String, alternativeCalendar: String?, foregroundColor: UIColor) {
+    public func update(with date: String, alternativeCalendar: String?, foregroundColor: UIColor,
+                       inkBackingColor: UIColor? = nil) {
         firstLabel.text = date
         firstLabel.textColor = foregroundColor
+        firstLabel.inkBackingColor = inkBackingColor
+        secondaryLabel.inkBackingColor = inkBackingColor
         
         if let alternativeCalendar = alternativeCalendar {
             secondaryLabel.isHidden = false
@@ -62,7 +65,7 @@ class DateView: UIView {
         super.layoutSubviews()
         
         if hasAlternativeCalendar {
-            let secondaryHeight: CGFloat = 14
+            let secondaryHeight = CalendarDayAppearance.alternativeHeight
             secondaryLabel.frame = CGRect(
                 x: 0,
                 y: bounds.height - secondaryHeight,

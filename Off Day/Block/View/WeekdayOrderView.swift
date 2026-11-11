@@ -10,6 +10,7 @@ import SnapKit
 import ZCCalendar
 
 class WeekdayOrderView: UIView {
+    private var appearanceKey: String?
     let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -21,11 +22,8 @@ class WeekdayOrderView: UIView {
     
     var labelColor: UIColor? {
         didSet {
-            for subview in stackView.arrangedSubviews {
-                if let label = subview as? UILabel {
-                    label.textColor = labelColor
-                }
-            }
+            appearanceKey = nil
+            refreshTheme()
         }
     }
     
@@ -43,7 +41,6 @@ class WeekdayOrderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         self.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(self).inset(12)
@@ -68,14 +65,49 @@ class WeekdayOrderView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         let inset = (frame.width - itemWidth * CGFloat(itemCount) - interSpacing * CGFloat(itemCount - 1)) / 2.0
         stackView.snp.updateConstraints { make in
             make.leading.trailing.equalTo(self).inset(inset)
         }
+        refreshTheme()
+    }
+
+    func refreshTheme() {
+        let style = AppTheme.current.style
+        let scale = max(1, traitCollection.displayScale)
+        let key = "\(style.palette.rawValue).\(style.coloredPatterns).\(traitCollection.userInterfaceStyle.rawValue).\(scale)"
+        guard appearanceKey != key else { return }
+        appearanceKey = key
+        let colors = AppTheme.current.colors(for: traitCollection)
+        let backing = UIColor(colors.background(for: CalendarNavigationPattern.palette)).resolvedColor(with: traitCollection)
+        backgroundColor = style.usesColoredPatterns
+            ? UIColor(patternImage: CalendarNavigationPattern.image(for: traitCollection)) : AppColor.navigationBar
+        for (index, view) in stackView.arrangedSubviews.enumerated() {
+            guard let label = view as? UILabel else { continue }
+            let order = WeekdayOrder(rawValue: (startWeekdayOrder.rawValue + index) % 7) ?? .sun
+            let title = order.getVeryShortSymbol()
+            let foreground = labelColor ?? AppColor.navigationText
+            if style.usesColoredPatterns {
+                label.attributedText = CalendarInkTextAttachment.text(title, font: label.font, foreground: foreground,
+                    backing: backing, traits: traitCollection)
+            } else {
+                label.attributedText = nil
+                label.text = title
+            }
+            label.textColor = foreground
+        }
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            appearanceKey = nil
+            refreshTheme()
+        }
     }
     
     func updateLabels() {
+        appearanceKey = nil
         stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         let weekdayOrders = Array(0..<7).compactMap { index in
             let newIndex = self.startWeekdayOrder.rawValue + index
@@ -89,10 +121,11 @@ class WeekdayOrderView: UIView {
             let label = UILabel()
             label.textAlignment = .center
             label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
-            label.textColor = .white
+            label.textColor = AppColor.navigationText
             label.text = weekdayOrder.getVeryShortSymbol()
             label.accessibilityLabel = weekdayOrder.getSymbol()
             stackView.addArrangedSubview(label)
         }
+        refreshTheme()
     }
 }

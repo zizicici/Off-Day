@@ -49,27 +49,30 @@ struct UpdateDayMarkIntent: AppIntent {
                 "mark": AnyEncodable(mark.rawValue)
             ]
         ) { () throws -> Bool in
-            var result = false
-            let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
-            if let year = components.year, let month = components.month, let day = components.day, let month = Month(rawValue: month) {
-                let target = GregorianDay(year: year, month: month, day: day)
-                result = true
-                switch mark {
-                case .off:
-                    CustomDayManager.shared.update(dayType: .offDay, to: target.julianDay)
-                case .work:
-                    CustomDayManager.shared.update(dayType: .workDay, to: target.julianDay)
-                case .blank:
-                    CustomDayManager.shared.update(dayType: nil, to: target.julianDay)
-                }
-                WidgetCalendarPublisher.shared.publishNow()
-            }
+            let result = try updateMark { WidgetCalendarPublisher.shared.publishNow() }
 
             await NotificationManager.shared.updateNotifications()
 
             return result
         }
         return .result(value: value)
+    }
+
+    @MainActor
+    func updateMark(publishSnapshot: () -> Bool) throws -> Bool {
+        let components = WidgetCalendarTimeline.calendar().dateComponents([.year, .month, .day], from: date)
+        guard let year = components.year, let month = components.month, let day = components.day,
+              let month = Month(rawValue: month) else { return false }
+        let target = GregorianDay(year: year, month: month, day: day)
+        switch mark {
+        case .off: try AppDatabase.shared.setCustomDay(.offDay, at: target.julianDay)
+        case .work: try AppDatabase.shared.setCustomDay(.workDay, at: target.julianDay)
+        case .blank: try AppDatabase.shared.setCustomDay(nil, at: target.julianDay)
+        }
+        // Existing shortcuts report the committed DB result. A widget cache failure
+        // must not abort their remaining actions; the publisher records the failure.
+        _ = publishSnapshot()
+        return true
     }
 
     static var openAppWhenRun: Bool = false

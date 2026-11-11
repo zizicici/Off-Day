@@ -60,7 +60,7 @@ class MenuCell: MenuBaseCell {
         configuration.image = UIImage(systemName: "chevron.up.chevron.down", withConfiguration: config)
         configuration.imagePlacement = .trailing
         configuration.contentInsets = .zero
-        configuration.baseForegroundColor = .secondaryLabel
+        configuration.baseForegroundColor = AppColor.secondaryText
         
         let button = UIButton(configuration: configuration)
         button.isAccessibilityElement = false

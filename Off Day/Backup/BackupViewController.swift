@@ -159,10 +159,10 @@ class BackupViewController: UIViewController {
                     itemSwitch.isEnabled = isEnable
                     itemSwitch.isOn = isAutoUpdate
                     itemSwitch.addTarget(self, action: #selector(self.toggle(_:)), for: .touchUpInside)
-                    itemSwitch.onTintColor = AppColor.offDay
+                    itemSwitch.onTintColor = AppColor.accent
                     var content = cell.defaultContentConfiguration()
                     content.text = identifier.cellTitle()
-                    content.textProperties.color = .label
+                    content.textProperties.color = AppColor.text
                     cell.accessoryView = itemSwitch
                     cell.contentConfiguration = content
                     return cell
@@ -173,7 +173,7 @@ class BackupViewController: UIViewController {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
                     var content = UIListContentConfiguration.valueCell()
                     content.text = identifier.cellTitle()
-                    content.textProperties.color = .label
+                    content.textProperties.color = AppColor.text
                     content.secondaryText = time?.formatted() ?? String(localized: "backup.history.none")
                     cell.contentConfiguration = content
                     cell.accessoryType = .none
@@ -182,7 +182,7 @@ class BackupViewController: UIViewController {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
                     var content = UIListContentConfiguration.valueCell()
                     content.text = identifier.cellTitle()
-                    content.textProperties.color = .label
+                    content.textProperties.color = AppColor.text
                     content.secondaryText = name
                     cell.contentConfiguration = content
                     cell.accessoryType = .disclosureIndicator
@@ -192,9 +192,9 @@ class BackupViewController: UIViewController {
                     var content = cell.defaultContentConfiguration()
                     content.text = identifier.cellTitle()
                     if BackupManager.shared.iCloudDocumentIsAccessable {
-                        content.textProperties.color = AppColor.offDay
+                        content.textProperties.color = AppColor.accent
                     } else {
-                        content.textProperties.color = .secondaryLabel
+                        content.textProperties.color = AppColor.secondaryText
                     }
                     cell.contentConfiguration = content
                     return cell
@@ -203,7 +203,7 @@ class BackupViewController: UIViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
                 var content = cell.defaultContentConfiguration()
                 content.text = identifier.cellTitle()
-                content.textProperties.color = AppColor.offDay
+                content.textProperties.color = AppColor.accent
                 cell.contentConfiguration = content
                 return cell
             }

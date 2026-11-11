@@ -39,7 +39,7 @@ class TutorialsViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .body)
         label.textAlignment = .center
-        label.textColor = AppColor.offDay
+        label.textColor = AppColor.accent
         label.numberOfLines = 1
         label.minimumScaleFactor = 0.5
         label.adjustsFontSizeToFitWidth = true
@@ -53,7 +53,7 @@ class TutorialsViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .title1).pointSize, weight: .black)
         label.textAlignment = .center
-        label.textColor = AppColor.offDay
+        label.textColor = AppColor.accent
         label.numberOfLines = 1
         label.minimumScaleFactor = 0.5
         label.adjustsFontSizeToFitWidth = true
@@ -81,7 +81,7 @@ class TutorialsViewController: UIViewController {
         })
         
         let button = UIButton(configuration: configuration)
-        button.tintColor = AppColor.offDay
+        button.tintColor = AppColor.accent
         
         return button
     }()
@@ -104,7 +104,7 @@ class TutorialsViewController: UIViewController {
         })
         
         let button = UIButton(configuration: configuration)
-        button.tintColor = AppColor.offDay
+        button.tintColor = AppColor.accent
         
         return button
     }()
@@ -112,7 +112,7 @@ class TutorialsViewController: UIViewController {
     private var manageNotificationButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         let button = UIButton(configuration: configuration)
-        button.tintColor = AppColor.offDay
+        button.tintColor = AppColor.accent
         
         let attributes: [NSAttributedString.Key: Any] = [
             .underlineStyle: NSUnderlineStyle.single.rawValue,
@@ -142,7 +142,7 @@ class TutorialsViewController: UIViewController {
         })
         
         let button = UIButton(configuration: configuration)
-        button.tintColor = AppColor.offDay
+        button.tintColor = AppColor.accent
         button.showsMenuAsPrimaryAction = true
         
         return button
@@ -166,7 +166,7 @@ class TutorialsViewController: UIViewController {
         })
         
         let button = UIButton(configuration: configuration)
-        button.tintColor = AppColor.offDay
+        button.tintColor = AppColor.accent
         
         return button
     }()
@@ -174,7 +174,7 @@ class TutorialsViewController: UIViewController {
     private var tutorialsButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         let button = UIButton(configuration: configuration)
-        button.tintColor = AppColor.offDay
+        button.tintColor = AppColor.accent
         
         let attributes: [NSAttributedString.Key: Any] = [
             .underlineStyle: NSUnderlineStyle.single.rawValue,
@@ -206,6 +206,13 @@ class TutorialsViewController: UIViewController {
         
         view.backgroundColor = AppColor.background
         updateNavigationBarStyle()
+
+        // This screen keeps a solid navigation surface rather than the calendar texture.
+        let appearance = navigationController?.navigationBar.standardAppearance.copy() ?? UINavigationBarAppearance()
+        appearance.titleTextAttributes[.foregroundColor] = AppColor.solidNavigationText
+        appearance.largeTitleTextAttributes[.foregroundColor] = AppColor.solidNavigationText
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
         
         let helpButton = UIBarButtonItem(image: UIImage(systemName: "questionmark.circle"), style: .plain, target: self, action: nil)
         let helpAction = UIAction(title: String(localized: "more.item.help"), subtitle: String(localized: "more.section.help.hint"), image: UIImage(systemName: "questionmark.circle")) { [weak self] _ in
@@ -219,10 +226,10 @@ class TutorialsViewController: UIViewController {
         helpButton.menu = UIMenu(title: "", children: [helpAction, contactDivider])
         if #available(iOS 26.0, *) {
             helpButton.hidesSharedBackground = true
-            helpButton.tintColor = .white
         } else {
             // Fallback on earlier versions
         }
+        helpButton.tintColor = AppColor.solidNavigationText
         navigationItem.rightBarButtonItem = helpButton
         
         view.addSubview(scrollView)
@@ -297,7 +304,7 @@ class TutorialsViewController: UIViewController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return AppTheme.current.style.palette == .classic ? .lightContent : AppTheme.current.statusBarStyle(for: traitCollection)
     }
     
     @objc

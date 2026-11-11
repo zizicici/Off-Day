@@ -37,6 +37,8 @@ class BlockBaseCell: UICollectionViewCell {
 }
 
 class BlockCell: BlockBaseCell {
+    private let textureView = CalendarDayTextureView()
+    private var displayedStyle = CalendarVisualStyle()
     var isHover: Bool = false {
         didSet {
             if oldValue != isHover {
@@ -52,15 +54,15 @@ class BlockCell: BlockBaseCell {
     
     var publicDayLabel: MarqueeLabel = {
         let label = MarqueeLabel(frame: .zero, duration: 4.0, fadeLength: 2.0)
-        label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: CalendarDayAppearance.holidayFontSize, weight: .bold)
         label.trailingBuffer = 10.0
         label.textAlignment = .center
         return label
     }()
     
-    var cornerMark: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "OffDayMark"))
-        view.layer.cornerRadius = 6.0
+    var cornerMark: CalendarDayCornerMarkView = {
+        let view = CalendarDayCornerMarkView()
+        view.layer.cornerRadius = CalendarDayAppearance.cornerRadius
         view.layer.cornerCurve = .continuous
         view.layer.maskedCorners = [.layerMaxXMinYCorner]
         view.layer.masksToBounds = true
@@ -90,27 +92,29 @@ class BlockCell: BlockBaseCell {
         
         // 设置视图frame
         let contentBounds = contentView.bounds
-        let inset: CGFloat = 3.0
+        let inset = CalendarDayAppearance.inset
         
-        // Corner mark (固定大小15x15，右上角)
+        textureView.frame = contentBounds
+        let markSize = displayedStyle.palette == .classic && !displayedStyle.coloredPatterns
+            ? CalendarDayAppearance.markSize : CalendarDayMarkGeometry.side(for: contentBounds.width)
         cornerMark.frame = CGRect(
-            x: contentBounds.width - 15.0,
+            x: contentBounds.width - markSize,
             y: 0,
-            width: 15.0,
-            height: 15.0
+            width: markSize,
+            height: markSize
         )
         
         // Comment mark (固定大小5x5，左上角内边距5)
         commentMark.frame = CGRect(
-            x: 5.0,
-            y: 5.0,
-            width: 5.0,
-            height: 5.0
+            x: CalendarDayAppearance.commentInset,
+            y: CalendarDayAppearance.commentInset,
+            width: CalendarDayAppearance.commentSize,
+            height: CalendarDayAppearance.commentSize
         )
         
         if hasPublicDay {
             // 有publicDayLabel时的布局
-            let publicDayHeight: CGFloat = 16.0
+            let publicDayHeight = CalendarDayAppearance.holidayHeight
             publicDayLabel.frame = CGRect(
                 x: inset,
                 y: contentBounds.height - publicDayHeight - inset,
@@ -135,6 +139,11 @@ class BlockCell: BlockBaseCell {
     private func setupViewsIfNeeded() {
         guard needsSetupViews else { return }
         
+        textureView.isUserInteractionEnabled = false
+        textureView.layer.cornerRadius = CalendarDayAppearance.cornerRadius
+        textureView.layer.cornerCurve = .continuous
+        textureView.clipsToBounds = true
+        contentView.addSubview(textureView)
         contentView.addSubview(dateView)
         contentView.addSubview(cornerMark)
         contentView.addSubview(commentMark)
@@ -151,12 +160,26 @@ class BlockCell: BlockBaseCell {
         setupViewsIfNeeded()
         
         if let item = state.blockItem {
+            displayedStyle = item.visualStyle
+            let presentation = CalendarCellPresentation(style: item.visualStyle, appearance: item.appearance)
+            let colors = presentation.colors(for: traitCollection)
+            var backgroundColor = item.backgroundColor
+            if isHover || isHighlighted {
+                backgroundColor = highlightColor.overlay(on: backgroundColor)
+            }
             // 更新publicDayLabel状态
             if let publicDayName = item.publicDayName {
                 hasPublicDay = true
                 publicDayLabel.isHidden = false
-                publicDayLabel.text = publicDayName
                 publicDayLabel.textColor = item.foregroundColor
+                if colors.usesInkBacking(for: item.appearance) {
+                    publicDayLabel.attributedText = CalendarInkTextAttachment.text(publicDayName,
+                        font: publicDayLabel.font, foreground: item.foregroundColor,
+                        backing: backgroundColor, traits: traitCollection)
+                } else {
+                    publicDayLabel.attributedText = nil
+                    publicDayLabel.text = publicDayName
+                }
             } else {
                 hasPublicDay = false
                 publicDayLabel.isHidden = true
@@ -165,27 +188,20 @@ class BlockCell: BlockBaseCell {
             // 更新cornerMark
             if let customDayType = item.customDayType {
                 cornerMark.isHidden = false
-                switch customDayType {
-                case .offDay:
-                    cornerMark.image = UIImage(named: "OffDayMark")
-                case .workDay:
-                    cornerMark.image = UIImage(named: "WorkDayMark")
-                }
+                cornerMark.update(isOffDay: customDayType == .offDay, appearance: item.appearance, colors: colors)
             } else {
                 cornerMark.isHidden = true
             }
             
             // 更新背景色
-            var backgroundColor = item.backgroundColor
-            if isHover || isHighlighted {
-                backgroundColor = highlightColor.overlay(on: backgroundColor)
-            }
+            textureView.update(appearance: item.appearance, colors: colors)
             
             // 更新dateView
             dateView.update(
                 with: item.day.dayString(),
                 alternativeCalendar: item.alternativeCalendarDayName,
-                foregroundColor: item.foregroundColor
+                foregroundColor: item.foregroundColor,
+                inkBackingColor: colors.usesInkBacking(for: item.appearance) ? backgroundColor : nil
             )
             
             // 更新commentMark
@@ -207,10 +223,10 @@ class BlockCell: BlockBaseCell {
             backgroundConfiguration = BlockCellBackgroundConfiguration.configuration(
                 for: state,
                 backgroundColor: backgroundColor,
-                cornerRadius: 6.0,
+                cornerRadius: CalendarDayAppearance.cornerRadius,
                 showStroke: item.isToday,
-                strokeColor: AppColor.today,
-                strokeWidth: 3.0,
+                strokeColor: presentation.today,
+                strokeWidth: CalendarDayAppearance.todayStrokeWidth,
                 strokeOutset: 0.0
             )
             
@@ -238,6 +254,13 @@ class BlockCell: BlockBaseCell {
     func update(isHover: Bool) {
         self.isHover = isHover
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            setNeedsUpdateConfiguration()
+        }
+    }
     
     override var isHighlighted: Bool {
         didSet {
@@ -260,9 +283,9 @@ struct BlockCellBackgroundConfiguration {
         }
         if #available(iOS 18.0, *) {
             background.shadowProperties.color = .systemGray
-            background.shadowProperties.opacity = 0.1
-            background.shadowProperties.radius = 6.0
-            background.shadowProperties.offset = CGSize(width: 0.0, height: 2.0)
+            background.shadowProperties.opacity = CalendarDayAppearance.shadowOpacity
+            background.shadowProperties.radius = CalendarDayAppearance.shadowRadius
+            background.shadowProperties.offset = CalendarDayAppearance.shadowOffset
         }
 
         return background
