@@ -210,6 +210,7 @@ class BlockDetailViewController: UIViewController {
         headerTexture.update(appearance: blockItem.appearance, colors: colors)
         dateLabel.textColor = UIColor(colors.foreground(for: blockItem.appearance)).resolvedColor(with: traitCollection)
         dateLabel.inkBackingColor = colors.usesInkBacking(for: blockItem.appearance) ? background : nil
+        updatePopoverAppearance()
         markStackView.distribution = theme.usesPatterns ? .fillEqually : .fill
         markStackView.axis = traitCollection.preferredContentSizeCategory.isAccessibilityCategory ? .vertical : .horizontal
         updateButtons()
@@ -218,6 +219,14 @@ class BlockDetailViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         updateDateLabelColor()
+    }
+
+    func updatePopoverAppearance() {
+        // An explicit opaque backdrop lets UIKit extend the content into the
+        // arrow and clip the header to the same outline as the popover itself.
+        guard let popover = popoverPresentationController else { return }
+        let background: UIColor? = AppTheme.current.usesPatterns ? AppColor.background : nil
+        if popover.backgroundColor != background { popover.backgroundColor = background }
     }
     
     @objc

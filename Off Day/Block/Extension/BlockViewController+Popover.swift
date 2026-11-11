@@ -17,12 +17,12 @@ extension BlockViewController {
         if let pres = nav.presentationController {
             pres.delegate = self
         }
-        present(nav, animated: ConsideringUser.animated, completion: nil)
-
         if let popover = nav.popoverPresentationController {
             popover.sourceView = sourceView
             popover.permittedArrowDirections = [.up, .down]
         }
+        (contentViewController as? BlockDetailViewController)?.updatePopoverAppearance()
+        present(nav, animated: ConsideringUser.animated, completion: nil)
     }
 }
 

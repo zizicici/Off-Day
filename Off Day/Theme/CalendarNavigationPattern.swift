@@ -1,7 +1,6 @@
 import UIKit
 
-/// A six-point repeating tile, shared by the home navigation and weekday bar.
-/// Both surfaces use the same native pattern color to keep their tiles aligned.
+/// A six-point repeating tile for the home's shared header background.
 enum CalendarNavigationPattern {
     static let period: CGFloat = 6
     static let palette = CalendarDayAppearance.Palette(backgroundAsset: "OffDayColor", whiteText: true)
@@ -31,5 +30,21 @@ enum CalendarNavigationPattern {
         }
         cache.setObject(image, forKey: key)
         return image
+    }
+}
+
+/// One drawing surface extends behind both bars. Separate pattern colors start
+/// at separate drawing origins on older UIKit versions, even with the same tile.
+final class CalendarNavigationPatternView: UIView {
+    private var appearanceKey: String?
+
+    func refreshTheme() {
+        let style = AppTheme.current.style
+        let key = "\(style.usesColoredPatterns).\(traitCollection.userInterfaceStyle.rawValue).\(traitCollection.displayScale)"
+        guard appearanceKey != key else { return }
+        appearanceKey = key
+        isHidden = !style.usesColoredPatterns
+        backgroundColor = style.usesColoredPatterns
+            ? UIColor(patternImage: CalendarNavigationPattern.image(for: traitCollection)) : .clear
     }
 }

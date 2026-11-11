@@ -81,7 +81,7 @@ class WeekdayOrderView: UIView {
         let colors = AppTheme.current.colors(for: traitCollection)
         let backing = UIColor(colors.background(for: CalendarNavigationPattern.palette)).resolvedColor(with: traitCollection)
         backgroundColor = style.usesColoredPatterns
-            ? UIColor(patternImage: CalendarNavigationPattern.image(for: traitCollection)) : AppColor.navigationBar
+            ? .clear : AppColor.navigationBar
         for (index, view) in stackView.arrangedSubviews.enumerated() {
             guard let label = view as? UILabel else { continue }
             let order = WeekdayOrder(rawValue: (startWeekdayOrder.rawValue + index) % 7) ?? .sun

@@ -17,6 +17,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
     // UI
     
     private var weekdayOrderView: WeekdayOrderView!
+    private let navigationPatternView = CalendarNavigationPatternView()
     
     // UIBarButtonItem
     
@@ -80,13 +81,19 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
         configureHierarchy()
         
         weekdayOrderView = WeekdayOrderView(itemCount: 7, itemWidth: DayGrid.itemWidth(in: view.frame.width), interSpacing: DayGrid.interSpacing)
-        weekdayOrderView.backgroundColor = AppColor.navigationBar
         view.addSubview(weekdayOrderView)
         weekdayOrderView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(-2)
             make.leading.trailing.equalTo(view)
             make.height.equalTo(24)
         }
+        navigationPatternView.isUserInteractionEnabled = false
+        view.insertSubview(navigationPatternView, at: 0)
+        navigationPatternView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(view)
+            make.bottom.equalTo(weekdayOrderView)
+        }
+        navigationPatternView.refreshTheme()
         updateNavigationTitleView()
         
         configureDataSource()
@@ -127,12 +134,15 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        navigationPatternView.refreshTheme()
         weekdayOrderView?.refreshTheme()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if isViewLoaded, traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            navigationPatternView.refreshTheme()
+            weekdayOrderView?.refreshTheme()
             updateNavigationTitleView()
         }
     }
@@ -252,6 +262,7 @@ class BlockViewController: BlockBaseViewController, DisplayHandlerDelegate {
 
     @objc
     internal func reloadData() {
+        navigationPatternView.refreshTheme()
         weekdayOrderView.refreshTheme()
         let startWeekdayOrder = WeekdayOrder(rawValue: WeekStartType.current.rawValue) ?? WeekdayOrder.firstDayOfWeek
         weekdayOrderView.startWeekdayOrder = startWeekdayOrder

@@ -112,6 +112,29 @@ struct AppThemeTests {
         }
     }
 
+    @Test func popoverHeaderShouldCoverEveryArrowPosition() async throws {
+        let previous = CalendarAppearanceSettings.load()
+        defer { select(previous) }
+        let folder = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("WidgetPreviews/AppThemes")
+        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+        for style in [CalendarVisualStyle(coloredPatterns: true), .init(palette: .mono)] {
+            select(style)
+            for mode in [UIUserInterfaceStyle.light, .dark] {
+                for direction in [UIPopoverArrowDirection.up, .down] {
+                    for x in [CGFloat(57), 201, 345] {
+                        let controller = BlockDetailViewController(blockItem: item())
+                        let image = try await snapshotPopover(controller, traits: .init(userInterfaceStyle: mode),
+                            windowSize: .init(width: 402, height: 874),
+                            sourcePoint: .init(x: x, y: direction == .up ? 300 : 600), arrowDirection: direction)
+                        let name = "popover-\(style.palette == .mono ? "mono" : "colored")-\(mode == .dark ? "dark" : "light")-\(direction == .up ? "up" : "down")-\(Int(x)).png"
+                        try #require(image.pngData()).write(to: folder.appendingPathComponent(name))
+                    }
+                }
+            }
+        }
+    }
+
     @Test func dateStyleNamesAndMenusShouldDescribeTheActualTheme() throws {
         let previous = CalendarAppearanceSettings.load()
         defer { select(previous) }
@@ -233,11 +256,22 @@ struct AppThemeTests {
             // Theme application can run before the selected tab loads its content.
             nav.refreshTheme()
             home.loadViewIfNeeded()
-            #expect(nav.navigationBar.standardAppearance.backgroundColor?.cgColor.colorSpace?.model == .pattern)
-            #expect(nav.navigationBar.scrollEdgeAppearance?.backgroundColor?.cgColor.colorSpace?.model == .pattern)
+            #expect((nav.navigationBar.standardAppearance.backgroundColor?.cgColor.alpha ?? 0) == 0)
+            #expect((nav.navigationBar.scrollEdgeAppearance?.backgroundColor?.cgColor.alpha ?? 0) == 0)
+            let background = try #require(descendants(home.view).compactMap { $0 as? CalendarNavigationPatternView }.first)
+            #expect(!background.isHidden)
+            #expect(background.backgroundColor?.cgColor.colorSpace?.model == .pattern)
             // A later screen appearance setup must also retain the active theme.
             home.updateNavigationBarStyle(hideShadow: true)
-            #expect(nav.navigationBar.standardAppearance.backgroundColor?.cgColor.colorSpace?.model == .pattern)
+            #expect((nav.navigationBar.standardAppearance.backgroundColor?.cgColor.alpha ?? 0) == 0)
+            select(.init())
+            nav.refreshTheme()
+            #expect(nav.navigationBar.standardAppearance.backgroundColor?.cgColor.alpha == 1)
+            #expect(background.isHidden)
+            select(.init(coloredPatterns: true))
+            nav.refreshTheme()
+            #expect((nav.navigationBar.standardAppearance.backgroundColor?.cgColor.alpha ?? 0) == 0)
+            #expect(!background.isHidden)
         }
     }
 
@@ -277,21 +311,92 @@ struct AppThemeTests {
         window.layoutIfNeeded(); home.collectionView.layoutIfNeeded()
         let weekday = try #require(descendants(home.view).compactMap { $0 as? WeekdayOrderView }.first)
         weekday.refreshTheme()
-        #expect((nav.navigationBar.standardAppearance.backgroundColor?.cgColor.colorSpace?.model == .pattern) == style.usesColoredPatterns)
-        #expect((nav.navigationBar.scrollEdgeAppearance?.backgroundColor?.cgColor.colorSpace?.model == .pattern) == style.usesColoredPatterns)
+        #expect(((nav.navigationBar.standardAppearance.backgroundColor?.cgColor.alpha ?? 0) == 0) == style.usesColoredPatterns)
+        #expect(((nav.navigationBar.scrollEdgeAppearance?.backgroundColor?.cgColor.alpha ?? 0) == 0) == style.usesColoredPatterns)
+        expectColor(nav.navigationBar.tintColor.resolvedColor(with: traits), AppColor.navigationText.resolvedColor(with: traits))
         #expect(weekday.stackView.arrangedSubviews.count == 7)
         #expect(home.dataSource.snapshot().itemIdentifiers.count == 31)
         let image = UIGraphicsImageRenderer(size: window.bounds.size).image { _ in
             window.drawHierarchy(in: window.bounds, afterScreenUpdates: true)
         }
+        if style.usesColoredPatterns {
+            let seam = nav.navigationBar.convert(nav.navigationBar.bounds, to: window).maxY
+            try expectContinuousHeader(in: image, seam: seam)
+        }
         // Pushing an ordinary screen must restore its native solid navigation surface.
         let other = UIViewController()
         nav.setViewControllers([home, other], animated: false)
+        nav.refreshTheme()
+        #expect(nav.navigationBar.standardAppearance.backgroundColor?.cgColor.alpha == 1)
         other.updateNavigationBarStyle()
         nav.refreshTheme()
         #expect(nav.navigationBar.standardAppearance.backgroundImage == nil)
         #expect(nav.navigationBar.standardAppearance.backgroundColor?.cgColor.colorSpace?.model != .pattern)
+        nav.setViewControllers([home], animated: false)
+        nav.refreshTheme()
+        window.layoutIfNeeded()
+        if style.usesColoredPatterns {
+            let returnedImage = UIGraphicsImageRenderer(size: window.bounds.size).image { _ in
+                window.drawHierarchy(in: window.bounds, afterScreenUpdates: true)
+            }
+            let seam = nav.navigationBar.convert(nav.navigationBar.bounds, to: window).maxY
+            try expectContinuousHeader(in: returnedImage, seam: seam)
+        }
         return image
+    }
+
+    private func expectContinuousHeader(in image: UIImage, seam: CGFloat) throws {
+        let (width, pixels) = try imagePixels(image)
+        let scale = image.scale
+        let upperY = Int(((seam - 2) * scale).rounded())
+        let lowerY = Int(((seam + 2) * scale).rounded())
+        let shift = lowerY - upperY
+        // A 45-degree stripe must retain its color as it crosses the bar boundary.
+        // Sample the left margin to avoid the title, buttons and weekday glyphs.
+        let samples = (Int(4 * scale)..<Int(18 * scale)).flatMap { x in
+            (0..<3).map { channel in
+                let upper = Int(pixels[(upperY * width + x + shift) * 4 + channel])
+                let lower = Int(pixels[(lowerY * width + x) * 4 + channel])
+                return abs(upper - lower)
+            }
+        }
+        let meanDifference = Double(samples.reduce(0, +)) / Double(samples.count)
+        #expect(meanDifference < 2, "Header stripe mismatch across navigation/weekday seam: \(meanDifference)")
+        // A uniform fallback background must not pass the continuity check.
+        let row = (Int(4 * scale)..<Int(18 * scale)).map { pixels[(lowerY * width + $0) * 4 + 1] }
+        #expect(Int(row.max()!) - Int(row.min()!) > 20)
+    }
+
+    private func imagePixels(_ image: UIImage) throws -> (width: Int, bytes: [UInt8]) {
+        let cgImage = try #require(image.cgImage)
+        let width = cgImage.width, height = cgImage.height
+        var pixels = [UInt8](repeating: 0, count: width * height * 4)
+        try pixels.withUnsafeMutableBytes { buffer in
+            let context = try #require(CGContext(data: buffer.baseAddress, width: width, height: height,
+                bitsPerComponent: 8, bytesPerRow: width * 4, space: CGColorSpaceCreateDeviceRGB(),
+                bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue))
+            context.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
+        }
+        return (width, pixels)
+    }
+
+    private func expectPopoverHeaderCoverage(in image: UIImage, origin: CGPoint, bodyTop: CGFloat,
+                                            probeX: CGFloat, referenceX: CGFloat) throws {
+        let (width, pixels) = try imagePixels(image)
+        let scale = image.scale
+        let y = Int(((origin.y + bodyTop + 6) * scale).rounded())
+        let firstX = Int(((origin.x + probeX) * scale).rounded())
+        let secondX = Int(((origin.x + referenceX) * scale).rounded())
+        // Compare one full stripe period at the corner against the same phase
+        // farther inside the header. The date starts below this sampling row.
+        let differences = (0..<Int(6 * scale)).flatMap { x in
+            (0..<3).map { channel in
+                abs(Int(pixels[(y * width + firstX + x) * 4 + channel])
+                    - Int(pixels[(y * width + secondX + x) * 4 + channel]))
+            }
+        }
+        let difference = Double(differences.reduce(0, +)) / Double(differences.count)
+        #expect(difference < 2, "Popover header texture missing near its corner: \(difference)")
     }
 
     private func item() -> BlockItem {
@@ -333,10 +438,13 @@ struct AppThemeTests {
         }
     }
 
-    private func snapshotPopover(_ controller: BlockDetailViewController, traits: UITraitCollection) async throws -> UIImage {
+    private func snapshotPopover(_ controller: BlockDetailViewController, traits: UITraitCollection,
+                                 windowSize: CGSize = .init(width: 320, height: 380),
+                                 sourcePoint: CGPoint = .init(x: 159, y: 65),
+                                 arrowDirection: UIPopoverArrowDirection = .up) async throws -> UIImage {
         let scene = try #require(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
         let window = UIWindow(windowScene: scene)
-        window.frame = .init(x: 0, y: 0, width: 320, height: 380)
+        window.frame = .init(origin: .zero, size: windowSize)
         let host = ThemePopoverPreviewHost()
         host.overrideUserInterfaceStyle = traits.userInterfaceStyle
         host.view.backgroundColor = AppColor.background
@@ -355,9 +463,10 @@ struct AppThemeTests {
         controller.modalPresentationStyle = .popover
         let presentation = try #require(controller.popoverPresentationController)
         presentation.sourceView = host.view
-        presentation.sourceRect = .init(x: 159, y: 65, width: 2, height: 2)
-        presentation.permittedArrowDirections = .up
+        presentation.sourceRect = .init(origin: sourcePoint, size: .init(width: 2, height: 2))
+        presentation.permittedArrowDirections = arrowDirection
         presentation.delegate = host
+        controller.updatePopoverAppearance()
         #expect(host.view.window === window)
         await withCheckedContinuation { continuation in
             host.present(controller, animated: false) { continuation.resume() }
@@ -367,9 +476,18 @@ struct AppThemeTests {
         #expect(buttons.allSatisfy { $0.bounds.width > 80 && $0.bounds.height > 30 })
         let date = try #require(descendants(controller.view).compactMap { $0 as? CalendarThemeHeaderLabel }.first)
         #expect(date.bounds.height > 20)
-        return UIGraphicsImageRenderer(size: window.bounds.size).image { _ in
+        let image = UIGraphicsImageRenderer(size: window.bounds.size).image { _ in
             window.drawHierarchy(in: window.bounds, afterScreenUpdates: true)
         }
+        if AppTheme.current.usesPatterns {
+            let leftArrow = arrowDirection == .up && sourcePoint.x < windowSize.width / 3
+            let rightArrow = arrowDirection == .up && sourcePoint.x > windowSize.width * 2 / 3
+            let probeX: CGFloat = leftArrow ? 8 : rightArrow ? controller.view.bounds.width - 14 : 60
+            let referenceX = rightArrow ? probeX - 120 : probeX + 120
+            try expectPopoverHeaderCoverage(in: image, origin: controller.view.convert(CGPoint.zero, to: window),
+                bodyTop: controller.view.safeAreaInsets.top, probeX: probeX, referenceX: referenceX)
+        }
+        return image
     }
 
     private func select(_ style: CalendarVisualStyle) {

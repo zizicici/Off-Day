@@ -9,6 +9,7 @@ import UIKit
 
 class NavigationController: UINavigationController {
     private var headerThemeKey: String?
+    private var usesPatternedHomeBackground = false
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -27,13 +28,17 @@ class NavigationController: UINavigationController {
     func refreshTheme() {
         headerThemeKey = currentHeaderThemeKey
         let patternedHome = topViewController is BlockViewController && AppTheme.current.style.usesColoredPatterns
+        // UIKit may normalize a clear appearance background to nil. Remember when
+        // that transparency belongs to our header so leaving it restores the bar.
+        let updatesHomeBackground = patternedHome || usesPatternedHomeBackground
+        usesPatternedHomeBackground = patternedHome
         // Preserve each screen's navigation layout and shadow choices.
         let appearance = navigationBar.standardAppearance.copy()
-        if appearance.backgroundColor != nil {
+        if appearance.backgroundColor != nil || updatesHomeBackground {
             appearance.backgroundColor = patternedHome
-                ? UIColor(patternImage: CalendarNavigationPattern.image(for: traitCollection)) : AppColor.navigationBar
-            // The native bar extends background images above its backdrop. A tiled color
-            // follows the backdrop itself and shares the weekday view's window origin.
+                ? .clear : AppColor.navigationBar
+            // The home view draws one continuous texture behind both header bars.
+            // Keep UIKit from starting a separate pattern at the bar's own origin.
             appearance.backgroundImage = nil
             if patternedHome { appearance.backgroundEffect = nil }
             appearance.titleTextAttributes[.foregroundColor] = AppColor.navigationText
@@ -41,7 +46,7 @@ class NavigationController: UINavigationController {
             navigationBar.standardAppearance = appearance
         }
         if let edge = navigationBar.scrollEdgeAppearance?.copy(),
-           edge.backgroundColor != nil {
+           edge.backgroundColor != nil || updatesHomeBackground {
             edge.backgroundColor = appearance.backgroundColor
             edge.backgroundImage = appearance.backgroundImage
             if patternedHome { edge.backgroundEffect = nil }
@@ -49,7 +54,8 @@ class NavigationController: UINavigationController {
             edge.largeTitleTextAttributes[.foregroundColor] = AppColor.navigationText
             navigationBar.scrollEdgeAppearance = edge
         }
-        navigationBar.tintColor = navigationBar.standardAppearance.backgroundColor == nil ? AppColor.accent : AppColor.navigationText
+        navigationBar.tintColor = patternedHome || navigationBar.standardAppearance.backgroundColor != nil
+            ? AppColor.navigationText : AppColor.accent
         setNeedsStatusBarAppearanceUpdate()
     }
     @available(iOS 27.1, *)
